@@ -1,0 +1,55 @@
+{
+  "repository": "klencsakattila/f35-msfs.main",
+  "inspection": "Directory listings verified through GitHub connector; file contents not retrieved successfully. No conversion or simulator test performed.",
+  "variants": [
+    "IndiaFoxtEcho_F35A",
+    "IndiaFoxtEcho_F35B",
+    "IndiaFoxtEcho_F35C"
+  ],
+  "f35a_configuration_files": [
+    "aircraft.cfg",
+    "flight_model.cfg",
+    "engines.cfg",
+    "systems.cfg",
+    "cockpit.cfg",
+    "target_performance.cfg"
+  ],
+  "f35a_model_files": [
+    {
+      "name": "F35A_LOD00.gltf",
+      "bytes": 514969
+    },
+    {
+      "name": "F35A_LOD00.bin",
+      "bytes": 31685404
+    },
+    {
+      "name": "F35A_VC_LOD00.gltf",
+      "bytes": 775031
+    },
+    {
+      "name": "F35A_VC_LOD00.bin",
+      "bytes": 55198708
+    },
+    {
+      "name": "F35A.xml",
+      "bytes": 170372
+    },
+    {
+      "name": "F35A_interior.xml",
+      "bytes": 235254
+    }
+  ],
+  "instrument_directories": [
+    "F35_HUD",
+    "IndiaFoxtEcho_F35_ASR",
+    "IndiaFoxtEcho_F35_DAS",
+    "IndiaFoxtEcho_F35_Map",
+    "IndiaFoxtEcho_F35_TFLIR"
+  ],
+  "manual": {
+    "path": "Docs/F35Manual.pdf",
+    "bytes": 19850962
+  },
+  "reuse_permission": "Not established; no license visible in repository root or package-root listings."
+}
