@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<SimBase.Document Type="AceXML" version="1,0" id="VSTOL_Jitter">
+  <Descr>AceXML Document</Descr>
+  <Filename>VSTOL_Jitter.xml</Filename>
+  <SimGauge.Gauge id="Gauge" ArtDirectory=".\1024">
+  <Comment> 
+When included in the panel.cfg, this gauge adds random jitter to calculated values for pitch-speed,
+roll-speed and yaw-speed.
+
+V20.4
+
+COPYRIGHT STATEMENT
+==================
+This gauge is especially created and tweaked for this F35B addon.
+It may NOT be renamed, copied, re-uploaded, modified, or bundled in an other archive without my prior, written consent.
+Rob Barendregt, Febr. 29th 2012
+Email: rc.barendregt@planet.nl
+</Comment>
+
+<Macro Name="AltitudeFactor">
+<MacroValue>
+  200 (A:RADIO HEIGHT,feet) - 200 / 0 max
+</MacroValue>
+</Macro>
+
+<Macro Name="Main">
+<MacroValue>
+  (P:Absolute Time,seconds) 13645 * 1000 % d *
+  (A:RADIO HEIGHT,feet) +
+  (A:GENERAL ENG1 THROTTLE LEVER POSITION,percent) +
+  (A:AIRSPEED TRUE,knots) +
+  (L:longitudinal_velocity_value,number) +
+  (L:lateral_velocity_value,number) +
+  (A:ATTITUDE INDICATOR BANK DEGREES,degrees) +
+  (A:ATTITUDE INDICATOR PITCH DEGREES,degrees) + sp10
+  l10 1.1457 % 0.5 - (&gt;L:VSTOL_Random1,number)
+  l10 14.6234 * 1 % 0.5 - (&gt;L:VSTOL_Random2,number)
+  l10 39.8936 * 1 % 0.5 - (&gt;L:VSTOL_Random3,number)
+  (L:VSTOL_Random1,number) 0.7 * @AltitudeFactor * (&gt;L:VSTOL_PitchJitter,number)
+  (L:VSTOL_Random2,number) 1.0 * @AltitudeFactor * (&gt;L:VSTOL_RollJitter,number)
+  (L:VSTOL_Random3,number) 0.03 * @AltitudeFactor * (&gt;L:VSTOL_YawJitter,number)
+</MacroValue>
+</Macro>
+
+<!-- gauge control queue -->
+<Update>
+<Frequency>2</Frequency>
+<Script>
+@Main
+</Script>
+</Update> 
+
+</SimGauge.Gauge>
+</SimBase.Document>

@@ -1,0 +1,24 @@
+<Gauge Name="AvionicsControl" Version="1.0">
+
+<Comment>
+INITIALIZATION IN ANY CASE
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:CABIN NO SMOKING ALERT SWITCH, bool) (>L:Test1, bool)
+(A:CABIN SEATBELTS ALERT SWITCH, bool) (>L:Test2, bool)
+(A:LIGHT PEDESTRAL, bool) (>L:Test3, bool)
+(A:TAILHOOK HANDLE, bool) (>L:Test4, bool)
+(A:RETRACT FLOAT SWITCH, bool) (>L:Test5, bool)
+</Value>
+</Select>
+</Element>
+
+
+
+</Gauge>
+
+
+

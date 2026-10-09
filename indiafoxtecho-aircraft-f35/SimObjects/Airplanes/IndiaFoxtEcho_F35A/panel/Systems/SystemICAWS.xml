@@ -1,0 +1,2157 @@
+<Gauge Name="GunsAndSidewinders" Version="1.0">
+<Update Frequency="18"/> 
+
+<Comment>
+Integrated Caution and Warning System for F-35
+L:ICAWS_Line1 = stores the highest priority warning or caution... 2, 3, 4 etc to follow
+L:ICAWS_Pointer = active ICAWS slot
+</Comment>
+
+
+<Comment>
+INITIALIZATION
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ICAWS_WARNING, bool) (>L:ICAWS_WARNING_PREV, bool)
+(L:ICAWS_CAUTION, bool) (>L:ICAWS_CAUTION_PREV, bool)
+(L:ICAWS_ADVISORY, bool) (>L:ICAWS_ADVISORY_PREV, bool)
+0 (>L:ICAWS_Pointer, enum) 
+0 (>L:ICAWS_Line1, enum)
+0 (>L:ICAWS_Line2, enum)
+0 (>L:ICAWS_Line3, enum)
+0 (>L:ICAWS_Line4, enum)
+0 (>L:ICAWS_Line5, enum)
+0 (>L:ICAWS_Line6, enum)
+0 (>L:ICAWS_Line7, enum)
+0 (>L:ICAWS_Line8, enum)
+0 (>L:ICAWS_Line9, enum)
+0 (>L:ICAWS_Line10, enum)
+0 (>L:ICAWS_Line11, enum)
+0 (>L:ICAWS_Line12, enum)
+0 (>L:ICAWS_Line13, enum)
+0 (>L:ICAWS_Line14, enum)
+0 (>L:ICAWS_Line15, enum)
+0 (>L:ICAWS_Line16, enum)
+0 (>L:ICAWS_WARNING, bool)
+0 (>L:ICAWS_CAUTION, bool)
+0 (>L:ICAWS_ADVISORY, bool)
+0 (>L:ICAWS_HMD, number)
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+16 ENGINE FAIL
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:GENERAL ENG FAILED:1, bool) if{
+if{
+16 (>L:ICAWS_EventCode, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_16, bool) or if{ 1 (>L:ICAWSAcknowledged_6, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_WARNING, bool) }
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_16, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+*** WARNING ***
+</Comment>
+
+
+<Comment>
+1 ENGINE FIRE EVENT
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:ENG ON FIRE:1, bool)
+if{
+1 (>L:ICAWS_EventCode, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_1, bool) or if{ 1 (>L:ICAWSAcknowledged_6, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_WARNING, bool) }
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_1, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+2 GPWS DISABLED
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:GPWS Warning, bool) (L:STOVLMode,enum) 1 &lt; and (A:Gear center position,percent) 98 &gt; (A:Vertical speed,feet per minute) 2000 &lt; and ! and (L:GCASSilencer,bool) ! and 0 and 
+if{
+2 (>L:ICAWS_EventCode, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_2, bool) or if{ 1 (>L:ICAWSAcknowledged_6, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_WARNING, bool) }
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_2, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+3 STALL WARNING
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:Stall Warning, bool)
+if{
+3 (>L:ICAWS_EventCode, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_4, bool) or if{ 1 (>L:ICAWSAcknowledged_6, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_WARNING, bool) }
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_3, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+4 FUEL LOW
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:FUEL TOTAL QUANTITY WEIGHT, pounds) 1000 &lt;
+if{
+4 (>L:ICAWS_EventCode, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_4, bool) or if{ 1 (>L:ICAWSAcknowledged_6, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_WARNING, bool) }
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+
+1 (>L:ICAWS_HMD, number) 
+}
+els{ 0 (>L:ICAWSAcknowledged_4, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+5 ENGINE RPM LOW
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:Turb eng1 N2, percent) abs 30 &lt;
+if{
+5 (>L:ICAWS_EventCode, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_5, bool) or if{ 1 (>L:ICAWSAcknowledged_6, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_WARNING, bool) }
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_5, bool) }
+</Value>
+</Select>
+</Element>
+
+
+
+
+<Comment>
+7 GENERATOR FAIL ALL
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ICC1Switch, bool) ! (L:ICC2Switch, bool) ! and (L:IPPMasterSwitch, bool) ! (A:TURB ENG CORRECTED N1:1, percent) 5 &lt; or and
+if{
+7 (>L:ICAWS_EventCode, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_7, bool) or if{ 1 (>L:ICAWSAcknowledged_6, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_WARNING, bool) }
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_7, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+**** CAUTION ****
+</Comment>
+
+<Comment>
+6 BINGO
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:FUEL TOTAL QUANTITY WEIGHT, pounds) (L:FUEL_BINGO, number) &lt;
+(A:FUEL TOTAL QUANTITY WEIGHT, pounds) 500 &gt; and
+if{
+6 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_6, bool) or if{ 1 (>L:ICAWSAcknowledged_6, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_6, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+18 BATTERY SWITCH
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:ELECTRICAL MASTER BATTERY, bool) !
+if{
+18 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_18, bool) or if{ 1 (>L:ICAWSAcknowledged_18, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_18, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+8 - ENG RPM HI
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:Turb eng1 N2, percent) abs 104 &gt;
+if{
+8 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_8, bool) or if{ 1 (>L:ICAWSAcknowledged_8, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_8, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+WEAPON DOOR SYSTEM *** FIXED FOR MSFS *** DISABLED
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:weapon_doors_status, number) 10 &gt; 0 and
+if{
+if{
+9 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_9, bool) or if{ 1 (>L:ICAWSAcknowledged_9, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_9, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+10 REFUEL DOOR WARNING *** FIXED FOR MSFS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:IFR_doors_status, number) 0 &gt; 0 and
+if{
+10 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_10, bool) or if{ 1 (>L:ICAWSAcknowledged_10, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_10, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+11 LOW BATTERY *** FIXED FOR MSFS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:ELECTRICAL BATTERY VOLTAGE, Volts) 22  &lt;
+if{
+6 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_11, bool) or if{ 1 (>L:ICAWSAcknowledged_11, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_11, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+20 WINGS FOLDED AND HIGH RPM
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:wingfold_status, number) 90 &gt; (A:Turb eng1 N2, percent) abs 80 &gt; and
+if{
+20 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_20, bool) or if{ 1 (>L:ICAWSAcknowledged_20, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_20, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+21 SEAT UNARMED AT HIGH RPM
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:EjectionSeatArmPilot, bool) ! (A:Turb eng1 N2, percent) abs 80 &gt; (A:SIM ON GROUND, bool) ! or and
+if{
+21 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_21, bool) or if{ 1 (>L:ICAWSAcknowledged_21, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_21, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+22 PARKING BRAKE AND HIGH RPM
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:Brake parking indicator, bool) (A:Turb eng1 N2, percent) abs 80 &gt; (A:SIM ON GROUND, bool) ! or and 
+if{
+22 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_22, bool) or if{ 1 (>L:ICAWSAcknowledged_22, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_22, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+23 CANOPY OPEN AT HIGH RPM
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CanopyOpen, number) 0 &gt; (A:Turb eng1 N2, percent) abs 80 &gt; (A:SIM ON GROUND, bool) ! or and
+if{
+23 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_23, bool) or if{ 1 (>L:ICAWSAcknowledged_23, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_23, bool) }
+</Value>Canop
+</Select>
+</Element>
+
+<Comment>
+ICC 1 AND ICC 2 OFFLINE
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ICC1Switch, bool) ! (L:ICC2Switch, bool) ! and (L:IPPMasterSwitch, bool) (A:TURB ENG CORRECTED N1:1, percent) 5 &gt; and and
+if{
+24 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_24, bool) or if{ 1 (>L:ICAWSAcknowledged_24, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_24, bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:ICC1Switch, bool) ! (L:ICC2Switch, bool) and
+if{
+25 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_25, bool) or if{ 1 (>L:ICAWSAcknowledged_25, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_25, bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:ICC1Switch, bool) (L:ICC2Switch, bool) ! and
+if{
+26 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_26, bool) or if{ 1 (>L:ICAWSAcknowledged_26, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_26, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+OVERSPEED
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:AIRSPEED INDICATED, knots) 700 &gt; (A:Airspeed mach, mach) 1.60 &gt; or
+if{
+39 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_39, bool) or if{ 1 (>L:ICAWSAcknowledged_39, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_39, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+OVERSPEED AAR
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:AIRSPEED INDICATED, knots) 400 &gt; (A:Airspeed mach, mach) 0.80 &gt; or (L:IFR_doors_status, number) 0 &gt; and
+if{
+37 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_37, bool) or if{ 1 (>L:ICAWSAcknowledged_37, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_37, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+OVERSPEED GEAR
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:AIRSPEED INDICATED, knots) 300 &gt; (A:Airspeed mach, mach) 0.65 &gt; or (A:Gear center position,percent) 10 &gt; and
+if{
+38 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_38, bool) or if{ 1 (>L:ICAWSAcknowledged_38, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_38, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+OVERSPEED HOOK
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:AIRSPEED INDICATED, knots) 300 &gt; (A:Airspeed mach, mach) 0.65 &gt; or (L:tailhook_animation,number) 90 &gt; and (L:F35Model,number) 1 != and
+if{
+40 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_40, bool) or if{ 1 (>L:ICAWSAcknowledged_40, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_40, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+AIR DATA
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:PITOT ICE PCT, percent) 95 &gt; 
+if{
+41 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_41, bool) or if{ 1 (>L:ICAWSAcknowledged_41, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_41, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+FUEL DUMP
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:FUEL DUMP SWITCH,bool) 0 and
+if{
+42 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_42, bool) or if{ 1 (>L:ICAWSAcknowledged_42, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_42, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+GEAR DAMAGE
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:GEAR DAMAGE BY SPEED, bool)
+if{
+43 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_43, bool) or if{ 1 (>L:ICAWSAcknowledged_43, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_43, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+48 ICC 3 GENERATOR IPP
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:IPPMasterSwitch, bool) ! (A:TURB ENG CORRECTED N1:1, percent) 5 &lt; or (L:ICC1Switch, bool) (L:ICC2Switch, bool) or and
+if{
+48 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_48, bool) or if{ 1 (>L:ICAWSAcknowledged_48, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_48, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+MFSOV
+</Comment>
+
+<Element>
+<Select>
+<Value>
+0
+if{
+30 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_30, bool) or if{ 1 (>L:ICAWSAcknowledged_30, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_30, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+CABIN PRESS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:IPPCabinPressureSelector, enum) 0 == (L:CanopyOpen, number) 10 &gt; or (A:Indicated altitude,feet) 10000 &gt; and
+if{
+27 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_27, bool) or if{ 1 (>L:ICAWSAcknowledged_27, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_27, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+LADDER NOT LOCKED AT HIGH RPM
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CanopyOpen, number) 99 &gt; (A:Turb eng1 N2, percent) abs 80 &gt; and
+if{
+15 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_15, bool) or if{ 1 (>L:ICAWSAcknowledged_15, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_15, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+FCS DEGRADED
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:Turb eng1 N2, percent) abs 25 &lt; (A:FLY BY WIRE ELAC SWITCH, bool) ! (A:FLY BY WIRE FAC SWITCH, bool) ! or (A:FLY BY WIRE SEC SWITCH, bool) ! or (A:AIRSPEED INDICATED, knots) 450 &gt; and or (L:AutopilotFCSReset, enum) 0 == and (A:Autopilot master, bool) ! and
+if{
+29 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_29, bool) or if{ 1 (>L:ICAWSAcknowledged_29, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_29, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+51 ICE DETECTED AND ANTI-ICE OFF
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:ENG ANTI ICE:1, bool) ! (A:STRUCTURAL ICE PCT, percent) 10 &gt; and
+if{
+51 (>L:ICAWS_EventCode, enum)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWSAcknowledge, bool) (L:ICAWSAcknowledged_51, bool) or if{ 1 (>L:ICAWSAcknowledged_51, bool) (L:ICAWS_EventCode, enum) 100 + (>L:ICAWS_EventCode, enum) } els{ 1 (>L:ICAWS_CAUTION, bool) }
+(L:ICAWS_Pointer, enum) 1 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ (L:ICAWS_EventCode, enum) (>L:ICAWS_Line16, enum) }
+}
+els{ 0 (>L:ICAWSAcknowledged_51, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*** ADVISORY ***
+</Comment>
+
+<Comment>
+ASSISTED START
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:GENERAL ENG STARTER ACTIVE:1,bool)
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 49 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 49 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 49 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 49 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 49 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 49 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 49 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 49 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 49 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 49 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 49 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 49 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 49 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 49 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 49 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 49 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+VSBIT NO GO
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:VSBITComplete,bool) !
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 56 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 56 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 56 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 56 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 56 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 56 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 56 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 56 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 56 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 56 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 56 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 56 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 56 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 56 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 56 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 56 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+VSBIT RUNNING
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:VSBIT,bool)
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 36 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 36 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 36 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 36 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 36 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 36 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 36 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 36 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 36 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 36 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 36 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 36 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 36 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 36 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 36 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 36 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+WINGS FOLDED AND LOW RPM
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:wingfold_status, number) 90 &gt; (A:Turb eng1 N2, percent) abs 80 &lt; and
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 12 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 12 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 12 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 12 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 12 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 12 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 12 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 12 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 12 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 12 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 12 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 12 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 12 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 12 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 12 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 12 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+CANOPY UNLOCKED AND LOW RPM
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CanopyOpen, number) 0 &gt; (A:Turb eng1 N2, percent) abs 80 &lt; and
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 19 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 19 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 19 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 19 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 19 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 19 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 19 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 19 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 19 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 19 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 19 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 19 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 19 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 19 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 19 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 19 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+PARKING BRAKE AND LOW RPM
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:Brake parking indicator, bool) (A:Turb eng1 N2, percent) abs 80 &lt; and (A:SIM ON GROUND, bool) and
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 13 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 13 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 13 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 13 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 13 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 13 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 13 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 13 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 13 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 13 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 13 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 13 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 13 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 13 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 13 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 13 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:FUEL TOTAL QUANTITY WEIGHT, pounds) (L:FUEL_JOKER, number) &lt;
+(A:FUEL TOTAL QUANTITY WEIGHT, pounds) (L:FUEL_BINGO, number) &gt; and
+(A:FUEL TOTAL QUANTITY WEIGHT, pounds) 500 &gt; and
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 31 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 31 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 31 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 31 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 31 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 31 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 31 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 31 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 31 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 31 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 31 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 31 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 31 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 31 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 31 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 31 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+LAUNCH BAR
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:launch_bar_animation, number) 90 &gt;
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 17 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 17 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 17 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 17 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 17 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 17 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 17 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 17 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 17 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 17 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 17 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 17 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 17 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 17 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 17 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 17 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+
+
+<Comment>
+BOS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:SwitchOxygenEmergency, bool)
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 28 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 28 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 28 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 28 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 28 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 28 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 28 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 28 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 28 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 28 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 28 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 28 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 28 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 28 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 28 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 28 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+32 SEAT UNARMED AT LOW RPM
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:EjectionSeatArmPilot, bool) ! (A:Turb eng1 N2, percent) abs 80 &lt; and (A:SIM ON GROUND, bool) and
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 32 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 32 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 32 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 32 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 32 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 32 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 32 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 32 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 32 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 32 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 32 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 32 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 32 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 32 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 32 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 32 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+WEAPON DOOR L
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:weapon_doors_status, number) 45 &gt;
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 33 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 33 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 33 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 33 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 33 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 33 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 33 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 33 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 33 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 33 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 33 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 33 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 33 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 33 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 33 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 33 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+WEAPON DOOR R
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:weapon_doors_status, number) 55 &gt;
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 34 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 34 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 34 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 34 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 34 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 34 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 34 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 34 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 34 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 34 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 34 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 34 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 34 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 34 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 34 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 34 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+LADDER NOT LOCKED AT LOW RPM
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CanopyOpen, number) 99 &gt; (A:Turb eng1 N2, percent) abs 80 &lt; and (A:SIM ON GROUND, bool) and
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 35 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 35 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 35 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 35 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 35 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 35 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 35 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 35 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 35 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 35 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 35 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 35 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 35 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 35 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 35 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 35 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+47 REFUEL DOOR ADVISORY *** FIXED FOR MSFS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:IFR_doors_status, number) 0 &gt;
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 47 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 47 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 47 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 47 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 47 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 47 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 47 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 47 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 47 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 47 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 47 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 47 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 47 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 47 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 47 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 47 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+
+
+<Comment>
+52 ICE DETECTED AND ANTI-ICE ON
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:ENG ANTI ICE:1, bool) (A:STRUCTURAL ICE PCT, percent) 10 &gt; and 
+if{
+1 (>L:ICAWS_ADVISORY, bool)
+(L:ICAWS_Pointer, enum) 1 + (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 52 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 52 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 52 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 52 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 52 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 52 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 52 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 52 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 52 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 52 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 52 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 52 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 52 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 52 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 52 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 52 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*** ADVISORY ***
+</Comment>
+
+<Comment>
+*************
+TEST
+*************
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+(L:ICAWSTest,enum) 0 &gt; if{ (L:ICAWSTest,enum) 1 + (>L:ICAWSTest,enum) }
+(L:ICAWSTest,enum) 150 &gt; if{ 0 (>L:ICAWSTest,enum) }
+
+(L:ICAWSTest,enum) 1 &gt; (L:ICAWSTest,enum) 50 &lt; and
+if{
+1 (>L:ICAWS_WARNING, bool)
+0 (>L:ICAWS_CAUTION, bool)
+0 (>L:ICAWS_ADVISORY, bool)
+1 (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 53 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 0 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 0 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 0 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 0 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 0 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 0 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 0 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 0 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 0 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 0 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 0 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 0 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 0 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 0 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 0 (>L:ICAWS_Line16, enum) }
+}
+
+(L:ICAWSTest,enum) 49 &gt; (L:ICAWSTest,enum) 100 &lt; and
+if{
+0 (>L:ICAWS_WARNING, bool)
+1 (>L:ICAWS_CAUTION, bool)
+0 (>L:ICAWS_ADVISORY, bool)
+1 (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 54 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 0 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 0 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 0 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 0 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 0 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 0 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 0 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 0 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 0 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 0 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 0 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 0 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 0 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 0 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 0 (>L:ICAWS_Line16, enum) }
+}
+
+(L:ICAWSTest,enum) 99 &gt; (L:ICAWSTest,enum) 150 &lt; and
+if{
+0 (>L:ICAWS_WARNING, bool)
+0 (>L:ICAWS_CAUTION, bool)
+1 (>L:ICAWS_ADVISORY, bool)
+1 (>L:ICAWS_Pointer, enum)
+(L:ICAWS_Pointer, enum) 1 == if{ 55 (>L:ICAWS_Line1, enum) }
+(L:ICAWS_Pointer, enum) 2 == if{ 0 (>L:ICAWS_Line2, enum) }
+(L:ICAWS_Pointer, enum) 3 == if{ 0 (>L:ICAWS_Line3, enum) }
+(L:ICAWS_Pointer, enum) 4 == if{ 0 (>L:ICAWS_Line4, enum) }
+(L:ICAWS_Pointer, enum) 5 == if{ 0 (>L:ICAWS_Line5, enum) }
+(L:ICAWS_Pointer, enum) 6 == if{ 0 (>L:ICAWS_Line6, enum) }
+(L:ICAWS_Pointer, enum) 7 == if{ 0 (>L:ICAWS_Line7, enum) }
+(L:ICAWS_Pointer, enum) 8 == if{ 0 (>L:ICAWS_Line8, enum) }
+(L:ICAWS_Pointer, enum) 9 == if{ 0 (>L:ICAWS_Line9, enum) }
+(L:ICAWS_Pointer, enum) 10 == if{ 0 (>L:ICAWS_Line10, enum) }
+(L:ICAWS_Pointer, enum) 11 == if{ 0 (>L:ICAWS_Line11, enum) }
+(L:ICAWS_Pointer, enum) 12 == if{ 0 (>L:ICAWS_Line12, enum) }
+(L:ICAWS_Pointer, enum) 13 == if{ 0 (>L:ICAWS_Line13, enum) }
+(L:ICAWS_Pointer, enum) 14 == if{ 0 (>L:ICAWS_Line14, enum) }
+(L:ICAWS_Pointer, enum) 15 == if{ 0 (>L:ICAWS_Line15, enum) }
+(L:ICAWS_Pointer, enum) 16 == if{ 0 (>L:ICAWS_Line16, enum) }
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+*************
+RESET ACKNOWLEDGEMENT
+*************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+0 (>L:ICAWSAcknowledge, bool)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*************
+HUD AND HMD WARNINGS
+*************
+</Comment>
+<Element>
+<Select>
+<Value>
+0 (>L:ICAWS_HUD, enum)
+(L:ICAWS_Line1, enum) 1 == (L:ICAWSAcknowledged_1, bool) ! and if{ 1 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 2 == (L:ICAWSAcknowledged_2, bool) ! and if{ 2 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 3 == (L:ICAWSAcknowledged_3, bool) ! and if{ 3 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 4 == (L:ICAWSAcknowledged_4, bool) ! and if{ 4 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 5 == (L:ICAWSAcknowledged_5, bool) ! and if{ 5 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 6 == (L:ICAWSAcknowledged_6, bool) ! and if{ 6 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 7 == (L:ICAWSAcknowledged_7, bool) ! and if{ 7 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 8 == (L:ICAWSAcknowledged_8, bool) ! and if{ 8 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 9 == (L:ICAWSAcknowledged_9, bool) ! and if{ 9 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 10 == (L:ICAWSAcknowledged_10, bool) ! and if{ 10 (>L:ICAWS_HUD, enum) }
+
+(L:ICAWS_Line1, enum) 11 == (L:ICAWSAcknowledged_11, bool) ! and if{ 11 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 12 == (L:ICAWSAcknowledged_12, bool) ! and if{ 12 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 13 == (L:ICAWSAcknowledged_13, bool) ! and if{ 13 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 14 == (L:ICAWSAcknowledged_14, bool) ! and if{ 14 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 15 == (L:ICAWSAcknowledged_15, bool) ! and if{ 15 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 16 == (L:ICAWSAcknowledged_16, bool) ! and if{ 16 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 17 == (L:ICAWSAcknowledged_17, bool) ! and if{ 17 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 18 == (L:ICAWSAcknowledged_18, bool) ! and if{ 18 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 19 == (L:ICAWSAcknowledged_19, bool) ! and if{ 19 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 20 == (L:ICAWSAcknowledged_10, bool) ! and if{ 20 (>L:ICAWS_HUD, enum) }
+
+(L:ICAWS_Line1, enum) 21 == (L:ICAWSAcknowledged_21, bool) ! and if{ 21 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 22 == (L:ICAWSAcknowledged_22, bool) ! and if{ 22 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 23 == (L:ICAWSAcknowledged_23, bool) ! and if{ 23 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 24 == (L:ICAWSAcknowledged_24, bool) ! and if{ 24 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 25 == (L:ICAWSAcknowledged_25, bool) ! and if{ 25 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 26 == (L:ICAWSAcknowledged_26, bool) ! and if{ 26 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 27 == (L:ICAWSAcknowledged_27, bool) ! and if{ 27 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 28 == (L:ICAWSAcknowledged_28, bool) ! and if{ 28 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 29 == (L:ICAWSAcknowledged_29, bool) ! and if{ 29 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 30 == (L:ICAWSAcknowledged_30, bool) ! and if{ 30 (>L:ICAWS_HUD, enum) }
+
+(L:ICAWS_Line1, enum) 31 == (L:ICAWSAcknowledged_31, bool) ! and if{ 31 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 32 == (L:ICAWSAcknowledged_32, bool) ! and if{ 32 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 33 == (L:ICAWSAcknowledged_33, bool) ! and if{ 33 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 34 == (L:ICAWSAcknowledged_34, bool) ! and if{ 34 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 35 == (L:ICAWSAcknowledged_35, bool) ! and if{ 35 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 36 == (L:ICAWSAcknowledged_36, bool) ! and if{ 36 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 37 == (L:ICAWSAcknowledged_37, bool) ! and if{ 37 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 38 == (L:ICAWSAcknowledged_38, bool) ! and if{ 38 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 39 == (L:ICAWSAcknowledged_39, bool) ! and if{ 39 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 40 == (L:ICAWSAcknowledged_40, bool) ! and if{ 40 (>L:ICAWS_HUD, enum) }
+
+(L:ICAWS_Line1, enum) 41 == (L:ICAWSAcknowledged_41, bool) ! and if{ 41 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 42 == (L:ICAWSAcknowledged_42, bool) ! and if{ 42 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 43 == (L:ICAWSAcknowledged_43, bool) ! and if{ 43 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 44 == (L:ICAWSAcknowledged_44, bool) ! and if{ 44 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 45 == (L:ICAWSAcknowledged_45, bool) ! and if{ 45 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 46 == (L:ICAWSAcknowledged_46, bool) ! and if{ 46 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 47 == (L:ICAWSAcknowledged_47, bool) ! and if{ 47 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 48 == (L:ICAWSAcknowledged_48, bool) ! and if{ 48 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 49 == (L:ICAWSAcknowledged_49, bool) ! and if{ 49 (>L:ICAWS_HUD, enum) }
+(L:ICAWS_Line1, enum) 50 == (L:ICAWSAcknowledged_50, bool) ! and if{ 50 (>L:ICAWS_HUD, enum) }
+</Value> 
+</Select>
+</Element>
+
+<Comment>
+*************
+SOUND SECTION
+*************
+</Comment>
+
+
+<Comment>
+PLAY WARNING VOICES
+Warning_GENERIC
+Caution_BINGO
+Warning_BLEED_AIR
+Warning_ENGINE
+Warning_FIRE
+Warning_FLAMEOUT
+Warning_FLIGHT_CONTROLS
+Warning_LOW_FUEL
+Warning_HYDRAULICS
+Warning_IPP_FAIL
+Warning_OXYGEN_CRITICAL
+Warning_TEST
+
+MasterCaution_Sound
+Caution_BRAKE_FAIL
+Caution_CABIN_PRESSURE
+Caution_CANOPY
+Caution_ELECTRICS
+Caution_FLIGHT_CONTROLS
+Caution_FUEL
+Caution_OVERSPEED
+Caution_OXYGEN
+Caution_PARKING_BRAKE
+
+Advisory_Sound
+Advisory_Autopilot
+Advisory_Autorecovery
+Advisory_Joker
+Advisory_Throttle
+Advisory_200Hz
+</Comment>
+
+<Comment>
+WARNING
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+(L:ICAWS_WARNING_PREV, bool) ! (L:ElectricalPowerAvailable, bool) and if{ 
+(L:ICAWS_Line1, enum) 16 == if{ 1 (>L:Warning_ENGINE, number) }
+(L:ICAWS_Line1, enum) 1 == if{ 1 (>L:Warning_FIRE, number) }
+(L:ICAWS_Line1, enum) 4 == if{ 1 (>L:Warning_LOW_FUEL, number) }
+(L:ICAWS_Line1, enum) 5 == if{ 1 (>L:Warning_ENGINE, number) }
+(L:ICAWS_Line1, enum) 7 == if{ 1 (>L:Warning_GENERIC, number) }
+(L:ICAWS_Line1, enum) 18 == if{ 1 (>L:Warning_GENERIC, number) }
+(L:ICAWS_Line1, enum) 53 == if{ 1 (>L:Warning_TEST, number) } 
+} 
+
+(L:ICAWS_WARNING, bool) ! if{ 
+0 (>L:Warning_ENGINE, number)
+0 (>L:Warning_FIRE, number)
+0 (>L:Warning_LOW_FUEL, number)
+0 (>L:Warning_ENGINE, number)
+0 (>L:Warning_GENERIC, number)
+0 (>L:Warning_GENERIC, number)
+0 (>L:Warning_TEST, number)
+} 
+</Value>
+</Select>
+</Element>
+
+<Comment>
+CAUTION
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ICAWS_CAUTION_PREV, bool) ! (L:ElectricalPowerAvailable, bool) and if{ 
+(L:ICAWS_Line1, enum) 6 == if{ 1 (>L:Caution_BINGO, number) } els{ 0 (>L:Caution_BINGO, number) }
+(L:ICAWS_Line1, enum) 8 == if{ 1 (>L:MasterCaution_Sound, number) } 
+(L:ICAWS_Line1, enum) 9 == if{ 1 (>L:MasterCaution_Sound, number) } 
+(L:ICAWS_Line1, enum) 10 == if{ 1 (>L:MasterCaution_Sound, number) }  
+(L:ICAWS_Line1, enum) 11 == (L:ICAWS_Line1, enum) 24 ==  or (L:ICAWS_Line1, enum) 25 ==  or (L:ICAWS_Line1, enum) 26 ==  or if{ 1 (>L:Caution_ELECTRICS, number) } els{ 0 (>L:Caution_ELECTRICS, number) }
+(L:ICAWS_Line1, enum) 14 == if{ 1 (>L:MasterCaution_Sound, number) } 
+(L:ICAWS_Line1, enum) 15 == if{ 1 (>L:MasterCaution_Sound, number) }
+(L:ICAWS_Line1, enum) 20 == if{ 1 (>L:MasterCaution_Sound, number) }
+(L:ICAWS_Line1, enum) 21 == if{ 1 (>L:MasterCaution_Sound, number) }
+(L:ICAWS_Line1, enum) 22 == if{ 1 (>L:Caution_PARKING_BRAKE, number) } els{ 0 (>L:Caution_PARKING_BRAKE, number) }
+(L:ICAWS_Line1, enum) 23 == if{ 1 (>L:Caution_CANOPY, number) } els{ 0 (>L:Caution_CANOPY, number) }
+(L:ICAWS_Line1, enum) 27 == if{ 1 (>L:Caution_CABIN_PRESSURE, number) } els{ 0 (>L:Caution_CABIN_PRESSURE, number) }
+(L:ICAWS_Line1, enum) 29 == if{ 1 (>L:Caution_FLIGHT_CONTROLS, number) } els{ 0 (>L:Caution_FLIGHT_CONTROLS, number) }
+(L:ICAWS_Line1, enum) 30 == if{ 1 (>L:Caution_FUEL, number) } els{ 0 (>L:Caution_FUEL, number) }
+(L:ICAWS_Line1, enum) 37 == (L:ICAWS_Line1, enum) 38 == or (L:ICAWS_Line1, enum) 39 == or (L:ICAWS_Line1, enum) 40 == or if{ 1 (>L:Caution_OVERSPEED, number) } els{ 0 (>L:Caution_OVERSPEED, number) }
+(L:ICAWS_Line1, enum) 48 == if{ 1 (>L:MasterCaution_Sound, number) }
+(L:ICAWS_Line1, enum) 51 == if{ 1 (>L:MasterCaution_Sound, number) }
+(L:ICAWS_Line1, enum) 54 == if{ 1 (>L:MasterCaution_Sound, number) }
+} 
+
+(L:ICAWS_CAUTION_PREV, bool) (L:ICAWS_CAUTION, bool) ! and if{ 0 (>L:MasterCaution_Sound, number) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+ADVISORY
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ICAWS_WARNING_PREV, bool) ! (L:ICAWS_CAUTION_PREV, bool) ! and (L:ICAWS_ADVISORY_PREV, bool) ! and (L:ICAWS_ADVISORY, bool) and (L:ElectricalPowerAvailable, bool) and if{
+(L:ICAWS_Line1, enum) 31 == if{ 1 (>L:Advisory_Joker, number) }
+els{ 1 (>L:Advisory_Sound,bool) }
+}
+
+(L:ICAWS_ADVISORY_PREV, bool) (L:ICAWS_ADVISORY, bool) ! and if{ 0 (>L:Advisory_Sound, number) }
+(L:ICAWS_Line1, enum) 55 == if{ 1 (>L:Advisory_Sound, number) } 
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:ICAWS_CAUTION, bool) ! (L:ElectricalPowerAvailable, bool) ! or if{ 0 (>L:MasterCaution_Sound, number) } 
+</Value>
+</Select>
+</Element>
+
+<Comment>
+ALOW1 ALOW2 LIS
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+(A:Radio height,feet) (L:ALOW_value,number) &gt; if{ 1 (>L:ALOW_armed, bool) 0 (>L:ALOWTimer,number) }
+(A:Radio height,feet) (L:ALOW2_value,number) &gt; if{ 1 (>L:ALOW2_armed, bool) 0 (>L:ALOW2Timer,number) }
+(L:LIS_armed, bool) 0 == (A:PRESSURE ALTITUDE,feet) (L:LIS_value,number) &gt; and if{ 1 (>L:LIS_armed, bool) }
+
+
+(A:Radio height,feet) 15 &lt; if{ 0 (>L:ALOW_armed, bool) 0 (>L:ALOW2_armed, bool) 0 (>L:LIS_armed, bool) }
+
+(A:Radio Height, feet) (L:ALOW_value, number) &lt; or (L:GCASSilencer,bool) ! and (L:ElectricalPowerAvailable,bool) and (L:IsRadaltVisible, bool) and (L:ALOW_armed, bool) and (L:ALOWTimer,number) 0 == and if{ 1 (>L:ALOWTimer,number) }
+(A:Radio Height, feet) (L:ALOW2_value, number) &lt; or (L:GCASSilencer,bool) ! and (L:ElectricalPowerAvailable,bool) and (L:IsRadaltVisible, bool) and (L:ALOW2_armed, bool) and (L:ALOW2Timer,number) 0 == and if{ 1 (>L:ALOW2Timer,number) }
+(A:PRESSURE ALTITUDE, feet) (L:LIS_value,number) &lt; or (L:LIS_value,number) 0 &gt; and (L:ElectricalPowerAvailable,bool) and (L:LIS_armed, bool) and (L:LISTimer,number) 0 == and if{ 1 (>L:LISTimer,number) }
+
+(L:LISTimer,number) 0 &gt; if{ (L:LISTimer,number) ++ 70 min (>L:LISTimer,number) }
+(L:LISTimer,number) 0 &gt; (L:LISTimer,number) 15 &lt; and if{ 1 (>L:LISWarning,bool) } els{ 0 (>L:LISWarning,bool) }
+
+(L:ALOW2Timer,number) 0 &gt; if{ (L:ALOW2Timer,number) ++ 70 min (>L:ALOW2Timer,number) }
+(L:ALOW2Timer,number) 0 &gt; (L:ALOW2Timer,number) 15 &lt; and if{ 1 (>L:ALOW2Warning,bool) } els{ 0 (>L:ALOW2Warning,bool) }
+
+(L:ALOWTimer,number) 0 &gt; if{ (L:ALOWTimer,number) ++ 70 min (>L:ALOWTimer,number) }
+(L:ALOWTimer,number) 0 &gt; (L:ALOWTimer,number) 15 &lt; and if{ 1 (>L:ALOW1Warning,bool) } els{ 0 (>L:ALOW1Warning,bool) }
+
+(A:Gear left position,percent) near 100 == if{ 0 (>L:ALOWWarning,bool) }
+(L:ICAWS_WARNING_PREV, bool) ! (L:ElectricalPowerAvailable, bool) and
+if{ (L:ICAWS_Line1, enum) 2 == (L:ALOWWarning,bool) or (L:ALOW1Warning,bool) or (L:ALOW2Warning,bool) or (L:LISWarning,bool) or (L:GCASSilencer,bool) ! and (L:ElectricalPowerAvailable,bool) and (L:ALOW_armed, bool) and
+ if{ 
+	(A:Gear left position,percent) 95 &lt; if{ 1 (>L:AlertAltitude,bool) } els{ 0 (>L:AlertAltitude,bool) }
+	(L:ALOW1Warning,bool) if{ 1 (>L:Warning_GENERIC, number)  } els{ 0 (>L:Warning_GENERIC,bool) }
+ }
+ els{ 
+	0 (>L:AlertAltitude,bool) 
+	0 (>L:Warning_GENERIC, number)  
+ }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+COMPUTE PULL UP LIMIT DEPENING ON GCAS MODE
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:GCASLevel, enum) 0 == if{ (A:Radio height, feet) (L:MANMTC_value, number) + (>L:PullUpLimit, feet) }
+(L:GCASLevel, enum) 1 == if{ (A:Radio height, feet) (>L:PullUpLimit, feet) }
+(L:GCASLevel, enum) 2 == if{ (A:Radio height, feet) 500 - (>L:PullUpLimit, feet) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+PULL UP
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:GPWS Warning, bool) (L:STOVLMode,enum) 1 &lt; and (A:Gear center position,percent) 98 &gt; (A:Vertical speed,feet per minute) 2000 &lt; and ! and 
+(A:VELOCITY WORLD Y, feet per minute) abs 60 / 5 * (L:PullUpLimit, feet) &gt; (A:Sim On Ground, bool) ! and (A:AIRSPEED INDICATED, knots) 200 &gt; and (A:VELOCITY WORLD Y, feet per minute) 0 &lt; and or
+(A:Gear center position,percent) 98 &gt; (A:Vertical speed,feet per minute) 2000 &lt; and ! and (L:GCASSilencer,bool) ! and
+(>L:PULL_UP_WARNING, bool)
+
+(L:PULL_UP_WARNING, bool) ! if{ 400 (>L:PullUpChevronShift, number) }
+(L:PULL_UP_WARNING, bool) if{ (L:PullUpChevronShift, number) (A:VELOCITY WORLD Y, feet per minute) 500 / + 400 min 0 max (>L:PullUpChevronShift, number) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:ICAWS_WARNING_PREV, bool) ! (L:ElectricalPowerAvailable, bool) and if{
+	(L:PULL_UP_WARNING, bool) if{ 1 (>L:AlertPullUp, number) 0 (>L:Warning_GENERIC, number)	}
+els{	
+	0 (>L:AlertPullUp, number)
+	if{ (L:ICAWS_Line1, enum) 2 == (L:ALOWWarning,bool) or (L:ALOW1Warning,bool) or (L:ALOW2Warning,bool) or (L:GCASSilencer,bool) ! and (L:ElectricalPowerAvailable,bool) and (L:ALOW_armed, bool) and
+		if{ 1 (>L:AlertAltitude,bool) 1 (>L:Warning_GENERIC, number) }
+		els{ 0 (>L:AlertAltitude,bool) 0 (>L:Warning_GENERIC, number) }
+	}
+}
+
+}
+</Value>
+</Select>
+</Element>
+
+
+
+<Comment>
+******************
+GEAR WARNING SOUND
+******************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:ELECTRICAL MASTER BATTERY, bool) (A:GEAR HANDLE POSITION, percent) 5 &lt; and (A:GENERAL ENG THROTTLE LEVER POSITION:1, percent) 75 &lt; and 
+(A:INDICATED ALTITUDE, feet) 7000 &lt; and (A:AIRSPEED INDICATED, knots) 200 &lt; and (A:Vertical speed,feet per minute) -250 &lt; and
+if{ 1 (>L:GearWarningSound, bool) } els{ 0 (>L:GearWarningSound, bool) }
+(L:GearWarningSound, bool) (&gt;L:CHECK_GEAR_WARNING)
+</Value>
+</Select>
+</Element>
+
+
+
+<Comment>
+*****************
+LIGHT GEAR HANDLE
+*****************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+0 (>L:light_gear_handle, bool)
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:GEAR HANDLE POSITION, percent) 99 &gt; (L:GearWarningSound, bool) or if{
+(A:GEAR CENTER POSITION, percent) 99 &lt; (A:GEAR LEFT POSITION, percent) 99 &lt; or (A:GEAR RIGHT POSITION, percent) 99 &lt; or (L:GearWarningSound, bool) or
+if{
+(A:SIM ON GROUND, bool) ! (L:ElectricalPowerAvailable, bool) and
+if{
+1 (>L:light_gear_handle, bool)
+}
+}
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+0 (>L:Gstrain, bool)
+(A:SIM ON GROUND, bool) ! (A:G Force,GForce) 5.0 &gt; and if{
+1 (>L:Gstrain, bool) 
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Make sure warning variables are set to OFF if no electrical power is available
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ElectricalPowerAvailable, bool) !
+if{
+0 (>L:light_gear_handle, bool)
+0 (>L:Warning_PULL_UP, number)
+0 (>L:ALOW,bool)
+0 (>L:ALOW2, bool)
+0 (>L:LIS, bool)
+0 (>L:Warning_GENERIC, number) 
+0 (>L:Warning_LOW_FUEL, number)
+0 (>L:Warning_ENGINE_FIRE, number)
+0 (>L:Warning_ENGINE, number)
+}
+</Value>
+</Select>
+</Element>
+
+</Gauge>
+

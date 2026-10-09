@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Gauge Name="Auto Speedbrakes">
+//***** Automatic speedbrake retraction if throttle is above 90% ****
+	<Element>
+		<Select>
+			<Value>
+			(A:GENERAL ENG THROTTLE LEVER POSITION:1, percent) 90 &gt;
+			(A:SPOILERS HANDLE POSITION, percent) 1 &gt; and
+			if{ 0 (>K:SPOILERS_SET) }
+			</Value>
+		</Select>
+	</Element>
+
+//***** Automatic speedbrake retraction if AoA is above 20 units (with margin) ****
+	<Element>
+		<Select>
+			<Value>
+			(L:AOAUnits, number) 21 &gt;
+			(A:SPOILERS HANDLE POSITION, percent) 1 &gt; and
+			if{ 0 (>K:SPOILERS_SET) }
+			</Value>
+		</Select>
+	</Element>
+
+//***** Automatic speedbrake extension during landing ground roll ****
+
+		<Element>
+		<Select>
+			<Value>
+			(A:SIM ON GROUND, bool) !
+			if{ 1 (>L:SpoilersDeployArm, enum) }
+			</Value>
+		</Select>
+	</Element>		
+
+	<Element>
+		<Select>
+			<Value>
+			(L:SpoilersDeployArm, enum) 1 ==
+			(A:SIM ON GROUND, bool) and
+			(A:SURFACE RELATIVE GROUND SPEED, Knots) 50 &gt; and
+			(A:GENERAL ENG THROTTLE LEVER POSITION:1, percent) 70 &lt; and
+			(A:SPOILERS HANDLE POSITION, percent) 99 &lt; and
+			if{ 
+			2 (>L:SpoilersDeployArm) 
+			16384 (>K:SPOILERS_SET)
+			}
+			</Value>
+		</Select>
+	</Element>		
+
+	<Element>
+		<Select>
+			<Value>
+			(L:SpoilersDeployArm, enum) 2 ==
+			(A:SIM ON GROUND, bool) and
+			(A:GENERAL ENG THROTTLE LEVER POSITION:1, percent) 70 &gt; and
+			(A:SPOILERS HANDLE POSITION, percent) 1 &gt; and
+			if{ 
+			0 (>K:SPOILERS_SET)
+			}
+			</Value>
+		</Select>
+	</Element>	
+
+	<Element>
+		<Select>
+			<Value>
+			(L:SpoilersDeployArm, enum) 2 ==
+			(A:SIM ON GROUND, bool) and
+			(A:SURFACE RELATIVE GROUND SPEED, Knots) 40 &lt; and
+			(A:GENERAL ENG THROTTLE LEVER POSITION:1, percent) 70 &lt; and
+			(A:SPOILERS HANDLE POSITION, percent) 1 &gt; and
+			if{ 
+			0 (>K:SPOILERS_SET)
+			}
+			</Value>
+		</Select>
+	</Element>	
+
+	<Element>
+		<Select>
+			<Value>
+			(A:SIM ON GROUND, bool) 
+			(A:SURFACE RELATIVE GROUND SPEED, Knots) 35 &lt; and
+			(A:GENERAL ENG THROTTLE LEVER POSITION:1, percent) 70 &lt; and
+			if{ 
+			0 (>L:SpoilersDeployArm) 
+			}
+			</Value>
+		</Select>
+	</Element>	
+
+			
+</Gauge>

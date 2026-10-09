@@ -1,0 +1,231 @@
+<Gauge Name="AvionicsControl" Version="1.0">
+
+<Comment>
+F-35 Integrated Power Package
+
+(L:IPPMasterSwitch, bool)  Master switch ON OFF
+(L:ICC1Switch, bool) Inverter Converter Controller 1 ON OFF
+(L:ICC2Switch, bool) Inverter Converter Controller 2 ON OFF
+(L:IPPModeSelector, enum) IPP Mode 0=OFF 1=AUTO 2=STARTER
+(L:IPPCabinPressureSelector, enum) Cabin Pressure Selector 0=DUMP 1=NORM 2=ALTN
+(L:IPPEmergencyShutOff, bool) 0 = system on  1 = shutdown
+</Comment>
+
+<Comment>
+Make sure avionic master is ON
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:AVIONICS MASTER SWITCH:1, bool) ! if{ 1 (>K:AVIONICS_MASTER_1_ON) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+GENERATOR MODE
+To generate power, IPP must be on, at least one converter must be on, IPP mode should be AUTO and RPM greater than 20%
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:GENERAL ENG MASTER ALTERNATOR:1, bool) (L:IPPMasterSwitch, bool) ! and (L:ICC1Switch, bool) ! and (L:ICC2Switch, bool) ! and if{
+1 (>L:IPPMasterSwitch, bool) 1 (>L:ICC1Switch, bool) 1 (>L:ICC2Switch, bool) }
+
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:ICC1Switch, bool) (L:ICC2Switch, bool) or (L:IPPMasterSwitch, bool) and (L:IPPEmergencyShutOff, bool) ! and 
+if{
+(A:GENERAL ENG MASTER ALTERNATOR:1, bool) ! if{ (>K:TOGGLE_MASTER_ALTERNATOR) }
+}
+els{
+(A:GENERAL ENG MASTER ALTERNATOR:1, bool) if{ (>K:TOGGLE_MASTER_ALTERNATOR) }
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+STARTER MODE
+To engarge the starter, IPP must be on, at least one converter must be on, master battery should be ON, IPP mode should be START
+</Comment>
+
+<Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ICC1Switch, bool) (L:ICC2Switch, bool) or (L:IPPMasterSwitch, bool) and (L:IPPModeSelector, enum) 2 == and (L:IPPModePrev, enum) 2 != and (L:IPPEmergencyShutOff, bool) ! and (A:ELECTRICAL MASTER BATTERY, bool) and
+if{
+(A:GENERAL ENG STARTER:1, bool) ! if{ (>K:TOGGLE_MASTER_STARTER_SWITCH) }
+}
+els{
+0
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:ICC1Switch, bool) (L:ICC2Switch, bool) or (L:IPPMasterSwitch, bool) and (L:IPPModeSelector, enum) 1 == and (L:IPPModePrev, enum) 1 != and (L:IPPEmergencyShutOff, bool) ! and (A:ELECTRICAL MASTER BATTERY, bool) and
+if{
+(A:GENERAL ENG STARTER:1, bool) if{ (>K:TOGGLE_MASTER_STARTER_SWITCH) }
+}
+els{
+0
+}
+</Value>
+</Select>
+</Element>
+
+</Comment>
+
+
+<Comment>
+ELECTRICAL POWER AVAILABLE
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ICC1Switch, bool) (L:ICC2Switch, bool) or (A:GENERAL ENG MASTER ALTERNATOR:1, bool) and (A:TURB ENG CORRECTED N1:1, percent) 15 &gt; and
+if{
+1 (>L:IPPGenerator,bool)
+500 (>L:IPPCooldown, number)
+1 (>L:SyntheticImagery, bool)
+}
+els{
+0 (>L:IPPGenerator,bool)
+(L:IPPCooldown, number) -1 &gt; if{ (L:IPPCooldown, number) 1 - (>L:IPPCooldown, number) }
+0 (>L:SyntheticImagery, bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:ELECTRICAL MASTER BATTERY, bool) (L:IPPGenerator,bool) or
+if{
+1 (>L:ElectricalPowerAvailable,bool)
+(L:IPPBIT, number) 1 + 600 min (>L:IPPBIT, number)
+}
+els{
+0 (>L:ElectricalPowerAvailable,bool)
+0 (>L:IPPBIT, number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+SWITCH POSITION MEMORY
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:IPPModeSelector, enum) 2 == (>L:IPPModePrev, enum)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+PRESSURIZATION
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:PLANE ALTITUDE, feet) (>L:CabinPressNumber, number)
+(A:PLANE ALTITUDE, feet) 8000 &gt; (A:PLANE ALTITUDE, feet) 23000 &lt; and if{ 8000 (>L:CabinPressNumber, number) }
+(A:PLANE ALTITUDE, feet) 23000 &gt; if{ (A:PLANE ALTITUDE, feet) 15000 - (>L:CabinPressNumber, number) }
+(L:CanopyOpen, number) 10 &gt; (L:IPPCabinPressureSelector, enum) 0 == or if{ (A:PLANE ALTITUDE, feet) (>L:CabinPressNumber, number) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+BOS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:OBOGSLitres, number) 0 &gt; (L:SwitchOxygenEmergency, bool) and if{ (L:OBOGSLitres, number) 0.001 - (>L:OBOGSLitres, number) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+ENGINE SWITCH - IF OFF AND THROTTLE BELOW 10% SET MIXTURE TO LEAN, OTHERWISE SET MIXTURE TO FULL
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:MASTER IGNITION SWITCH, bool) if{ (>K:MIXTURE_RICH) 1 (>L:MotoreRun,bool) }
+els{ (A:GENERAL ENG THROTTLE LEVER POSITION:1, percent) 15 &lt; if{ (>K:MIXTURE_LEAN) 0 (>L:MotoreRun,bool) }  }
+(A:GENERAL ENG MIXTURE LEVER POSITION:1, percent) (>L:MotoreRunNumber,number) 
+</Value>
+</Select>
+</Element>
+
+<Comment>
+DISABLE MFSOV IF THROTTLE IS ABOVE 15%
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:GENERAL ENG THROTTLE LEVER POSITION:1, percent) 15 &gt;
+if{ 0 (>L:Fuel_MFSOV_Consent, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+IPP PANEL LIGHTS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:ELECTRICAL BATTERY VOLTAGE, Volts) 22 &lt; (A:ELECTRICAL MASTER BATTERY, bool) and (>L:IPPLight28VLOW, bool)
+(A:ELECTRICAL MASTER BATTERY, bool) (L:IPPGenerator,bool) ! and if{ 1 (>L:IPPLight28VDIS, bool) } els{ 0 (>L:IPPLight28VDIS, bool) }
+(L:IPPBIT, number) 0 &gt; (L:IPPBIT, number) 500 &lt; and if{ (L:IsFlashTime, bool) (>L:IPPLight28VDIS, bool) }
+0 (>L:IPPLight270VLOW, bool)
+0 (>L:IPPLight270VDIS, bool)
+(A:SIM ON GROUND, bool) (L:IPPGenerator,bool) and if{ 1 (>L:IPPLightBurn, bool) 1 (>L:IPPMFDBurn, bool) } els{ 0 (>L:IPPLightBurn, bool) 0 (>L:IPPMFDBurn, bool) }
+(A:GENERAL ENG STARTER:1, bool) (L:IPPCooldown, number) 0 &gt; (L:IPPCooldown, number) 499 &lt; and or if{ (L:IsFlashTime, bool) (>L:IPPLightBurn, bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:ElectricalPowerAvailable,bool) ! if{
+(A:INTERACTIVE POINT OPEN:0, percent) 2 &gt; (A:INTERACTIVE POINT OPEN:0, percent) 98 &lt; and if{ 1 (>L:IPPLight28VDIS, bool) }
+0 (>L:IPPLight270VLOW, bool)
+0 (>L:IPPLight270VDIS, bool)
+0 (>L:IPPLightBurn, bool)
+} 
+</Value>
+</Select>
+</Element>
+
+</Gauge>

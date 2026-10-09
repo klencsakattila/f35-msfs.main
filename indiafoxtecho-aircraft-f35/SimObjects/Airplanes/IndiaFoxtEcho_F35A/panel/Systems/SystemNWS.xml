@@ -1,0 +1,108 @@
+<Gauge Name="Brake System" Version="1.1">
+
+<Update Frequency="0"/>
+
+<Comment>
+NoseWheel Steering Control
+</Comment>
+
+<Comment>
+*******************
+AUTOMATIC NWS
+*******************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:NWSAutomatic, bool) (A:SIM ON GROUND, bool) and if{ 
+(A:SURFACE RELATIVE GROUND SPEED, knots) 19 &lt; (L:NWSMode, enum) 2 != and if{ 1 (>L:NWSSelector, bool) }
+(A:SURFACE RELATIVE GROUND SPEED, knots) 20 &gt; (L:NWSMode, enum) 1 != and if{ 1 (>L:NWSSelector, bool) }
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+***********************************
+NWS BUTTON ALSO USED FOR FCS TOGGLE
+***********************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:NOSEWHEEL MAX STEERING ANGLE, radians) 0 == (A:SIM ON GROUND, bool) ! and if{ 
+					(L:FCSReset, bool) ! (>L:FCSReset, bool)
+					10 (>K:NOSE_WHEEL_STEERING_LIMIT_SET, degrees)
+					(L:FCSReset, bool) if{ 					
+					(>K:FLAPS_UP)
+					(A:FLY BY WIRE ELAC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_ELAC_TOGGLE) }
+					(A:FLY BY WIRE FAC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_FAC_TOGGLE) } 
+					(A:FLY BY WIRE SEC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_SEC_TOGGLE) }
+					}
+					(L:FCSReset, bool) ! if{ 					
+					(>K:FLAPS_1)
+					(A:FLY BY WIRE ELAC SWITCH, bool) if{ (>K:FLY_BY_WIRE_ELAC_TOGGLE) }
+					(A:FLY BY WIRE FAC SWITCH, bool) if{ (>K:FLY_BY_WIRE_FAC_TOGGLE) } 
+					(A:FLY BY WIRE SEC SWITCH, bool) if{ (>K:FLY_BY_WIRE_SEC_TOGGLE) }
+					}					
+					}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*******************
+AUTOMATIC NWS ENGAGEMENT
+*******************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:SIM ON GROUND, bool) ! if{ 1 (>L:NWSPreselection, bool) }
+(L:NWSPreselection, bool) (A:SIM ON GROUND, bool) and (A:SURFACE RELATIVE GROUND SPEED, knots) 145 &lt; and (A:GEAR ANIMATION POSITION:1, percent) 50 &gt; and if{ 1 (>L:NWSSelector, bool) 0 (>L:NWSPreselection, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*******************
+NWS
+*******************
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+(A:NOSEWHEEL MAX STEERING ANGLE, radians) 0 == (A:SIM ON GROUND, bool) and if{ 1 (>L:NWSSelector, bool) }
+
+(L:NWSSelector, bool) if{ (L:NWSMode, enum) 1 + (>L:NWSMode, enum) }
+
+(L:NWSMode, enum) 2 &gt; if{ 0 (>L:NWSMode, enum) }
+
+(L:NWSMode, enum) 0 == (A:NOSEWHEEL MAX STEERING ANGLE, radians) 0.03 &lt; (A:NOSEWHEEL MAX STEERING ANGLE, radians) 0.2 &gt; or and if{ 100 (>K:NOSE_WHEEL_STEERING_LIMIT_SET, degrees) }
+(L:NWSMode, enum) 1 == (A:NOSEWHEEL MAX STEERING ANGLE, radians) 0.8 &lt; and (A:SURFACE RELATIVE GROUND SPEED, knots) 45 &lt; and if{ 4000 (>K:NOSE_WHEEL_STEERING_LIMIT_SET, degrees) }
+(L:NWSMode, enum) 1 == (A:NOSEWHEEL MAX STEERING ANGLE, radians) 0.8 &lt; and (A:SURFACE RELATIVE GROUND SPEED, knots) 45 &gt; and if{ 4000 (>K:NOSE_WHEEL_STEERING_LIMIT_SET, degrees) }
+(L:NWSMode, enum) 2 == (A:NOSEWHEEL MAX STEERING ANGLE, radians) 1.0 &lt; and if{ 16000 (>K:NOSE_WHEEL_STEERING_LIMIT_SET, degrees) }
+
+(L:NWSMode, enum) 2 == (A:SURFACE RELATIVE GROUND SPEED, knots) 20 &gt; and if{ 1 (>L:NWSMode, enum)  }
+
+(A:SIM ON GROUND, bool) ! if{ 0 (>L:NWSMode, enum)  }
+
+(A:NOSEWHEEL MAX STEERING ANGLE, radians) (>L:NWSAngleMax, number)
+
+0 (>L:NWSSelector, bool)
+
+(L:launch_bar_animation, number) 1 &gt; (A:NOSEWHEEL MAX STEERING ANGLE, radians) 0.2 &gt; and (L:NWSDisabled, bool) ! and if{ 0 (>L:NWSMode, enum) 100 (>K:NOSE_WHEEL_STEERING_LIMIT_SET, degrees) }
+
+(A:GEAR CENTER POSITION, percent) 99 &lt; (A:SURFACE RELATIVE GROUND SPEED, knots) 150 &gt; and (L:NWSMode, enum) 0 != and if{ 0 (>L:NWSMode, enum) 0 (>L:NWSModeSelfTest, enum) 100 (>K:NOSE_WHEEL_STEERING_LIMIT_SET, degrees) }
+</Value>
+</Select>
+</Element>
+
+
+</Gauge>

@@ -1,0 +1,378 @@
+<Gauge Name="MFD_Init_Master_Mode" Version="1.0">
+
+<Update Frequency="0"/>
+
+<!-- Initialize MFD Status -->
+
+<Element>
+<Select>
+<Value>
+
+<!-- Initialization of portal configuration -->
+(L:MFDInit, enum) 0 == if{
+  
+<!-- TSD Zoom level -->
+2 (>L:TSD_Zoom, number)
+2 (>L:TSD1_Zoom, number)
+2 (>L:TSD2_Zoom, number)
+2 (>L:TSD3_Zoom, number)
+2000 (>L:FUEL_BINGO, number)
+5000 (>L:FUEL_JOKER, number)
+1000 (>L:FUEL_DUMPCO, number)
+
+<!-- Sets wheel brakes anti-skid on -->
+(A:ANTISKID BRAKES ACTIVE, bool) 0 == if{ 1 (>K:ANTISKID_BRAKES_TOGGLE) }
+}
+
+<!-- Initialization complete -->
+1 (>L:MasterModeChange, enum) 
+1 (>L:MFDInit, enum)
+</Value>
+</Select>
+</Element>
+
+<!-- Stores MFD status to buffer variables to retrive them when exiting from menus or full screen modes -->
+<Element>
+<Select>
+<Value>
+(L:MFD1_Screen, number) 99 &lt; if{ (L:MFD1_Screen, number) (&gt;L:MFD1_TSD_Buffer1, number) }
+(L:MFD2_Screen, number) 99 &lt; if{ (L:MFD2_Screen, number) (&gt;L:MFD1_TSD_Buffer2, number) }
+(L:MFD3_Screen, number) 99 &lt; if{ (L:MFD3_Screen, number) (&gt;L:MFD3_TSD_Buffer1, number) }
+(L:MFD4_Screen, number) 99 &lt; if{ (L:MFD4_Screen, number) (&gt;L:MFD3_TSD_Buffer2, number) }
+</Value>
+</Select>
+</Element>
+
+<!-- if MENU mode is invoked in full screen, applies to both screens -->
+<Element>
+<Select>
+<Value>
+(L:MFD1_Full_Screen_Sync, number) if{ 
+(L:MFD1_Screen, number) 99 &lt; 
+(L:MFD1_Screen, number) 0 &gt; and if{
+(L:MFD1_Screen, number) 100 + (>L:MFD1_Screen, number) 
+(L:MFD1_Screen, number) (>L:MFD2_Screen, number)
+0 (>L:MFD1_Full_Screen_Sync, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<!-- if MENU mode is invoked in full screen, applies to both screens, right half -->
+<Element>
+<Select>
+<Value>
+(L:MFD3_Full_Screen_Sync, number) if{ 
+(L:MFD3_Screen, number) 99 &lt; 
+(L:MFD3_Screen, number) 0 &gt; and if{
+(L:MFD3_Screen, number) 100 + (>L:MFD3_Screen, number) 
+(L:MFD3_Screen, number) (>L:MFD4_Screen, number)
+0 (>L:MFD3_Full_Screen_Sync, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<!-- adds to standbycounter -->
+<Element>
+<Select>
+<Value>
+(L:IPPGenerator,bool) 
+(A:GENERAL ENG STARTER:1, bool) or 
+(A:TURB ENG CORRECTED N1:1, percent) 2 &gt; (L:ICC1Switch, bool) (L:ICC2Switch, bool) or (L:IPPMasterSwitch, bool) or and or 
+(L:IPPModeSelector, enum) 2 == or if{ 
+(L:MFD3_StandbyCounter, number) 1 + 3000 min (>L:MFD3_StandbyCounter, number)
+}
+els{
+0 (>L:MFD3_StandbyCounter, number)
+}
+</Value>
+</Select>
+</Element>
+
+<!-- adds to standbycounter MFD 3-->
+<Element>
+<Select>
+<Value>
+(L:ElectricalPowerAvailable,bool) ! if{ 
+0 (>L:MFD1_StandbyCounter, number)
+}
+els{
+(L:MFD1_StandbyCounter, number) 1 + 3000 min (>L:MFD1_StandbyCounter, number)
+}
+</Value>
+</Select>
+</Element>
+
+<!-- adds to standbycounter MFD 3-->
+<Element>
+<Select>
+<Value>
+(L:MFD1_StandbyCounter, number) 10 &lt; if{ 
+0 (&gt;L:MFD1_Screen, number)
+1 (&gt;L:MFD1_Subportal, number)
+0 (&gt;L:MFD1_Subportal1, number)  
+0 (&gt;L:MFD1_Subportal2, number)  
+0 (&gt;L:MFD2_Screen, number)
+1 (&gt;L:MFD2_Subportal, number)
+0 (&gt;L:MFD2_Subportal1, number)  
+0 (&gt;L:MFD2_Subportal2, number)
+}
+(L:MFD3_StandbyCounter, number) 10 &lt; if{   
+0 (&gt;L:MFD3_Screen, number)
+1 (&gt;L:MFD3_Subportal, number)
+0 (&gt;L:MFD3_Subportal1, number)  
+0 (&gt;L:MFD3_Subportal2, number)  
+0 (&gt;L:MFD4_Screen, number)
+1 (&gt;L:MFD4_Subportal, number)
+0 (&gt;L:MFD4_Subportal1, number)
+0 (&gt;L:MFD4_Subportal2, number)
+}
+</Value>
+</Select>
+</Element>
+
+<!-- Flash control -->
+<Element>
+<Select>
+<Value>
+(L:MFD_Flashthick, number) 1 + (>L:MFD_Flashthick, number)
+(L:MFD_Flashthick, number) 5 &gt; if{ 1 (>L:MFD_Flash, bool) } els{ 0 (>L:MFD_Flash, bool) }
+(L:MFD_Flashthick, number) 10 &gt; if{ 0 (>L:MFD_Flashthick, number) }
+</Value>
+</Select>
+</Element>
+
+<!-- If a screen which is not TSD is selected in TSD mode, revert to a single screen -->
+
+<Element>
+<Select>
+<Value>
+(L:MFD1_Screen, number) 99 &gt;  (L:MFD1_Screen, number) 199 &lt; and (L:MFD2_Screen, number) 99 &lt; and
+if{  
+(L:MFD1_TSD_Buffer1, number) (&gt;L:MFD1_Screen, number)
+(L:MFD1_TSD_Buffer2, number) (&gt;L:MFD2_Screen, number)
+0 (&gt;L:MFD2_Subportal, number)
+0 (&gt;L:MFD1_Subportal, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:MFD2_Screen, number) 99 &gt; (L:MFD2_Screen, number) 199 &lt; and (L:MFD1_Screen, number) 99 &lt; and
+if{  
+(L:MFD1_TSD_Buffer1, number) (&gt;L:MFD1_Screen, number)
+(L:MFD1_TSD_Buffer2, number) (&gt;L:MFD2_Screen, number)
+0 (&gt;L:MFD2_Subportal, number)
+0 (&gt;L:MFD1_Subportal, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 99 &gt;  (L:MFD3_Screen, number) 199 &lt; and (L:MFD4_Screen, number) 99 &lt; and
+if{  
+(L:MFD3_TSD_Buffer1, number) (&gt;L:MFD3_Screen, number)
+(L:MFD3_TSD_Buffer2, number) (&gt;L:MFD4_Screen, number)
+0 (&gt;L:MFD3_Subportal, number)
+0 (&gt;L:MFD4_Subportal, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 99 &gt;  (L:MFD4_Screen, number) 199 &lt; and (L:MFD3_Screen, number) 99 &lt; and
+if{  
+(L:MFD3_TSD_Buffer1, number) (&gt;L:MFD3_Screen, number)
+(L:MFD3_TSD_Buffer2, number) (&gt;L:MFD4_Screen, number)
+0 (&gt;L:MFD3_Subportal, number)
+0 (&gt;L:MFD4_Subportal, number)
+}
+</Value>
+</Select>
+</Element>
+
+<!-- If subportals have collected a code for full screen mode, revert to the code for single screen mode  -->
+
+<Element>
+<Select>
+<Value>
+(L:MFD1_Subportal1, number) 100 &gt; if{ (L:MFD1_Subportal1, number) 100 - (>L:MFD1_Subportal1, number)  }
+(L:MFD1_Subportal2, number) 100 &gt; if{ (L:MFD1_Subportal2, number) 100 - (>L:MFD1_Subportal2, number)  }
+(L:MFD2_Subportal1, number) 100 &gt; if{ (L:MFD2_Subportal1, number) 100 - (>L:MFD2_Subportal1, number)  }
+(L:MFD2_Subportal2, number) 100 &gt; if{ (L:MFD2_Subportal2, number) 100 - (>L:MFD2_Subportal2, number)  }
+(L:MFD3_Subportal1, number) 100 &gt; if{ (L:MFD3_Subportal1, number) 100 - (>L:MFD3_Subportal1, number)  }
+(L:MFD3_Subportal2, number) 100 &gt; if{ (L:MFD3_Subportal2, number) 100 - (>L:MFD3_Subportal2, number)  }
+(L:MFD4_Subportal1, number) 100 &gt; if{ (L:MFD4_Subportal1, number) 100 - (>L:MFD4_Subportal1, number)  }
+(L:MFD4_Subportal2, number) 100 &gt; if{ (L:MFD4_Subportal2, number) 100 - (>L:MFD4_Subportal2, number)  }
+</Value>
+</Select>
+</Element>
+
+<!-- If CNI only full portal, no -->
+<Element>
+<Select>
+<Value>
+(L:MFD1_Screen, number) 103 ==
+if{  
+(A:ELECTRICAL AVIONICS BUS VOLTAGE,volts) 0 &gt; if{ 
+(L:MFD1_TSD_Buffer1, number) (&gt;L:MFD1_Screen, number)
+(L:MFD1_TSD_Buffer2, number) (&gt;L:MFD2_Screen, number)
+0 (&gt;L:MFD2_Subportal, number)
+0 (&gt;L:MFD1_Subportal, number)
+}
+</Value>
+</Select>
+</Element>
+
+<!-- If CNI only full portal, no -->
+<Element>
+<Select>
+<Value>
+(L:MFD1_Screen, number) 105 ==
+if{  
+(A:ELECTRICAL AVIONICS BUS VOLTAGE,volts) 0 &gt; if{ 
+(L:MFD1_TSD_Buffer1, number) (&gt;L:MFD1_Screen, number)
+(L:MFD1_TSD_Buffer2, number) (&gt;L:MFD2_Screen, number)
+0 (&gt;L:MFD2_Subportal, number)
+0 (&gt;L:MFD1_Subportal, number)
+}
+</Value>
+</Select>
+</Element>
+
+<!-- If PHM only full portal, no -->
+<Element>
+<Select>
+<Value>
+(L:MFD1_Screen, number) 114 ==
+if{  
+(A:ELECTRICAL AVIONICS BUS VOLTAGE,volts) 0 &gt; if{ 
+(L:MFD1_TSD_Buffer1, number) (&gt;L:MFD1_Screen, number)
+(L:MFD1_TSD_Buffer2, number) (&gt;L:MFD2_Screen, number)
+0 (&gt;L:MFD2_Subportal, number)
+0 (&gt;L:MFD1_Subportal, number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<!-- If SRCH only full portal, no -->
+<Element>
+<Select>
+<Value>
+(L:MFD1_Screen, number) 116 ==
+if{  
+(A:ELECTRICAL AVIONICS BUS VOLTAGE,volts) 0 &gt; if{ 
+(L:MFD1_TSD_Buffer1, number) (&gt;L:MFD1_Screen, number)
+(L:MFD1_TSD_Buffer2, number) (&gt;L:MFD2_Screen, number)
+0 (&gt;L:MFD2_Subportal, number)
+0 (&gt;L:MFD1_Subportal, number)
+}
+</Value>
+</Select>
+</Element>
+
+<!-- check that full screen mode is not sent to portal -->
+<Element>
+<Select>
+<Value>
+(L:MFD1_Subportal1, number) 99 &gt;  if{ (L:MFD1_Subportal1, number) 100 - (>L:MFD1_Subportal1, number) }
+(L:MFD1_Subportal2, number) 99 &gt;  if{ (L:MFD1_Subportal2, number) 100 - (>L:MFD1_Subportal2, number) }
+
+(L:MFD2_Subportal1, number) 99 &gt;  if{ (L:MFD2_Subportal1, number) 100 - (>L:MFD2_Subportal1, number) }
+(L:MFD2_Subportal2, number) 99 &gt;  if{ (L:MFD2_Subportal2, number) 100 - (>L:MFD2_Subportal2, number) }
+
+(L:MFD3_Subportal1, number) 99 &gt;  if{ (L:MFD3_Subportal1, number) 100 - (>L:MFD3_Subportal1, number) }
+(L:MFD3_Subportal2, number) 99 &gt;  if{ (L:MFD3_Subportal2, number) 100 - (>L:MFD3_Subportal2, number) }
+
+(L:MFD4_Subportal1, number) 99 &gt;  if{ (L:MFD4_Subportal1, number) 100 - (>L:MFD4_Subportal1, number) }
+(L:MFD4_Subportal2, number) 99 &gt;  if{ (L:MFD4_Subportal2, number) 100 - (>L:MFD4_Subportal2, number) }
+</Value>
+</Select>
+</Element>
+
+
+
+<!-- TSD Range switch -->
+
+<Element>
+<Select>
+<Value>
+(L:MFD1_Screen, number) 18 == (L:MFD1_Screen, number) 118 == or if{ (L:TSD1_Range, number) (>L:TSD_MFD1_Range, number) }
+(L:MFD1_Screen, number) 19 == (L:MFD1_Screen, number) 119 == or if{ (L:TSD2_Range, number) (>L:TSD_MFD1_Range, number) }
+(L:MFD1_Screen, number) 20 == (L:MFD1_Screen, number) 120 == or if{ (L:TSD3_Range, number) (>L:TSD_MFD1_Range, number) }
+(L:MFD2_Screen, number) 18 == if{ (L:TSD1_Range, number) (>L:TSD_MFD2_Range, number) }
+(L:MFD2_Screen, number) 19 == if{ (L:TSD2_Range, number) (>L:TSD_MFD2_Range, number) }
+(L:MFD2_Screen, number) 20 == if{ (L:TSD3_Range, number) (>L:TSD_MFD2_Range, number) }
+(L:MFD3_Screen, number) 18 == (L:MFD3_Screen, number) 118 == or if{ (L:TSD1_Range, number) (>L:TSD_MFD3_Range, number) }
+(L:MFD3_Screen, number) 19 == (L:MFD3_Screen, number) 119 == or if{ (L:TSD2_Range, number) (>L:TSD_MFD3_Range, number) }
+(L:MFD3_Screen, number) 20 == (L:MFD3_Screen, number) 120 == or if{ (L:TSD3_Range, number) (>L:TSD_MFD3_Range, number) }
+(L:MFD4_Screen, number) 18 == if{ (L:TSD1_Range, number) (>L:TSD_MFD4_Range, number) }
+(L:MFD4_Screen, number) 19 == if{ (L:TSD2_Range, number) (>L:TSD_MFD4_Range, number) }
+(L:MFD4_Screen, number) 20 == if{ (L:TSD3_Range, number) (>L:TSD_MFD4_Range, number) }
+</Value>
+</Select>
+</Element>
+
+<!-- TSD Buffer MFD Update -->
+
+(L:MFD1_Screen, number) 99 &lt;
+if{
+(L:MFD1_Screen, number) (&gt;L:MFD1_TSD_Buffer1, number) 
+}
+
+(L:MFD2_Screen, number) 99 &lt;
+if{
+(L:MFD2_Screen, number) (&gt;L:MFD1_TSD_Buffer2, number) 
+}
+
+(L:MFD3_Screen, number) 99 &lt;
+if{
+(L:MFD3_Screen, number) (&gt;L:MFD3_TSD_Buffer1, number) 
+}
+
+(L:MFD4_Screen, number) 99 &lt;
+if{
+(L:MFD4_Screen, number) (&gt;L:MFD3_TSD_Buffer2, number) 
+}
+
+<!-- MFD OPTIONS -->
+
+<!-- AIRSPEED, TRUE OR INDICATED -->
+
+<Element>
+<Select>
+<Value>
+(L:MenuAirspeed, number) 0 == if{ (A:Airspeed indicated, knots) (>L:PCDAirspeed, knots) }
+(L:MenuAirspeed, number) 1 == if{ (A:AIRSPEED TRUE, knots) (>L:PCDAirspeed, knots) }
+</Value>
+</Select>
+</Element>
+
+<!-- GPS TOS IN ZULU TIME -->
+<Element>
+<Select>
+<Value>
+(P:Zulu time,seconds) (A:GPS WP ETE, seconds) + (>L:GPSWPETAZulu,seconds)
+</Value>
+</Select>
+</Element>
+
+
+
+
+
+</Gauge>

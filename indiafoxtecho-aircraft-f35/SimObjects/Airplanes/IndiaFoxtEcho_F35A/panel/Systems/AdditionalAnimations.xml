@@ -1,0 +1,48 @@
+<Gauge Name="Replacement Animations for launch bar and tailhook" Version="1.0">
+
+<Comment>
+Additional animations
+- PCD
+- TFLIR Hear
+- Safety pin
+- Pilot visibility
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:PCDAnimationController, enum) 1 + (>L:PCDAnimationController, enum)
+(L:PCDAnimationController, enum) 50 &gt; if{ (L:PCDAnimation, enum) 1 + (>L:PCDAnimation, enum) 0 (>L:PCDAnimationController, enum) }
+(L:PCDAnimation, enum) 3 &gt; if{ 0 (>L:PCDAnimation, enum) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TFLIRHead,number) (L:TFLIRHeadDelta, number) + (>L:TFLIRHead,number)
+(L:TFLIRHead,number) 1 &lt; if{ 1 (>L:TFLIRHeadDelta, number) }
+(L:TFLIRHead,number) 199 &gt; if{ -1 (>L:TFLIRHeadDelta, number) }
+(A:ELECTRICAL MASTER BATTERY, bool) ! (A:GENERAL ENG MASTER ALTERNATOR:1, bool) ! and if{ 0 (>L:TFLIRHead,number) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:SafetyPin2, bool) if{ 0 (>L:EjectionSeatArmPilot, bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:ELECTRICAL MASTER BATTERY, bool) (A:GENERAL ENG MASTER ALTERNATOR:1, bool) or (A:BRAKE PARKING INDICATOR,enum) 0 == or if{ 1 (>L:IsPilotVisible, bool) } els{ 0 (>L:IsPilotVisible, bool) }
+</Value>
+</Select>
+</Element>
+
+</Gauge>

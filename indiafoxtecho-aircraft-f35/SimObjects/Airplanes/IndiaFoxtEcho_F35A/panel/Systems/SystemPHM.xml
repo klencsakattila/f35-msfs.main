@@ -1,0 +1,118 @@
+<Gauge Name="AutoRecovery" Version="2.0">
+<Comment>
+PHM
+</Comment>
+
+<Update Frequency="0"/>
+
+<Comment>
+***************
+VEHICLE SYSTEMS
+***************
+</Comment>
+
+<Comment>
+ENGINE - REPORT NO GO IF NOT WORKING
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+	(A:Turb eng1 N1, percent) 15 &lt; if{ 2 (>L:PHM_ENGINE, enum) } els{ 0 (>L:PHM_ENGINE, enum) }
+    </Value>
+  </Select>
+</Element>
+
+<Comment>
+FUEL SYSTEM - REPORT NO GO IF NO FUEL
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+	(A:FUEL TOTAL QUANTITY WEIGHT, pounds) 50 &lt; if{ 2 (>L:PHM_FUEL, enum) } els{ 0 (>L:PHM_FUEL, enum) }
+    </Value>
+  </Select>
+</Element>
+
+<Comment>
+FCS DEGRADED
+</Comment>
+<Element>
+  <Select>
+    <Value>
+(A:Turb eng1 N2, percent) abs 25 &lt; (A:FLY BY WIRE ELAC SWITCH, bool) ! (A:FLY BY WIRE FAC SWITCH, bool) ! or (A:FLY BY WIRE SEC SWITCH, bool) ! or (A:AIRSPEED INDICATED, knots) 450 &gt; and or if{ 4 (>L:PHM_FCS, enum) } els{ 0 (>L:PHM_FCS, enum) }
+    </Value>
+  </Select>
+</Element>
+
+<Comment>
+GEAR DAMAGED BY SPEED
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+	(A:GEAR DAMAGE BY SPEED, bool) if{ 2 (>L:PHM_GEAR, enum) } els{ 0 (>L:PHM_GEAR, enum) }
+    </Value>
+  </Select>
+</Element>
+
+<Comment>
+HYD - REPORT NO GO IF NOT WORKING
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+	(A:HYDRAULIC PRESSURE:1, psi) 1500 &lt; if{ 2 (>L:PHM_HYD, enum) } els{ 0 (>L:PHM_HYD, enum) }
+    </Value>
+  </Select>
+</Element>
+
+<Comment>
+LIFT SYSTEM AVAILABLE OR NOT
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+	(L:F35Model,number) 1 != if{ 5 (>L:PHM_LIFT, enum) } els{ 0 (>L:PHM_LIFT, enum) }
+    </Value>
+  </Select>
+</Element>
+
+
+<Comment>
+MISSION SYSTEMS
+</Comment>
+
+<Comment>
+ALWAYS UNAVAILABLE
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+5 (>L:PHM_CM, enum)
+5 (>L:PHM_EW, enum)
+5 (>L:PHM_RADAR, enum)
+    </Value>
+  </Select>
+</Element>
+
+<Comment>
+GUN and SMS 
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+(L:F35Model,number) 0 == (L:F35_STA6_GUNPOD, bool) or if{ 4 (>L:PHM_GUN, enum) } els{ 5 (>L:PHM_GUN, enum) }
+(L:isPacifist, bool) if{ 2 (>L:PHM_GUN, enum) 2 (>L:PHM_SMS, enum) } els{ 4 (>L:PHM_SMS, enum) }
+    </Value>
+  </Select>
+</Element>
+
+
+</Gauge>

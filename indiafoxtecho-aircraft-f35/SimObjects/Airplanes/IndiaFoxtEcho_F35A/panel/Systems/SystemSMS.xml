@@ -1,0 +1,628 @@
+<Gauge Name="SMS" Version="1.0">
+
+<Comment>
+Checks station weights and sets SMS variables status
+</Comment>
+
+<Update Frequency="0"/>
+
+
+<Element>
+<Select>
+<Value>
+(L:F35SMSInit,bool) !
+if{
+189 (>L:AIM9XMinWeight, number) 201 (>L:AIM9XMaxWeight, number)
+170 (>L:AIM132MinWeight, number) 188 (>L:AIM132MaxWeight, number)
+329 (>L:AIM120MinWeight, number) 351 (>L:AIM120MaxWeight, number)
+529 (>L:GBU12MinWeight, number) 561 (>L:GBU12MaxWeight, number)
+1060 (>L:JSOWMinWeight, number) 1095 (>L:JSOWMaxWeight, number)
+1140 (>L:GBU39MinWeight, number) 1190 (>L:GBU39MaxWeight, number)
+1999 (>L:GBU31MinWeight, number) 2101 (>L:GBU31MaxWeight, number)
+499 (>L:GunpodMinWeight, number) 601 (>L:GunpodMaxWeight, number)
+
+1 (>L:F35SMSInit,bool)
+}
+</Value>
+</Select>
+</Element>
+
+
+<!-- Visualization of weapons in external model -->
+
+<Element>
+<Select>
+<Value>
+
+133 (&gt;L:TEST, number)
+0 (&gt;L:F35_STA1_PYL, bool) 
+0 (&gt;L:F35_STA1_SW, bool)
+0 (&gt;L:F35_STA1_AS, bool) 
+ 
+0 (&gt;L:F35_STA2_PYL, bool) 
+0 (&gt;L:F35_STA2_GBU31, bool) 
+0 (&gt;L:F35_STA2_GBU12, bool)
+
+0 (&gt;L:F35_STA3_PYL, bool) 
+0 (&gt;L:F35_STA3_GBU31, bool) 
+0 (&gt;L:F35_STA3_GBU12, bool)
+
+0 (&gt;L:F35_STA4_GBU31, bool) 
+0 (&gt;L:F35_STA4_GBU12, bool) 
+0 (&gt;L:F35_STA4_SLAM, bool)
+0 (&gt;L:F35_STA4_JSOW, bool)
+0 (&gt;L:F35_STA4_GBU39, bool)
+
+0 (&gt;L:F35_STA5_SLAM, bool) 
+
+0 (&gt;L:F35_STA6_GUNPOD, bool) 
+
+0 (&gt;L:F35_STA7_SLAM, bool) 
+
+0 (&gt;L:F35_STA8_GBU31, bool) 
+0 (&gt;L:F35_STA8_GBU12, bool) 
+0 (&gt;L:F35_STA8_SLAM, bool)
+0 (&gt;L:F35_STA8_JSOW, bool)
+0 (&gt;L:F35_STA8_GBU39, bool)
+
+0 (&gt;L:F35_STA9_PYL, bool) 
+0 (&gt;L:F35_STA9_GBU31, bool) 
+0 (&gt;L:F35_STA9_GBU12, bool)
+
+0 (&gt;L:F35_STA10_PYL, bool) 
+0 (&gt;L:F35_STA10_GBU31, bool) 
+0 (&gt;L:F35_STA10_GBU12, bool)
+
+0 (&gt;L:F35_STA11_PYL, bool) 
+0 (&gt;L:F35_STA11_SW, bool) 
+0 (&gt;L:F35_STA11_AS, bool) 
+
+
+0 (&gt;L:SW_QTY,number)
+0 (&gt;L:A132_QTY,number) 
+0 (&gt;L:AM_QTY,number)
+0 (&gt;L:GBU31_QTY,number)
+0 (&gt;L:GBU10_QTY,number)
+0 (&gt;L:GBU12_QTY,number)
+0 (&gt;L:JSOW_QTY,number)
+0 (&gt;L:AGM65_QTY,number)
+0 (&gt;L:MK82_QTY,number)
+0 (&gt;L:MK83_QTY,number)
+0 (&gt;L:MK84_QTY,number)
+0 (&gt;L:Int_bomb,number) 
+(A:FUEL TOTAL QUANTITY WEIGHT, pounds)  (&gt;L:Totalfakefuel, pounds)
+
+<!-- MFD Update -->
+
+(L:MFD1_Screen, number) 99 &lt;
+if{
+(L:MFD1_Screen, number) (&gt;L:MFD1_TSD_Buffer1, number) 
+}
+
+(L:MFD2_Screen, number) 99 &lt;
+if{
+(L:MFD2_Screen, number) (&gt;L:MFD1_TSD_Buffer2, number) 
+}
+
+(L:MFD3_Screen, number) 99 &lt;
+if{
+(L:MFD3_Screen, number) (&gt;L:MFD3_TSD_Buffer1, number) 
+}
+
+(L:MFD4_Screen, number) 99 &lt;
+if{
+(L:MFD4_Screen, number) (&gt;L:MFD3_TSD_Buffer2, number) 
+}
+
+<!-- SMS configuration -->
+
+(L:configurationChange, bool) if{
+(L:configurationNumber, number) 1 + (>L:configurationNumber, number)
+}
+
+<!-- SMS configuration 0 Clean-->
+
+(L:configurationChange, bool) (L:configurationNumber, number) 0 == and if{
+0 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:7, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+<!-- SMS configuration 1 Air to Air Internal -->
+
+(L:configurationChange, bool) (L:configurationNumber, number) 1 == and if{
+0 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:7, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+<!-- SMS configuration 2 Air to Air External -->
+
+(L:configurationChange, bool) (L:configurationNumber, number) 2 == and if{
+200 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:7, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+200 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+<!-- SMS configuration 3 Air to Air External - ASRAAM -->
+
+(L:F35Model, number) 1 != (L:configurationChange, bool) and (L:configurationNumber, number) 3 == and if{ 4 (>L:configurationNumber, number) }
+
+(L:configurationChange, bool) (L:configurationNumber, number) 3 == and if{
+180 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:7, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+180 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+
+<!-- SMS configuration 4 Air to Ground GBU-12 - stealth -->
+
+(L:configurationChange, bool) (L:configurationNumber, number) 4 == and if{
+0 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:7, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+
+<!-- SMS configuration 5 Air to Ground GBU-39 - stealth -->
+
+(L:F35Model, number) 0 &gt; (L:configurationChange, bool) and (L:configurationNumber, number) 5 == and if{ 6 (>L:configurationNumber, number) }
+
+(L:configurationChange, bool) (L:configurationNumber, number) 5 == and if{
+0 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+1180 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:7, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+1180 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+<!-- SMS configuration 6 Air to Ground JSOW - stealth C-only -->
+
+(L:F35Model, number) 2 &lt; (L:configurationChange, bool) and (L:configurationNumber, number) 6 == and if{ 7 (>L:configurationNumber, number) }
+
+(L:configurationChange, bool) (L:configurationNumber, number) 6 == and if{
+0 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+1080 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:7, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+1080 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+<!-- SMS configuration 7 Air to Ground JDAM - stealth A and C only -->
+
+(L:F35Model, number) 1 == (L:configurationChange, bool) and (L:configurationNumber, number) 7 == and if{ 8 (>L:configurationNumber, number) }
+
+(L:configurationChange, bool) (L:configurationNumber, number) 7 == and if{
+0 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+2000 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:7, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+2000 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+<!-- SMS configuration 8 Air to Ground GBU - beast mode GBU -->
+
+(L:configurationChange, bool) (L:configurationNumber, number) 8 == and if{
+200 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+(L:F35Model, number) 0 &gt; if{ 550 (>A:PAYLOAD STATION WEIGHT:7, pounds) } els{ 0 (>A:PAYLOAD STATION WEIGHT:7, pounds) }
+350 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+200 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+<!-- SMS configuration 9 Air to Ground GBU - beast mode GBU with ASRAAM -->
+
+(L:F35Model, number) 1 != (L:configurationChange, bool) and (L:configurationNumber, number) 9 == and if{ 10 (>L:configurationNumber, number) }
+
+(L:configurationChange, bool) (L:configurationNumber, number) 9 == and if{
+180 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+(L:F35Model, number) 0 &gt; if{ 550 (>A:PAYLOAD STATION WEIGHT:7, pounds) } els{ 0 (>A:PAYLOAD STATION WEIGHT:7, pounds) }
+350 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+550 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+180 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+<!-- SMS configuration 10 Air to Ground JDAM - beast mode JDAM A and C only-->
+
+(L:F35Model, number) 1 == (L:configurationChange, bool) and (L:configurationNumber, number) 10 == and if{ 11 (>L:configurationNumber, number) }
+
+(L:configurationChange, bool) (L:configurationNumber, number) 10 == and if{
+200 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+2000 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+2000 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+2000 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+350 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+(L:F35Model, number) 0 &gt; if{ 550 (>A:PAYLOAD STATION WEIGHT:7, pounds) } els{ 0 (>A:PAYLOAD STATION WEIGHT:7, pounds) }
+350 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+2000 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+2000 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+2000 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+200 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+}
+
+<!-- SMS configuration reset and cycle-->
+
+(L:configurationNumber, number) 10 &gt; if{ 
+0 (>A:PAYLOAD STATION WEIGHT:2, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:3, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:4, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:5, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:6, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:7, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:8, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:9, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:10, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:11, pounds)
+0 (>A:PAYLOAD STATION WEIGHT:12, pounds)
+0 (>L:configurationChange, bool)
+0 (>L:configurationNumber, bool) }
+
+<!-- Sidewinder -->
+
+(A:PAYLOAD STATION WEIGHT:2, pounds) (L:AIM9XMinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:2, pounds) (L:AIM9XMaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+if{
+1 (&gt;L:F35_STA1_SW, bool) 
+(L:SW_QTY,number) ++ (&gt;L:SW_QTY,number) 
+}
+
+(A:PAYLOAD STATION WEIGHT:12, pounds) (L:AIM9XMinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:12, pounds) (L:AIM9XMaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+if{
+1 (&gt;L:F35_STA11_SW, bool) 
+(L:SW_QTY,number) ++ (&gt;L:SW_QTY,number) 
+}
+
+<!-- ASRAAM -->
+
+(A:PAYLOAD STATION WEIGHT:2, pounds) (L:AIM132MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:2, pounds) (L:AIM132MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+if{
+1 (&gt;L:F35_STA1_AS, bool) 
+(L:A132_QTY,number) ++ (&gt;L:A132_QTY,number) 
+}
+
+(A:PAYLOAD STATION WEIGHT:12, pounds) (L:AIM132MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:12, pounds) (L:AIM132MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+if{
+1 (&gt;L:F35_STA11_AS, bool) 
+(L:A132_QTY,number) ++ (&gt;L:A132_QTY,number) 
+}
+
+<!-- Outer pylons -->
+
+(A:PAYLOAD STATION WEIGHT:3, pounds) (L:GBU31MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:3, pounds) (L:GBU31MaxWeight, number) &lt; and (L:isPacifist, bool) ! and (L:F35Model, number) 1 != and
+if{
+1 (&gt;L:F35_STA2_GBU31, bool) 
+(L:GBU31_QTY,number) ++ (&gt;L:GBU31_QTY,number) 
+}
+
+(A:PAYLOAD STATION WEIGHT:3, pounds) (L:GBU12MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:3, pounds) (L:GBU12MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+if{
+1 (&gt;L:F35_STA2_GBU12, bool) 
+(L:GBU12_QTY,number) ++ (&gt;L:GBU12_QTY,number) 
+}
+
+(A:PAYLOAD STATION WEIGHT:11, pounds) (L:GBU31MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:11, pounds) (L:GBU31MaxWeight, number) &lt; and (L:isPacifist, bool) ! and (L:F35Model, number) 1 != and
+if{
+1 (&gt;L:F35_STA10_GBU31, bool) 
+(L:GBU31_QTY,number) ++ (&gt;L:GBU31_QTY,number) 
+}
+
+(A:PAYLOAD STATION WEIGHT:11, pounds) (L:GBU12MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:11, pounds) (L:GBU12MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+if{
+1 (&gt;L:F35_STA10_GBU12, bool) 
+(L:GBU12_QTY,number) ++ (&gt;L:GBU12_QTY,number) 
+}
+
+
+<!-- Pylons 3-->
+
+(A:PAYLOAD STATION WEIGHT:4, pounds) (L:GBU31MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:4, pounds) (L:GBU31MaxWeight, number) &lt; and (L:isPacifist, bool) ! and 
+if{
+1 (&gt;L:F35_STA3_GBU31, bool) 
+(L:GBU31_QTY,number) ++ (&gt;L:GBU31_QTY,number) 
+}
+
+(A:PAYLOAD STATION WEIGHT:4, pounds) (L:GBU12MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:4, pounds) (L:GBU12MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+if{
+1 (&gt;L:F35_STA3_GBU12, bool) 
+(L:GBU12_QTY,number) ++ (&gt;L:GBU12_QTY,number) 
+}
+
+
+<!-- Pylon 9 -->
+
+(A:PAYLOAD STATION WEIGHT:10, pounds) (L:GBU31MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:10, pounds) (L:GBU31MaxWeight, number) &lt; and (L:isPacifist, bool) ! and 
+if{
+1 (&gt;L:F35_STA9_GBU31, bool) 
+(L:GBU31_QTY,number) ++ (&gt;L:GBU31_QTY,number) 
+}
+
+(A:PAYLOAD STATION WEIGHT:10, pounds) (L:GBU12MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:10, pounds) (L:GBU12MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+if{
+1 (&gt;L:F35_STA9_GBU12, bool) 
+(L:GBU12_QTY,number) ++ (&gt;L:GBU12_QTY,number) 
+}
+
+
+<!-- Inner bays -->
+
+   (A:PAYLOAD STATION WEIGHT:5, pounds) (L:GBU31MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:5, pounds) (L:GBU31MaxWeight, number) &lt; and (L:isPacifist, bool) ! and (L:F35Model, number) 1 != and
+   (L:F35Model, number) 1 != and
+   if{
+   1 (&gt;L:F35_STA4_GBU31, bool) 
+   (L:GBU31_QTY,number) ++ (&gt;L:GBU31_QTY,number) 
+   (L:Int_bomb,number) ++ (&gt;L:Int_bomb,number)
+   }
+
+   (A:PAYLOAD STATION WEIGHT:5, pounds) (L:GBU12MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:5, pounds) (L:GBU12MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+   if{
+   1 (&gt;L:F35_STA4_GBU12, bool) 
+   (L:GBU12_QTY,number) ++ (&gt;L:GBU12_QTY,number) 
+   (L:Int_bomb,number) ++ (&gt;L:Int_bomb,number)
+   }
+
+   (A:PAYLOAD STATION WEIGHT:5, pounds) (L:GBU39MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:5, pounds) (L:GBU39MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+   if{
+   1 (&gt;L:F35_STA4_GBU39, bool) 
+   (L:GBU39_QTY,number) 4 + (&gt;L:GBU39_QTY,number) 
+   (L:Int_bomb,number) 4 + (&gt;L:Int_bomb,number)
+   }
+   
+   
+   (A:PAYLOAD STATION WEIGHT:5, pounds) (L:JSOWMinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:5, pounds) (L:JSOWMaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+   if{
+   1 (&gt;L:F35_STA4_JSOW, bool) 
+   (L:JSOW_QTY,number) ++ (&gt;L:JSOW_QTY,number) 
+   (L:Int_bomb,number) ++ (&gt;L:Int_bomb,number)
+   }  
+
+   (A:PAYLOAD STATION WEIGHT:5, pounds) (L:AIM120MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:5, pounds) (L:AIM120MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+   if{
+   1 (&gt;L:F35_STA4_SLAM, bool) 
+   (L:AM_QTY,number) ++ (&gt;L:AM_QTY,number)  
+   }
+  
+
+   (A:PAYLOAD STATION WEIGHT:6, pounds) (L:AIM120MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:6, pounds) (L:AIM120MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+   if{
+   1 (&gt;L:F35_STA5_SLAM, bool) 
+   (L:AM_QTY,number) ++ (&gt;L:AM_QTY,number) 
+   }
+
+   (A:PAYLOAD STATION WEIGHT:7, pounds) (L:GunpodMinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:7, pounds) (L:GunpodMaxWeight, number) &lt; and (L:isPacifist, bool) ! and (L:F35Model, number) 0 &gt; and
+   if{
+   1 (&gt;L:F35_STA6_GUNPOD, bool) 
+   }
+
+   (A:PAYLOAD STATION WEIGHT:8, pounds) (L:AIM120MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:8, pounds) (L:AIM120MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+   if{
+   1 (&gt;L:F35_STA7_SLAM, bool) 
+   (L:AM_QTY,number) ++ (&gt;L:AM_QTY,number)  
+   }
+
+   (A:PAYLOAD STATION WEIGHT:9, pounds) (L:GBU31MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:9, pounds) (L:GBU31MaxWeight, number) &lt; and (L:isPacifist, bool) ! and (L:F35Model, number) 1 != and
+   (L:F35Model, number) 1 != and
+   if{
+   1 (&gt;L:F35_STA8_GBU31, bool) 
+   (L:GBU31_QTY,number) ++ (&gt;L:GBU31_QTY,number) 
+   (L:Int_bomb,number) ++ (&gt;L:Int_bomb,number)
+   }
+
+   (A:PAYLOAD STATION WEIGHT:9, pounds) (L:GBU12MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:9, pounds) (L:GBU12MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+   if{
+   1 (&gt;L:F35_STA8_GBU12, bool) 
+   (L:GBU12_QTY,number) ++ (&gt;L:GBU12_QTY,number) 
+   (L:Int_bomb,number) ++ (&gt;L:Int_bomb,number)
+   }
+
+   (A:PAYLOAD STATION WEIGHT:9, pounds) (L:GBU39MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:9, pounds) (L:GBU39MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+   if{
+   1 (&gt;L:F35_STA8_GBU39, bool) 
+   (L:GBU39_QTY,number) 4 + (&gt;L:GBU39_QTY,number) 
+   (L:Int_bomb,number) 4 + (&gt;L:Int_bomb,number)
+   }
+   
+   (A:PAYLOAD STATION WEIGHT:9, pounds) (L:JSOWMinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:9, pounds) (L:JSOWMaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+   if{
+   1 (&gt;L:F35_STA8_JSOW, bool) 
+   (L:JSOW_QTY,number) ++ (&gt;L:JSOW_QTY,number) 
+   (L:Int_bomb,number) ++ (&gt;L:Int_bomb,number)
+   } 
+
+   (A:PAYLOAD STATION WEIGHT:9, pounds) (L:AIM120MinWeight, number) &gt; (A:PAYLOAD STATION WEIGHT:9, pounds) (L:AIM120MaxWeight, number) &lt; and (L:isPacifist, bool) ! and
+   if{
+   1 (&gt;L:F35_STA8_SLAM, bool) 
+   (L:AM_QTY,number) ++ (&gt;L:AM_QTY,number)  
+   }
+
+
+    </Value>
+  </Select>
+</Element>
+
+<!-- Manage Weapon Change-->
+
+<Element> <Select> <Value>
+(L:WeaponChange, bool) (L:isPacifist,bool) ! and 
+if{ (L:WeaponSelected, enum) ++ (>L:WeaponSelected, enum) }
+
+(L:WeaponSelected, enum) 1 == (L:F35Model, enum) 0 == (L:F35_STA6_GUNPOD, bool) or ! and if{ (L:WeaponSelected, enum) ++ (>L:WeaponSelected, enum) }
+(L:WeaponSelected, enum) 2 == (L:SW_QTY, enum) 0 == and if{ (L:WeaponSelected, enum) ++ (>L:WeaponSelected, enum) }
+(L:WeaponSelected, enum) 3 == (L:A132_QTY, enum) 0 == and if{ (L:WeaponSelected, enum) ++ (>L:WeaponSelected, enum) }
+(L:WeaponSelected, enum) 4 == (L:AM_QTY, enum) 0 == and if{ (L:WeaponSelected, enum) ++ (>L:WeaponSelected, enum) }
+(L:WeaponSelected, enum) 5 == (L:GBU12_QTY, enum) 0 == and if{ (L:WeaponSelected, enum) ++ (>L:WeaponSelected, enum) }
+(L:WeaponSelected, enum) 6 == (L:GBU31_QTY, enum) 0 == and if{ (L:WeaponSelected, enum) ++ (>L:WeaponSelected, enum) }
+(L:WeaponSelected, enum) 7 == (L:GBU39_QTY, enum) 0 == and if{ (L:WeaponSelected, enum) ++ (>L:WeaponSelected, enum) }
+(L:WeaponSelected, enum) 8 == if{ 0 (>L:WeaponSelected, enum) }  
+
+0 (>L:WeaponChange, bool) 
+(L:isPacifist,bool) if{ 
+0 (>L:WeaponSelected, enum)
+}
+</Value> </Select> </Element>
+
+
+<!-- Sidewinder Sensor Status -->
+
+<Element> <Select> <Value>
+(L:WeaponSelected, enum) 2 != (L:WeaponSelected, enum) 3 != and (L:SidewinderSensorStatus,enum) 0 != and if{ 0 (>L:SidewinderSensorStatus,enum) }
+(L:WeaponSelected, enum) 2 == (L:WeaponSelected, enum) 3 == or (L:SidewinderSensorStatus,enum) 1 &lt; and if{ 1 (>L:SidewinderSensorStatus,enum) }
+</Value> </Select> </Element>
+
+<Comment>
+REFUEL CODE
+</Comment>
+
+<!-- Different refuel rates if probe and drogue (B and C) or boom and receptacle (A) -->
+
+<Element> <Select> <Value>
+(L:F35Model, number) 0 &gt; if{ 0.075 (>L:InFlightRefuelRate, number) }
+els{ 0.135 (>L:InFlightRefuelRate, number) }
+</Value> </Select> </Element>
+
+<!-- Initiate Refuel -->
+<Element> <Select> <Value>
+(L:InFlightRefuelTimer, number) 350 &lt;
+(L:IFR_doors_status, number) 95 &gt; and
+(A:Indicated altitude,feet) 1000 &gt; and
+(A:Airspeed indicated,knots) 100 &gt; and
+(A:Airspeed indicated,knots) 400 &lt; and
+(A:Airspeed mach, mach) 0.8 &lt; and
+if{
+(A:Indicated altitude,feet) (>L:RefuelReferenceAltitude, feet)
+(A:Airspeed indicated,knots) (>L:RefuelReferenceAirspeed, knots)
+}
+</Value> </Select> </Element>
+
+
+<Element> <Select> <Value>
+(L:InFlightRefuelTimer, number) 1 + 510 min (>L:InFlightRefuelTimer, number)
+(L:InFlightRefuelTimer, number) 500 &gt; if{ 1 (>L:InFlightRefuel, bool) }
+</Value> </Select> </Element>
+
+
+<!-- Refuel -->
+
+<Element> <Select> <Value>
+(L:InFlightRefuel, bool) (A:FUEL TANK LEFT AUX LEVEL, percent) 98 &lt; and if{ (A:FUEL TANK LEFT AUX QUANTITY, gallons) (L:InFlightRefuelRate, number) + (>A:FUEL TANK LEFT AUX QUANTITY, gallons) }
+(L:InFlightRefuel, bool) (A:FUEL TANK RIGHT AUX LEVEL, percent) 98 &lt; and if{ (A:FUEL TANK RIGHT AUX QUANTITY, gallons) (L:InFlightRefuelRate, number) + (>A:FUEL TANK RIGHT AUX QUANTITY, gallons) }
+(L:InFlightRefuel, bool) (A:FUEL TANK LEFT MAIN LEVEL, percent) 98 &lt; and if{ (A:FUEL TANK LEFT MAIN QUANTITY, gallons) (L:InFlightRefuelRate, number) + (>A:FUEL TANK LEFT MAIN QUANTITY, gallons) }
+(L:InFlightRefuel, bool) (A:FUEL TANK RIGHT MAIN LEVEL, percent) 98 &lt; and if{ (A:FUEL TANK RIGHT MAIN QUANTITY, gallons) (L:InFlightRefuelRate, number) + (>A:FUEL TANK RIGHT MAIN QUANTITY, gallons) }
+(L:InFlightRefuel, bool) (A:FUEL TANK LEFT TIP LEVEL, percent) 98 &lt; and if{ (A:FUEL TANK LEFT TIP QUANTITY, gallons) (L:InFlightRefuelRate, number) + (>A:FUEL TANK LEFT TIP QUANTITY, gallons) }
+(L:InFlightRefuel, bool) (A:FUEL TANK RIGHT TIP LEVEL, percent) 98 &lt; and if{ (A:FUEL TANK RIGHT TIP QUANTITY, gallons) (L:InFlightRefuelRate, number) + (>A:FUEL TANK RIGHT TIP QUANTITY, gallons) }
+(L:InFlightRefuel, bool) (A:FUEL TANK CENTER LEVEL, percent) 98 &lt; and if{ (A:FUEL TANK CENTER QUANTITY, gallons) (L:InFlightRefuelRate, number) + (>A:FUEL TANK CENTER QUANTITY, gallons) }
+(L:InFlightRefuel, bool) (A:FUEL TANK CENTER2 LEVEL, percent) 98 &lt; and if{ (A:FUEL TANK CENTER2 QUANTITY, gallons) (L:InFlightRefuelRate, number) + (>A:FUEL TANK CENTER2 QUANTITY, gallons) }
+</Value> </Select> </Element>
+
+<!-- Disconnect refuel on pilot error, or in case fuel tanks are full or in case on the ground -->
+
+<Element> <Select> <Value>
+(A:Indicated altitude,feet) (L:RefuelReferenceAltitude, feet) - abs 75 &gt;
+(A:Airspeed indicated,knots) (L:RefuelReferenceAirspeed, knots) - abs 15 &gt; or
+(A:SIM ON GROUND,bool) or
+(L:IFR_doors_status, number) 99 &lt; or
+(A:Indicated altitude,feet) 1000 &lt; or
+(A:Airspeed indicated,knots) 150 &lt; (A:Airspeed indicated,knots) 400 &gt; and or
+(A:Airspeed mach, mach) 0.8 &gt; or
+if{ 0 (>L:InFlightRefuel, bool)  0 (>L:InFlightRefuelTimer, number) }
+</Value> </Select> </Element>
+
+
+<Element> <Select> <Value>
+(L:InFlightRefuel, bool) 
+(A:FUEL TANK LEFT AUX LEVEL, percent) 98 &gt; and
+(A:FUEL TANK RIGHT AUX LEVEL, percent) 98 &gt; and
+(A:FUEL TANK LEFT MAIN LEVEL, percent) 98 &gt; and 
+(A:FUEL TANK RIGHT MAIN LEVEL, percent) 98 &gt; and
+(A:FUEL TANK LEFT TIP LEVEL, percent) 98 &gt; and
+(A:FUEL TANK RIGHT TIP LEVEL, percent) 98 &gt; and 
+(A:FUEL TANK CENTER LEVEL, percent) 98 &gt; and
+(A:FUEL TANK CENTER2 LEVEL, percent) 98 &gt; and
+if{ 0 (>L:InFlightRefuel, bool) 0 (>L:InFlightRefuelTimer, number) }
+</Value> </Select> </Element>
+
+
+
+</Gauge>
+
+
+

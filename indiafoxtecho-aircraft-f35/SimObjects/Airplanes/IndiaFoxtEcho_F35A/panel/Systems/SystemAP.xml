@@ -1,0 +1,428 @@
+<Gauge Name="AP" Version="1.0">
+<Update Frequency="18"/> 
+
+<Comment>
+Make sure the altitude slot is 2
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:AUTOPILOT ALTITUDE SLOT INDEX, number) 2 != 0 and if{ 2 (>K:ALTITUDE_SLOT_INDEX_SET) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Reset the input digits if AP digit counter is zero
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 0 == if{
+0 (>L:AP_digit_1,number)
+0 (>L:AP_digit_2,number)
+0 (>L:AP_digit_3,number)
+0 (>L:AP_digit_4,number)
+0 (>L:AP_digit_5,number)
+0 (>L:AP_digit_6,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Manage digits input
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:AP_NewDigit, number) -1 == if{
+(L:AP_digit_counter,number) 1 == if{ 0 (>L:AP_digit_1,number) }
+(L:AP_digit_counter,number) 2 == if{ 0 (>L:AP_digit_2,number) }
+(L:AP_digit_counter,number) 3 == if{ 0 (>L:AP_digit_3,number) }
+(L:AP_digit_counter,number) 4 == if{ 0 (>L:AP_digit_4,number) }
+(L:AP_digit_counter,number) 5 == if{ 0 (>L:AP_digit_5,number) }
+(L:AP_digit_counter,number) 6 == if{ 0 (>L:AP_digit_6,number) }
+(L:AP_digit_counter,number) 1 - (>L:AP_digit_counter,number)
+(L:AP_digit_counter,number) 0 &lt; if{ 0 (>L:AP_mode,number) 0 (>L:AP_digit_counter,number) }
+0 (>L:AP_NewDigit, number)
+}
+(L:AP_NewDigit, number) 1 == if{
+(L:AP_digit_counter,number) 1 + (>L:AP_digit_counter,number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 1 == (L:AP_NewDigit, number) 1 == and if{
+(L:AP_Digit, number) (>L:AP_digit_1,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 2 == (L:AP_NewDigit, number) 1 == and if{
+(L:AP_Digit, number) (>L:AP_digit_2,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 3 == (L:AP_NewDigit, number) 1 == and if{
+(L:AP_Digit, number) (>L:AP_digit_3,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 4 == (L:AP_NewDigit, number) 1 == and if{
+(L:AP_Digit, number) (>L:AP_digit_4,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 5 == (L:AP_NewDigit, number) 1 == and if{
+(L:AP_Digit, number) (>L:AP_digit_5,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 6 == (L:AP_NewDigit, number) 1 == and if{
+(L:AP_Digit, number) (>L:AP_digit_6,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 3 == if{
+(L:AP_mode,number) 1 == if{
+(L:AP_digit_1,number) 10000 * (L:AP_digit_2,number) 1000 * + (L:AP_digit_3,number) 100 * + (>L:APAltitudeSetFeet,number)
+0 (>L:AP_mode,number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 3 == if{
+(L:AP_mode,number) 2 == if{
+(L:AP_digit_1,number) 100 * (L:AP_digit_2,number) 10 * + (L:AP_digit_3,number) + dnor (>K:HEADING_BUG_SET)
+0 (>L:AP_mode,number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 3 == if{
+(L:AP_mode,number) 3 == if{
+(L:AP_digit_1,number) 100 * (L:AP_digit_2,number) 10 * + (L:AP_digit_3,number) + dnor (>K:VOR1_SET)
+0 (>L:AP_mode,number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 3 == (L:AP_mode,number) 4 == and if{
+(L:ATMach,bool) ! if{
+(L:AP_digit_1,number) 100 * (L:AP_digit_2,number) 10 * + (L:AP_digit_3,number) + (>L:APSpeedSetKnots,number)
+0 (>L:AP_mode,number)
+}
+els{
+(L:AP_digit_1,number) 100 * (L:AP_digit_2,number) 10 * + (L:AP_digit_3,number) + (>L:APSpeedSetMach,number)
+0 (>L:AP_mode,number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+
+
+<Element>
+<Select>
+<Value>
+(L:AP_digit_counter,number) 2 == if{
+(L:AP_mode,number) 5 == if{
+(A:Autopilot altitude lock var, feet) (A:Plane Altitude, feet) &gt; if{
+(L:AP_digit_1,number) 1000 * (L:AP_digit_2,number) 100 * + (>K:AP_VS_VAR_SET_ENGLISH)
+0 (>L:AP_mode,number)
+}
+els{
+(L:AP_digit_1,number) -1000 * (L:AP_digit_2,number) -100 * + (>K:AP_VS_VAR_SET_ENGLISH)
+0 (>L:AP_mode,number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AP_NewDigit, number) 0 != if{
+0 (>L:AP_NewDigit, number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+Make sure altitude hold value is set to all the slots
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:Autopilot altitude lock var, feet) (A:AUTOPILOT ALTITUDE LOCK VAR:1, feet) != if{ (A:Autopilot altitude lock var, feet) (>A:AUTOPILOT ALTITUDE LOCK VAR:1, feet)  }
+(A:Autopilot altitude lock var, feet) (A:AUTOPILOT ALTITUDE LOCK VAR:2, feet) != if{ (A:Autopilot altitude lock var, feet) (>A:AUTOPILOT ALTITUDE LOCK VAR:2, feet)  }
+(A:Autopilot altitude lock var, feet) (A:AUTOPILOT ALTITUDE LOCK VAR:3, feet) != if{ (A:Autopilot altitude lock var, feet) (>A:AUTOPILOT ALTITUDE LOCK VAR:3, feet)  }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Autopilot engagement limits
+</Comment>
+
+<Element>
+<Select>
+<Value>
+1 (>L:AutopilotCanBeEngaged, bool)
+(A:INCIDENCE ALPHA,degrees) -5 &lt; if{ 0 (>L:AutopilotCanBeEngaged, bool) }
+(A:INCIDENCE ALPHA,degrees) 15 &gt; if{ 0 (>L:AutopilotCanBeEngaged, bool) }
+(A:GEAR LEFT POSITION,percent) 98 &gt; (A:PLANE PITCH DEGREES,degrees) abs 25 &gt; and if{ 0 (>L:AutopilotCanBeEngaged, bool) }
+(A:GEAR LEFT POSITION,percent) 98 &lt; (A:PLANE PITCH DEGREES,degrees) abs 45 &gt; and if{ 0 (>L:AutopilotCanBeEngaged, bool) }
+(L:AIRSPEED_Equivalent,number) 100 &lt; if{ 0 (>L:AutopilotCanBeEngaged, bool) }
+(L:AIRSPEED_Equivalent,number) 170 &lt; (A:PLANE BANK DEGREES,degrees) abs 33 &gt; and if{ 0 (>L:AutopilotCanBeEngaged, bool) }
+(A:GEAR LEFT POSITION,percent) 98 &gt; (A:PLANE BANK DEGREES,degrees) abs 45 &gt; and if{ 0 (>L:AutopilotCanBeEngaged, bool) }
+(A:GEAR LEFT POSITION,percent) 98 &lt; (A:PLANE BANK DEGREES,degrees) abs 60 &gt; and if{ 0 (>L:AutopilotCanBeEngaged, bool) }
+(A:GEAR LEFT POSITION,percent) 98 &lt; (L:AIRSPEED_Equivalent,number) 170 &lt; and (A:PLANE BANK DEGREES,degrees) abs 35 &gt; and if{ 0 (>L:AutopilotCanBeEngaged, bool) }
+(A:GEAR LEFT POSITION,percent) 98 &lt; (L:AIRSPEED_Equivalent,number) 240 &lt; and (A:PLANE BANK DEGREES,degrees) abs 45 &gt; and if{ 0 (>L:AutopilotCanBeEngaged, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+Autopilot disengagement limits
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:AutopilotCanBeEngaged, bool) ! (A:Autopilot master, bool) and if{ 1 (>K:AP_MASTER, bool) }
+(A:AIRSPEED MACH, mach) 1.44 &gt; if{ 1 (>K:AP_AIRSPEED_OFF,bool) 1 (>K:AP_MACH_OFF) }
+(L:AIRSPEED_Equivalent,number) 700 &gt; if{ (>K:AP_AIRSPEED_OFF,bool) 1 (>K:AP_MACH_OFF) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+Stick Control Functionality - if not DISABLED
+</Comment>
+
+<Element>
+<Select>
+<Value>
+0 (>L:AutopilotWarningSC, enum) 
+(A:Autopilot master, bool) (A:YOKE X POSITION, percent) abs 4 &gt; (A:YOKE Y POSITION, percent) abs 15 &gt; or and (A:Autopilot nav1 lock, bool) ! and (A:AUTOPILOT APPROACH HOLD, bool) ! and (L:StickControlDisabled, bool) ! and
+if{
+	(A:YOKE X POSITION, percent) abs 70 &lt; (A:YOKE Y POSITION, percent) abs 70 &lt; and if{
+		1 (>L:AutopilotWarningSC, enum)
+			(L:AutopilotCanBeEngaged, bool) if{
+				(A:AUTOPILOT VERTICAL HOLD,bool) ! if{ (A:INDICATED ALTITUDE,feet) (>K:AP_ALT_VAR_SET_ENGLISH) }
+				(A:PLANE HEADING DEGREES MAGNETIC,degrees) (>K:HEADING_BUG_SET)
+				(A:AUTOPILOT VERTICAL HOLD,bool) if{ (A:VERTICAL SPEED,feet per minute) (>K:AP_VS_VAR_SET_ENGLISH) (>K:AP_VS_ON) }
+				(A:YOKE X POSITION, percent) abs 40 &gt; (A:YOKE Y POSITION, percent) abs 40 &gt; or if{ 2 (>L:AutopilotWarningSC, enum) }
+			}
+			(L:AutopilotCanBeEngaged, bool) ! if{ 
+				3 (>L:AutopilotWarningSC, enum) }
+			}			
+	}
+	els{	
+	}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+RESET FCS to revive the autopilot
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:FLY BY WIRE ELAC SWITCH, bool) (A:FLY BY WIRE FAC SWITCH, bool) or (A:FLY BY WIRE SEC SWITCH, bool) or (L:APMasterPrev,bool) (A:Autopilot master, bool) != and (A:Autopilot master, bool) and (L:AlternateAutopilot,bool) and
+if{ 					
+(>K:FLAPS_1)
+(A:FLY BY WIRE ELAC SWITCH, bool) if{ (>K:FLY_BY_WIRE_ELAC_TOGGLE) }
+(A:FLY BY WIRE FAC SWITCH, bool) if{ (>K:FLY_BY_WIRE_FAC_TOGGLE) } 
+(A:FLY BY WIRE SEC SWITCH, bool) if{ (>K:FLY_BY_WIRE_SEC_TOGGLE) }
+}
+
+(A:FLY BY WIRE ELAC SWITCH, bool) ! (A:FLY BY WIRE FAC SWITCH, bool) ! or (A:FLY BY WIRE SEC SWITCH, bool) ! or (L:APMasterPrev,bool) (A:Autopilot master, bool) != and (A:Autopilot master, bool) ! and (L:AlternateAutopilot,bool) and
+if{ 					
+(>K:FLAPS_UP)
+(A:FLY BY WIRE ELAC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_ELAC_TOGGLE) }
+(A:FLY BY WIRE FAC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_FAC_TOGGLE) } 
+(A:FLY BY WIRE SEC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_SEC_TOGGLE) }
+}
+
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Voice Messages
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:Autopilot master, bool) ! (L:APMasterPrev, bool) and if{ 1 (>L:Advisory_Autopilot, bool) } els{ 0 (>L:Advisory_Autopilot, bool) }
+(A:AUTOPILOT THROTTLE ARM, bool) ! (L:ATMasterPrev, bool) and (A:SIM ON GROUND, bool) ! and if{ 1 (>L:Advisory_Throttle, bool) } els{ 0 (>L:Advisory_Throttle, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Allow HOTAS changes
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:MFD2_Screen, number) 224 != (L:MFD4_Screen, number) 224 != and if{
+(A:Autopilot airspeed hold var, knots) (L:ATPrevAispeed, bool) != if{ (A:Autopilot airspeed hold var, knots) (>L:APSpeedSetKnots,number) }
+(A:AUTOPILOT MACH HOLD VAR,number) (L:ATPrevMach, bool) != if{ (A:AUTOPILOT MACH HOLD VAR,number) (>L:APSpeedSetMach,number) }
+(A:Autopilot altitude lock var, feet) (L:ATPrevAltitude, bool) != if{ (A:Autopilot altitude lock var, feet) (>L:APAltitudeSetFeet,number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Autothrottle alternate logic
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ATMasterPrev, bool) (A:AUTOPILOT THROTTLE ARM, bool) != (A:AUTOPILOT THROTTLE ARM, bool) and 0 and
+if{
+(A:AUTOPILOT THROTTLE ARM, bool) ! if{ (>K:AUTO_THROTTLE_ARM) }	
+(L:AP_SpeedMode,enum) 0 == if{
+(L:APSpeedSetKnots,number) 10 &lt; if{ (A:AIRSPEED INDICATED, knots) (>L:APSpeedSetKnots,number) (A:AIRSPEED INDICATED, knots) (>K:AP_SPD_VAR_SET) }
+(L:APSpeedSetMach,number) 10 &lt; if{ (A:AIRSPEED MACH, mach) 100 * (>K:AP_MACH_VAR_SET) (A:AIRSPEED MACH, mach) 100 * (>L:APSpeedSetMach,number) }
+}
+(L:AP_SpeedMode,enum) 1 == if{
+(L:PCDAirspeed, knots) (>K:AP_SPD_VAR_SET) 
+}
+(L:ATMach,bool) (A:Autopilot airspeed hold, bool) ! and if{ 1 (>K:AP_MACH_HOLD) } els{ 1 (>K:AP_PANEL_SPEED_HOLD) }  
+}	
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Autopilot limits
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:Autopilot airspeed hold var, knots) 630 &gt; if{ 630 (>K:AP_SPD_VAR_SET) }
+(A:AUTOPILOT MACH HOLD VAR,number) 144 &gt; if{ 144 (>K:AP_MACH_VAR_SET) }
+(A:Autopilot altitude lock var, feet) 60000 &gt; if{ 60000 (>K:AP_ALT_VAR_SET_ENGLISH) }
+(L:APSpeedSetKnots,number) 630 &gt; if{ 630 (>L:APSpeedSetKnots,number) }
+(L:APSpeedSetMach,number) 144 &gt; if{ 144 (>L:APSpeedSetMach,number) }
+(L:APAltitudeSetFeet,number) 60000 &gt; if{ 60000 (>L:APAltitudeSetFeet,number) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Store autopilot state
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:Autopilot airspeed hold, bool) (>L:APAirspeedHoldPrev, bool)
+(A:Autopilot altitude lock, bool) (>L:APAltitudeHoldPrev, bool)
+(A:AUTOPILOT HEADING LOCK, bool) (>L:APHeadingHoldPrev, bool)
+(A:Autopilot nav1 lock, bool) (>L:APNavHoldPrev, bool)
+(A:AUTOPILOT APPROACH HOLD, bool) (>L:APAppHoldPrev, bool)
+(A:GPS DRIVES NAV1, bool) (>L:APGPSDrivesNav1Prev, bool)
+(A:Autopilot master, bool) (>L:APMasterPrev, bool)
+(A:AUTOPILOT THROTTLE ARM, bool) (>L:ATMasterPrev, bool)
+(A:Autopilot airspeed hold var, knots) (>L:ATPrevAispeed, knots)
+(A:AUTOPILOT MACH HOLD VAR,number) (>L:ATPrevMach, number)
+(A:Autopilot altitude lock var, feet) (>L:ATPrevAltitude, feet)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Push autopilot settings
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:AP_AltMode,bool) ! if{
+(A:Autopilot altitude lock var, feet) (L:APAltitudeSetFeet,number) != if{ (L:APAltitudeSetFeet,number) (>K:AP_ALT_VAR_SET_ENGLISH) }
+}
+
+(L:AP_SpeedMode,bool) ! if{
+(A:Autopilot airspeed hold var, knots) (L:APSpeedSetKnots,number) != (L:ATMach,bool) ! and if{ (L:APSpeedSetKnots,number) (>K:AP_SPD_VAR_SET) }
+(A:AUTOPILOT MACH HOLD VAR,number) (L:APSpeedSetMach,number) != (L:ATMach,bool) and if{ (L:APSpeedSetMach,number) (>K:AP_MACH_VAR_SET) }
+}
+</Value>
+</Select>
+</Element>
+
+
+</Gauge>

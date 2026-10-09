@@ -1,0 +1,210 @@
+@font-face {
+  font-family: "F-35 HMD";
+  src: url("/Fonts/F-35_HMD-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Rubik Light";
+  src: url("/Fonts/Rubik-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Arial";
+  src: url("/Fonts/arialnb.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+#Electricity .hud-display {
+  position: fixed;
+  font-weight: bold;
+  font-family: "F-35 HMD";
+  width: 100%;
+  height: 100%;
+  font-weight: 300;
+  font-family: "F-35 HMD";
+  font-size: 45px;
+  color: #67FF37;  
+}
+#Electricity .hud-display[main_hud=True] {
+  margin-top: 41%;
+  margin-left: 5%;
+  width: 90%;
+  height: 90%;
+}
+#Electricity .hud-display .full-screen-hud-element {
+  position: absolute;
+  overflow: visible;
+}
+#Electricity .hud-display #hud-airspeed, #Electricity .hud-display #hud-altitude {
+  position: absolute;
+  top: 32%;
+  width: 13.3%;
+  height: 4.5%;
+  padding-right: 4px;
+  font-size: 45px;
+  text-align: right;
+  line-height: 0.97;
+  border: 4px solid #00FF00;
+}
+#Electricity .hud-display #hud-airspeed {
+  left: 18%;
+  vertical-align: middle;
+}
+#Electricity .hud-display #hud-altitude {
+  right: 18%;
+  width: 13.3%;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+#Electricity .hud-display #hud-vertical-speed {
+  position: absolute;
+  top: 28%;
+  right: 7%;
+  font-size: 33px;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+}
+#Electricity .hud-display #hud-altitude-large {
+  position: absolute;
+  right: 53.5%;
+  font-size: 45px;
+}
+#Electricity .hud-display #hud-altitude-small {
+  font-size: 33px;
+  line-height: 50px;
+  padding-right: 1px;
+}
+#Electricity .hud-display #hud-altitude-mode {
+  position: absolute;
+  top: 32%;
+  right: 13.5%;
+  font-size: 38px;
+}
+#Electricity .hud-display #hud-altitude-mode[state=blink] {
+  animation: blinking 1s infinite;
+}
+#Electricity .hud-display #hud-altitude-warning {
+  position: absolute;
+  top: 47%;
+  left: 0%;
+  width: 100%;
+  font-size: 3vh;
+  text-align: center;
+  animation: blinking 1s infinite;
+}
+#Electricity .hud-display #hud-flyup-warning {
+  position: absolute;
+  top: 18.5%;
+  left: 0%;
+  width: 100%;
+  font-size: 3vh;
+  text-align: center;
+  animation: blinking 1s infinite;
+}
+#Electricity .hud-display #hud-left-panel {
+  position: absolute;
+  top: 47%;
+  left: 9%;
+  font-size: 33px;
+  text-align: right;
+  width: 20%;
+}
+#Electricity .hud-display #hud-left-panel-col-1 {
+  display: inline-block;
+  vertical-align: top;
+  width: 45%;
+}
+#Electricity .hud-display #hud-alpha-label {
+  font-family: "F-35 HMD";
+}
+#Electricity .hud-display #hud-left-panel-col-2 {
+  display: inline-block;
+  vertical-align: top;
+  width: 45%;
+}
+#Electricity .hud-display #hud-right-panel {
+  position: absolute;
+  top: 52%;
+  right: 18%;
+  text-align: right;
+  font-size: 33px;
+}
+#Electricity .hud-display #hud-right-panel #hud-cpl-mode[state=blink] {
+  animation: blinking 1s infinite;
+}
+#Electricity .hud-display #bank-cursor[state=blink] {
+  animation: blinking 1s infinite;
+}
+#Electricity .hud-display #velocity-vector-group[state=blink] {
+  animation: blinking 0.5s infinite;
+}
+#Electricity .hud-display #hud-radio-altitude {
+  width: 0%;
+  font-size: 33px;
+  white-space: nowrap;
+}
+
+#Electricity .hud-display #hud-refuel {
+  position: absolute;
+  top: 0%;
+  right: 2%;
+  text-align: right;
+  font-size: 33px;
+}
+
+#Electricity .hud-display #hud-fuelq {
+  position: absolute;
+  top: 6%;
+  right: 2%;
+  text-align: right;
+  font-size: 33px;
+}
+
+#Electricity .hud-display #hud-dump {
+  position: absolute;
+  top: 3%;
+  right: 2%;
+  text-align: right;
+  font-size: 20px;
+}
+
+#Electricity .hud-display #hud-newclock {
+  position: absolute;
+  top: 71%;
+  right: 10%;
+  text-align: left;
+  font-size: 28px;
+}
+
+#Electricity .hud-display #hud-stopwatch {
+  position: absolute;
+  top: 68%;
+  right: 10%;
+  text-align: left;
+  font-size: 28px;
+}
+
+#Electricity .hud-display #hud-steering-data {
+  position: absolute;
+  top: 60%;
+  right: 0%;
+  text-align: right;
+  font-size: 28px;
+}
+
+#Electricity .hud-display #hud-time-to-steer {
+  position: absolute;
+  top: 63%;
+  right: 0%;
+  text-align: right;
+  font-size: 28px;
+}
+
+
+/*# sourceMappingURL=FA18_HMD.css.map */

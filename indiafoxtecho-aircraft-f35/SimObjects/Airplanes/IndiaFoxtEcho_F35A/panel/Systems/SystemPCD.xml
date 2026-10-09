@@ -1,0 +1,713 @@
+<Gauge Name="AutoRecovery" Version="2.0">
+<Comment>
+
+Primary Control Display
+
+</Comment>
+
+<Update Frequency="0"/>
+
+
+<Element>
+ <Select>
+  <Value>
+	(L:PCDPreset, enum) (L:PCDPresetPrev, enum) != if{
+	
+(L:PCDPreset, enum) 0 == if{
+6 (&gt;L:MFD1_Screen, number)
+0 (&gt;L:MFD1_Subportal, number)
+18 (&gt;L:MFD1_Subportal1, number) 
+4 (&gt;L:MFD1_Subportal2, number) 
+8 (&gt;L:MFD2_Screen, number)
+1 (&gt;L:MFD2_Subportal, number)
+12 (&gt;L:MFD2_Subportal1, number) 
+15 (&gt;L:MFD2_Subportal2, number) 
+7 (&gt;L:MFD3_Screen, number)
+1 (&gt;L:MFD3_Subportal, number)
+13 (&gt;L:MFD3_Subportal1, number) 
+17 (&gt;L:MFD3_Subportal2, number) 
+11 (&gt;L:MFD4_Screen, number)
+0 (&gt;L:MFD4_Subportal, number)
+8 (&gt;L:MFD4_Subportal1, number)
+6 (&gt;L:MFD4_Subportal2, number)	
+}
+	
+(L:PCDPreset, enum) 1 == if{
+6 (&gt;L:MFD1_Screen, number)
+0 (&gt;L:MFD1_Subportal, number)
+18 (&gt;L:MFD1_Subportal1, number) 
+4 (&gt;L:MFD1_Subportal2, number) 
+8 (&gt;L:MFD2_Screen, number)
+1 (&gt;L:MFD2_Subportal, number)
+12 (&gt;L:MFD2_Subportal1, number) 
+15 (&gt;L:MFD2_Subportal2, number) 
+7 (&gt;L:MFD3_Screen, number)
+1 (&gt;L:MFD3_Subportal, number)
+13 (&gt;L:MFD3_Subportal1, number) 
+17 (&gt;L:MFD3_Subportal2, number) 
+11 (&gt;L:MFD4_Screen, number)
+0 (&gt;L:MFD4_Subportal, number)
+8 (&gt;L:MFD4_Subportal1, number)
+6 (&gt;L:MFD4_Subportal2, number)	
+}
+
+(L:PCDPreset, enum) 2 == if{
+6 (&gt;L:MFD1_Screen, number)
+0 (&gt;L:MFD1_Subportal, number)
+18 (&gt;L:MFD1_Subportal1, number) 
+4 (&gt;L:MFD1_Subportal2, number) 
+8 (&gt;L:MFD2_Screen, number)
+1 (&gt;L:MFD2_Subportal, number)
+12 (&gt;L:MFD2_Subportal1, number) 
+15 (&gt;L:MFD2_Subportal2, number) 
+7 (&gt;L:MFD3_Screen, number)
+1 (&gt;L:MFD3_Subportal, number)
+13 (&gt;L:MFD3_Subportal1, number) 
+17 (&gt;L:MFD3_Subportal2, number) 
+11 (&gt;L:MFD4_Screen, number)
+0 (&gt;L:MFD4_Subportal, number)
+8 (&gt;L:MFD4_Subportal1, number)
+6 (&gt;L:MFD4_Subportal2, number)	
+}	
+	
+	
+	}
+  </Value>
+ </Select>
+</Element>
+
+<Element>
+ <Select>
+  <Value>
+	(L:PCDPreset, enum) (>L:PCDPresetPrev, enum)
+  </Value>
+ </Select>
+</Element>
+
+<Element>
+ <Select>
+  <Value>
+(L:PCDPreset, enum) 2 &gt; if{ 0 (>L:PCDPreset, enum) }
+  </Value>
+ </Select>
+</Element>
+
+<Comment>Touchscreen markers FAB</Comment>
+
+<Element>
+ <Select>
+  <Value>
+	(L:FAB1PCDTouchTimer,enum) 0 &gt; if{ (L:FAB1PCDTouchTimer,enum) 1 + (>L:FAB1PCDTouchTimer,enum) }
+	(L:FAB1PCDTouchTimer,enum) 12 &gt; if{ 0 (>L:FAB1PCDTouchTimer,enum) }
+	(L:FAB2PCDTouchTimer,enum) 0 &gt; if{ (L:FAB2PCDTouchTimer,enum) 1 + (>L:FAB2PCDTouchTimer,enum) }
+	(L:FAB2PCDTouchTimer,enum) 12 &gt; if{ 0 (>L:FAB2PCDTouchTimer,enum) }
+  </Value>
+ </Select>
+</Element>
+
+
+ADF_ACTIVE_SET
+
+<Element>
+ <Select>
+  <Value>
+(L:AdditionalKeybindingsInitialized,bool) ! if{ 
+1 (>L:AdditionalKeybindingsInitialized,bool) 
+110500000 (>K:NAV3_RADIO_SET_HZ) 
+855.5
+10000 * s0 10 %
+s2 l0 10 / flr 10 % 16 * l2 +
+s2 l0 100 / flr 10 % 256 * l2 +
+s2 l0 1000 / flr 10 % 4096 * l2 +
+s2 l0 10000 / flr 10 % 65536 * l2 +
+s2 l0 100000 / flr 10 % 1048576 * l2 +
+s2 l0 1000000 / flr 10 % 16777216 * l2 +
+s2 l0 10000000 / flr 10 % 268435456 * l2 +
+s2 (>L:ADFVariableSet, number)
+(L:ADFVariableSet, number) (>K:ADF2_COMPLETE_SET)
+(L:ADFVariableSet, number) (>K:ADF_COMPLETE_SET)
+}
+  </Value>
+ </Select>
+</Element>
+
+<Comment>
+******************
+PORTAL OF INTEREST
+******************
+</Comment>
+
+<Element>
+ <Select>
+  <Value>
+	(L:DisplayManagementSwitchInitialized,bool) ! if{ 1 (>L:DisplayManagementSwitchInitialized,bool) 110500000 (>K:NAV3_RADIO_SET_HZ) 2 (>L:DisplayManagementPortal,enum) 13 (>L:CursorSlewX,number) 4 (>L:CursorSlewY,number) }
+	0 (>L:DisplayManagementSwitch,enum)
+	(A:Nav active frequency:3,Megahertz) 110.54 &gt; if{ 1 (>L:DisplayManagementSwitch,enum) }
+	(A:Nav active frequency:3,Megahertz) 110.46 &lt; if{ 2 (>L:DisplayManagementSwitch,enum) }
+	(A:Nav active frequency:3,Megahertz) 110.80 &gt; if{ 3 (>L:DisplayManagementSwitch,enum) }
+	(A:Nav active frequency:3,Megahertz) 110.20 &lt; if{ 4 (>L:DisplayManagementSwitch,enum) }
+
+	
+	(A:Nav active frequency:3,Megahertz) (>L:NAV3MegaHertz,number)
+	(A:Nav active frequency:4,Megahertz) (>L:NAV4MegaHertz,number)
+	(A:Nav active frequency:3,Megahertz) 110.5 != if{ 110500000 (>K:NAV3_RADIO_SET_HZ) } 
+
+	(L:DisplayManagementMode, enum) 0 == if{
+		0 (>L:MFD1_POI, bool)
+		0 (>L:MFD2_POI, bool)
+		0 (>L:MFD1_POI_Full, bool)
+		0 (>L:MFD3_POI, bool)
+		0 (>L:MFD4_POI, bool)
+		0 (>L:MFD3_POI_Full, bool)
+	} 
+	
+	(L:DisplayManagementMode, enum) 0 &gt; if{
+		(L:DisplayManagementPortal,enum) 0 == (L:MFD1_Screen,number) 99 &lt; (L:MFD1_Screen,number) 199 &gt; or and (L:MFD2_Screen,number) 99 &lt; (L:MFD2_Screen,number) 199 &gt; or and if{	1 (>L:MFD1_POI, bool) 0 (>L:MFD2_POI, bool) 0 (>L:MFD1_POI_Full, bool) 0 (>L:MFD3_POI, bool) 0 (>L:MFD4_POI, bool) 0 (>L:MFD3_POI_Full, bool)	}
+		(L:DisplayManagementPortal,enum) 1 == (L:MFD1_Screen,number) 99 &lt; (L:MFD1_Screen,number) 199 &gt; or and (L:MFD2_Screen,number) 99 &lt; (L:MFD2_Screen,number) 199 &gt; or and if{	0 (>L:MFD1_POI, bool) 1 (>L:MFD2_POI, bool) 0 (>L:MFD1_POI_Full, bool) 0 (>L:MFD3_POI, bool) 0 (>L:MFD4_POI, bool) 0 (>L:MFD3_POI_Full, bool)	} 
+
+		(L:DisplayManagementPortal,enum) 2 == (L:MFD3_Screen,number) 99 &lt; (L:MFD3_Screen,number) 199 &gt; or and (L:MFD4_Screen,number) 99 &lt; (L:MFD4_Screen,number) 199 &gt; or and if{	0 (>L:MFD1_POI, bool) 0 (>L:MFD2_POI, bool) 0 (>L:MFD1_POI_Full, bool) 1 (>L:MFD3_POI, bool) 0 (>L:MFD4_POI, bool) 0 (>L:MFD3_POI_Full, bool)	}
+		(L:DisplayManagementPortal,enum) 3 == (L:MFD3_Screen,number) 99 &lt; (L:MFD3_Screen,number) 199 &gt; or and (L:MFD4_Screen,number) 99 &lt; (L:MFD4_Screen,number) 199 &gt; or and if{	0 (>L:MFD1_POI, bool) 0 (>L:MFD2_POI, bool) 0 (>L:MFD1_POI_Full, bool) 0 (>L:MFD3_POI, bool) 1 (>L:MFD4_POI, bool) 0 (>L:MFD3_POI_Full, bool)	} 
+
+		(L:DisplayManagementPortal,enum) 0 == (L:DisplayManagementPortal,enum) 1 == or 
+		(L:MFD1_Screen,number) 99 &gt; (L:MFD1_Screen,number) 199 &lt; and 
+		(L:MFD2_Screen,number) 99 &gt; (L:MFD2_Screen,number) 199 &lt; and or 
+		and 
+		if{	0 (>L:MFD1_POI, bool) 0 (>L:MFD2_POI, bool) 1 (>L:MFD1_POI_Full, bool) 0 (>L:MFD3_POI, bool) 0 (>L:MFD4_POI, bool) 0 (>L:MFD3_POI_Full, bool) }
+
+		(L:DisplayManagementPortal,enum) 2 == (L:DisplayManagementPortal,enum) 3 == or 
+		(L:MFD3_Screen,number) 99 &gt; (L:MFD3_Screen,number) 199 &lt; and 
+		(L:MFD4_Screen,number) 99 &gt; (L:MFD4_Screen,number) 199 &lt; and or 
+		and 
+		if{	0 (>L:MFD1_POI, bool) 0 (>L:MFD2_POI, bool) 0 (>L:MFD1_POI_Full, bool) 0 (>L:MFD3_POI, bool) 0 (>L:MFD4_POI, bool) 1 (>L:MFD3_POI_Full, bool) }
+		
+	}	
+	
+	(L:DisplayManagementSwitch,enum) 1 == (L:DisplayManagementMode, enum) 0 &gt; and if{ (L:DisplayManagementPortal,enum) 1 + (>L:DisplayManagementPortal,enum) (L:DisplayManagementPortal,enum) 3 &gt; if{ 0 (>L:DisplayManagementPortal,enum) } }
+	(L:DisplayManagementSwitch,enum) 2 == (L:DisplayManagementMode, enum) 0 &gt; and if{ (L:DisplayManagementPortal,enum) 1 - (>L:DisplayManagementPortal,enum) (L:DisplayManagementPortal,enum) 0 &lt; if{ 3 (>L:DisplayManagementPortal,enum) } }
+	(L:DisplayManagementSwitch,enum) 4 == if{ (L:DisplayManagementMode,enum) 1 - 0 min (>L:DisplayManagementMode,enum) }
+	(L:DisplayManagementSwitch,enum) 3 == if{
+	 (L:DisplayManagementMode,enum) 0 &gt; if{
+	(L:MFD1_POI, bool) if{ (L:MFD1_Screen, number) (>L:MFD1_Subportalbuffer, number) (L:MFD1_Subportal1, number) (>L:MFD1_Screen, number) (L:MFD1_Subportal2, number) (>L:MFD1_Subportal1, number)	(L:MFD1_Subportalbuffer, number) (>L:MFD1_Subportal2, number) }
+	(L:MFD2_POI, bool) if{ (L:MFD2_Screen, number) (>L:MFD2_Subportalbuffer, number) (L:MFD2_Subportal1, number) (>L:MFD2_Screen, number) (L:MFD2_Subportal2, number) (>L:MFD2_Subportal1, number)	(L:MFD2_Subportalbuffer, number) (>L:MFD2_Subportal2, number) }
+	(L:MFD3_POI, bool) if{ (L:MFD3_Screen, number) (>L:MFD3_Subportalbuffer, number) (L:MFD3_Subportal1, number) (>L:MFD3_Screen, number) (L:MFD3_Subportal2, number) (>L:MFD3_Subportal1, number)	(L:MFD3_Subportalbuffer, number) (>L:MFD3_Subportal2, number) }
+	(L:MFD4_POI, bool) if{ (L:MFD4_Screen, number) (>L:MFD4_Subportalbuffer, number) (L:MFD4_Subportal1, number) (>L:MFD4_Screen, number) (L:MFD4_Subportal2, number) (>L:MFD4_Subportal1, number)	(L:MFD4_Subportalbuffer, number) (>L:MFD4_Subportal2, number) }
+	}
+	 els{ (L:DisplayManagementMode,enum) 1 + 1 max (>L:DisplayManagementMode,enum) }
+	}
+  </Value>
+ </Select>
+</Element>
+
+<Comment>
+************************
+Target Management Switch
+************************
+</Comment>
+
+<Element>
+ <Select>
+  <Value>
+	(A:ADF ACTIVE FREQUENCY:1, KHz) 855.5 &gt; (A:ADF ACTIVE FREQUENCY:1, KHz) 856 &lt; and if{ 1 (>L:TargetManagementSwitch,enum) }
+	(A:ADF ACTIVE FREQUENCY:1, KHz) 855.5 &lt; (A:ADF ACTIVE FREQUENCY:1, KHz) 855 &gt; and if{ 2 (>L:TargetManagementSwitch,enum) }	
+	(A:ADF ACTIVE FREQUENCY:1, KHz) 856 &gt; (A:ADF ACTIVE FREQUENCY:1, KHz) 859 &lt; and if{ 3 (>L:TargetManagementSwitch,enum) }
+	(A:ADF ACTIVE FREQUENCY:1, KHz) 855 &lt; (A:ADF ACTIVE FREQUENCY:1, KHz) 841 &gt; and if{ 4 (>L:TargetManagementSwitch,enum) }
+	(A:ADF ACTIVE FREQUENCY:2, KHz) 859 &gt; if{ 5 (>L:CursorSlew,enum) }	
+  </Value>
+ </Select>
+</Element>
+
+
+<Comment>
+************************
+Cursor Slew
+1 - Right
+2 - Left
+3 - Up
+4 - Down
+************************
+</Comment>
+
+<Element>
+ <Select>
+  <Value>
+	(L:DisplayManagementMode,enum) 0 &gt; (L:TFLIRCSMode,bool) ! and (L:RadarScanSlewMode,bool) ! and if{ 1 (>L:CursorVisible, bool) } els{ 0 (>L:CursorVisible, bool) }
+  </Value>
+ </Select>
+</Element>
+
+<Element>
+ <Select>
+  <Value>
+	(A:ADF ACTIVE FREQUENCY:2, KHz) 855.5 &gt; (A:ADF ACTIVE FREQUENCY:2, KHz) 856 &lt; and if{ 1 (>L:CursorSlew,enum) }
+	(A:ADF ACTIVE FREQUENCY:2, KHz) 855.5 &lt; (A:ADF ACTIVE FREQUENCY:2, KHz) 855 &gt; and if{ 2 (>L:CursorSlew,enum) }	
+	(A:ADF ACTIVE FREQUENCY:2, KHz) 856 &gt; (A:ADF ACTIVE FREQUENCY:2, KHz) 859 &lt; and if{ 3 (>L:CursorSlew,enum) }
+	(A:ADF ACTIVE FREQUENCY:2, KHz) 855 &lt; (A:ADF ACTIVE FREQUENCY:2, KHz) 841 &gt; and if{ 4 (>L:CursorSlew,enum) }
+	(A:ADF ACTIVE FREQUENCY:2, KHz) 859 &gt; if{ 5 (>L:CursorSlew,enum) }	
+  </Value>
+ </Select>
+</Element>
+
+<Element>
+ <Select>
+  <Value>
+	(L:CursorVisible, bool) if{
+	(L:CursorSlew,enum) 1 == if{ (L:CursorSlewX,number) 1 - (>L:CursorSlewX,number) }
+	(L:CursorSlew,enum) 2 == if{ (L:CursorSlewX,number) 1 + (>L:CursorSlewX,number) }
+	(L:CursorSlew,enum) 3 == if{ (L:CursorSlewY,number) 1 - (>L:CursorSlewY,number) }
+	(L:CursorSlew,enum) 4 == if{ (L:CursorSlewY,number) 1 + (>L:CursorSlewY,number) }
+	}
+	(L:TFLIRCSMode,bool) if{
+	(L:CursorSlew,enum) 3 == if{ (L:TFLIRCameraPitch, degree) 2 - -90 max (>L:TFLIRCameraPitch, degree) }
+	(L:CursorSlew,enum) 4 == if{ (L:TFLIRCameraPitch, degree) 2 + 90 min (>L:TFLIRCameraPitch, degree) }
+	}	
+	(L:RadarScanSlewMode, bool) if{
+	(L:CursorSlew,enum) 1 == if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+	(L:CursorSlew,enum) 2 == if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+	(L:MFD_POI_Subtype,enum) 2 == if{
+	(L:CursorSlew,enum) 4 == if{ 1 (>L:RadarCenterElevationIncrease, bool) }
+	(L:CursorSlew,enum) 3 == if{ 1 (>L:RadarCenterElevationDecrease, bool) }
+	}
+	}
+	
+	(L:CursorSlewX,number) 1 max 20 min (>L:CursorSlewX,number)
+	(L:CursorSlewY,number) 0 max 8 min (>L:CursorSlewY,number)	
+  </Value>
+ </Select>
+</Element>
+
+<Comment>
+************************
+Compute Values for PCD interaction
+************************
+</Comment>
+
+<Element>
+ <Select>
+  <Value>
+	0 (>L:CursorPCDInteraction, enum)
+	0 (>L:CursorPortalInteraction, enum)
+	(L:CursorSlewX,number) 6 &lt; if{ (L:CursorSlewX,number) (>L:CursorPCDInteraction, enum) 1 (>L:CursorPortalInteraction, enum) }
+	(L:CursorSlewX,number) 5 &gt; (L:CursorSlewX,number) 11 &lt; and if{ (L:CursorSlewX,number) 5 - (>L:CursorPCDInteraction, enum) 2 (>L:CursorPortalInteraction, enum) }
+	(L:CursorSlewX,number) 10 &gt; (L:CursorSlewX,number) 16 &lt; and if{ (L:CursorSlewX,number) 10 - (>L:CursorPCDInteraction, enum) 3 (>L:CursorPortalInteraction, enum) }
+	(L:CursorSlewX,number) 15 &gt; if{ (L:CursorSlewX,number) 15 - (>L:CursorPCDInteraction, enum) 4 (>L:CursorPortalInteraction, enum) }
+	(L:CursorSlewY,number) 0 &gt; if{ (L:CursorSlewY,number) 1 - 0 max 5 * (L:CursorPCDInteraction, enum) + (>L:CursorPCDInteraction, enum) }
+
+	(L:CursorSlew,enum) 5 == if{ (L:PCDUISound, bool) ! (>L:PCDUISound, bool) }
+  </Value>
+ </Select>
+</Element>
+
+<Comment>DETECT POI TYPE 0 = NONE 18 = TSD 17 = TFLIR 3 = DAS</Comment>
+
+<Element>
+ <Select>
+  <Value>
+  0 (>L:MFD_POI_Type,enum)
+  0 (>L:MFD_POI_Subtype,enum)
+  
+  (L:CursorSlewY,number) 1 &gt; (L:CursorSlewY,number) 7 &lt; and if{
+	(L:CursorSlewX,number) 1 &gt; (L:CursorSlewX,number) 5 &lt; and if{	
+	(L:MFD1_POI, bool) if{ (L:MFD1_Screen, number) (>L:MFD_POI_Type,enum) }
+	(L:MFD1_POI, bool) (L:MFD1_Screen, number) 18 == and if{ 18 (>L:MFD_POI_Type,enum) (L:TSD1View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD1_POI, bool) (L:MFD1_Screen, number) 19 == and if{ 19 (>L:MFD_POI_Type,enum) (L:TSD2View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD1_POI, bool) (L:MFD1_Screen, number) 20 == and if{ 20 (>L:MFD_POI_Type,enum) (L:TSD3View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD1_POI, bool) (L:MFD1_Screen, number) 17 == and if{ 17 (>L:MFD_POI_Type,enum) }
+	}
+	(L:CursorSlewX,number) 1 &gt; (L:CursorSlewX,number) 6 &lt; and if{
+	(L:MFD1_POI_Full, bool) (L:MFD1_Screen, number) 118 == (L:MFD1_Screen, number) 119 == or (L:MFD1_Screen, number) 120 == or and if{ 118 (>L:MFD_POI_Type,enum) }
+	}
+	
+	
+	(L:CursorSlewX,number) 6 &gt; (L:CursorSlewX,number) 10 &lt; and if{
+	(L:MFD2_POI, bool) if{ (L:MFD2_Screen, number) (>L:MFD_POI_Type,enum) }
+	(L:MFD2_POI, bool) (L:MFD2_Screen, number) 18 == and if{ 18 (>L:MFD_POI_Type,enum) (L:TSD1View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD2_POI, bool) (L:MFD2_Screen, number) 19 == and if{ 19 (>L:MFD_POI_Type,enum) (L:TSD2View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD2_POI, bool) (L:MFD2_Screen, number) 20 == and if{ 20 (>L:MFD_POI_Type,enum) (L:TSD3View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD2_POI, bool) (L:MFD2_Screen, number) 17 == and if{ 17 (>L:MFD_POI_Type,enum) }
+	}
+	(L:CursorSlewX,number) 5 &gt; (L:CursorSlewX,number) 10 &lt; and if{
+	(L:MFD1_POI_Full, bool) (L:MFD2_Screen, number) 118 == (L:MFD2_Screen, number) 119 == or (L:MFD2_Screen, number) 120 == or and if{ 118 (>L:MFD_POI_Type,enum) }
+	}
+
+	
+	(L:CursorSlewX,number) 11 &gt; (L:CursorSlewX,number) 15 &lt; and if{
+	(L:MFD3_POI, bool) if{ (L:MFD3_Screen, number) (>L:MFD_POI_Type,enum) }
+	(L:MFD3_POI, bool) (L:MFD3_Screen, number) 18 == and if{ 18 (>L:MFD_POI_Type,enum) (L:TSD1View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD3_POI, bool) (L:MFD3_Screen, number) 19 == and if{ 19 (>L:MFD_POI_Type,enum) (L:TSD2View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD3_POI, bool) (L:MFD3_Screen, number) 20 == and if{ 20 (>L:MFD_POI_Type,enum) (L:TSD3View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD3_POI, bool) (L:MFD3_Screen, number) 17 == and if{ 17 (>L:MFD_POI_Type,enum) }	
+	}
+	(L:CursorSlewX,number) 11 &gt; (L:CursorSlewX,number) 16 &lt; and if{
+	(L:MFD3_POI_Full, bool) (L:MFD3_Screen, number) 118 == (L:MFD3_Screen, number) 119 == or (L:MFD3_Screen, number) 120 == or and if{ 118 (>L:MFD_POI_Type,enum) }
+	}
+
+		
+	(L:CursorSlewX,number) 16 &gt; (L:CursorSlewX,number) 20 &lt; and if{
+	(L:MFD4_POI, bool) if{ (L:MFD4_Screen, number) (>L:MFD_POI_Type,enum) }
+	(L:MFD4_POI, bool) (L:MFD4_Screen, number) 18 == and if{ 18 (>L:MFD_POI_Type,enum) (L:TSD1View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD4_POI, bool) (L:MFD4_Screen, number) 19 == and if{ 19 (>L:MFD_POI_Type,enum) (L:TSD2View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD4_POI, bool) (L:MFD4_Screen, number) 20 == and if{ 20 (>L:MFD_POI_Type,enum) (L:TSD3View, enum) (>L:MFD_POI_Subtype,enum) }
+	(L:MFD4_POI, bool) (L:MFD4_Screen, number) 17 == and if{ 17 (>L:MFD_POI_Type,enum) }	
+	}
+	(L:CursorSlewX,number) 15 &gt; (L:CursorSlewX,number) 20 &lt; and if{
+	(L:MFD3_POI_Full, bool) (L:MFD4_Screen, number) 118 == (L:MFD4_Screen, number) 119 == or (L:MFD4_Screen, number) 120 == or and if{ 118 (>L:MFD_POI_Type,enum) }
+	}	
+	
+  }
+  </Value>
+ </Select>
+</Element> 
+
+<Comment>SPECIAL POI INTERACTIONS</Comment>
+
+<Comment>RADAR SCAN VOLUME CONTROL FULL SCREEN</Comment>
+
+<Element>
+ <Select>
+  <Value>
+(L:MFD_POI_Type,enum) 118 == (L:DisplayManagementMode, enum) 1 == and (L:RadarScanVolumeDisplay,enum) 0 &gt; and 
+(L:CursorSlewY) 3 &gt; and (L:CursorSlewY) 9 &lt; and 
+(L:CursorSlewX) 1 &gt; (L:CursorSlewX) 10 &lt; and 
+(L:CursorSlewX) 11 &gt; (L:CursorSlewX) 20 &lt; and or and
+if{
+(L:TargetManagementSwitch,enum) 3 == if{ (L:RadarScanSlewMode, bool) ! (>L:RadarScanSlewMode, bool) (L:PCDUISound, bool) ! (>L:PCDUISound, bool) 0 (>L:TargetManagementSwitch,enum) }
+}
+  </Value>
+ </Select>
+</Element> 
+
+<Comment>RADAR SCAN VOLUME CONTROL SINGLE PORTAL</Comment>
+
+<Element>
+ <Select>
+  <Value>
+(L:MFD_POI_Type,enum) 18 == (L:MFD_POI_Type,enum) 19 == or (L:MFD_POI_Type,enum) 20 == or (L:DisplayManagementMode, enum) 1 == and (L:RadarScanVolumeDisplay,enum) 0 &gt; and 
+(L:CursorSlewY) 3 &gt; and (L:CursorSlewY) 9 &lt; and 
+(L:CursorSlewX) 1 &gt; (L:CursorSlewX) 5 &lt; and 
+(L:CursorSlewX) 6 &gt; (L:CursorSlewX) 10 &lt; and or
+(L:CursorSlewX) 11 &gt; (L:CursorSlewX) 15 &lt; and or
+(L:CursorSlewX) 16 &gt; (L:CursorSlewX) 20 &lt; and or and
+if{
+(L:TargetManagementSwitch,enum) 3 == if{ (L:RadarScanSlewMode, bool) ! (>L:RadarScanSlewMode, bool) (L:PCDUISound, bool) ! (>L:PCDUISound, bool) 0 (>L:TargetManagementSwitch,enum) }
+}
+  </Value>
+ </Select>
+</Element> 
+
+<Comment>Disegnage Scan Volume control</Comment>
+
+<Element>
+ <Select>
+  <Value>
+	(L:MFD_POI_Type,enum) 18 != (L:MFD_POI_Type,enum) 19 != and (L:MFD_POI_Type,enum) 20 != and (L:MFD_POI_Type,enum) 118 != and (L:RadarScanSlewMode, bool) and if{ 0 (>L:RadarScanSlewMode, bool) }
+  </Value>
+ </Select>
+</Element> 
+
+
+<Comment>TARGET MANAGEMENT (IF TSD)</Comment>
+
+<Element>
+ <Select>
+  <Value>
+(L:MFD_POI_Type,enum) 18 == (L:MFD_POI_Type,enum) 19 == or (L:MFD_POI_Type,enum) 20 == or (L:MFD_POI_Type,enum) 118 == or (L:DisplayManagementMode, enum) 1 == and (L:DisplayManagementMode, enum) 0 == or if{
+  (L:TargetManagementSwitch,enum) 3 == if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) (L:PCDUISound, bool) ! (>L:PCDUISound, bool) 0 (>L:TargetManagementSwitch,enum) }
+  (L:TargetManagementSwitch,enum) 4 == if{ (L:TargetNumber, number) 1 - (>L:TargetNumber, number) (L:PCDUISound, bool) ! (>L:PCDUISound, bool) 0 (>L:TargetManagementSwitch,enum) }
+  (L:CursorSlew) 5 == if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) }
+}
+  </Value>
+ </Select>
+</Element>
+
+<Comment>TFLIR CONTROL if TFLIR Camera</Comment>
+
+<Element>
+ <Select>
+  <Value>
+(L:MFD_POI_Type,enum) 17 == (L:DisplayManagementMode, enum) 1 == and (L:DisplayManagementMode, enum) 0 == or if{
+(L:CursorSlew) 5 == if{ (L:TFLIRCSMode, bool) ! (>L:TFLIRCSMode, bool) }
+}
+(L:MFD_POI_Type,enum) 17 != (L:TFLIRCSMode, bool) and if{ 0 (>L:TFLIRCSMode, bool) }
+  </Value>
+ </Select>
+</Element> 
+
+
+<Comment>FAB BAR INTERACTION</Comment>
+
+<Element>
+ <Select>
+  <Value>
+	(L:TargetManagementSwitch,enum) 3 == (L:CursorSlewY,number) 0 == and (L:DisplayManagementMode, enum) 1 == and if{
+	(L:MFD_Top_Bar_Swap, bool) ! if{
+		(L:CursorSlewX,number) 2 == if{ 
+			(L:MFD1_Screen, number) 199 &lt; if{ (L:MFD1_Screen, number) (>L:MFD1_Screen_POPUP_Buffer, number) 207 (>L:MFD1_Screen, number) }
+			els{ (L:MFD1_Screen_POPUP_Buffer, number) (>L:MFD1_Screen, number) }					
+			1 (>L:FAB1PCDTouchTimer,enum)
+			115 (>L:FAB1PCDTouchPosition,enum)
+			1 (>L:MFD1_PopTimer, enum)
+			(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 3 == if{ 
+					(L:MFD1_Screen, number) 199 &lt; if{ (L:MFD1_Screen, number) (>L:MFD1_Screen_POPUP_Buffer, number) 211 (>L:MFD1_Screen, number) }
+					els{ (L:MFD1_Screen_POPUP_Buffer, number) (>L:MFD1_Screen, number) }
+					1 (>L:FAB1PCDTouchTimer,enum)
+					240 (>L:FAB1PCDTouchPosition,enum)					
+					1 (>L:MFD1_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 4 == if{ 
+					(L:MFD1_Screen, number) 199 &lt; if{ (L:MFD1_Screen, number) (>L:MFD1_Screen_POPUP_Buffer, number) 215 (>L:MFD1_Screen, number) }
+					els{ (L:MFD1_Screen_POPUP_Buffer, number) (>L:MFD1_Screen, number) }					
+					1 (>L:FAB1PCDTouchTimer,enum)
+					340 (>L:FAB1PCDTouchPosition,enum)
+					1 (>L:MFD1_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 5 == if{ 
+					(L:MFD1_Screen, number) 199 &lt; if{ (L:MFD1_Screen, number) (>L:MFD1_Screen_POPUP_Buffer, number) 208 (>L:MFD1_Screen, number) }
+					els{ (L:MFD1_Screen_POPUP_Buffer, number) (>L:MFD1_Screen, number) }					
+					1 (>L:FAB1PCDTouchTimer,enum)
+					455 (>L:FAB1PCDTouchPosition,enum)
+					1 (>L:MFD1_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 6 == if{ 
+					(L:MFD2_Screen, number) 199 &lt; if{ (L:MFD2_Screen, number) (>L:MFD2_Screen_POPUP_Buffer, number) 213 (>L:MFD2_Screen, number) }
+					els{ (L:MFD2_Screen_POPUP_Buffer, number) (>L:MFD2_Screen, number) }					
+					1 (>L:FAB1PCDTouchTimer,enum)
+					595 (>L:FAB1PCDTouchPosition,enum)
+					1 (>L:MFD2_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 8 == if{ 
+					1 (>L:FAB1PCDTouchTimer,enum)
+					795 (>L:FAB1PCDTouchPosition,enum)
+					1 (>L:ICAWSAcknowledge, bool)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 9 == if{ 
+					(L:MFD2_Screen, number) 199 &lt; if{ (L:MFD2_Screen, number) (>L:MFD2_Screen_POPUP_Buffer, number) 224 (>L:MFD2_Screen, number) }
+					els{ (L:MFD2_Screen_POPUP_Buffer, number) (>L:MFD2_Screen, number) }					
+					1 (>L:FAB1PCDTouchTimer,enum)
+					915 (>L:FAB1PCDTouchPosition,enum)
+					1 (>L:MFD2_PopTimer, enum)
+			}
+
+		(L:CursorSlewX,number) 12 == if{ 
+					(L:MFD3_Screen, number) 199 &lt; if{ (L:MFD3_Screen, number) (>L:MFD3_Screen_POPUP_Buffer, number) 230 (>L:MFD3_Screen, number) }
+					els{ (L:MFD3_Screen_POPUP_Buffer, number) (>L:MFD3_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					175 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD3_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 15 == if{ 
+					(L:MFD3_Screen, number) 199 &lt; if{ (L:MFD3_Screen, number) (>L:MFD3_Screen_POPUP_Buffer, number) 227 (>L:MFD3_Screen, number) }
+					els{ (L:MFD3_Screen_POPUP_Buffer, number) (>L:MFD3_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					460 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD3_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 16 == if{ 
+					(L:MFD4_Screen, number) 199 &lt; if{ (L:MFD4_Screen, number) (>L:MFD4_Screen_POPUP_Buffer, number) 225 (>L:MFD4_Screen, number) }
+					els{ (L:MFD4_Screen_POPUP_Buffer, number) (>L:MFD4_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					570 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD4_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 17 == if{ 
+					(L:MFD4_Screen, number) 199 &lt; if{ (L:MFD4_Screen, number) (>L:MFD4_Screen_POPUP_Buffer, number) 228 (>L:MFD4_Screen, number) }
+					els{ (L:MFD4_Screen_POPUP_Buffer, number) (>L:MFD4_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					685 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD4_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}			
+		(L:CursorSlewX,number) 18 == if{ 
+					(L:MFD4_Screen, number) 199 &lt; if{ (L:MFD4_Screen, number) (>L:MFD4_Screen_POPUP_Buffer, number) 229 (>L:MFD4_Screen, number) }
+					els{ (L:MFD4_Screen_POPUP_Buffer, number) (>L:MFD4_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					795 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD4_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}				
+		(L:CursorSlewX,number) 19 == if{ 
+					(L:MFD4_Screen, number) 199 &lt; if{ (L:MFD4_Screen, number) (>L:MFD4_Screen_POPUP_Buffer, number) 239 (>L:MFD4_Screen, number) }
+					els{ (L:MFD4_Screen_POPUP_Buffer, number) (>L:MFD4_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					900 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD4_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}			
+		} els{
+
+		(L:CursorSlewX,number) 2 == if{ 
+					(L:MFD1_Screen, number) 199 &lt; if{ (L:MFD1_Screen, number) (>L:MFD1_Screen_POPUP_Buffer, number) 230 (>L:MFD1_Screen, number) }
+					els{ (L:MFD1_Screen_POPUP_Buffer, number) (>L:MFD1_Screen, number) }					
+					1 (>L:FAB1PCDTouchTimer,enum)
+					175 (>L:FAB1PCDTouchPosition,enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+					1 (>L:MFD1_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 5 == if{ 
+					(L:MFD1_Screen, number) 199 &lt; if{ (L:MFD1_Screen, number) (>L:MFD1_Screen_POPUP_Buffer, number) 227 (>L:MFD1_Screen, number) }
+					els{ (L:MFD1_Screen_POPUP_Buffer, number) (>L:MFD1_Screen, number) }					
+					1 (>L:FAB1PCDTouchTimer,enum)
+					460 (>L:FAB1PCDTouchPosition,enum)
+					1 (>L:MFD1_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 6 == if{ 
+					1 (>L:FAB1PCDTouchTimer,enum)
+					570 (>L:FAB1PCDTouchPosition,enum)
+					(L:MFD2_Screen, number) 199 &lt; if{ (L:MFD2_Screen, number) (>L:MFD2_Screen_POPUP_Buffer, number) 225 (>L:MFD2_Screen, number) }
+					els{ (L:MFD2_Screen_POPUP_Buffer, number) (>L:MFD2_Screen, number) }
+					1 (>L:MFD2_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 7 == if{ 
+					(L:MFD2_Screen, number) 199 &lt; if{ (L:MFD2_Screen, number) (>L:MFD2_Screen_POPUP_Buffer, number) 228 (>L:MFD2_Screen, number) }
+					els{ (L:MFD2_Screen_POPUP_Buffer, number) (>L:MFD2_Screen, number) }					
+					1 (>L:FAB1PCDTouchTimer,enum)
+					685 (>L:FAB1PCDTouchPosition,enum)
+					1 (>L:MFD2_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 8 == if{ 
+					(L:MFD2_Screen, number) 199 &lt; if{ (L:MFD2_Screen, number) (>L:MFD2_Screen_POPUP_Buffer, number) 229 (>L:MFD2_Screen, number) }
+					els{ (L:MFD2_Screen_POPUP_Buffer, number) (>L:MFD2_Screen, number) }					
+					1 (>L:FAB1PCDTouchTimer,enum)
+					795 (>L:FAB1PCDTouchPosition,enum)
+					1 (>L:MFD2_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 9 == if{ 
+					(L:MFD2_Screen, number) 199 &lt; if{ (L:MFD2_Screen, number) (>L:MFD2_Screen_POPUP_Buffer, number) 239 (>L:MFD2_Screen, number) }
+					els{ (L:MFD2_Screen_POPUP_Buffer, number) (>L:MFD2_Screen, number) }					
+					1 (>L:FAB1PCDTouchTimer,enum)
+					900 (>L:FAB1PCDTouchPosition,enum)
+					1 (>L:MFD2_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 12 == if{ 
+					(L:MFD3_Screen, number) 199 &lt; if{ (L:MFD3_Screen, number) (>L:MFD3_Screen_POPUP_Buffer, number) 207 (>L:MFD3_Screen, number) }
+					els{ (L:MFD3_Screen_POPUP_Buffer, number) (>L:MFD3_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					115 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD3_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}	
+		(L:CursorSlewX,number) 13 == if{ 
+					(L:MFD3_Screen, number) 199 &lt; if{ (L:MFD3_Screen, number) (>L:MFD3_Screen_POPUP_Buffer, number) 211 (>L:MFD3_Screen, number) }
+					els{ (L:MFD3_Screen_POPUP_Buffer, number) (>L:MFD3_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					240 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD3_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 14 == if{ 
+					(L:MFD3_Screen, number) 199 &lt; if{ (L:MFD3_Screen, number) (>L:MFD3_Screen_POPUP_Buffer, number) 208 (>L:MFD3_Screen, number) }
+					els{ (L:MFD3_Screen_POPUP_Buffer, number) (>L:MFD3_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					455 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD3_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}		
+		(L:CursorSlewX,number) 15 == if{ 
+					(L:MFD4_Screen, number) 199 &lt; if{ (L:MFD4_Screen, number) (>L:MFD4_Screen_POPUP_Buffer, number) 213 (>L:MFD4_Screen, number) }
+					els{ (L:MFD4_Screen_POPUP_Buffer, number) (>L:MFD4_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					595 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD4_PopTimer, enum)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 16 == if{ 
+					1 (>L:FAB2PCDTouchTimer,enum)
+					795 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:ICAWSAcknowledge, bool)
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+			}
+		(L:CursorSlewX,number) 18 == if{ 
+					(L:MFD4_Screen, number) 199 &lt; if{ (L:MFD4_Screen, number) (>L:MFD4_Screen_POPUP_Buffer, number) 224 (>L:MFD4_Screen, number) }
+					els{ (L:MFD4_Screen_POPUP_Buffer, number) (>L:MFD4_Screen, number) }					
+					1 (>L:FAB2PCDTouchTimer,enum)
+					915 (>L:FAB2PCDTouchPosition,enum)
+					1 (>L:MFD4_PopTimer, enum)
+			}			
+		}
+
+		(L:CursorSlewX,number) 10 == (L:CursorSlewX,number) 11 == or if{
+					(L:MFD_Top_Bar_Swap, bool) ! (>L:MFD_Top_Bar_Swap, bool)
+					1 (>L:FAB1PCDTouchTimer,enum)
+					1024 (>L:FAB1PCDTouchPosition,enum)
+					1 (>L:FAB2PCDTouchTimer,enum)
+					0 (>L:FAB2PCDTouchPosition,enum)
+					(L:MFD1_Screen, number) 199 &gt; if{ (L:MFD1_Screen_POPUP_Buffer, number) (>L:MFD1_Screen, number) }
+					(L:MFD2_Screen, number) 199 &gt; if{ (L:MFD2_Screen_POPUP_Buffer, number) (>L:MFD2_Screen, number) }
+					(L:MFD3_Screen, number) 199 &gt; if{ (L:MFD3_Screen_POPUP_Buffer, number) (>L:MFD3_Screen, number) }
+					(L:MFD4_Screen, number) 199 &gt; if{ (L:MFD4_Screen_POPUP_Buffer, number) (>L:MFD4_Screen, number) }					
+					(L:PCDUISound, bool) ! (>L:PCDUISound, bool)	
+		}		
+	}
+  </Value>
+ </Select>
+</Element>	
+
+<Comment>TRANSFER INTERACTION TO TOUCHSCREEN</Comment>
+
+<Element>
+ <Select>
+  <Value>	
+	 (L:TargetManagementSwitch,enum) 3 == (L:CursorSlewY,number) 0 &gt; and (L:DisplayManagementMode, enum) 1 == and if{
+	 (L:CursorPortalInteraction, enum) 1 == if{ (L:CursorPCDInteraction, enum) (>L:MFD1PCDTouch,enum) }
+	 (L:CursorPortalInteraction, enum) 2 == if{ (L:CursorPCDInteraction, enum) (>L:MFD2PCDTouch,enum) }
+	 (L:CursorPortalInteraction, enum) 3 == if{ (L:CursorPCDInteraction, enum) (>L:MFD3PCDTouch,enum) }
+	 (L:CursorPortalInteraction, enum) 4 == if{ (L:CursorPCDInteraction, enum) (>L:MFD4PCDTouch,enum) }
+	 }
+	</Value>
+ </Select>
+</Element>
+
+<Comment>FAB BAR INTERACTION</Comment>
+
+<Element>
+ <Select>
+  <Value>
+	(L:CursorSlew,enum) 0 &gt; (L:CursorSlewY,number) 0 &gt; and (L:DisplayManagementMode,enum) 0 &gt; and if{
+	(L:CursorSlewX,number) 6 &lt; if{ 0 (>L:DisplayManagementPortal,enum) }
+	(L:CursorSlewX,number) 5 &gt; (L:CursorSlewX,number) 11 &lt; and if{ 1 (>L:DisplayManagementPortal,enum) }
+	(L:CursorSlewX,number) 10 &gt; (L:CursorSlewX,number) 16 &lt; and if{ 2 (>L:DisplayManagementPortal,enum) }
+	(L:CursorSlewX,number) 15 &gt; if{ 3 (>L:DisplayManagementPortal,enum) }
+	 }	 
+  </Value>
+ </Select>
+</Element>
+
+
+
+
+<Comment>
+************************
+Reset ADF Variables
+************************
+</Comment>
+
+<Element>
+ <Select>
+  <Value>
+	(A:ADF ACTIVE FREQUENCY:1, KHz) (>L:HotasTMSTest, enum)
+	(A:ADF ACTIVE FREQUENCY:2, KHz) (>L:HotasCSCTest, enum)
+	(A:ADF ACTIVE FREQUENCY:2, KHz) 850 != if{ (L:ADFVariableSet, number) (>K:ADF2_COMPLETE_SET) }
+	(A:ADF ACTIVE FREQUENCY:1, KHz) 850 != if{ (L:ADFVariableSet, number) (>K:ADF_COMPLETE_SET) }
+	0 (>L:CursorSlew,enum)
+	0 (>L:TargetManagementSwitch,enum)
+  </Value>
+ </Select>
+</Element>
+
+</Gauge>
+

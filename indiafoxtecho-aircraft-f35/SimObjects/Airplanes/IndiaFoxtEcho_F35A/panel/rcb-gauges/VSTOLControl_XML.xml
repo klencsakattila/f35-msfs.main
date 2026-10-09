@@ -1,0 +1,791 @@
+<Gauge Name="VSTOL Controller, IPC" Version="30.16">
+<Comment>
+This gauge emulates a VTOL controller for Dino Cateneo's F35B.
+
+V30.0_MSFS
+- For Dino's F35B (removed IRIS flaps stuff and new init parameters).
+- For Tailhook animation of fan/nozzle doors.
+
+V30.1
+- Change in STOL V/S settings; also solved VTOL-to-STOL transition problem.
+- Corrected the animation problem (framerate-dependant) when exiting STOVL mode.
+  (removed the Tailhook delay)
+
+V30.2
+- When full throttle is set, it's actually 89 percent (to avoid afterburner sound)
+- During STOL, throttle is maximised to 90%
+- Nozzle swing during STOL reduced a bit for better visual alignment
+- Nozzle swing in STOL also elevator-dependant (visible IRL eg at carrier liftoff)
+- Target speed during STOL now non-lineair.
+- DECELL mode implemented (stronger decelleration when Hover mode is switched on)
+
+V30.3: Does not exist
+
+V30.4:
+- Now using Accel var for Tailhook Handle instead of own derivate.
+  NOTE: (A:SurfaceRelativeGroundSpeed,knots) still unusable, since it's always positive (even when going backward).
+- Autothrust var now Off when Tailhook is retracted in mode-2 on the ground.
+- AP-Master is now also forced off in mode-1
+- Increased max speed in VTOL to 50 knots.
+
+V30.5: (for Beta2)
+- When going into Hover mode, the Target Groundspeed is set to the speed of a tracked carrier, if any.
+
+V30.6:
+- Slower nozzle at low speed and delayed CTOL transition
+- Lower TargetSpeed in FINAL state to avoid funny display in MDF
+
+V30.7:
+- Solved groundspeed bug on moving surfaces
+- Removed Init test with NoSmoking var
+
+V30.8:
+- Improved groundspeed handling:
+  - Speedchange smoothing now based on rudder/aileron input, for moving carriers.
+  - Faster acceleration in VTO
+- Reversed the elevator-dependant nozzle movement.
+- In STOL, in nozzle animation formula, Throttle is limited to 90 to prevent "jitter"
+- Nozzle moves a bit faster
+- Added control for nozzle roll
+- Added control for airspeed-dependant LiftFanIntake angle
+
+V30.9:
+- Added Lvar (L:InnerBayDoors,number).
+
+V30.10:
+- Again, improved groundcontrol.
+- Tweaked InnerBayDoors var.
+
+V30.11:
+- Max VTOL weight now 40600
+
+V30.12/13: Obsolete
+
+V30.14:
+- Now using FSX variables (A:STATIC CG TO GROUND,feet) and (A:STATIC PITCH,degrees) to dynamically determine GroundRH and GroundPitch.
+- Improved, weight-dependant STOL takeoff/landing (45 - 85 Knots, at resp 35000 - 60000 lbs).
+- Improved, airspeed-dependant decelleration in STOL config.
+
+V30.15
+- New elevator/aileron control in STOL flight mode
+- New Hover thrust at low alt.
+
+V30.16
+For V3 FDE: airspeed dependant pitch correction to compensate pitchup tendency
+
+COPYRIGHT STATEMENT
+==================
+Although this gauge is freeware, it may NOT be renamed, copied, re-uploaded,
+modified, or bundled in an other archive, without my prior consent.
+Rob Barendregt, 12 May 2016
+Email: rc.barendregt@planet.nl
+</Comment>
+
+<Update Frequency="0"/>
+
+<Element>
+  <Select>
+    <Value>
+      (L:VSTOLInit,bool) ! 
+      if{
+        (A:STATIC CG TO GROUND,feet) (&gt;L:VSTOLGroundRH,number)     (* in feet *)
+        (A:STATIC PITCH,degrees) (&gt;L:VSTOLGroundPitch,number)      (* in degrees *)
+        0.96 (&gt;L:VSTOLNoseWheelRadius,number) (* in feet (as in aircraft.cfg) *)
+        90 (&gt;L:VSTOLMaxThrottle,number)       (* max. throttle percentage in STOL and after after hover *)
+        70 (&gt;L:VSTOLHoverThrottle,number)     (* throttle percentage at hover *)
+        20 (&gt;L:VSTOLThrottleVariation,number) (* V/S-dependant throttle variation *)
+        1.1 (&gt;L:VSTOLVsOffset,number)         (* compensates descent when V/S 0 is commanded *)
+        40600 (&gt;L:VSTOLMaxWeight,number)
+        (P:ABSOLUTE TIME,seconds) (&gt;L:VSTOL_Time,number)
+
+        1 (&gt;L:VSTOLInit,bool)
+      }
+    </Value>
+  </Select>
+</Element>
+
+<Macro Name="PitchCompensation">
+  1   (A:AIRSPEED TRUE,knots) 60 - 140 / 0 max 1 min   -  0.7 * 1.0 +
+</Macro>
+
+<Macro Name="EnginesOn">
+  (A:TURB ENG1 N1,percent) 10 &gt;   
+</Macro>
+<Macro Name="VSTOLThresholdRH">
+  (L:VSTOLGroundRH,number)  1 +
+</Macro>
+<Macro Name="WindSpeedLon">
+  (A:AMBIENT WIND DIRECTION,degrees) (A:PLANE HEADING DEGREES TRUE,degrees) - 
+  dnor dgrd cos (A:AMBIENT WIND VELOCITY,knots) *
+</Macro>
+<Macro Name="WindSpeedLat">
+  (A:AMBIENT WIND DIRECTION,degrees) (A:PLANE HEADING DEGREES TRUE,degrees) - 
+  dnor dgrd sin (A:AMBIENT WIND VELOCITY,knots) *
+</Macro>
+<Macro Name="SimRunning">
+  (A:IS SLEW ACTIVE,bool) !
+  (P:ABSOLUTE TIME,seconds) (L:VSTOL_Time,number) &gt; &amp;&amp;
+  (L:VSTOLInit,bool) &amp;&amp;
+  (L:F35Model, number) 1 == and
+</Macro>
+<Macro Name="SetNozzle">
+  (L:tailhook_status, number) 40 &gt;
+  if{ 
+    (L:NozzleAngle,number) -
+    5 min 
+    (A:AIRSPEED TRUE,knots) 80 &lt; (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &gt; &amp;&amp; if{ -0.7 } els{ -5 } max
+    (L:NozzleAngle,number) +
+  }
+  els{ 0 min }
+  (&gt;L:NozzleAngle,number)
+  (L:STOVLMode) 0 == (L:NozzleAngle,number) 0 &gt; and if{
+  (L:NozzleAngle,number) 5 - 0 max (&gt;L:NozzleAngle,number)
+  }
+</Macro>
+<Macro Name="SetThrottle">
+  d (A:GENERAL ENG1 THROTTLE LEVER POSITION,percent) - abs 0.5 &gt;
+  if{ 163.84 * (&gt;K:THROTTLE_SET) }
+  els{ }
+</Macro>
+<Macro Name="PitchAirspeedComponent">
+  (A:ATTITUDE INDICATOR PITCH DEGREES,degrees) (L:VSTOLGroundPitch,number) - 2 *
+</Macro>
+
+<Comment>
+For testing
+</Comment>
+<Element>
+  <Select>
+    <Value>
+	(A:RADIO HEIGHT,feet) (>L:VSTOLRadioHeight, number)
+	 @VSTOLThresholdRH (>L:VSTOLRadioHeightThreshold, number)
+    </Value>
+  </Select>
+</Element>
+
+
+<Element>
+  <Select>
+    <Value>
+      @SimRunning
+      if{
+        0 (&gt;L:vertical_velocity_control,number)
+        0 (&gt;L:pitch_velocity_control,number)
+        0 (&gt;L:roll_velocity_control,number) 
+        0 (&gt;L:lateral_velocity_control,number)
+        0 (&gt;L:longitudinal_velocity_control,number)
+        0 (&gt;L:yaw_velocity_control,number)        
+        0 (&gt;L:VSTOLEnabled,bool)
+     }
+   </Value>
+  </Select>
+</Element>
+
+
+<Element>
+  <Select>
+    <Value>
+	(L:F35Model, number) 1 != if{ 0 (&gt;L:STOVLMode,enum) 14 (>L:STOVLTest, number) }
+	</Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      @SimRunning
+      if{
+        @EnginesOn !
+        if{
+          -1 (&gt;L:STOVLMode,enum)
+          (L:lever_tailhook, bool) if{ 0 (>L:lever_tailhook, bool) }
+          (A:AUTOPILOT HEADING LOCK,bool) if{ (&gt;K:AP_HDG_HOLD) }
+          (A:AUTOPILOT ALTITUDE LOCK,bool) if{ (&gt;K:AP_ALT_HOLD) }
+        }
+        els{
+
+          (L:STOVLMode,enum) -1 ==
+          if{
+            0 (&gt;L:STOVLMode,enum)
+          }
+          els{
+
+            (L:STOVLMode,enum) 0 ==
+            if{
+              (L:lever_tailhook, bool) (L:TailhookDelay,bool) ! &amp;&amp;
+              if{
+                (L:longitudinal_velocity_value,number) 420 &gt;
+                if{ (L:lever_tailhook, bool) ! (&gt;L:lever_tailhook, bool) }
+                els{
+                  1 (&gt;L:STOVLMode,enum) 0 (>K:AILERON_TRIM_SET)
+                  (A:AUTOPILOT HEADING LOCK,bool) if{ (&gt;K:AP_HDG_HOLD) }
+                  (A:AUTOPILOT ALTITUDE LOCK,bool) if{ (&gt;K:AP_ALT_HOLD) }
+                }
+              }
+            }
+            els{
+
+              (L:STOVLMode,enum) 1 ==
+              if{
+                (A:AUTOPILOT ALTITUDE LOCK,bool) if{ (&gt;K:AP_ALT_HOLD) }
+                (L:lever_tailhook, bool) ! (L:F35Model, number) 1 != or
+                if{
+                  0 (&gt;L:STOVLMode,enum) 10 (>L:STOVLTest, number) 0 (>K:AILERON_TRIM_SET)
+                  1 (&gt;L:TailhookDelay,bool)
+                  (L:lever_tailhook, bool) ! (&gt;L:lever_tailhook, bool)
+                  (A:AUTOPILOT HEADING LOCK,bool) if{ (&gt;K:AP_HDG_HOLD) }
+                }
+                els{
+                  (A:AUTOPILOT HEADING LOCK,bool)
+                  if{
+                    (A:TOTAL WEIGHT,pounds) (L:VSTOLMaxWeight,number) &gt;
+                    if{
+                      (&gt;K:AP_HDG_HOLD)
+                    }
+                    els{
+                      2 (&gt;L:STOVLMode,enum) 0 (&gt;K:AILERON_TRIM_SET)
+                      (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &gt;
+                      if{
+                        1 (&gt;L:DECELL,bool)
+                        (L:TACAN_VALID,bool)
+                        if{ (L:CarrierSpeed,knots) 1 + } els{ 0 }
+                      }
+                      els{ 0 }
+                      (&gt;K:AILERON_TRIM_SET)
+                    }
+                  }
+                }
+              }
+              els{
+
+                (L:STOVLMode,enum) 2 ==
+                if{
+                  (L:lever_tailhook, bool) !
+                  if{
+                    0 (&gt;L:STOVLMode,enum) 11 (>L:STOVLTest, number) 0 (>K:AILERON_TRIM_SET)
+                    1 (&gt;L:TailhookDelay,bool)
+                    (L:lever_tailhook, bool) ! (&gt;L:lever_tailhook, bool)
+                    (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &lt; if{ 0 } els{ (L:VSTOLMaxThrottle,number) } @SetThrottle
+                    (A:AUTOPILOT HEADING LOCK,bool) if{ (&gt;K:AP_HDG_HOLD) }
+                    (A:AUTOPILOT ALTITUDE LOCK,bool) if{ (&gt;K:AP_ALT_HOLD) }
+                  }
+                  els{
+                    (A:AUTOPILOT HEADING LOCK,bool) !
+                    if{
+                      1 (&gt;L:STOVLMode,enum) 0 (>K:AILERON_TRIM_SET)
+                      (A:AUTOPILOT ALTITUDE LOCK,bool) if{ (&gt;K:AP_ALT_HOLD) }
+                      (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &lt; if{ 0 (&gt;K:THROTTLE_SET) 0 } els{ (L:VSTOLMaxThrottle,number) } @SetThrottle
+                    }
+                    els{
+                      (A:AUTOPILOT ALTITUDE LOCK,bool)
+                      if{
+                        (&gt;K:AP_ALT_HOLD)
+                        }
+                      }
+                    }
+                  }
+                }
+
+            
+                els{
+                  (L:STOVLMode,enum) 3 ==
+                  if{
+                    (L:lever_tailhook, bool) !
+                    if{
+                      0 (&gt;L:STOVLMode,enum) 12 (>L:STOVLTest, number)
+                      1 (&gt;L:TailhookDelay,bool)
+                      (L:lever_tailhook, bool) ! (&gt;L:lever_tailhook, bool)
+                      (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &lt; if{ 0 } els{ (L:VSTOLMaxThrottle,number) } @SetThrottle
+                      (A:AUTOPILOT HEADING LOCK,bool) if{ (&gt;K:AP_HDG_HOLD) }
+                      (A:AUTOPILOT ALTITUDE LOCK,bool) if{ (&gt;K:AP_ALT_HOLD) }
+                    }
+                    els{
+                      (A:AUTOPILOT HEADING LOCK,bool) !
+                      if{
+                        1 (&gt;L:STOVLMode,enum)
+                        (A:AUTOPILOT ALTITUDE LOCK,bool) if{ (&gt;K:AP_ALT_HOLD) }
+                        (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &lt; if{ 0 } els{ (L:VSTOLMaxThrottle,number) } @SetThrottle
+                      }
+                      els{
+                        (A:AUTOPILOT ALTITUDE LOCK,bool) !
+                        if{
+                          2 (&gt;L:STOVLMode,enum)
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      @SimRunning
+      if{
+        (L:STOVLMode,enum) 0 &gt;
+        if{
+          (L:VSTOLHoverThrust,number) 1 &gt; (A:TURB ENG1 N1,percent) 60 &gt; &amp;&amp;
+          (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &gt; (L:VSTOLPrevEnabled,bool) &amp;&amp; ||
+          (A:RADIO HEIGHT,feet) @VSTOLThresholdRH 10 + &gt; ||
+          if{ 1 (&gt;L:VSTOLEnabled,bool) }
+        }
+        els{
+          (L:VSTOLPrevEnabled,bool) (L:PrevSTOVLMode,enum) 0 &gt; &amp;&amp;
+          if{ 1 (&gt;L:VSTOLFinal,bool) }
+        }
+
+        (L:VSTOLFinal,bool)
+        if{
+          (A:AIRSPEED TRUE,knots) 180 &gt;
+          (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &lt; ||
+          (L:STOVLMode,enum) 0 &gt; ||
+          if{
+            0 (&gt;L:VSTOLFinal,bool)
+            0 (&gt;K:AILERON_TRIM_SET)
+          }
+          els{ 1 (&gt;L:VSTOLEnabled,bool) }
+        }
+      }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      @SimRunning (L:STOVLMode,enum) 1 &lt; &amp;&amp;
+      if{
+        0 @SetNozzle
+        0 (&gt;L:VSTOLAutoThrust,bool)
+
+        (L:VSTOLFinal,bool)
+        if{
+          (L:VSTOLMaxThrottle,number) @SetThrottle
+          1 (&gt;L:VSTOLAutoThrust,bool)
+          0 (&gt;L:VSTOLHoverThrust,number)
+          600 (&gt;L:VSTOLTargetLonSpeed,number)
+        }
+      }
+   </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      @SimRunning (L:STOVLMode,enum) 1 == &amp;&amp;
+      if{
+        (A:AIRSPEED TRUE,knots) 40  -
+        (A:TOTAL WEIGHT,pounds) 33000 -  60000 33000 -  / 0 max   40 *    -
+        1.5 /
+        20 (A:RADIO HEIGHT,feet) @VSTOLThresholdRH - - 2 / 1 max min
+        (&gt;L:VSTOLHoverThrust,number)
+
+        (A:GENERAL ENG1 THROTTLE LEVER POSITION,percent) 10 - 0 max 80 / d * 200 * 
+        (A:RADIO HEIGHT,feet) @VSTOLThresholdRH 1 + &gt;
+        if{ @PitchAirspeedComponent @WindSpeedLon - } els{ 0 } +
+        (&gt;L:VSTOLTargetLonSpeed,number)
+
+        (A:GENERAL ENG1 THROTTLE LEVER POSITION,percent) (L:VSTOLMaxThrottle,number) &gt;
+        if{ (L:VSTOLMaxThrottle,number) @SetThrottle }
+        0 (&gt;L:VSTOLAutoThrust,bool)
+        60    (A:GENERAL ENG1 THROTTLE LEVER POSITION,percent) 90 min 90 / 20 * -   (A:ELEVATOR POSITION,number) 20 * +   @SetNozzle
+      }
+   </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      @SimRunning (L:STOVLMode,enum) 1 &gt; &amp;&amp;
+      if{
+        (L:STOVLMode,enum) 2 ==
+        if{ (A:ELEVATOR POSITION,number) (&gt;L:VSTOLEp,number) }
+        (L:VSTOLEp,number) (L:VSTOLThrottleVariation,number) * + (&gt;L:VSTOLHoverThrust,number)
+        
+        (A:AILERON TRIM PCT,percent) sp10
+        l10 50 &gt; if{ 50 sp10 }
+        l10 -20 &lt; if{ -20 sp10 }
+        (L:VSTOLEnabled,bool) ! (L:VSTOLPrevEnabled,bool) &amp;&amp; (A:RADIO HEIGHT,feet) @VSTOLThresholdRH 10 + &lt; &amp;&amp; if{ 0 sp10 }
+        (L:VSTOLEnabled,bool) (L:VSTOLPrevEnabled,bool) ! &amp;&amp; (A:RADIO HEIGHT,feet) @VSTOLThresholdRH 10 + &lt; &amp;&amp;
+        (L:longitudinal_velocity_value,number) abs 2 &gt; &amp;&amp; if{ (L:longitudinal_velocity_value,number) 1.688 / sp10 }
+        l10 (A:AILERON TRIM PCT,percent) - abs 0.5 &gt; if{ l10 (&gt;K:AILERON_TRIM_SET) }
+        l10 (&gt;L:VSTOLTargetLonSpeed,number)
+
+        (L:VSTOLHoverThrottle,number) (L:VSTOLHoverThrust,number) + @SetThrottle
+        1 (&gt;L:VSTOLAutoThrust,bool)
+        (L:DECELL,bool)
+        if{ 103 }
+        els{ 90 (L:VSTOLTargetLonSpeed,number) (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &gt; if{ @WindSpeedLon } els{ 0 } + 2.5 / - }
+        @SetNozzle
+      }
+   </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      @SimRunning
+      if{
+
+        (L:STOVLMode,enum) 1 &gt; (L:VSTOLEnabled,bool) ! &amp;&amp; (L:VSTOLPrevEnabled,bool) &amp;&amp;
+        if{ (&gt;K:AP_HDG_HOLD) }
+
+        (L:STOVLMode,enum) 3 == (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &lt; &amp;&amp;
+        if{ (&gt;K:AP_ALT_HOLD) }
+
+        (L:STOVLMode,enum) 0 &gt;
+        if{ (A:AUTOPILOT MASTER,bool) if{ (&gt;K:AP_MASTER) } }
+
+        (L:STOVLMode,enum) 1 &gt;
+        if{
+          (A:AUTOPILOT AIRSPEED HOLD,bool) if{ (&gt;K:AP_AIRSPEED_OFF) }
+          (A:AUTOPILOT MACH HOLD,bool) if{ (&gt;K:AP_MACH_OFF) }
+        }
+
+        (L:STOVLMode,enum) 2 &lt;
+        (L:longitudinal_velocity_value,number) 1.688 / (L:VSTOLTargetLonSpeed,number) 2 + &lt; ||
+        if{ 0 (&gt;L:DECELL,bool) }
+
+        (L:TailhookDelay,bool) (L:NozzleAngle,number) 5 &lt; &amp;&amp;
+        (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &lt; (A:AIRSPEED TRUE,knots) 100 &gt; || &amp;&amp;
+        (L:TailhookDelay,bool) (L:tailhook_status, number) 95 &lt; &amp;&amp; ||
+        if{
+          0 (&gt;L:TailhookDelay,bool)
+          (L:lever_tailhook, bool) ! (&gt;L:lever_tailhook, bool)
+		  
+        }
+      }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      @SimRunning (L:STOVLMode,enum) 1 == (L:VSTOLFinal,bool) || &amp;&amp;
+      if{
+        (L:VSTOLEnabled,bool)
+        if{
+          (L:VSTOLFinal,bool)
+          if{ 1.4 }
+          els{
+            (L:VSTOLTargetLonSpeed,number) 1.688 * (L:longitudinal_velocity_value,number) - s10
+            0.5 l10 abs 500 / + min (* -0.5 *)    -0.3  (A:AIRSPEED TRUE,knots) 40 - 0 max 160 min 160 / 0.3 *   -      max 
+          }
+          (L:longitudinal_velocity_value,number) + (&gt;L:longitudinal_velocity_value,number)
+		  100 (&gt;STOVLValue, number)
+		  
+
+(*
+          (A:AILERON POSITION,number) -0.05 * (&gt;L:roll_velocity_value,number)
+          (A:ATTITUDE INDICATOR BANK DEGREES,degrees) 30 &gt; if{ -0.07 (&gt;L:roll_velocity_value,number) }
+          (A:ATTITUDE INDICATOR BANK DEGREES,degrees) -30 &lt; if{ 0.07 (&gt;L:roll_velocity_value,number) }
+
+          (A:ELEVATOR POSITION,number) -0.05 * (&gt;L:pitch_velocity_value,number)
+          (A:ATTITUDE INDICATOR PITCH DEGREES,degrees) 30 &gt; if{ -0.03 (&gt;L:pitch_velocity_value,number) }
+          (A:ATTITUDE INDICATOR PITCH DEGREES,degrees) -30 &lt; if{ 0.03 (&gt;L:pitch_velocity_value,number) }
+*)
+
+
+          (A:ATTITUDE INDICATOR PITCH DEGREES,degrees) @PitchCompensation  - (A:ELEVATOR POSITION,number) 30 * + 5 min -5 max -0.01 * (&gt;L:pitch_velocity_value,number)
+          (A:ATTITUDE INDICATOR BANK DEGREES,degrees)  (A:AILERON POSITION,number) 30 * + 5 min -5 max -0.01 * (&gt;L:roll_velocity_value,number)
+
+
+          (A:RADIO HEIGHT,feet) @VSTOLThresholdRH 1 + &gt;
+          if{ (A:ATTITUDE INDICATOR BANK DEGREES,degrees) -1.0 * @WindSpeedLat 1.688 * - }
+          els{ 0 }
+          (L:lateral_velocity_value,number) - 10 / (L:lateral_velocity_value,number) + (&gt;L:lateral_velocity_value,number) 
+
+          (A:ATTITUDE INDICATOR BANK DEGREES,degrees) -0.01 *
+          (A:RUDDER POSITION,number) + 0.05 * 
+          (L:yaw_velocity_value,number) - 5 / (L:yaw_velocity_value,number) + (&gt;L:yaw_velocity_value,number)
+
+          (L:VSTOLHoverThrust,number) 0.9 *
+          (A:ATTITUDE INDICATOR BANK DEGREES,degrees) 57.3 / cos *
+          90 (A:ATTITUDE INDICATOR PITCH DEGREES,degrees) abs - 90 / *
+          (L:vertical_velocity_value,number) - 10 / (L:vertical_velocity_value,number) + (&gt;L:vertical_velocity_value,number)
+
+          2 (&gt;L:vertical_velocity_control,number)
+          2 (&gt;L:pitch_velocity_control,number)
+          2 (&gt;L:roll_velocity_control,number) 
+          2 (&gt;L:lateral_velocity_control,number)
+          2 (&gt;L:longitudinal_velocity_control,number)
+          2 (&gt;L:yaw_velocity_control,number)  
+		  30 (&gt;STOVLTest, number)
+        }
+      }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      @SimRunning (L:STOVLMode,enum) 1 &gt; &amp;&amp;
+      if{
+        (L:VSTOLEnabled,bool)
+        if{
+          (L:VSTOLFinal,bool)
+          if{ 1.4 }
+          els{
+            (L:VSTOLTargetLonSpeed,number) 1.688 * (L:longitudinal_velocity_value,number) -
+            0.3 min -0.3 (L:DECELL,bool) 0.7 * - max 
+          }
+          (L:longitudinal_velocity_value,number) + (&gt;L:longitudinal_velocity_value,number)
+		  200 (&gt;STOVLValue, number)
+
+          (A:AILERON POSITION,number) 10 * @WindSpeedLat 1.688 * 4 / + 10 min -10 max
+          (A:ATTITUDE INDICATOR BANK DEGREES,degrees) +  (L:VSTOL_RollJitter,number) + -0.01 * (&gt;L:roll_velocity_value,number)
+
+          (A:RADIO HEIGHT,feet) @VSTOLThresholdRH 1 + &gt;
+          if{ (A:ATTITUDE INDICATOR BANK DEGREES,degrees) -4.0 * @WindSpeedLat 1.688 * - }
+          els{ 0 }
+          (L:lateral_velocity_value,number) - 10 / (L:lateral_velocity_value,number) + (&gt;L:lateral_velocity_value,number)
+
+          (A:RUDDER POSITION,number) (L:VSTOL_YawJitter,number) + 0.12 *
+          (L:yaw_velocity_value,number) - 5 / (L:yaw_velocity_value,number) + (&gt;L:yaw_velocity_value,number)
+
+          (L:STOVLMode,enum) 3 == (L:VSTOLHoverThrust,number) abs 0.1 &lt; &amp;&amp;
+          if{ 
+            (A:PLANE ALTITUDE,feet) (L:VSTOLPrevPA,number) - -10.0 *
+          }
+          els{
+            (A:PLANE ALTITUDE,feet) (&gt;L:VSTOLPrevPA,number)
+            (L:VSTOLHoverThrust,number) 0.9 *
+            (A:ATTITUDE INDICATOR PITCH DEGREES,degrees) 57.3 / sin (L:longitudinal_velocity_value,number) * +
+            (A:ATTITUDE INDICATOR BANK DEGREES,degrees) abs 57.3 / sin (L:lateral_velocity_value,number) abs * +
+            (L:VSTOLVsOffset,number) +
+            (L:vertical_velocity_value,number) - 10 / (L:vertical_velocity_value,number) +
+          }
+          (&gt;L:vertical_velocity_value,number)
+
+          (A:ATTITUDE INDICATOR PITCH DEGREES,degrees) (L:VSTOLGroundPitch,number) - (L:VSTOL_PitchJitter,number) + -0.005 * (&gt;L:pitch_velocity_value,number)
+
+          2 (&gt;L:vertical_velocity_control,number)
+          2 (&gt;L:pitch_velocity_control,number)
+          2 (&gt;L:roll_velocity_control,number) 
+          2 (&gt;L:lateral_velocity_control,number)
+          2 (&gt;L:longitudinal_velocity_control,number)
+          2 (&gt;L:yaw_velocity_control,number)
+		  40 (&gt;STOVLTest, number)		  
+        }
+      }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      @SimRunning
+      if{
+        (L:VSTOLEnabled,bool) ! (A:RADIO HEIGHT,feet) @VSTOLThresholdRH &lt; &amp;&amp; (L:STOVLMode,enum) 0 &gt; &amp;&amp; (A:BRAKE PARKING POSITION,bool) !  &amp;&amp;
+        (A:BRAKE LEFT POSITION,percent) 10 &lt; (A:BRAKE RIGHT POSITION,percent) 10 &lt; &amp;&amp; (L:STOVLMode,enum) 1 &gt; || &amp;&amp;
+        if{
+          2 (&gt;L:longitudinal_velocity_control,number)
+		  50 (&gt;STOVLTest, number)
+          (A:PLANE HEADING DEGREES TRUE,degrees) (L:PHDTPrev,number) - abs (A:GROUND VELOCITY,knots) * 15 / 0.2 max sp11
+          (L:VSTOLTargetLonSpeed,number) 1.688 *
+          (A:CENTER WHEEL RPM,RPM) 60 / (L:VSTOLNoseWheelRadius,number) 6.28 * * - s10
+          d 0 &gt;
+          if{ l11 l10 abs 350 / + min 0.01 max }
+          els{ -0.01 min l11 neg max } 
+          (L:longitudinal_velocity_value,number) + (&gt;L:longitudinal_velocity_value,number)
+		  300 (&gt;STOVLValue, number)
+        }
+      }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      (L:lever_tailhook, bool) (L:tailhook_status, number) 20 &gt; &amp;&amp; 
+      (L:lever_tailhook, bool) ! (L:tailhook_status, number) 62 &gt; &amp;&amp; ||
+      if{ 145 (A:VELOCITY BODY Z,knots) - 25 / 100 * 0 max 100 min }
+      els{ 0 }
+      (L:LiftFanIntake,number) - 4 min -4 max (L:LiftFanIntake,number) +
+      (&gt;L:LiftFanIntake,number)
+
+      (L:STOVLMode,enum) 0 &gt;
+      if{
+        (A:RUDDER POSITION,percent) 0 &lt;
+        if{ (A:RUDDER POSITION,percent) abs 7 /  0 max 10 min }
+        els{ 100 (A:RUDDER POSITION,percent) abs 7 / - 90 max 100 min }
+      }
+      els{ 0 }
+      (&gt;L:NozzleRoll,number) 
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+      (L:STOVLMode,enum) 1 &gt;
+      if{ (A:EXIT OPEN:2,percent) 75 max }
+      els{ (A:EXIT OPEN:2,percent) }
+      (L:InnerBayDoors,number) - 10 min -10 max (L:InnerBayDoors,number) + (&gt;L:InnerBayDoors,number)
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+	  (L:STOVLMode,enum) (L:PrevSTOVLMode,enum) !=
+	  (L:PrevSTOVLMode,enum) 2 == and
+	  (L:STOVLMode,enum) 1 == and
+	  (A:SIM ON GROUND, bool) and
+	  if{ 1 (>L:ThrottleSpoolDown, number) }
+
+	  (L:STOVLMode,enum) 2 &lt;
+	  (A:SIM ON GROUND, bool) and
+	  (L:ThrottleSpoolDown, number) 0 &gt;
+	  if{ (L:ThrottleSpoolDown, number) 1 + (>L:ThrottleSpoolDown, number) 0 (&gt;K:THROTTLE_SET) 
+	  (A:SURFACE RELATIVE GROUND SPEED,feet/second) 5 &gt; if{ (A:VELOCITY BODY Z,feet/second) 3 - (>A:VELOCITY BODY Z,feet/second) }
+	  (A:SURFACE RELATIVE GROUND SPEED,feet/second) 5 &lt; (A:SURFACE RELATIVE GROUND SPEED,feet/second) 1 &gt; and if{ (A:VELOCITY BODY Z,feet/second) 1 - 0 max (>A:VELOCITY BODY Z,feet/second) } 
+	  (A:SURFACE RELATIVE GROUND SPEED,feet/second) -1 &gt; (A:SURFACE RELATIVE GROUND SPEED,feet/second) -5 &lt; and if{ (A:VELOCITY BODY Z,feet/second) 1 + 0 min (>A:VELOCITY BODY Z,feet/second) } 
+	  (A:SURFACE RELATIVE GROUND SPEED,feet/second) -5 &lt; if{ (A:VELOCITY BODY Z,feet/second) 3 + (>A:VELOCITY BODY Z,feet/second) }
+	  667 (>L:STOVLTest, number)
+	  }	  
+	 
+	  (L:ThrottleSpoolDown, number) 50 &gt;
+	  if{ 0 (>L:ThrottleSpoolDown, number) }	 
+    </Value>
+  </Select>
+</Element>
+
+
+<Element>
+  <Select>
+    <Value>
+      (L:longitudinal_velocity_control,number) 0 == 
+      if{ (A:VELOCITY BODY Z,knots) 1.688 * (&gt;L:longitudinal_velocity_value,number) }
+      (L:lateral_velocity_control,number) 0 == 
+      if{ (A:VELOCITY BODY X,knots) 1.688 * (&gt;L:lateral_velocity_value,number) }
+      (L:vertical_velocity_control,number) 0 ==
+      if{ (A:VERTICAL SPEED, feet per second) (&gt;L:vertical_velocity_value,number) }
+      (L:yaw_velocity_control,number) 0 ==
+      if{ 0 (&gt;L:yaw_velocity_value,number) }
+
+      (A:PLANE HEADING DEGREES TRUE,degrees) (&gt;L:PHDTPrev,number)
+      (L:STOVLMode,enum) (&gt;L:PrevSTOVLMode,enum)
+      (L:VSTOLEnabled,bool) (&gt;L:VSTOLPrevEnabled,bool)
+      (A:IS SLEW ACTIVE,bool) (&gt;L:VSTOL_PrevSlewActive,bool)
+      (P:ABSOLUTE TIME,seconds) (&gt;L:VSTOL_Time,number)
+    </Value>
+  </Select>
+</Element>
+
+<Comment>
+If plane is on the ground or at a very low altitude and in Hover mode, make sure it does not accelerate
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+	(L:STOVLMode,enum) 1 &gt; (A:RADIO HEIGHT,feet) 9 &lt; and (L:STOVLMovingShipDynamics,bool) ! and if{ 
+	0 (>K:AILERON_TRIM_SET)
+	2 (>L:longitudinal_velocity_control,number)
+	60 (>L:STOVLTest, number)
+	0 (>L:longitudinal_velocity_value,number)
+	}
+    </Value>
+  </Select>
+</Element>
+
+
+<Comment>
+Overwrites flight model variables
+</Comment>
+
+
+<Element>
+  <Select>
+    <Value>
+(L:longitudinal_velocity_control,number) 2 == (L:F35Model, number) 1 == and if{ (L:longitudinal_velocity_value,number) (>A:VELOCITY BODY Z,feet/second) }
+(L:lateral_velocity_control,number) 2 == (L:F35Model, number) 1 == and if{ (L:lateral_velocity_value,number) (>A:VELOCITY BODY X,feet/second) }
+(L:vertical_velocity_control,number) 2 == (L:F35Model, number) 1 == and if{ (L:vertical_velocity_value,number) (>A:VELOCITY BODY Y,feet/second) }
+
+(L:roll_velocity_control,number) 2 == (L:F35Model, number) 1 == and if{ (L:roll_velocity_value,number) (>A:ROTATION VELOCITY BODY Z,radians per second) }
+(L:pitch_velocity_control,number) 2 == (L:F35Model, number) 1 == and if{ (L:pitch_velocity_value,number) (>A:ROTATION VELOCITY BODY X,radians per second) }
+(L:yaw_velocity_control,number) 2 == (L:F35Model, number) 1 == and if{ (L:yaw_velocity_value,number) (>A:ROTATION VELOCITY BODY Y,radians per second) }
+
+(L:dsd_heading_control,number) 2 == (L:F35Model, number) 1 == and if{ (L:dsd_heading_value,number) (>A:PLANE HEADING DEGREES TRUE,degrees) }
+(L:dsd_pitch_control,number) 2 == (L:F35Model, number) 1 == and if{ (L:dsd_pitch_value,number) (>A:PLANE PITCH DEGREES,degrees) }
+(L:dsd_bank_control,number) 2 == (L:F35Model, number) 1 == and if{ (L:dsd_bank_value,number) (>A:PLANE BANK DEGREES,degrees) } 
+(L:dsd_altitude_control,number) 2 == (L:F35Model, number) 1 == and if{ (L:dsd_altitude_value,number) (>A:PLANE ALTITUDE,feet) }
+
+    </Value>
+  </Select>
+</Element>
+
+
+<Comment>
+If F-35 is not B model, reject STOVL mode
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+	(L:F35Model, number) 1 != (A:Plane Altitude, feet) 20000 &gt; or if{ 0 (&gt;L:STOVLMode,enum) 13 (>L:STOVLTest, number) }
+	</Value>
+  </Select>
+</Element>
+
+<Comment>
+Limits engagement depending on speed, bank and pitch
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+	(A:AIRSPEED INDICATED, knots) 240 &gt; (A:ATTITUDE INDICATOR PITCH DEGREES,degrees) abs 20 &gt; or  (A:ATTITUDE INDICATOR BANK DEGREES,degrees) abs 20 &gt; or
+	if{ 0 (&gt;L:STOVLMode,enum) 13 (>L:STOVLTest, number) }
+	</Value>
+  </Select>
+</Element>
+
+<Comment>
+PEDAL TURN for all models
+</Comment>
+
+<Element>
+  <Select>
+    <Value>
+	 (A:VELOCITY BODY X, knots) 2 pow (A:VELOCITY BODY Y, knots) 2 pow + (A:VELOCITY BODY Z, knots) 2 pow + sqrt (>L:TotalBodySpeed, knots)
+	 75 75 (L:TotalBodySpeed, knots) - abs 75 min 0 max - (>L:TotalBodySpeedAverage, knots)
+     (A:AIRSPEED INDICATED, knots) 150 &lt; 
+	 (A:SIM ON GROUND, bool) ! and
+	 (L:STOVLMode, number) 0 == and
+	 (A:Attitude indicator pitch degrees,degrees) abs 20 &lt; and
+	 (A:Attitude indicator bank degrees,degrees) abs 20 &lt; and
+	 (A:GEAR HANDLE POSITION, percent) 10 &lt; and 
+	 (A:RUDDER POSITION,number) abs 100 &gt; and
+	 if{
+		(A:RUDDER POSITION,number) 0.3 * (L:TotalBodySpeedAverage, knots) 75 / 1 min 0 max * + (>A:ROTATION VELOCITY BODY Y,radians per second)	 
+        (A:Attitude indicator bank degrees,degrees) 20 &gt; if{ 20 (>A:PLANE BANK DEGREES,degrees) } 	
+        (A:Attitude indicator bank degrees,degrees) -20 &lt; if{ -20 (>A:PLANE BANK DEGREES,degrees) } 		
+		(A:Attitude indicator pitch degrees,degrees) 45 &gt; if{ 45 (>A:PLANE PITCH DEGREES,degrees) }		
+		(A:Attitude indicator pitch degrees,degrees) -45 &lt; if{ -45 (>A:PLANE PITCH DEGREES,degrees) }
+	 }
+	 (A:RUDDER POSITION,number) (>L:TestRudderPosition, number)
+	</Value>
+  </Select>
+</Element>
+
+
+
+</Gauge>

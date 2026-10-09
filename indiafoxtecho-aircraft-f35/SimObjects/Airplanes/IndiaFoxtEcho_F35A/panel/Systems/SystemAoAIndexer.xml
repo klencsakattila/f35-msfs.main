@@ -1,0 +1,117 @@
+<Gauge Name="AvionicsControl" Version="1.0">
+
+<Comment>
+T45C AOA INDEXER
+</Comment>
+
+<Comment>
+*************************
+AOA INDEXER
+Aircraft Specific Formula
+
+Formula rebuilt on the basis of the T-45 HUD setting so that:
+- 7.2 alpha is "ON SPEED" -> results in 17 units AOA
+- bracket is +/- 1 degree 
+
+NOTE: real aircraft "ON SPEED" seems to be 8° alpha
+
+*************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:INCIDENCE ALPHA, degrees) 0 + 60 min 0 max (>L:AOADegrees, number)
+(A:INCIDENCE ALPHA, degrees) 9.8 + 60 min 0 max (>L:AOAUnits, number)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*************************
+AOA CHEVRON
+From NATOPS flight manual
+- ON SPEED at 17 units (+/- 1)
+- FAST at 16 units, chevron lit at 16.5 (slightly fast)
+- SLOW at 18 units, chevron lit at 17.5 (slightly slow)
+Slow flash if 
+*************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+0 (>L:AOAFast, bool)
+0 (>L:AOAOnSpeed, bool)
+0 (>L:AOASlow, bool)
+0 (>L:AOAGREEN, bool)
+0 (>L:AOAAMBER, bool)
+0 (>L:AOARED, bool)
+1 (>L:AOAFlash, bool)
+(L:SwitchHookBypass,bool) if{ 1 (>L:AOAFlash, bool) }
+(L:SwitchHookBypass,bool) ! (L:tailhook_animation, number) 49 &lt; and if{ (L:SlowflashTime, bool) (>L:AOAFlash, bool) } els{ 1 (>L:AOAFlash, bool) }
+(A:GEAR CENTER POSITION, percent) 96 &gt; if{
+(L:AOAUnits, number) 17.50 &gt; if{ (L:AOAFlash, bool) (>L:AOASlow, bool) }
+(L:AOAUnits, number) 16.50 &lt; if{ (L:AOAFlash, bool) (>L:AOAFast, bool) }
+(L:AOAUnits, number) 16.01 &gt; (L:AOAUnits, number) 17.99 &lt; and if{ (L:AOAFlash, bool) (>L:AOAOnSpeed, bool) }
+}
+(A:GEAR CENTER POSITION, percent) 96 &gt; (L:tailhook_animation, number) 49 &gt; (L:SwitchHookBypass,bool) or and if{
+(L:AOAUnits, number) 18.00 &gt; if{ 1 (>L:AOAGREEN, bool) }
+(L:AOAUnits, number) 16.00 &lt; if{ 1 (>L:AOARED, bool) }
+(L:AOAUnits, number) 16.01 &gt; (L:AOAUnits, number) 17.99 &lt; and if{ 1 (>L:AOAAMBER, bool) }
+}
+(A:SIM ON GROUND, bool) if{
+0 (>L:AOAFast, bool)
+0 (>L:AOAOnSpeed, bool)
+0 (>L:AOASlow, bool)
+0 (>L:AOAGREEN, bool)
+0 (>L:AOAAMBER, bool)
+0 (>L:AOARED, bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*************************
+STALL WARNING
+
+Let the sim decide the stall warning 
+
+*************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+0 (>L:StallWarning, bool)
+(A:SIM ON GROUND, bool) ! if{
+(A:STALL WARNING, bool) or if{ 1 (>L:StallWarning, bool) }
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+*************************
+TEST
+*************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ElectricalPowerAvailable, bool) (L:AOATester, bool) and if{ 
+1 (>L:AOAFast, bool)
+1 (>L:AOAOnSpeed, bool)
+1 (>L:AOASlow, bool)
+}
+</Value>
+</Select>
+</Element>
+
+</Gauge>
+
+
+

@@ -1,0 +1,94 @@
+<Gauge Name="AvionicsControl" Version="1.0">
+
+<Element>
+<Select>
+<Value>
+(L:ADSHTSystem,enum) 2 &gt; if{ 0 (>L:ADSHTSystem,enum) }
+(L:EngineIceSystem,enum) 2 &gt; if{ 0 (>L:EngineIceSystem,enum) }
+(A:PITOT HEAT, bool) (>L:TestIcePitotHeat, bool)
+(A:ENG ANTI ICE:1, bool) (>L:TestIceEngineHeat, bool)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+ASD HT function
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:ADSHTSystem,enum) 1 ==
+if{
+(A:PITOT HEAT, bool) ! (A:Ambient temperature, celsius) 0 &lt; and if{ 1 (>K:PITOT_HEAT_ON, bool) }
+els{
+(A:PITOT HEAT, bool) (A:Ambient temperature, celsius) 0 &gt; and if{ 1 (>K:PITOT_HEAT_OFF, bool) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:PITOT HEAT, bool) (L:ADSHTSystem,enum) 0 == and 
+if{
+(>K:PITOT_HEAT_OFF, bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:PITOT HEAT, bool) ! (L:ADSHTSystem,enum) 2 == and 
+if{
+(>K:PITOT_HEAT_ON, bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+ENGINE ANTI ICE function
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:EngineIceSystem,enum) 1 == 
+if{
+(A:ENG ANTI ICE:1, bool) ! (A:STRUCTURAL ICE PCT, percent) 10 &gt; and if{ 1 (>K:ANTI_ICE_TOGGLE, bool) }
+els{
+(A:ENG ANTI ICE:1, bool) (A:STRUCTURAL ICE PCT, percent) 10 &lt; and if{ 1 (>K:ANTI_ICE_TOGGLE, bool) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:ENG ANTI ICE:1, bool) (L:EngineIceSystem,enum) 0 == and
+if{
+1 (>K:ANTI_ICE_TOGGLE, bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:ENG ANTI ICE:1, bool) ! (L:EngineIceSystem,enum) 2 == and
+if{
+0 (>K:ANTI_ICE_TOGGLE, bool)
+}
+</Value>
+</Select>
+</Element>
+
+</Gauge>

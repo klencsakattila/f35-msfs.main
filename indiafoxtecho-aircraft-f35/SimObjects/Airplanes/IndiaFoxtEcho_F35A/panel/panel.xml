@@ -1,0 +1,39 @@
+<PlaneHTMLConfig>
+
+	
+	<Instrument>
+		<Name>AS04F_DDI_4</Name>
+		<Electric>
+			<Simvar name="CIRCUIT AVIONICS ON" unit="Boolean"/>
+		</Electric>
+		<HighlightBackgroundOpacity>0.45</HighlightBackgroundOpacity>
+	</Instrument>
+ 
+    <Instrument>
+    <Name>B747_8_SAI</Name>
+		<Electric>
+			<Simvar name="CIRCUIT AVIONICS ON" unit="Boolean"/>
+		</Electric>
+  </Instrument>
+
+	<Instrument>
+		<Name>F35_TFLIR</Name>
+		<SyntheticVision>True</SyntheticVision>
+		<AltimeterIndex>0</AltimeterIndex>
+		<DisplayMode>PFD</DisplayMode>
+		<ReversionaryMode>True</ReversionaryMode>
+		<Electric>
+			<Simvar name="CIRCUIT AVIONICS ON" unit="Boolean"/>
+		</Electric>
+	</Instrument>  
+	
+	<Instrument>
+		<Name>F35_MFD</Name>
+		<DisplayMode>MFD</DisplayMode>
+		<Electric>
+			<Simvar name="CIRCUIT AVIONICS ON" unit="Boolean"/>
+		</Electric>
+	</Instrument>
+
+  
+</PlaneHTMLConfig>

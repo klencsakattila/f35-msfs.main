@@ -1,0 +1,70 @@
+﻿<link rel="stylesheet" href="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI.css" />
+
+<script type="text/html" id="AS04F_DDI">
+    <glasscockpit-highlight id="highlight"></glasscockpit-highlight>
+    <div id="Mainframe">
+        <div id="Electricity" state="off">
+            <f35-ddi-not-implemented></f35-ddi-not-implemented>
+            <f35-ddi-adi></f35-ddi-adi>
+            <f35-ddi-hud></f35-ddi-hud>
+            <f35-acc-ddi-checklist></f35-acc-ddi-checklist>
+            <f35-ddi-engine></f35-ddi-engine>
+            <f35-ddi-fuel></f35-ddi-fuel>
+            <f35-ddi-menu-tactical></f35-ddi-menu-tactical>
+            <f35-acc-ddi-menu-support></f35-acc-ddi-menu-support>
+            <f35-acc-ddi-hsi-aircraft-data></f35-acc-ddi-hsi-aircraft-data>
+            <f35-acc-ddi-hsi-tacan-data></f35-acc-ddi-hsi-tacan-data>
+            <f35-acc-ddi-hsi-waypoint-data></f35-acc-ddi-hsi-waypoint-data>
+            <f35-acc-ddi-fpas></f35-acc-ddi-fpas>
+            <f35-acc-ddi-hsi></f35-acc-ddi-hsi>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" import-script="/JS/SimPlane.js"></script>
+
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/Shared/Map/MapInstrument.html"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/Templates/Highlight/highlight.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/Utils/RadioNav.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/FlightPlan.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/FlightPlanManager.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/GeoCalc.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/LogicElements/SearchField.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/Waypoint.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/Runway.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/Approach.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/NearestWaypoint.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/LogicElements/SelectableElement.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/LogicElements/ContextualMenu.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/NavSystem.js"></script>
+
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_NotImplemented.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_ADI.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_HUD.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_Engine.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_Fuel.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_MenuTactical.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_MenuSupport.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI_Checklist.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI_HSIAircraftData.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI_HSITacanData.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI_HSIWaypointData.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI_FPAS.html"></script>
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI_HSI.html"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_Map.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_HSIndicator.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI_HSIndicator.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_WaypointManager.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI_WaypointManager.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_Page.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_HSI.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/Shared/DDI/F35_DDI_MenuSupport.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/F35ACC/DDI/F35ACC_DDI_MenuSupport.js"></script>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    # ======================================================== #
+    #                 	     F-35 A/B/C                        #
+    #                                                          #
+    #                Created by IndiaFoxtEcho                  #
+    #                                                          #
+    #        Engine sound effects created by Echo 19 Audio     #
+    #                                                          #
+    #           	   (https://echo19audio.com)      				   #
+    #                                                          #
+    #                           2024                           #
+    # ======================================================== #
+-->
+
+
+<SoundInfo Version="1.10">
+
+	<WwisePackages>
+		<MainPackage Name="IndiaFoxtEcho_F35_AI"/>
+    <AdditionalPackage Name="F35_Engine_AMB_AI" />
+	</WwisePackages>
+
+  <EngineSoundPresets>
+      <Sound WwiseEvent="Starter" FadeOutType="2" FadeOutTime="5" WwiseData="true" EngineIndex="1" BreakOnStop="true" >  
+    </Sound>
+
+    <Sound WwiseEvent="CombustionStart" FadeOutType="2" FadeOutTime="0.2" ConeHeading="0"  WwiseData="true" EngineIndex="1" >  
+	  </Sound>
+      <Sound WwiseEvent="Shutdown" ConeHeading="0" RPMMin="10000" WwiseData="true" EngineIndex="1" > 
+      </Sound>
+
+      <Sound WwiseEvent="JetWhine" CustomSuffix="Front" FadeOutType="2" FadeOutTime="1" ConeHeading="0" RPMMin="3000" WwiseData="true" EngineIndex="1">
+        <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />  
+        <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+	      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+      </Sound>
+      <Sound WwiseEvent="JetWhine" CustomSuffix="Rear" FadeOutType="2" FadeOutTime="1" ConeHeading="0" RPMMin="3000" WwiseData="true" EngineIndex="1">
+        <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />  
+        <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+	      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+      </Sound>
+      <Sound WwiseEvent="JetWhine" FadeOutType="2" FadeOutTime="1" ConeHeading="0" RPMMin="3000" WwiseData="true" EngineIndex="1">
+        <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />  
+        <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+	      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+      </Sound>
+      <Sound WwiseEvent="JetWhine" CustomSuffix="front_far" FadeOutType="2" FadeOutTime="1" ConeHeading="0" RPMMin="3000" WwiseData="true" EngineIndex="1">
+        <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />  
+        <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+	      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+      </Sound>
+      <Sound WwiseEvent="JetWhine" CustomSuffix="rear_far" FadeOutType="2" FadeOutTime="1" ConeHeading="0" RPMMin="3000" WwiseData="true" EngineIndex="1">
+        <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />  
+        <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+	      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+        </Sound>
+      <Sound WwiseEvent="JetWhine" FadeOutType="2" FadeOutTime="1" ConeHeading="0" RPMMin="3000" WwiseData="true" EngineIndex="1">
+        <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />  
+        <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+	      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+      </Sound>
+  </EngineSoundPresets>
+  
+  <GroundSounds>
+    <Sound WwiseEvent="CENTER_TOUCHDOWN" FadeOutType="2" FadeOutTime="0.5" WwiseData="true" />
+  	<Sound WwiseEvent="LEFT_TOUCHDOWN" FadeOutType="2" FadeOutTime="0.5" WwiseData="true" />  
+    <Sound WwiseEvent="RIGHT_TOUCHDOWN" FadeOutType="2" FadeOutTime="0.5" WwiseData="true" />
+  </GroundSounds>
+  
+  <MiscellaneousSounds>
+    <Sound WwiseEvent="SONIC_BOOM" WwiseData="true" ViewPoint="Outside"/> 
+  </MiscellaneousSounds>
+  
+  <SimVarSounds> 
+
+  <!-- ENGINES ====================================================================== -->    
+  
+	  <Sound WwiseEvent="eng1_combustion_distance_rear" ConeHeading="180" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" FadeOutTime="1" FadeOutType="2" >
+      <Range LowerBound="10"/>
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+      <WwiseRTPC SimVar="VERTICAL SPEED" Units="FEET PER SECOND" Index="0" RTPCName="SIMVAR_VERTICAL_SPEED" />
+      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+    </Sound>
+
+    <Sound WwiseEvent="eng1_combustion_flyby_rear" ConeHeading="180" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" FadeOutType="2" FadeOutTime="10" BreakOnStop="True" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+    </Sound>
+
+    <Sound WwiseEvent="eng1_combustion" CustomSuffix="Front" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" ConeHeading="0" FadeOutType="2" FadeOutTime="10" BreakOnStop="True" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+  	  	  
+	  </Sound>
+    <Sound WwiseEvent="eng1_combustion" CustomSuffix="Front_Far" FadeOutType="2" FadeOutTime="1" ConeHeading="0" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" BreakOnStop="True" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+	    <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="2" RTPCReleaseTime="1"/>  	  	  
+	  </Sound>
+    <Sound WwiseEvent="eng1_combustion" CustomSuffix="Rear" FadeOutType="2" FadeOutTime="1" ConeHeading="180" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" BreakOnStop="True" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="2" RTPCReleaseTime="1"/>  	  	  
+	  </Sound>
+    <Sound WwiseEvent="eng1_combustion" CustomSuffix="Rear_Far" FadeOutType="2" FadeOutTime="1" ConeHeading="180" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" BreakOnStop="True" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="2" RTPCReleaseTime="1"/>  	  	  
+	  </Sound>
+    <Sound WwiseEvent="eng1_combustion" CustomSuffix="Distance_Front" ConeHeading="0" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" BreakOnStop="True" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" WwiseData="true" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+    </Sound>
+    <Sound WwiseEvent="eng1_combustion" CustomSuffix="Flyby_Front" ConeHeading="0" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" BreakOnStop="True" FadeOutType="2" FadeOutTime="3" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+    </Sound>
+    <Sound WwiseEvent="eng1_combustion" CustomSuffix="Flyby_Mid_R" ConeHeading="-95"  WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" BreakOnStop="True" FadeOutType="2" FadeOutTime="3" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+    </Sound>
+    <Sound WwiseEvent="eng1_combustion" CustomSuffix="Flyby_Mid_L" ConeHeading="95" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" BreakOnStop="True" FadeOutType="2" FadeOutTime="3" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+    </Sound>
+    <Sound WwiseEvent="eng1_combustion" CustomSuffix="Flyby_Mid_Bottom" ConePitch="-90" ConeHeading="0" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" BreakOnStop="True" FadeOutType="2" FadeOutTime="3" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+    </Sound>
+    <Sound WwiseEvent="eng1_combustion" CustomSuffix="Flyby_Mid_Top" ConePitch="90" ConeHeading="0" WwiseData="true" SimVar="TURB ENG N1" Units="PERCENT" Index="1" BreakOnStop="True" FadeOutType="2" FadeOutTime="3" >
+      <Range LowerBound="10" />
+      <WwiseRTPC SimVar="TURB ENG N1" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_N1" />
+      <WwiseRTPC SimVar="GROUND VELOCITY" Units="Knots" Index="0" RTPCName="SIMVAR_GROUND_VELOCITY" />
+      <WwiseRTPC SimVar="TURB ENG AFTERBURNER PCT ACTIVE" Units="PERCENT" Index="1" RTPCName="SIMVAR_TURB_ENG_AFTERBURNER_PCT_ACTIVE" RTPCAttackTime="1" RTPCReleaseTime="1"/>
+    </Sound>
+
+    
+    <Sound WwiseEvent="airframe_gforce" WwiseData="true" SimVar="G FORCE" Units="G FORCE" Index="0" FadeOutType="2" FadeOutTime="1" >
+      <Range LowerBound="4" />
+      <WwiseRTPC SimVar="G FORCE" Units="G FORCE" Index="0" RTPCName="SIMVAR_G_FORCE" />
+    </Sound>
+
+  </SimVarSounds> 
+
+</SoundInfo>

@@ -1,0 +1,78 @@
+<Gauge Name="CanopyControl" Version="1.0">
+
+<Comment>
+SpeedBrake
+</Comment>
+
+<Element>
+<Select>
+<Value>
+50 (>L:SpeedBrakeSwitch, number)
+(A:SPOILERS LEFT POSITION, number) (L:PreviousSpeedbrakePosition) &gt; if{ 100 (>L:SpeedBrakeSwitch, number) }
+(A:SPOILERS LEFT POSITION, number) (L:PreviousSpeedbrakePosition) &lt; if{ 0 (>L:SpeedBrakeSwitch, number) }
+(A:SPOILERS LEFT POSITION, number) (>L:PreviousSpeedbrakePosition)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Rudder Trim
+</Comment>
+
+<Element>
+<Select>
+<Value>
+50 (>L:RudderTrimSwitch, number)
+(A:RUDDER TRIM PCT, number) (L:PreviousRudderTrimPosition) &gt; if{ 100 (>L:RudderTrimSwitch, number) }
+(A:RUDDER TRIM PCT, number) (L:PreviousRudderTrimPosition) &lt; if{ 0 (>L:RudderTrimSwitch, number) }
+(A:RUDDER TRIM PCT, number) (>L:PreviousRudderTrimPosition)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Aileron Trim
+</Comment>
+
+<Element>
+<Select>
+<Value>
+50 (>L:AileronTrimSwitch, number)
+(A:AILERON TRIM PCT, number) (L:PreviousAileronTrimPosition) &gt; if{ 100 (>L:AileronTrimSwitch, number) }
+(A:AILERON TRIM PCT, number) (L:PreviousAileronTrimPosition) &lt; if{ 0 (>L:AileronTrimSwitch, number) }
+(A:AILERON TRIM PCT, number) (>L:PreviousAileronTrimPosition)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Elevator Trim
+</Comment>
+
+<Element>
+<Select>
+<Value>
+50 (>L:ElevatorTrimSwitch, number)
+(A:ELEVATOR TRIM PCT, number) (L:PreviousElevatorTrimPosition) &gt; if{ 100 (>L:ElevatorTrimSwitch, number) }
+(A:ELEVATOR TRIM PCT, number) (L:PreviousElevatorTrimPosition) &lt; if{ 0 (>L:ElevatorTrimSwitch, number) }
+(A:ELEVATOR TRIM PCT, number) (>L:PreviousElevatorTrimPosition)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Flap
+</Comment>
+
+<Element>
+<Select>
+<Value>
+50 (>L:FlapSwitch, number)
+(A:TRAILING EDGE FLAPS RIGHT PERCENT, number) (L:PreviousFlapPosition) &gt; if{ 100 (>L:FlapSwitch, number) }
+(A:TRAILING EDGE FLAPS RIGHT PERCENT, number) (L:PreviousFlapPosition) &lt; if{ 0 (>L:FlapSwitch, number) }
+(A:TRAILING EDGE FLAPS RIGHT PERCENT, number) (>L:PreviousFlapPosition)
+</Value>
+</Select>
+</Element>
+
+</Gauge>

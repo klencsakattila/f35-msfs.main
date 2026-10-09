@@ -1,0 +1,124 @@
+<Gauge Name="Replacement Animations for launch bar and tailhook" Version="1.0">
+
+<Comment>
+This code serves to replace default launch bar and tailhook animations as they
+are not currently working in the sim.
+Variables employed are as follows:
+L:CarrierFunctionsEnabled, bool - TRUE if a non-zero value on SDK variables is detected
+L:switch_launch_bar_position, bool - Drives animation of the switch in the VC, TRUE is extend
+L:switch_launch_bar, bool - Commanded position of the launch bar, TRUE is extend, FALSE is retract
+L:launch_bar_animation, number - Drives animation of the launch bar in the model, 0 is retracted, 100 is extended
+L:launch_bar_status, number - Bespoke animation for the launch bar, 0 is retracted, 1 is extended
+L:lever_tailhook, bool 
+L:tailhook_animation, number
+L:tailhook_status, number
+</Comment>
+
+<Comment>
+LAUNCH VELOCITY CALCULATION
+- weight excess is calculated, multiplied by a coefficient and added to the base weight
+- then 1.7 (roughly) converts knots to feet per second
+- launchSpeed is calculated in feet per second
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:total weight, pounds) 45000 - 1000 / 0 max (>L:weightExcess, number)
+(L:weightExcess) 1.5 * 145 + 1.7 * (>L:launchSpeed, number)
+</Value>
+</Select>
+</Element>
+
+
+
+<Comment>
+ARRESTOR HOOK FUNCTIONALITY
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:SIM ON GROUND, bool) ! (L:tailhook_animation, number) 2 &lt; or (A:RADIO HEIGHT, feet) 9.99 &gt; or (A:PLANE ALTITUDE,feet) 50 &lt; (A:PLANE ALTITUDE,feet) 100 &gt; or or if{ 0 (>L:CarrierRecovery, bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:F35Model, number) 2 == (A:SIM ON GROUND, bool) (A:RADIO HEIGHT, feet) 9.99 &lt; or and (L:tailhook_animation, number) 90 &gt; and (L:CarrierRecovery, bool) 0 == and (A:SURFACE RELATIVE GROUND SPEED, Knots) 20 &gt; and 
+(A:PLANE ALTITUDE,feet) 50 &gt; and (A:PLANE ALTITUDE,feet) 100 &lt; and
+if{
+1 (>L:CarrierRecovery, bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CarrierRecovery, bool) 1 == if{
+(A:SURFACE RELATIVE GROUND SPEED,feet/second) 5 &gt; if{ (A:VELOCITY BODY Z,feet/second) 3 - (>A:VELOCITY BODY Z,feet/second) }
+(A:SURFACE RELATIVE GROUND SPEED,feet/second) 5 &lt; if{ (A:VELOCITY BODY Z,feet/second) 1 - (>A:VELOCITY BODY Z,feet/second) }
+(A:SURFACE RELATIVE GROUND SPEED,feet/second) 1.1 &lt; if{ 2 (>L:CarrierRecovery, bool) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+CATAPULT ASSISTED LAUNCH
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:SIM ON GROUND, bool) ! (L:launch_bar_animation, number) 10 &lt; or (A:RADIO HEIGHT, feet) 9.99 &gt; or (A:PLANE ALTITUDE,feet) 50 &lt; (A:PLANE ALTITUDE,feet) 100 &gt; and or if{ 0 (>L:CatapultLaunch, bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:F35Model, number) 2 == (A:SIM ON GROUND, bool) (A:RADIO HEIGHT, feet) 9.99 &lt; or and (L:launch_bar_animation, number) 90 &gt; and (A:Turb eng1 N2, percent) abs 74.9 &gt; and (L:CatapultLaunch, bool) 0 == and 
+(A:BRAKE PARKING POSITION, bool) (A:BRAKE RIGHT POSITION, percent) 0 &gt; or (A:BRAKE LEFT POSITION, percent) 0 &gt; or and 
+if{ (L:CatLaunchCount, number) 1 + 60 min (>L:CatLaunchCount, number) }
+els{ (L:CatLaunchCount, number) 0 &gt; if{ (L:CatLaunchCount, number) 1 - (>L:CatLaunchCount, number) } }
+(L:CatLaunchCount, number) 10 &gt; (A:BRAKE PARKING POSITION, bool) ! and (A:BRAKE RIGHT POSITION, percent) 1 &lt; and (A:BRAKE LEFT POSITION, percent) 1 &lt; and  if{ 1 (>L:CatapultLaunch, bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CatapultLaunch, bool) 1 == if{
+(A:VELOCITY BODY Z,feet/second) (L:launchSpeed, number) &lt; if{ (A:VELOCITY BODY Z,feet/second) 6 + (>A:VELOCITY BODY Z,feet/second) }
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:CABLE CAUGHT BY TAILHOOK, number) 0 &gt; (A:SURFACE RELATIVE GROUND SPEED, feet/second) 1 &lt; and (A:SIM ON GROUND, bool) and (A:TAILHOOK HANDLE,bool) ! and if{
+0 (&gt;A:TAILHOOK POSITION, percent over 100)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CatLaunchCount, number) 5 * (>L:JetBlastDeflectorAnim, number) 
+</Value>
+</Select>
+</Element>
+
+</Gauge>
+

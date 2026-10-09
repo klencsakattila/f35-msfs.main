@@ -1,0 +1,64 @@
+<Gauge Name="Brake System" Version="1.1">
+
+<Update Frequency="0"/>
+
+<Comment>
+Brake Application computation and anti-skid automatic engagement
+</Comment>
+
+<Comment>
+*******************
+BRAKE APPLICATION
+*******************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:BRAKE LEFT POSITION EX1, position) 0 &gt; (A:BRAKE RIGHT POSITION EX1, position) 0 &gt; and (A:SIM ON GROUND, bool) and
+if{
+(L:RemainingBrakeApplication,number) 0.01 - (>L:RemainingBrakeApplication,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RemainingBrakeApplication,number) 0 &lt;
+if{
+0 (>L:RemainingBrakeApplication,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RemainingBrakeApplication,number) 10 / int (>L:BrakeDigit1, number) 
+(L:RemainingBrakeApplication,number) 10 % int (>L:BrakeDigit2, number)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+******************************
+ ANTISKID AUTOMATIC ENGAGEMENT
+******************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:ANTISKID BRAKES ACTIVE, bool) ! (L:AntiSkidInit, bool) ! and
+if{
+1 (>K:ANTISKID_BRAKES_TOGGLE)
+1 (>L:AntiSkidInit, bool)
+}
+</Value>
+</Select>
+</Element>
+
+</Gauge>

@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<SimBase.Document Type="Pilot's Flight Crew Checklist" version="1.0">
+	<Checklist.Checklist>
+		<Step ChecklistStepId="PREFLIGHT_GATE">
+			<Page SubjectTT="External Checks - NOSE">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="General" ExpectationTT="Check panel and fasteners conditions"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Nose Landing Gear" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Nose Landing Gear pin" ExpectationTT="Removed"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Multifunction probes" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="EOTS/DAS" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Engine intake" ExpectationTT="Clear"/>
+				</Checkpoint>				
+			</Page>
+			<Page SubjectTT="External Checks - RIGHT FUSELAGE">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="General" ExpectationTT="Check panel and fasteners conditions"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="MIP panel" ExpectationTT="Check"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Navigation lights" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="TEFs" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Fuel vent" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Main Landing Gear" ExpectationTT="Check Condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Main Landing Gear pin" ExpectationTT="Removed"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Weapons bay doors" ExpectationTT="Check condition"/>
+				</Checkpoint>					
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Weapons and stores" ExpectationTT="Check"/>
+				</Checkpoint>					
+			</Page>
+			<Page SubjectTT="External Checks - AFT FUSELAGE">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="General" ExpectationTT="Check panel and fasteners conditions"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Stabilizers" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Arresting hook" ExpectationTT="Check condition, pin removed"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Rudders" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Engine exhaust" ExpectationTT="Check condition"/>
+				</Checkpoint>			
+			</Page>
+			<Page SubjectTT="External Checks - LEFT FUSELAGE">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="General" ExpectationTT="Check panel and fasteners conditions"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Navigation lights" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="TEFs" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Fuel dump" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="IPP door" ExpectationTT="Check"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Main Landing Gear" ExpectationTT="Check Condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Main Landing Gear pin" ExpectationTT="Removed"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Weapons bay doors" ExpectationTT="Check condition"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Weapons and stores" ExpectationTT="Check"/>
+				</Checkpoint>					
+			</Page>
+			<Page SubjectTT="External Checks - TOP FUSELAGE">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="General" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Canopy" ExpectationTT="Check condition"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Canopy" ExpectationTT="OPEN"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="ASE handle" ExpectationTT="SAFE"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="ASE handle pin" ExpectationTT="Removed and stowed"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Harness and straps" ExpectationTT="Check"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Ejection seat" ExpectationTT="Check"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Loose items and foreign object" ExpectationTT="Securely stowed"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Ingress and strap in" ExpectationTT="Complete"/>
+				</Checkpoint>					
+			</Page>				
+			<Page SubjectTT="Cockpit check">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="GEN (ICC) 1,2 and 3" ExpectationTT="ON"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="CABIN PRESSURE knob" ExpectationTT="NORM"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="BATT" ExpectationTT="OFF"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="IPP" ExpectationTT="AUTO"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="HMD" ExpectationTT="OFF"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Harness and restraint lines" ExpectationTT="Connect and check"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="ENGINE" ExpectationTT="OFF"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="DEFOG" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Throttle" ExpectationTT="IDLE"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="BOS" ExpectationTT="NORM"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LAND/TAXI LIGHT" ExpectationTT="OFF"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PARKING BRAKE" ExpectationTT="ON"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LDG GEAR handle" ExpectationTT="DOWN"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="JETTISON selector" ExpectationTT="SEL"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PRIMARY CONTROL DISPLAY" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="MASTER ARM switch" ExpectationTT="SAFE"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="AUTO RECOVERY switch" ExpectationTT="GUARDED"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="AIRCRAFT ZEROIZE selector" ExpectationTT="NORM"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Control stick arm rest" ExpectationTT="Adjust"/>
+				</Checkpoint>
+			</Page>
+			<Page SubjectTT="Engine Start">
+                <Checkpoint>
+					<CheckpointDesc SubjectTT="BATTERY" ExpectationTT="ON"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PRIMARY CONTROL DISPLAY" ExpectationTT="CHECK RIGHT SIDE POWER UP, LEFT SIDE WILL BE AVAILABLE WITHIN 120s"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PCD ICAWS page" ExpectationTT="Test"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="IPP selector" ExpectationTT="START"/>
+				</Checkpoint>
+                <Checkpoint>
+					<CheckpointDesc SubjectTT="PCD FUEL page" ExpectationTT="CHECK FUEL QUANTITY"/>
+				</Checkpoint>
+                <Checkpoint>
+					<CheckpointDesc SubjectTT="MAIN FUEL SHUT-OFF VALVE (MFSOV)" ExpectationTT="CHECK OPEN"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PCD ENG page" ExpectationTT="MONITOR ENGINE PARAMETERS"/>
+				</Checkpoint>
+                <Checkpoint>
+					<CheckpointDesc SubjectTT="Throttle" ExpectationTT="IDLE"/>
+				</Checkpoint>				
+                <Checkpoint>
+					<CheckpointDesc SubjectTT="ENGINE" ExpectationTT="RUN, guard down"/>
+				</Checkpoint>
+                <Checkpoint>
+					<CheckpointDesc SubjectTT="Canopy" ExpectationTT="DOWN and locked"/>
+				</Checkpoint>
+			</Page>	
+			<Page SubjectTT="Post start">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Console lights" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Lights" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PCD SMS page" ExpectationTT="Check configuration"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="VS BIT" ExpectationTT="Initiate and wait for completion"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Weapon bay doors" ExpectationTT="CLOSE"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="BOS" ExpectationTT="BOS for 2 beaths then NORM"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PMD/DR page" ExpectationTT="Check preferences, set as desired"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="AR System" ExpectationTT="Cycle (if required)"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="HMD" ExpectationTT="ON"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Mission Systems" ExpectationTT="Set as desired"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PCD FUEL page: JOKER, BINGO, DUMPCO" ExpectationTT="Set"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="NAV AIDS" ExpectationTT="Set"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Altimeter" ExpectationTT="Set"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Primary Control Display" ExpectationTT="Set as desired for takeoff"/>
+				</Checkpoint>
+			</Page>
+		</Step>	
+
+		<Step ChecklistStepId="PREFLIGHT_TAXI_OUT">
+			<Page SubjectTT="Taxi">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Parking brake" ExpectationTT="OFF"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Wheel brakes" ExpectationTT="Check"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Nose wheel steering" ExpectationTT="Set to HI, and check"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Flight instruments" ExpectationTT="CHECK, SET AS REQUIRED"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Navaids" ExpectationTT="CHECK, SET AS REQUIRED"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="ALOW" ExpectationTT="SET AS DESIRED"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="GCAS" ExpectationTT="SET AS DESIRED"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Wing Fold (-C only)" ExpectationTT="AS REQUIRED"/>
+				</Checkpoint>				
+			</Page>
+		</Step>		
+		<Step ChecklistStepId="FLIGHT_RUNWAY">
+			<Page SubjectTT="Before Take-Off">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Battery lights" ExpectationTT="Check off"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Weapon bay doors" ExpectationTT="CLOSE"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Wing Fold (-C only)" ExpectationTT="WINGS UNFOLDED"/>
+				</Checkpoint>					
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="CG" ExpectationTT="Check within limits"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Trim" ExpectationTT="RESET"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="ICAWS" ExpectationTT="No Warnings or Cautions"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="IFF" ExpectationTT="Set"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Harness" ExpectationTT="Check"/>
+				</Checkpoint>					
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="ASE" ExpectationTT="ARMED"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LAND/TAXI LIGHTS" ExpectationTT="As required"/>
+				</Checkpoint>					
+			</Page>		
+		</Step>
+		<Step ChecklistStepId="FLIGHT_TAKEOFF">
+			<Page SubjectTT="Take-Off Checklist">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="NWS" ExpectationTT="LO"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Throttle" ExpectationTT="MIL or MAX as required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Rotate" ExpectationTT="At predetermined rotation speed"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LDG GEAR lever" ExpectationTT="UP after comfortably aiborne"/>
+				</Checkpoint>				
+			</Page>
+			<Page SubjectTT="Short Take-off (B-Version only)">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Primary Control Display" ExpectationTT="Set one portal to FCS"/>
+				</Checkpoint>					
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="HOOK/STOVL pushbutton" ExpectationTT="Press"/>
+				</Checkpoint>	
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PCD FCS page" ExpectationTT="Check conversion to STOVL mode"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Throttle" ExpectationTT="MIL"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="NWS" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Rotate" ExpectationTT="At predetermined rotation speed"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LDG GEAR lever" ExpectationTT="UP after comfortably aiborne"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="HOOK/STOVL pushbutton, 1200ft AGL min 170kts min" ExpectationTT="Push"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PCD FCS page" ExpectationTT="Check conversion to normal mode"/>
+				</Checkpoint>					
+			</Page>	
+			<Page SubjectTT="Vertical Take-off (B-Version only, 4000 GWT MAXIMUM)">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Primary Control Display" ExpectationTT="Set one portal to FCS"/>
+				</Checkpoint>					
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="HOOK/STOVL pushbutton" ExpectationTT="Press"/>
+				</Checkpoint>	
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PCD FCS page" ExpectationTT="Check conversion to STOVL mode"/>
+				</Checkpoint>	
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PCD FCS page" ExpectationTT="Select HOVER mode"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Control stick" ExpectationTT="Apply aft pressure"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Once comfortably airborne, 300ft AGL min" ExpectationTT="Deselect HOVER mode"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Throttle" ExpectationTT="MIL"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LDG GEAR lever" ExpectationTT="UP after comfortably aiborne"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="HOOK/STOVL pushbutton, 1200ft AGL min 170kts min" ExpectationTT="Push"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PCD FCS page" ExpectationTT="Check conversion to normal mode"/>
+				</Checkpoint>					
+			</Page>	
+			
+			<Page SubjectTT="Climb">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Cabin altimeter" ExpectationTT="Check"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Altimeter" ExpectationTT="Set as required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Fuel state" ExpectationTT="Monitor"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="FAB" ExpectationTT="Monitor"/>
+				</Checkpoint>				
+			</Page>
+		</Step>
+		<Step ChecklistStepId="FLIGHT_CRUISE">
+			<Page SubjectTT="10000 ft / 15 Minute Report">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Cabin altimeter" ExpectationTT="Check"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Altimeter" ExpectationTT="Set as required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Fuel state" ExpectationTT="Monitor"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="FAB" ExpectationTT="Monitor"/>
+				</Checkpoint>				
+			</Page>
+		</Step>
+		<Step ChecklistStepId="FLIGHT_DESCENT">	
+			<Page SubjectTT="Descent/Penetration">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LAND/TAXI LIGHTS" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="MASTER ARM switch" ExpectationTT="SAFE"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Altimeter" ExpectationTT="Set"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Navaids" ExpectationTT="Set as required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="DEFOG" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Fuel" ExpectationTT="CHECK"/>
+				</Checkpoint>
+			</Page>
+		</Step>
+		<Step ChecklistStepId="LANDING_APPROACH">
+			<Page SubjectTT="Landing Checklist">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LDG GEAR lever" ExpectationTT="DOWN"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Hook" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LAND/TAXI LIGHTS" ExpectationTT="As required"/>
+				</Checkpoint>
+			</Page>
+			<Page SubjectTT="Vertical Landing Checklist (-B ONLY)">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Gross Weight" ExpectationTT="Check below 40000lbs"/>
+				</Checkpoint>	
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="If GWT above 40000lbs" ExpectationTT="Dump fuel as needed"/>
+				</Checkpoint>					
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LDG GEAR lever" ExpectationTT="DOWN"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Harness" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Speed brakes" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Aispeed" ExpectationTT="Check below 240 knots"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Primary control display" ExpectationTT="Set one portal to FCS"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="At 3/4 miles from landing point" ExpectationTT="Push HOOK/STOVL button"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="PCD FCS page" ExpectationTT="Check conversion to STOVL mode"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Aispeed" ExpectationTT="Smoothly decrease to 75 knots"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Neaby landing point, PCD FCS page" ExpectationTT="Select HOVER mode"/>
+				</Checkpoint>			
+			</Page>			
+		</Step>		
+		<Step ChecklistStepId="LANDING_TOUCHDOWN">
+			<Page SubjectTT="Landing">	
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Flare" ExpectationTT="Level wing at 400 ft AGL"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Throttle" ExpectationTT="IDLE"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Touchdown speed" ExpectationTT="150 knots (-A or -B), 135 knots (-C)"/>
+				</Checkpoint>
+		</Page>
+		</Step>
+		<Step ChecklistStepId="LANDING_GROUNDROLL">
+			<Page SubjectTT="After touchdown">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Throttle" ExpectationTT="IDLE"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Brakes" ExpectationTT="APPLY TO SLOW THE AIRPLANE"/>
+				</Checkpoint>
+			</Page>
+		</Step>	
+		<Step ChecklistStepId="LANDING_TAXI_IN">
+			<Page SubjectTT="After Landing">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="ASE" ExpectationTT="SAFE"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="LAND/TAXI light" ExpectationTT="As required"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="IFF" ExpectationTT="OFF"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Strobe light" ExpectationTT="OFF"/>
+				</Checkpoint>
+			</Page>
+		</Step>			
+		<Step ChecklistStepId="LANDING_GATE">
+			<Page SubjectTT="Engine shutdown">
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Parking brake" ExpectationTT="SET"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="HMD" ExpectationTT="OFF"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="VS BIT" ExpectationTT="Complete"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="FCS/ENG" ExpectationTT="RESET"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="AR doors" ExpectationTT="Open if opened during flight"/>
+				</Checkpoint>					
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="SMS" ExpectationTT="Check stores"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Weapon bay door" ExpectationTT="OPEN"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Engine switch" ExpectationTT="OFF"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Throttle" ExpectationTT="Retard to OFF"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="Canopy" ExpectationTT="OPEN"/>
+				</Checkpoint>
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="BATTERY switch" ExpectationTT="OFF"/>
+				</Checkpoint>				
+				<Checkpoint>
+					<CheckpointDesc SubjectTT="ICC 1, 2 and 3" ExpectationTT="OFF"/>
+				</Checkpoint>
+			</Page>		
+		</Step>
+	</Checklist.Checklist>
+</SimBase.Document>

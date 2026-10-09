@@ -1,0 +1,141 @@
+<Gauge Name="Auto-STOL" Version="3.0">
+<Comment>
+This gauge controls an auto-STOL takeoff in Dino Catteneo's F-35B.
+
+AutoSTOLTakeoff can only be selected when:
+- Aircraft on the ground, in STOL configuration, and engine running.
+- Brakes (normal or parking brakes) are applied.
+
+When selected, releasing the brakes will activate AutoSTOLTakeoff.
+When active, AutoSTOLTakeoff is de-activated when:
+- CTOL min. airspeed is reached (now: 160 Knots)
+- Brakes are applied (abort AutoSTOLTakeoff)
+
+The Lvar (L:STOLAutoTakeoff,enum) can be used in the VC to display the state of the AutoSTOLTakeoff function:
+- 0: No AutoSTOLTakeoff possible; not on the ground, or engine not running, or brakes not released.
+- 1: AutoSTOLTakeoff possible; awaiting AutoSTOLTakeoff selection.
+- 2: Selected; awaiting Brakes release or abort.
+- 3: Active; throttling up and accelerating on the ground.
+     When takeoff speed is reached and after liftoff, gear is retracted.
+- 4: Active; accelerating in the air, with a fixed 6-degree pitchup attitude.
+     When min. CTOL speed is reached, CTOL configuration is set, Flaps are retracted and control is released.
+
+The XML code for the selection clickspot in the VC should be:
+
+*************
+  (L:STOLAutoTakeoff,enum) 1 ==
+  if{ 2 (&gt;L:STOLAutoTakeoff,enum) }
+  els{
+    (L:STOLAutoTakeoff,enum) 2 ==
+    if{ 0 (&gt;L:STOLAutoTakeoff,enum) }
+  }
+*************
+
+Alternative to a mouse click in the VC, you can use a keystroke/button assigned to the FS function "Carb heat/eng anti-ice (on/off)"
+The default FSX key is "H".
+FOR TESTPURPOSES ONLY; WILL BE REMOVED WHEN VC CLICKSPOT CAN BE USED
+
+V3.0
+- Based on new elevator control in STOL config. 
+Works with _function gauge V30.15 and up
+
+COPYRIGHT STATEMENT
+==================
+Although this gauge is freeware, it may NOT be renamed, copied, re-uploaded,
+modified, or bundled in an other archive, without my prior consent.
+Rob Barendregt, 12 May 2016
+Email: rc.barendregt@planet.nl
+</Comment>
+
+<Update Frequency="0"/>
+
+<Macro Name="SetThrottle">
+  d (A:GENERAL ENG1 THROTTLE LEVER POSITION,percent) - abs 0.5 &gt;
+  if{ 163.84 * (&gt;K:THROTTLE_SET) }
+</Macro>
+
+<Macro Name="SetElevator">
+  d (A:ELEVATOR POSITION,percent) - abs 0.5 &gt;
+  if{ 163.84 * (&gt;K:ELEVATOR_SET) }
+</Macro>
+
+<Macro Name="BrakesApplied">
+ (A:BRAKE LEFT POSITION,percent) 10 &lt; (A:BRAKE RIGHT POSITION,percent) 10 &lt;  &amp;&amp;
+ if{ 0 } els{ 1 }
+</Macro>
+
+<Element>
+  <Select>
+    <Value>
+      (L:PrevGEAIP,bool) (A:GENERAL ENG1 ANTI ICE POSITION,bool) d (&gt;L:PrevGEAIP,bool) !=
+      if{
+        (L:STOLAutoTakeoff,enum) 1 ==
+        if{ 2 (&gt;L:STOLAutoTakeoff,enum) }
+        els{
+          (L:STOLAutoTakeoff,enum) 2 ==
+          if{ 0 (&gt;L:STOLAutoTakeoff,enum) }
+        }
+      }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+       (L:STOLAutoTakeoff,enum) 0 ==
+       if{
+         (A:SIM ON GROUND,bool) (L:STOVLMode,enum) 1 == &amp;&amp; @BrakesApplied &amp;&amp; (L:tailhook_animation, number) 99 &gt; &amp;&amp;
+         if{ 1 (&gt;L:STOLAutoTakeoff,enum) }
+       }
+       els{
+         (L:STOLAutoTakeoff,enum) 1 ==
+         if{
+           (A:SIM ON GROUND,bool) ! (L:STOVLMode,enum) 1 != ||  @BrakesApplied ! ||
+           if{ 0 (&gt;L:STOLAutoTakeoff,enum) }
+         }
+       }
+
+       (L:STOLAutoTakeoff,enum) 2 ==
+       if{
+         @BrakesApplied !
+         if{
+           (P:ABSOLUTE TIME,seconds) (&gt;L:STOLAutoTakeoffTimer,number)
+           3 (&gt;L:STOLAutoTakeoff,enum)
+         }
+       }
+
+       (L:STOLAutoTakeoff,enum) 3 ==
+       if{
+         (P:ABSOLUTE TIME,seconds) (L:STOLAutoTakeoffTimer,number) - 45 * (L:VSTOLMaxThrottle,number) min @SetThrottle
+         -40 @SetElevator
+         (A:RADIO HEIGHT,feet) (L:VSTOLGroundRH,number) 5 + &gt;
+         if{
+           4 (&gt;L:STOLAutoTakeoff,enum)
+         }
+       }
+
+       (L:STOLAutoTakeoff,enum) 4 ==
+       if{
+         (L:VSTOLMaxThrottle,number) @SetThrottle
+         -20 @SetElevator
+         (A:AIRSPEED TRUE,knots) 160 &gt;
+         if{
+           (&gt;K:FLAPS_UP)
+           (&gt;K:TOGGLE_TAIL_HOOK_HANDLE)
+           0 (&gt;L:STOLAutoTakeoff,enum)
+         }
+       }
+
+       (L:STOLAutoTakeoff,enum) 2 &gt; @BrakesApplied &amp;&amp;
+       if{
+         0 @SetThrottle
+         0 @SetElevator
+         0 (&gt;L:STOLAutoTakeoff,enum)
+       }
+
+    </Value>
+  </Select>
+</Element>
+
+</Gauge>

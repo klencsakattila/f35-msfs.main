@@ -1,0 +1,2632 @@
+<Gauge Name="GunsAndSidewinders" Version="1.0">
+<Update Frequency="18"/> 
+
+
+<!-- Gauge to control some TSD settings and feed data onto displays -->
+
+<Element>
+<Select>
+<Value>
+(L:TSDInitialization,bool) ! (A:GPS FLIGHT PLAN WP COUNT,number) 0 > and if{
+(A:GPS FLIGHT PLAN WP INDEX,number) (>L:WaypointBuffer,number)
+1 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanDepartureLatitude,degrees) (>L:WP1Lat,degrees)
+(C:fs9gps:FlightPlanDepartureLongitude,degrees) (>L:WP1Lon,degrees)
+2 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP2Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP2Lon,degrees)
+3 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP3Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP3Lon,degrees)
+4 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP4Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP4Lon,degrees)
+5 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP5Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP5Lon,degrees)
+6 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP6Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP6Lon,degrees)
+7 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP7Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP7Lon,degrees)
+8 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP8Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP8Lon,degrees)
+(L:WaypointBuffer,number) (>C:fs9gps:FlightPlanActiveWaypoint)
+9 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP9Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP9Lon,degrees)
+(L:WaypointBuffer,number) (>C:fs9gps:FlightPlanActiveWaypoint)
+10 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP10Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP10Lon,degrees)
+(L:WaypointBuffer,number) (>C:fs9gps:FlightPlanActiveWaypoint)
+11 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP11Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP11Lon,degrees)
+(L:WaypointBuffer,number) (>C:fs9gps:FlightPlanActiveWaypoint)
+12 (>C:fs9gps:FlightPlanActiveWaypoint)
+(C:fs9gps:FlightPlanWaypointLatitude,degrees) (>L:WP12Lat,degrees)
+(C:fs9gps:FlightPlanWaypointLongitude,degrees) (>L:WP12Lon,degrees)
+(L:WaypointBuffer,number) (>C:fs9gps:FlightPlanActiveWaypoint)
+1 (>L:TSDInitialization,bool)
+}
+</Value>
+</Select>
+</Element>
+
+<!-- Create a destination for GUH 
+'ALPHA' (>@c:FlightPlanNewWaypointIdent)
+(A:PLANE LONGITUDE,degrees) (>C:fs9gps:FlightPlanNewWaypointLatitude,degrees)
+(A:PLANE LATITUDE,degrees) (>C:fs9gps:FlightPlanNewWaypointLongitude,degrees)
+1 (>C:fs9gps:FlightPlanDirectToDestination,bool)
+-->
+
+<Element>
+<Select>
+<Value>
+(L:TSDInitialization,bool) ! (A:GPS FLIGHT PLAN WP INDEX,number) 0 == if{
+(A:PLANE LONGITUDE,degrees) (>L:GetYouHomeLongitude,degrees)
+(A:PLANE LATITUDE,degrees) (>L:GetYouHomeLatitude,degrees)
+
+1 (>L:TSDInitialization,bool)
+}
+</Value>
+</Select>
+</Element>
+
+
+<!-- Get bearing and range -->
+
+<Element>
+<Select>
+<Value>
+(A:PLANE LONGITUDE,degrees) (>C:fs9gps:GeoCalcLongitude1,degrees) 
+(A:PLANE LATITUDE,degrees) (>C:fs9gps:GeoCalcLatitude1,degrees)
+(C:fs9gps:FlightPlanDepartureLongitude,degrees) (>L:DepartureLongitude,degrees)
+(C:fs9gps:FlightPlanDepartureLatitude,degrees) (>L:DepartureLatitude,degrees)
+(C:fs9gps:FlightPlanDepartureLongitude,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(C:fs9gps:FlightPlanDepartureLatitude,degrees) (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:DEPBEARING,degrees)
+(C:fs9gps:GeoCalcDistance,meters) (>L:DEPDISTANCE,meters)
+
+
+(C:fs9gps:FlightPlanDestinationLongitude,degrees) (>L:DesitinationLongitude,degrees)
+(C:fs9gps:FlightPlanDestinationLatitude,degrees) (>L:DesitinationLatitude,degrees)
+(A:GPS FLIGHT PLAN WP INDEX,number) 0 == if{
+(L:GetYouHomeLongitude,degrees) (>L:DesitinationLongitude,degrees)
+(L:GetYouHomeLatitude,degrees) (>L:DesitinationLatitude,degrees)
+}
+(L:DesitinationLongitude,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:DesitinationLatitude,degrees) (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:DESBEARING,degrees)
+(C:fs9gps:GeoCalcDistance,meters) (>L:DESDISTANCE,meters)
+
+(L:RefpointBullseyeActive,bool) if{
+(L:BullseyeLatitude,degrees) (>C:fs9gps:GeoCalcLatitude2,degrees) 
+(L:BullseyeLongitude,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) - (>L:BullseyeBearing,degrees)
+(C:fs9gps:GeoCalcDistance,meters) (>L:BullseyeDistance,meters)
+
+(A:GPS WP NEXT LAT,degrees) (>C:fs9gps:GeoCalcLatitude2,degrees) 
+(A:GPS WP NEXT LON,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (>L:BullseyeWptBearing,degrees)
+(C:fs9gps:GeoCalcDistance,meters) (>L:BullseyeWptDistance,meters)
+(A:GPS WP BEARING,degrees) (>L:BullseyeWptCheckBearing,degrees)
+(A:GPS WP DISTANCE,meters) (>L:BullseyeWptCheckDistance,meters)
+}
+
+(L:WP3Lon,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:WP3Lat,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:WP3BEARING,degrees)
+(C:fs9gps:GeoCalcDistance,nmiles) (>L:WP3DISTANCE,nmiles)
+
+(L:WP4Lon,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:WP4Lat,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:WP4BEARING,degrees)
+(C:fs9gps:GeoCalcDistance,nmiles) (>L:WP4DISTANCE,nmiles)
+
+(L:WP5Lon,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:WP5Lat,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:WP5BEARING,degrees)
+(C:fs9gps:GeoCalcDistance,nmiles) (>L:WP5DISTANCE,nmiles)
+
+(L:WP6Lon,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:WP6Lat,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:WP6BEARING,degrees)
+(C:fs9gps:GeoCalcDistance,nmiles) (>L:WP6DISTANCE,nmiles)
+
+(L:WP7Lon,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:WP7Lat,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:WP7BEARING,degrees)
+(C:fs9gps:GeoCalcDistance,nmiles) (>L:WP7DISTANCE,nmiles)
+
+(L:WP8Lon,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:WP8Lat,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:WP8BEARING,degrees)
+(C:fs9gps:GeoCalcDistance,nmiles) (>L:WP8DISTANCE,nmiles)
+
+(L:WP9Lon,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:WP9Lat,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:WP9BEARING,degrees)
+(C:fs9gps:GeoCalcDistance,nmiles) (>L:WP9DISTANCE,nmiles)
+
+(L:WP10Lon,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:WP10Lat,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:WP10BEARING,degrees)
+(C:fs9gps:GeoCalcDistance,nmiles) (>L:WP10DISTANCE,nmiles)
+
+(L:WP11Lon,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:WP11Lat,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:WP12BEARING,degrees)
+(C:fs9gps:GeoCalcDistance,nmiles) (>L:WP12DISTANCE,nmiles)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*************
+RESET BASE COORDINATES FOR CALCULATIONS
+*************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:PLANE LONGITUDE,degrees) (>C:fs9gps:GeoCalcLongitude1,degrees) 
+(A:PLANE LATITUDE,degrees) (>C:fs9gps:GeoCalcLatitude1,degrees)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*************
+RADAR SECTION
+*************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:Radar_Age,number) 0 == if{ 8 (>L:Selected_Ageing,number) }
+(L:Radar_Age,number) 1 == if{ 2 (>L:Selected_Ageing,number) }
+(L:Radar_Age,number) 2 == if{ 5 (>L:Selected_Ageing,number) }
+(L:Radar_Age,number) 3 == if{ 10 (>L:Selected_Ageing,number) }
+(L:Radar_Age,number) 4 == if{ 15 (>L:Selected_Ageing,number) }
+(L:Radar_Age,number) 5 == (L:Radar_Age,number) 0 == or if{ 1 (>L:Radar_Age,number) }
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(A:Gear left position,percent) 90 > and if{ 0 (>L:TargetNumber,number) }
+10 (>L:TargetElevation,degrees)
+30 (>L:TargetBearing,degrees)
+20 (>L:TargetDistance,nmiles)
+20000 (>L:TargetAltitude,feet)
+5000 (>L:TargetAltitudeAGL,feet)
+250 (>L:TargetSpeed,knots)
+(L:TargetID,string)
+(L:TargetType,string)
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RadarScanVolumeDisplay,enum) 3 &gt; if{ 0 (>L:RadarScanVolumeDisplay,enum) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+<!-->Initialize radar variables if nothing is available<-->
+
+(L:RadarAA1_Azimuth,number) 0 == if{ 3 (>L:RadarAA1AzChange,number) 70 (>L:RadarAA1_Azimuth,number) }
+(L:RadarAA1_Elevation,number) 0 == if{ 4 (>L:RadarAA1ElChange,number) 12 (>L:RadarAA2_Elevation,number) }
+(L:RadarAA2_Azimuth,number) 0 == if{ 2 (>L:RadarAA2AzChange,number) 30 (>L:RadarAA2_Azimuth,number) }
+(L:RadarAA2_Elevation,number) 0 == if{ 4 (>L:RadarAA2ElChange,number) 12 (>L:RadarAA2_Elevation,number) }
+(L:RadarAS_Azimuth,number) 0 == if{ 30 (>L:RadarAS_Azimuth,number) }
+(L:RadarAS_RangeCenter,number) 0 == if{ 40 (>L:RadarAS_RangeCenter,number) }
+
+<!-->Radar range<-->
+
+(L:Datalink_AWACS,bool) ! (L:TSD_Filter,enum) 1 == or (L:TSD_Filter,enum) 2 == or if{ 
+100 (L:RadarAA1_Azimuth,number) 70 / 35 * - (L:RadarAA1_Elevation,number) 1.1 * - int (>L:RadarRangeMaxWithPenaltyAA1,number)
+}
+els{
+200 (>L:RadarRangeMaxWithPenaltyAA1,number)
+}
+100 (L:RadarAA2_Azimuth,number) 70 / 35 * - (L:RadarAA2_Elevation,number) 1.1 * - (>L:RadarRangeMaxWithPenaltyAA2,number)
+25 (L:RadarAS_Azimuth,number) 60 / 10 * - int (>L:RadarDistanceMaxWithPenaltyAS,number)
+}
+
+(L:RADAR_DISTANCE_MAX,number) (L:RadarRangeMaxWithPenaltyAA1,number) if{ (L:RadarRangeMaxWithPenaltyAA1,number) (>L:RADAR_DISTANCE_MAX,number) }
+(L:RADAR_DISTANCE_MAX_2,number) (L:RadarRangeMaxWithPenaltyAA2,number) if{ (L:RadarRangeMaxWithPenaltyAA2,number) (>L:RADAR_DISTANCE_MAX_2,number) }
+(L:RADAR_DISTANCE_MAX_3,number) (L:RadarAS_RangeCenter,number) (L:RadarDistanceMaxWithPenaltyAS,number) + != if{ (L:RadarAS_RangeCenter,number) (L:RadarDistanceMaxWithPenaltyAS,number) + 100 min (>L:RADAR_DISTANCE_MAX_3,number) }
+(L:RADAR_DISTANCE_MIN_3,number) (L:RadarAS_RangeCenter,number) (L:RadarDistanceMaxWithPenaltyAS,number) - != if{ (L:RadarAS_RangeCenter,number) (L:RadarDistanceMaxWithPenaltyAS,number) - 0 max (>L:RADAR_DISTANCE_MIN_3,number) }
+
+<!-- Radar modes and target types depending on AWACS datalink 
+(L:Datalink_AWACS,bool) true if Link16 is validated
+(L:TSD_Filter,enum) 0 ALL 1 TRUSTED 2 RADAR 3 ESM
+(L:RadarStatus,enum) 0 OFF 1 BIT 2 STANDBY 3 NOSLP 4 AASLP 5 ASSLP
+
+-->
+
+(L:RadarSleepModeChange,bool) (L:RadarStatus,enum) 1 &gt; and if{
+(L:RadarStatus,enum) 1 + (>L:RadarStatus,enum)
+(L:RadarStatus,enum) 5 &gt; if{ 2 (>L:RadarStatus,enum) }
+0 (>L:RadarSleepModeChange,bool)
+}
+
+(L:Datalink_AWACS,bool) ! (L:TSD_Filter,enum) 1 == or (L:TSD_Filter,enum) 2 == or if{ 
+
+(L:RadarStatus,enum) 2 &gt; (L:RADAR_OPERATIVE,bool) ! and if{ 1 (>L:RADAR_OPERATIVE,bool) } 
+(L:RadarStatus,enum) 3 &lt; (L:RADAR_OPERATIVE,bool) and if{ 0 (>L:RADAR_OPERATIVE,bool) } 
+
+(L:RADAR_MAX_TRACKS,enum) 60 &lt; if{ 60 (>L:RADAR_MAX_TRACKS,enum)  }
+
+(L:RadarSearchAspectAA1,enum) 2 &gt; if{ 0 (>L:RadarSearchAspectAA1,enum) }
+(L:RadarSearchAspectAA1,enum) 0 == (L:RADAR_SPEED_MIN,number) 0 !=  and if{ 0 (>L:RADAR_SPEED_MIN,number) }
+(L:RadarSearchAspectAA1,enum) 1 == (L:RADAR_SPEED_MIN,number) 250 !=  and if{ 250 (>L:RADAR_SPEED_MIN,number) }
+
+(L:RadarSearchAspectAA2,enum) 2 &gt; if{ 0 (>L:RadarSearchAspectAA2,enum) }
+(L:RadarSearchAspectAA1,enum) 0 == (L:RADAR_SPEED_MIN_2,number) 0 !=  and if{ 0 (>L:RADAR_SPEED_MIN_2,number) }
+(L:RadarSearchAspectAA1,enum) 1 == (L:RADAR_SPEED_MIN_2,number) 250 !=  and if{ 250 (>L:RADAR_SPEED_MIN_2,number) }
+
+(L:RADAR_TARGET_TYPES,number) 2 != (L:RadarStatus,enum) 3 == and (L:RadarSearchAspectAA1,enum) 2 &lt; and if{ 2 (>L:RADAR_TARGET_TYPES,number) }
+(L:RADAR_TARGET_TYPES,number) 3 != (L:RadarStatus,enum) 4 == and (L:RadarSearchAspectAA1,enum) 2 == or if{ 3 (>L:RADAR_TARGET_TYPES,number) }
+(L:RADAR_TARGET_TYPES,number) 2 != (L:RadarStatus,enum) 5 == and (L:RadarSearchAspectAA1,enum) 2 &lt; and if{ 2 (>L:RADAR_TARGET_TYPES,number) }
+
+(L:RADAR_TARGET_TYPES_2,number) 2 != (L:RadarStatus,enum) 3 == and (L:RadarSearchAspectAA2,enum) 2 &lt; and if{ 2 (>L:RADAR_TARGET_TYPES_2,number) }
+(L:RADAR_TARGET_TYPES_2,number) 3 != (L:RadarStatus,enum) 4 == and (L:RadarSearchAspectAA2,enum) 2 == or if{ 3 (>L:RADAR_TARGET_TYPES_2,number) }
+(L:RADAR_TARGET_TYPES_2,number) 2 != (L:RadarStatus,enum) 5 == and (L:RadarSearchAspectAA2,enum) 2 &lt; and if{ 2 (>L:RADAR_TARGET_TYPES_2,number) }
+_
+(L:RADAR_TARGET_TYPES_3,number) 1 != (L:RadarStatus,enum) 3 == and if{ 1 (>L:RADAR_TARGET_TYPES_3,number) }
+(L:RADAR_TARGET_TYPES_3,number) 1 != (L:RadarStatus,enum) 4 == and if{ 1 (>L:RADAR_TARGET_TYPES_3,number) }
+(L:RADAR_TARGET_TYPES_3,number) 3 != (L:RadarStatus,enum) 5 == and if{ 3 (>L:RADAR_TARGET_TYPES_3,number) }
+
+(L:RADAR_MAX_AGE,number) (L:Selected_Ageing,number) !=  if{ (L:Selected_Ageing,number) (>L:RADAR_MAX_AGE,number) }
+}
+
+
+(L:Datalink_AWACS,bool) (L:TSD_Filter,enum) 0 == and if{ 
+
+(L:RADAR_OPERATIVE,bool) ! if{ 1 (>L:RADAR_OPERATIVE,bool) } 
+
+(L:RADAR_MAX_TRACKS,enum) 50 &lt; if{ 50 (>L:RADAR_MAX_TRACKS,enum)  }
+
+(L:RADAR_SPEED_MIN,number) 100 !=  if{ 100 (>L:RADAR_SPEED_MIN,number) }
+
+(L:RadarSearchAspectAA2,enum) 2 &gt; if{ 0 (>L:RadarSearchAspectAA2,enum) }
+(L:RadarSearchAspectAA1,enum) 0 == (L:RADAR_SPEED_MIN_2,number) 0 !=  and if{ 0 (>L:RADAR_SPEED_MIN_2,number) }
+(L:RadarSearchAspectAA1,enum) 1 == (L:RADAR_SPEED_MIN_2,number) 250 !=  and if{ 250 (>L:RADAR_SPEED_MIN_2,number) }
+
+(L:RADAR_TARGET_TYPES,number) 2 != if{ 2 (>L:RADAR_TARGET_TYPES,number) }
+
+(L:RADAR_TARGET_TYPES_2,number) 2 != (L:RadarStatus,enum) 3 == and (L:RadarSearchAspectAA2,enum) 2 &lt; and if{ 2 (>L:RADAR_TARGET_TYPES_2,number) }
+(L:RADAR_TARGET_TYPES_2,number) 3 != (L:RadarStatus,enum) 4 == and (L:RadarSearchAspectAA2,enum) 2 == or if{ 3 (>L:RADAR_TARGET_TYPES_2,number) }
+(L:RADAR_TARGET_TYPES_2,number) 2 != (L:RadarStatus,enum) 5 == and (L:RadarSearchAspectAA2,enum) 2 &lt; and if{ 2 (>L:RADAR_TARGET_TYPES_2,number) }
+_
+(L:RADAR_TARGET_TYPES_3,number) 1 != (L:RadarStatus,enum) 3 == and if{ 1 (>L:RADAR_TARGET_TYPES_3,number) }
+(L:RADAR_TARGET_TYPES_3,number) 1 != (L:RadarStatus,enum) 4 == and if{ 1 (>L:RADAR_TARGET_TYPES_3,number) }
+(L:RADAR_TARGET_TYPES_3,number) 3 != (L:RadarStatus,enum) 5 == and if{ 3 (>L:RADAR_TARGET_TYPES_3,number) }
+
+(L:RADAR_MAX_AGE,number) 5 !=  if{ 5 (>L:RADAR_MAX_AGE,number) }
+}
+
+
+<!-->Apply azimuth and elevation changes<-->
+
+(L:RadarAA1AzChange,number) 3 &gt; if{ 1 (>L:RadarAA1AzChange,number) }
+(L:RadarAA2AzChange,number) 3 &gt; if{ 1 (>L:RadarAA2AzChange,number) }
+(L:RadarASAzChange,number) 3 &gt; if{ 1 (>L:RadarASAzChange,number) }
+(L:RadarAA1ElChange,number) 6 &gt; if{ 1 (>L:RadarAA1ElChange,number) }
+(L:RadarAA2ElChange,number) 6 &gt; if{ 1 (>L:RadarAA2ElChange,number) }
+(L:RadarASCtrChange,number) 6 &gt; if{ 1 (>L:RadarASCtrChange,number) }
+
+(L:RadarAA1_Azimuth,number) 10 != (L:RadarAA1AzChange,number) 1 == and if{ 10 (>L:RadarAA1_Azimuth,number) }
+(L:RadarAA1_Azimuth,number) 30 != (L:RadarAA1AzChange,number) 2 == and if{ 30 (>L:RadarAA1_Azimuth,number) }
+(L:RadarAA1_Azimuth,number) 70 != (L:RadarAA1AzChange,number) 3 == and if{ 70 (>L:RadarAA1_Azimuth,number) }
+
+(L:RadarAA1_Elevation,number) 2 != (L:RadarAA1ElChange,number) 1 == and if{ 2 (>L:RadarAA1_Elevation,number) }
+(L:RadarAA1_Elevation,number) 4 != (L:RadarAA1ElChange,number) 2 == and if{ 4 (>L:RadarAA1_Elevation,number) }
+(L:RadarAA1_Elevation,number) 8 != (L:RadarAA1ElChange,number) 3 == and if{ 8 (>L:RadarAA1_Elevation,number) }
+(L:RadarAA1_Elevation,number) 12 != (L:RadarAA1ElChange,number) 4 == and if{ 12 (>L:RadarAA1_Elevation,number) }
+(L:RadarAA1_Elevation,number) 20 != (L:RadarAA1ElChange,number) 5 == and if{ 20 (>L:RadarAA1_Elevation,number) }
+(L:RadarAA1_Elevation,number) 20 != (L:RadarAA1ElChange,number) 6 == and if{ 20 (>L:RadarAA1_Elevation,number) }
+
+(L:RadarAA2_Azimuth,number) 10 != (L:RadarAA2AzChange,number) 1 == and if{ 10 (>L:RadarAA2_Azimuth,number) }
+(L:RadarAA2_Azimuth,number) 30 != (L:RadarAA2AzChange,number) 2 == and if{ 30 (>L:RadarAA2_Azimuth,number) }
+(L:RadarAA2_Azimuth,number) 70 != (L:RadarAA2AzChange,number) 3 == and if{ 70 (>L:RadarAA2_Azimuth,number) }
+
+(L:RadarAA2_Elevation,number) 2 != (L:RadarAA2ElChange,number) 1 == and if{ 2 (>L:RadarAA2_Elevation,number) }
+(L:RadarAA2_Elevation,number) 4 != (L:RadarAA2ElChange,number) 2 == and if{ 4 (>L:RadarAA2_Elevation,number) }
+(L:RadarAA2_Elevation,number) 8 != (L:RadarAA2ElChange,number) 3 == and if{ 8 (>L:RadarAA2_Elevation,number) }
+(L:RadarAA2_Elevation,number) 12 != (L:RadarAA2ElChange,number) 4 == and if{ 12 (>L:RadarAA2_Elevation,number) }
+(L:RadarAA2_Elevation,number) 20 != (L:RadarAA2ElChange,number) 5 == and if{ 20 (>L:RadarAA2_Elevation,number) }
+(L:RadarAA2_Elevation,number) 20 != (L:RadarAA2ElChange,number) 6 == and if{ 20 (>L:RadarAA2_Elevation,number) }
+
+(L:RadarAS_Azimuth,number) 10 != (L:RadarASAzChange,number) 1 == and if{ 10 (>L:RadarAS_Azimuth,number) }
+(L:RadarAS_Azimuth,number) 30 != (L:RadarASAzChange,number) 2 == and if{ 30 (>L:RadarAS_Azimuth,number) }
+(L:RadarAS_Azimuth,number) 70 != (L:RadarASAzChange,number) 3 == and if{ 60 (>L:RadarAS_Azimuth,number) }
+
+(L:RadarAS_RangeCenter,number) 10 != (L:RadarASCtrChange,number) 1 == and if{ 10 (>L:RadarAS_RangeCenter,number) }
+(L:RadarAS_RangeCenter,number) 20 != (L:RadarASCtrChange,number) 2 == and if{ 20 (>L:RadarAS_RangeCenter,number) }
+(L:RadarAS_RangeCenter,number) 30 != (L:RadarASCtrChange,number) 3 == and if{ 30 (>L:RadarAS_RangeCenter,number) }
+(L:RadarAS_RangeCenter,number) 40 != (L:RadarASCtrChange,number) 4 == and if{ 40 (>L:RadarAS_RangeCenter,number) }
+(L:RadarAS_RangeCenter,number) 60 != (L:RadarASCtrChange,number) 5 == and if{ 60 (>L:RadarAS_RangeCenter,number) }
+(L:RadarAS_RangeCenter,number) 80 != (L:RadarASCtrChange,number) 6 == and if{ 80 (>L:RadarAS_RangeCenter,number) }
+
+<!-->Process elevation and azimuth center inputs<-->
+
+(L:RadarCenterAzimuthDecrease,bool) if{
+(L:RadarScanVolumeDisplay,enum) 1 == (L:RadarAA1_Azimuth,number) 65 &lt; and if{ (L:RadarAA1_Center,number) 5 - (>L:RadarAA1_Center,number) }
+(L:RadarScanVolumeDisplay,enum) 2 == (L:RadarAA2_Azimuth,number) 65 &lt; and if{ (L:RadarAA2_Center,number) 5 - (>L:RadarAA2_Center,number) }
+(L:RadarScanVolumeDisplay,enum) 3 == (L:RadarAS_Azimuth,number) 60 &lt; and if{ (L:RadarAS_Center,number) 5 - (>L:RadarAS_Center,number) }
+}
+(L:RadarCenterAzimuthIncrease,bool) if{
+(L:RadarScanVolumeDisplay,enum) 1 == (L:RadarAA1_Azimuth,number) 65 &lt; and if{ (L:RadarAA1_Center,number) 5 + (>L:RadarAA1_Center,number) }
+(L:RadarScanVolumeDisplay,enum) 2 == (L:RadarAA2_Azimuth,number) 65 &lt; and if{ (L:RadarAA2_Center,number) 5 + (>L:RadarAA2_Center,number) }
+(L:RadarScanVolumeDisplay,enum) 3 == (L:RadarAS_Azimuth,number) 60 &lt; and if{ (L:RadarAS_Center,number) 5 + (>L:RadarAS_Center,number) }
+}
+(L:RadarCenterElevationIncrease,bool) (L:RadarAA2ElChange,number) 5 &lt; and if{
+(L:RadarScanVolumeDisplay,enum) 1 == (L:RadarAA1_EL_Center,number) 45 &lt; and if{ (L:RadarAA1_EL_Center,number) 5 + (>L:RadarAA1_EL_Center,number) }
+(L:RadarScanVolumeDisplay,enum) 2 == (L:RadarAA2_EL_Center,number) 45 &lt; and if{ (L:RadarAA2_EL_Center,number) 5 + (>L:RadarAA2_EL_Center,number) }
+}
+(L:RadarCenterElevationDecrease,bool) (L:RadarAA2ElChange,number) 5 &lt; and if{
+(L:RadarScanVolumeDisplay,enum) 1 == (L:RadarAA1_EL_Center,number) -45 &gt; and if{ (L:RadarAA1_EL_Center,number) 5 - (>L:RadarAA1_EL_Center,number) }
+(L:RadarScanVolumeDisplay,enum) 2 == (L:RadarAA2_EL_Center,number) -45 &gt; and if{ (L:RadarAA2_EL_Center,number) 5 - (>L:RadarAA2_EL_Center,number) }
+}
+
+0 (>L:RadarCenterAzimuthDecrease,bool)
+0 (>L:RadarCenterAzimuthIncrease,bool)
+0 (>L:RadarCenterElevationDecrease,bool)
+0 (>L:RadarCenterElevationIncrease,bool)
+
+<!-->Apply azimuth and elevation center changes<-->
+
+(L:RadarAA1_Center,number) (L:RadarAA1_Azimuth,number) + 70 &gt; if{ 70 (L:RadarAA1_Azimuth,number) - (>L:RadarAA1_Center,number) }
+(L:RadarAA1_Center,number) (L:RadarAA1_Azimuth,number) - -70 &lt; if{ -70 (L:RadarAA1_Azimuth,number) + (>L:RadarAA1_Center,number) }
+(L:RadarAA2_Center,number) (L:RadarAA2_Azimuth,number) + 70 &gt; if{ 70 (L:RadarAA2_Azimuth,number) - (>L:RadarAA2_Center,number) }
+(L:RadarAA2_Center,number) (L:RadarAA2_Azimuth,number) - -70 &lt; if{ -70 (L:RadarAA2_Azimuth,number) + (>L:RadarAA2_Center,number) }
+(L:RadarAS_Center,number) (L:RadarAS_Azimuth,number) + 60 &gt; if{ 60 (L:RadarAS_Azimuth,number) - (>L:RadarAS_Center,number) }
+(L:RadarAS_Center,number) (L:RadarAS_Azimuth,number) - -60 &lt; if{ -60 (L:RadarAS_Azimuth,number) + (>L:RadarAS_Center,number) }
+
+(L:RadarAA1_Center,number) (L:RadarAA1_Azimuth,number) + 70 min (>L:RadarSweepAA1max,number)
+(L:RadarAA1_Center,number) (L:RadarAA1_Azimuth,number) - -70 max (>L:RadarSweepAA1min,number)
+(L:RadarAA2_Center,number) (L:RadarAA2_Azimuth,number) + 70 min (>L:RadarSweepAA2max,number)
+(L:RadarAA2_Center,number) (L:RadarAA2_Azimuth,number) - -70 max (>L:RadarSweepAA2min,number)
+(L:RadarAS_Center,number) (L:RadarAS_Azimuth,number) + 60 min (>L:RadarSweepASmax,number)
+(L:RadarAS_Center,number) (L:RadarAS_Azimuth,number) - -60 max (>L:RadarSweepASmin,number)
+
+(L:RadarAA1_EL_Center,number) -1 * (L:RadarAA1_Elevation,number) + (>L:RadarSweepAA1ELmax,number) 
+(L:RadarAA1_EL_Center,number) -1 * (L:RadarAA1_Elevation,number) - (>L:RadarSweepAA1ELmin,number) 
+(L:RadarAA2_EL_Center,number) -1 * (L:RadarAA2_Elevation,number) + (>L:RadarSweepAA2ELmax,number) 
+(L:RadarAA2_EL_Center,number) -1 * (L:RadarAA2_Elevation,number) - (>L:RadarSweepAA2ELmin,number) 
+
+(L:Datalink_AWACS,bool) (L:TSD_Filter,enum) 0 == and if{
+(L:RADAR_AZIMUTH_MIN,degrees) -179 != if{ -179 (>L:RADAR_AZIMUTH_MIN,degrees) }
+(L:RADAR_AZIMUTH_MAX,degrees) 179 != if{ 179 (>L:RADAR_AZIMUTH_MAX,degrees) }
+} els{
+(L:RADAR_AZIMUTH_MIN,degrees) (L:RadarSweepAA1min,number) != if{ (L:RadarSweepAA1min,number) (>L:RADAR_AZIMUTH_MIN,degrees) }
+(L:RADAR_AZIMUTH_MAX,degrees) (L:RadarSweepAA1max,number) != if{ (L:RadarSweepAA1max,number) (>L:RADAR_AZIMUTH_MAX,degrees) }
+}
+(L:RADAR_AZIMUTH_MIN_2,degrees) (L:RadarSweepAA2min,number) != if{ (L:RadarSweepAA2min,number) (>L:RADAR_AZIMUTH_MIN_2,degrees) }
+(L:RADAR_AZIMUTH_MAX_2,degrees) (L:RadarSweepAA2max,number) != if{ (L:RadarSweepAA2max,number) (>L:RADAR_AZIMUTH_MAX_2,degrees) }
+(L:RADAR_AZIMUTH_MIN_3,degrees) (L:RadarSweepASmin,number) != if{ (L:RadarSweepASmin,number) (>L:RADAR_AZIMUTH_MIN_3,degrees) }
+(L:RADAR_AZIMUTH_MAX_3,degrees) (L:RadarSweepASmax,number) != if{ (L:RadarSweepASmax,number) (>L:RADAR_AZIMUTH_MAX_3,degrees) }
+
+(L:Datalink_AWACS,bool) (L:TSD_Filter,enum) 0 == and if{
+-90 (L:RADAR_ELEVATION_MIN,degrees) != if{ -90 (>L:RADAR_ELEVATION_MIN,degrees) }
+90 (L:RADAR_ELEVATION_MAX,degrees) != if{ 90 (>L:RADAR_ELEVATION_MAX,degrees) }
+} els{
+(L:RadarSweepAA1ELmin,number) (L:RADAR_ELEVATION_MIN,degrees) != (L:RadarAA1ElChange,number) 5 &lt; and if{ (L:RadarSweepAA1ELmin,number) (>L:RADAR_ELEVATION_MIN,degrees) }
+(L:RadarSweepAA1ELmax,number) (L:RADAR_ELEVATION_MAX,degrees) != (L:RadarAA1ElChange,number) 5 &lt; and if{ (L:RadarSweepAA1ELmax,number) (>L:RADAR_ELEVATION_MAX,degrees) }
+}
+(L:RadarSweepAA2ELmin,number) (L:RADAR_ELEVATION_MIN_2,degrees) != (L:RadarAA2ElChange,number) 5 &lt; and if{ (L:RadarSweepAA2ELmin,number) (>L:RADAR_ELEVATION_MIN_2,degrees) }
+(L:RadarSweepAA2ELmax,number) (L:RADAR_ELEVATION_MAX_2,degrees) != (L:RadarAA2ElChange,number) 5 &lt; and if{ (L:RadarSweepAA2ELmax,number) (>L:RADAR_ELEVATION_MAX_2,degrees) }
+
+-24 (L:RADAR_ELEVATION_MIN,degrees) != (L:RadarAA1ElChange,number) 5 == and if{ -24 (>L:RADAR_ELEVATION_MIN,degrees) }
+2 (L:RADAR_ELEVATION_MAX,degrees) != (L:RadarAA1ElChange,number) 5 == and if{ 2 (>L:RADAR_ELEVATION_MAX,degrees) }
+-24 (L:RADAR_ELEVATION_MIN_2,degrees) != (L:RadarAA2ElChange,number) 5 == and if{ -24 (>L:RADAR_ELEVATION_MIN_2,degrees) }
+2 (L:RADAR_ELEVATION_MAX_2,degrees) != (L:RadarAA2ElChange,number) 5 == and if{ 2 (>L:RADAR_ELEVATION_MAX_2,degrees) }
+
+-2 (L:RADAR_ELEVATION_MIN,degrees) != (L:RadarAA1ElChange,number) 6 == and if{ -2 (>L:RADAR_ELEVATION_MIN,degrees) }
+30 (L:RADAR_ELEVATION_MAX,degrees) != (L:RadarAA1ElChange,number) 6 == and if{ 30 (>L:RADAR_ELEVATION_MAX,degrees) }
+-2 (L:RADAR_ELEVATION_MIN_2,degrees) != (L:RadarAA2ElChange,number) 6 == and if{ 2 (>L:RADAR_ELEVATION_MIN_2,degrees) }
+30 (L:RADAR_ELEVATION_MAX_2,degrees) != (L:RadarAA2ElChange,number) 6 == and if{ 30 (>L:RADAR_ELEVATION_MAX_2,degrees) }
+
+<!-->ASR Selection and settings<-->
+(L:ASRRangeSelection,enum) 1 == (L:ASRRange, number) 10 != and if{ 10 (>L:ASRRange, number) }
+(L:ASRRangeSelection,enum) 2 == (L:ASRRange, number) 20 != and if{ 20 (>L:ASRRange, number) }
+(L:ASRRangeSelection,enum) 3 == (L:ASRRange, number) 30 != and if{ 30 (>L:ASRRange, number) }
+(L:ASRRangeSelection,enum) 4 == (L:ASRRange, number) 40 != and if{ 40 (>L:ASRRange, number) }
+(L:ASRRangeSelection,enum) 5 == (L:ASRRange, number) 60 != and if{ 60 (>L:ASRRange, number) }
+(L:ASRRangeSelection,enum) 6 == (L:ASRRange, number) 80 != and if{ 80 (>L:ASRRange, number) }
+(L:ASRRangeSelection,enum) 6 &gt; if{ 6 (>L:ASRRangeSelection,enum) }
+(L:ASRRangeSelection,enum) 1 &lt; if{ 1 (>L:ASRRangeSelection,enum) }
+
+(L:RADAR_ELEVATION_MIN_3,degrees) -50 != if{ -80 (>L:RADAR_ELEVATION_MIN_3,degrees) }
+(L:RADAR_ELEVATION_MAX_3,degrees) 2 != if{ 2 (>L:RADAR_ELEVATION_MAX_3,degrees) }
+
+<!-->If WoW radar goes on standby<-->
+
+(A:SIM ON GROUND,bool) (L:RadarStatus,enum) 2 &gt; and if{
+2 (>L:RadarStatus,enum)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:ElectricalPowerAvailable,bool) ! if{ 0 (>L:RadarStatus,enum) 0 (>L:RadarPowerUpTimer,enum) }
+(L:ElectricalPowerAvailable,bool) (L:RadarPowerUpTimer,enum) 180 &lt; and if{ (L:RadarPowerUpTimer,enum) 1 + (>L:RadarPowerUpTimer,enum) }
+(L:RadarPowerUpTimer,enum) 0 &gt; (L:RadarPowerUpTimer,enum) 178 &lt; and if{ 1 (>L:RadarStatus,enum) }
+(L:RadarPowerUpTimer,enum) 178 &gt; (L:RadarStatus,enum) 2 &lt; and if{ 2 (>L:RadarStatus,enum) }
+(L:SidewinderSensorStatus,enum) 0 == 0 and if{ 1 (>L:SidewinderSensorStatus,enum) }
+(L:GunSound,enum) 0.1 &lt; 0 and if{ 0.1 (>L:GunSound,enum) }
+4 (>L:RWRWarningLevelSound,enum)
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_1,number) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_1,number)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_1,degrees) 
+(L:RADAR_TRACK_BEARING_1,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_1,degrees)
+(L:RADAR_TRACK_AZ_1,degrees) 180 > if{ (L:RADAR_TRACK_AZ_1,degrees) 360 - (>L:RADAR_TRACK_AZ_1,degrees) }
+
+(L:RADAR_TRACK_ALT_AGL_1,feet) 50 &lt; if{ 1 (>L:RADAR_TRACK_ICON_1,enum) }
+els{ 
+	(L:RADAR_TRACK_SPEED_1,knots) 150 &lt; if{ 2 (>L:RADAR_TRACK_ICON_1,enum) } 
+    (L:RADAR_TRACK_SPEED_1,knots) 149 &gt; if{ 3 (>L:RADAR_TRACK_ICON_1,enum) } 
+	(L:RADAR_TRACK_SPEED_1,knots) 300 &gt; if{ 4 (>L:RADAR_TRACK_ICON_1,enum) }
+	(L:RADAR_TRACK_SPEED_1,knots) 400 &gt; if{ 5 (>L:RADAR_TRACK_ICON_1,enum) }
+}
+
+(L:RADAR_TRACK_SPEED_1,knots) 200 > if{ 0 (>L:RWRThreat_1,number) }
+(L:RADAR_TRACK_SPEED_1,knots) 400 > if{ 0 (>L:RWRThreat_1,number) }
+(L:RADAR_TRACK_SPEED_1,knots) 700 > if{ 0 (>L:RWRThreat_1,number) }
+(L:RADAR_TRACK_VALID_1,number) 0 == (L:RADAR_TRACK_SPEED_1,knots) 200 &lt; or if{ 0 (>L:RWRTrack_1,bool) } els{ 0 (>L:RWRTrack_1,bool) }
+(L:RWRThreat_1,number) 0 &gt; (L:RWRThreat_1,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_1,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 1 == if{ 
+(L:RADAR_TRACK_VALID_1,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_1,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_1,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_1,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_1,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_1,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_1,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_1,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_1,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_1,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_1,degrees) (>L:TargetAzimuth,degrees)
+} 
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_2,number) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_2,number)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_2,degrees) 
+(L:RADAR_TRACK_BEARING_2,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_2,degrees)
+(L:RADAR_TRACK_AZ_2,degrees) 180 > if{ (L:RADAR_TRACK_AZ_2,degrees) 360 - (>L:RADAR_TRACK_AZ_2,degrees) }
+
+(L:RADAR_TRACK_ALT_AGL_2,feet) 50 &lt; if{ 1 (>L:RADAR_TRACK_ICON_2,enum) }
+els{ 
+	(L:RADAR_TRACK_SPEED_2,knots) 150 &lt; if{ 2 (>L:RADAR_TRACK_ICON_2,enum) } 
+    (L:RADAR_TRACK_SPEED_2,knots) 149 &gt; if{ 3 (>L:RADAR_TRACK_ICON_2,enum) } 
+	(L:RADAR_TRACK_SPEED_2,knots) 300 &gt; if{ 4 (>L:RADAR_TRACK_ICON_2,enum) }
+	(L:RADAR_TRACK_SPEED_2,knots) 400 &gt; if{ 5 (>L:RADAR_TRACK_ICON_2,enum) }
+}
+
+
+(L:RADAR_TRACK_SPEED_2,knots) 200 > if{ 3 (>L:RWRThreat_2,number) }
+(L:RADAR_TRACK_SPEED_2,knots) 400 > if{ 2 (>L:RWRThreat_2,number) }
+(L:RADAR_TRACK_SPEED_2,knots) 700 > if{ 1 (>L:RWRThreat_2,number) }
+(L:RADAR_TRACK_VALID_2,number) 0 == (L:RADAR_TRACK_SPEED_2,knots) 200 &lt; or if{ 0 (>L:RWRTrack_2,bool) } els{ 1 (>L:RWRTrack_2,bool) }
+(L:RWRThreat_2,number) 0 &gt; (L:RWRThreat_2,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_2,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 2 == if{
+(L:RADAR_TRACK_VALID_2,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_2,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_2,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_2,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_2,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_2,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_2,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_2,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_2,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_2,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_2,degrees) (>L:TargetAzimuth,degrees)
+} 
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_3,number) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_3,number)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_3,degrees) 
+(L:RADAR_TRACK_BEARING_3,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_3,degrees)
+(L:RADAR_TRACK_AZ_3,degrees) 180 > if{ (L:RADAR_TRACK_AZ_3,degrees) 360 - (>L:RADAR_TRACK_AZ_3,degrees) }
+
+(L:RADAR_TRACK_ALT_AGL_3,feet) 50 &lt; if{ 1 (>L:RADAR_TRACK_ICON_3,enum) }
+els{ 
+	(L:RADAR_TRACK_SPEED_3,knots) 150 &lt; if{ 2 (>L:RADAR_TRACK_ICON_3,enum) } 
+    (L:RADAR_TRACK_SPEED_3,knots) 149 &gt; if{ 3 (>L:RADAR_TRACK_ICON_3,enum) } 
+	(L:RADAR_TRACK_SPEED_3,knots) 300 &gt; if{ 4 (>L:RADAR_TRACK_ICON_3,enum) }
+	(L:RADAR_TRACK_SPEED_3,knots) 400 &gt; if{ 5 (>L:RADAR_TRACK_ICON_3,enum) }
+}
+
+(L:RADAR_TRACK_SPEED_3,knots) 200 > if{ 3 (>L:RWRThreat_3,number) }
+(L:RADAR_TRACK_SPEED_3,knots) 400 > if{ 2 (>L:RWRThreat_3,number) }
+(L:RADAR_TRACK_SPEED_3,knots) 700 > if{ 1 (>L:RWRThreat_3,number) }
+(L:RADAR_TRACK_VALID_3,number) 0 == (L:RADAR_TRACK_SPEED_3,knots) 200 &lt; or if{ 0 (>L:RWRTrack_3,bool) } els{ 1 (>L:RWRTrack_3,bool) }
+(L:RWRThreat_3,number) 0 &gt; (L:RWRThreat_3,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_3,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 3 == if{
+(L:RADAR_TRACK_VALID_3,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_3,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_3,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_3,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_3,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_3,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_3,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_3,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_3,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_3,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_3,degrees) (>L:TargetAzimuth,degrees)
+} 
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_4,number) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_4,number)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_4,degrees) 
+(L:RADAR_TRACK_BEARING_4,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_4,degrees)
+(L:RADAR_TRACK_AZ_4,degrees) 180 > if{ (L:RADAR_TRACK_AZ_4,degrees) 360 - (>L:RADAR_TRACK_AZ_4,degrees) }
+
+(L:RADAR_TRACK_ALT_AGL_4,feet) 50 &lt; if{ 1 (>L:RADAR_TRACK_ICON_4,enum) }
+els{ 
+	(L:RADAR_TRACK_SPEED_4,knots) 150 &lt; if{ 2 (>L:RADAR_TRACK_ICON_4,enum) } 
+    (L:RADAR_TRACK_SPEED_4,knots) 149 &gt; if{ 3 (>L:RADAR_TRACK_ICON_4,enum) } 
+	(L:RADAR_TRACK_SPEED_4,knots) 300 &gt; if{ 4 (>L:RADAR_TRACK_ICON_4,enum) }
+	(L:RADAR_TRACK_SPEED_4,knots) 400 &gt; if{ 5 (>L:RADAR_TRACK_ICON_4,enum) }
+}
+
+(L:RADAR_TRACK_SPEED_4,knots) 200 > if{ 3 (>L:RWRThreat_4,number) }
+(L:RADAR_TRACK_SPEED_4,knots) 400 > if{ 2 (>L:RWRThreat_4,number) }
+(L:RADAR_TRACK_SPEED_4,knots) 700 > if{ 1 (>L:RWRThreat_4,number) }
+(L:RADAR_TRACK_VALID_4,number) 0 == (L:RADAR_TRACK_SPEED_4,knots) 200 &lt; or if{ 0 (>L:RWRTrack_4,bool) } els{ 1 (>L:RWRTrack_4,bool) }
+(L:RWRThreat_4,number) 0 &gt; (L:RWRThreat_4,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_4,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 4 == if{ 
+(L:RADAR_TRACK_VALID_4,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_4,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_4,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_4,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_4,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_4,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_4,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_4,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_4,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_4,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_4,degrees) (>L:TargetAzimuth,degrees)
+} 
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_5,number) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_5,number)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_5,degrees) 
+(L:RADAR_TRACK_BEARING_5,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_5,degrees)
+(L:RADAR_TRACK_AZ_5,degrees) 180 > if{ (L:RADAR_TRACK_AZ_5,degrees) 360 - (>L:RADAR_TRACK_AZ_5,degrees) }
+
+(L:RADAR_TRACK_ALT_AGL_5,feet) 50 &lt; if{ 1 (>L:RADAR_TRACK_ICON_5,enum) }
+els{ 
+	(L:RADAR_TRACK_SPEED_5,knots) 150 &lt; if{ 2 (>L:RADAR_TRACK_ICON_5,enum) } 
+    (L:RADAR_TRACK_SPEED_5,knots) 149 &gt; if{ 3 (>L:RADAR_TRACK_ICON_5,enum) } 
+	(L:RADAR_TRACK_SPEED_5,knots) 300 &gt; if{ 4 (>L:RADAR_TRACK_ICON_5,enum) }
+	(L:RADAR_TRACK_SPEED_5,knots) 400 &gt; if{ 5 (>L:RADAR_TRACK_ICON_5,enum) }
+}
+
+(L:RADAR_TRACK_SPEED_5,knots) 200 > if{ 3 (>L:RWRThreat_5,number) }
+(L:RADAR_TRACK_SPEED_5,knots) 400 > if{ 2 (>L:RWRThreat_5,number) }
+(L:RADAR_TRACK_SPEED_5,knots) 700 > if{ 1 (>L:RWRThreat_5,number) }
+(L:RADAR_TRACK_VALID_5,number) 0 == (L:RADAR_TRACK_SPEED_5,knots) 200 &lt; or if{ 0 (>L:RWRTrack_5,bool) } els{ 1 (>L:RWRTrack_5,bool) }
+(L:RWRThreat_5,number) 0 &gt; (L:RWRThreat_5,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_5,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 5 == if{ 
+(L:RADAR_TRACK_VALID_5,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_5,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_5,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_5,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_5,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_5,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_5,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_5,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_5,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_5,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_5,degrees) (>L:TargetAzimuth,degrees)
+} 
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_6,number) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_6,number)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_6,degrees) 
+(L:RADAR_TRACK_BEARING_6,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_6,degrees)
+(L:RADAR_TRACK_AZ_6,degrees) 180 > if{ (L:RADAR_TRACK_AZ_6,degrees) 360 - (>L:RADAR_TRACK_AZ_6,degrees) }
+
+(L:RADAR_TRACK_ALT_AGL_6,feet) 50 &lt; if{ 1 (>L:RADAR_TRACK_ICON_6,enum) }
+els{ 
+	(L:RADAR_TRACK_SPEED_6,knots) 150 &lt; if{ 2 (>L:RADAR_TRACK_ICON_6,enum) } 
+    (L:RADAR_TRACK_SPEED_6,knots) 149 &gt; if{ 3 (>L:RADAR_TRACK_ICON_6,enum) } 
+	(L:RADAR_TRACK_SPEED_6,knots) 300 &gt; if{ 4 (>L:RADAR_TRACK_ICON_6,enum) }
+	(L:RADAR_TRACK_SPEED_6,knots) 400 &gt; if{ 5 (>L:RADAR_TRACK_ICON_6,enum) }
+}
+
+(L:RADAR_TRACK_SPEED_6,knots) 200 > if{ 3 (>L:RWRThreat_6,number) }
+(L:RADAR_TRACK_SPEED_6,knots) 400 > if{ 2 (>L:RWRThreat_6,number) }
+(L:RADAR_TRACK_SPEED_6,knots) 700 > if{ 1 (>L:RWRThreat_6,number) }
+(L:RADAR_TRACK_VALID_6,number) 0 == (L:RADAR_TRACK_SPEED_6,knots) 200 &lt; or if{ 0 (>L:RWRTrack_6,bool) } els{ 1 (>L:RWRTrack_6,bool) }
+(L:RWRThreat_6,number) 0 &gt; (L:RWRThreat_6,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_6,number) (>L:RWRWarningLevelSound, number) }
+
+(L:TargetNumber,number) 6 == if{ 
+(L:RADAR_TRACK_VALID_6,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_6,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_6,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_6,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_6,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_6,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_6,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_6,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_6,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_6,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_6,degrees) (>L:TargetAzimuth,degrees)
+} 
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_7,number) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_7,number)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_7,degrees) 
+(L:RADAR_TRACK_BEARING_7,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_7,degrees)
+(L:RADAR_TRACK_AZ_7,degrees) 180 > if{ (L:RADAR_TRACK_AZ_7,degrees) 360 - (>L:RADAR_TRACK_AZ_7,degrees) }
+
+(L:RADAR_TRACK_ALT_AGL_7,feet) 50 &lt; if{ 1 (>L:RADAR_TRACK_ICON_7,enum) }
+els{ 
+	(L:RADAR_TRACK_SPEED_7,knots) 150 &lt; if{ 2 (>L:RADAR_TRACK_ICON_7,enum) } 
+    (L:RADAR_TRACK_SPEED_7,knots) 149 &gt; if{ 3 (>L:RADAR_TRACK_ICON_7,enum) } 
+	(L:RADAR_TRACK_SPEED_7,knots) 300 &gt; if{ 4 (>L:RADAR_TRACK_ICON_7,enum) }
+	(L:RADAR_TRACK_SPEED_7,knots) 400 &gt; if{ 5 (>L:RADAR_TRACK_ICON_7,enum) }
+}
+
+(L:RADAR_TRACK_SPEED_7,knots) 200 > if{ 3 (>L:RWRThreat_7,number) }
+(L:RADAR_TRACK_SPEED_7,knots) 400 > if{ 2 (>L:RWRThreat_7,number) }
+(L:RADAR_TRACK_SPEED_7,knots) 700 > if{ 1 (>L:RWRThreat_7,number) }
+(L:RADAR_TRACK_VALID_7,number) 0 == (L:RADAR_TRACK_SPEED_7,knots) 200 &lt; or if{ 0 (>L:RWRTrack_7,bool) } els{ 1 (>L:RWRTrack_7,bool) }
+(L:RWRThreat_7,number) 0 &gt; (L:RWRThreat_7,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_7,number) (>L:RWRWarningLevelSound, number) }
+
+(L:TargetNumber,number) 7 == if{ 
+(L:RADAR_TRACK_VALID_7,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_7,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_7,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_7,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_7,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_7,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_7,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_7,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_7,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_7,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_7,degrees) (>L:TargetAzimuth,degrees)
+} 
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_8,number) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_8,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_8,degrees) 
+(L:RADAR_TRACK_BEARING_8,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_8,degrees)
+(L:RADAR_TRACK_AZ_8,degrees) 180 > if{ (L:RADAR_TRACK_AZ_8,degrees) 360 - (>L:RADAR_TRACK_AZ_8,degrees) }
+
+(L:RADAR_TRACK_ALT_AGL_8,feet) 50 &lt; if{ 1 (>L:RADAR_TRACK_ICON_8,enum) }
+els{ 
+	(L:RADAR_TRACK_SPEED_8,knots) 150 &lt; if{ 2 (>L:RADAR_TRACK_ICON_8,enum) } 
+    (L:RADAR_TRACK_SPEED_8,knots) 149 &gt; if{ 3 (>L:RADAR_TRACK_ICON_8,enum) } 
+	(L:RADAR_TRACK_SPEED_8,knots) 300 &gt; if{ 4 (>L:RADAR_TRACK_ICON_8,enum) }
+	(L:RADAR_TRACK_SPEED_8,knots) 400 &gt; if{ 5 (>L:RADAR_TRACK_ICON_8,enum) }
+}
+
+(L:RADAR_TRACK_SPEED_8,knots) 200 > if{ 3 (>L:RWRThreat_8,number) }
+(L:RADAR_TRACK_SPEED_8,knots) 400 > if{ 2 (>L:RWRThreat_8,number) }
+(L:RADAR_TRACK_SPEED_8,knots) 700 > if{ 1 (>L:RWRThreat_8,number) }
+(L:RADAR_TRACK_VALID_8,number) 0 == (L:RADAR_TRACK_SPEED_8,knots) 200 &lt; or if{ 0 (>L:RWRTrack_8,bool) } els{ 1 (>L:RWRTrack_8,bool) }
+(L:RWRThreat_8,number) 0 &gt; (L:RWRThreat_8,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_8,number) (>L:RWRWarningLevelSound, number) }
+
+(L:TargetNumber,number) 8 == if{ 
+(L:RADAR_TRACK_VALID_8,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_8,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_8,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_8,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_8,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_8,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_8,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_8,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_8,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_8,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_8,degrees) (>L:TargetAzimuth,degrees)
+} 
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_9,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_9,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_9,degrees) 
+(L:RADAR_TRACK_BEARING_9,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_9,degrees)
+(L:RADAR_TRACK_AZ_9,degrees) 180 > if{ (L:RADAR_TRACK_AZ_9,degrees) 360 - (>L:RADAR_TRACK_AZ_9,degrees) }
+
+(L:RADAR_TRACK_ALT_AGL_9,feet) 50 &lt; if{ 1 (>L:RADAR_TRACK_ICON_9,enum) }
+els{ 
+	(L:RADAR_TRACK_SPEED_9,knots) 150 &lt; if{ 2 (>L:RADAR_TRACK_ICON_9,enum) } 
+    (L:RADAR_TRACK_SPEED_9,knots) 149 &gt; if{ 3 (>L:RADAR_TRACK_ICON_9,enum) } 
+	(L:RADAR_TRACK_SPEED_9,knots) 300 &gt; if{ 4 (>L:RADAR_TRACK_ICON_9,enum) }
+	(L:RADAR_TRACK_SPEED_9,knots) 400 &gt; if{ 5 (>L:RADAR_TRACK_ICON_9,enum) }
+}
+
+(L:RADAR_TRACK_SPEED_9,knots) 200 > if{ 3 (>L:RWRThreat_9,number) }
+(L:RADAR_TRACK_SPEED_9,knots) 400 > if{ 2 (>L:RWRThreat_9,number) }
+(L:RADAR_TRACK_SPEED_9,knots) 700 > if{ 1 (>L:RWRThreat_9,number) }
+(L:RADAR_TRACK_VALID_9,number) 0 == (L:RADAR_TRACK_SPEED_9,knots) 200 &lt; or if{ 0 (>L:RWRTrack_9,bool) } els{ 1 (>L:RWRTrack_9,bool) }
+(L:RWRThreat_9,number) 0 &gt; (L:RWRThreat_9,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_9,number) (>L:RWRWarningLevelSound, number) }
+
+(L:TargetNumber,number) 9 == if{
+(L:RADAR_TRACK_VALID_9,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_9,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_9,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_9,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_9,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_9,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_9,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_9,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_9,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_9,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_9,degrees) (>L:TargetAzimuth,degrees)
+} 
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_10,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_10,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_10,degrees) 
+(L:RADAR_TRACK_BEARING_10,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_10,degrees)
+(L:RADAR_TRACK_AZ_10,degrees) 180 > if{ (L:RADAR_TRACK_AZ_10,degrees) 360 - (>L:RADAR_TRACK_AZ_10,degrees) }    
+
+(L:RADAR_TRACK_ALT_AGL_10,feet) 50 &lt; if{ 1 (>L:RADAR_TRACK_ICON_10,enum) }
+els{ 
+	(L:RADAR_TRACK_SPEED_10,knots) 150 &lt; if{ 2 (>L:RADAR_TRACK_ICON_10,enum) } 
+    (L:RADAR_TRACK_SPEED_10,knots) 149 &gt; if{ 3 (>L:RADAR_TRACK_ICON_10,enum) } 
+	(L:RADAR_TRACK_SPEED_10,knots) 300 &gt; if{ 4 (>L:RADAR_TRACK_ICON_10,enum) }
+	(L:RADAR_TRACK_SPEED_10,knots) 400 &gt; if{ 5 (>L:RADAR_TRACK_ICON_10,enum) }
+}
+
+(L:RADAR_TRACK_SPEED_10,knots) 200 > if{ 3 (>L:RWRThreat_10,number) }
+(L:RADAR_TRACK_SPEED_10,knots) 400 > if{ 2 (>L:RWRThreat_10,number) }
+(L:RADAR_TRACK_SPEED_10,knots) 700 > if{ 1 (>L:RWRThreat_10,number) }
+(L:RADAR_TRACK_VALID_10,number) 0 == (L:RADAR_TRACK_SPEED_10,knots) 200 &lt; or if{ 0 (>L:RWRTrack_10,bool) } els{ 1 (>L:RWRTrack_10,bool) }
+(L:RWRThreat_10,number) 0 &gt; (L:RWRThreat_10,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_10,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 10 == if{
+(L:RADAR_TRACK_VALID_10,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_10,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_10,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_10,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_10,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_10,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_10,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_10,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_10,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_10,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_10,degrees) (>L:TargetAzimuth,degrees)
+}                     
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_11,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_11,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_11,degrees) 
+(L:RADAR_TRACK_BEARING_11,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_11,degrees)
+(L:RADAR_TRACK_AZ_11,degrees) 180 > if{ (L:RADAR_TRACK_AZ_11,degrees) 360 - (>L:RADAR_TRACK_AZ_11,degrees) }                           
+
+(L:RADAR_TRACK_SPEED_11,knots) 200 > if{ 3 (>L:RWRThreat_11,number) }
+(L:RADAR_TRACK_SPEED_11,knots) 400 > if{ 2 (>L:RWRThreat_11,number) }
+(L:RADAR_TRACK_SPEED_11,knots) 700 > if{ 1 (>L:RWRThreat_11,number) }
+(L:RADAR_TRACK_VALID_11,number) 0 == (L:RADAR_TRACK_SPEED_11,knots) 200 &lt; or if{ 0 (>L:RWRTrack_11,bool) } els{ 1 (>L:RWRTrack_11,bool) }
+(L:RWRThreat_11,number) 0 &gt; (L:RWRThreat_11,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_11,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 11 == if{
+(L:RADAR_TRACK_VALID_11,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_11,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_11,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_11,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_11,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_11,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_11,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_11,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_11,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_11,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_11,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_12,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_12,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_12,degrees)                      
+(L:RADAR_TRACK_BEARING_12,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_12,degrees)
+(L:RADAR_TRACK_AZ_12,degrees) 180 > if{ (L:RADAR_TRACK_AZ_12,degrees) 360 - (>L:RADAR_TRACK_AZ_12,degrees) }  
+
+(L:RADAR_TRACK_SPEED_12,knots) 200 > if{ 3 (>L:RWRThreat_12,number) }
+(L:RADAR_TRACK_SPEED_12,knots) 400 > if{ 2 (>L:RWRThreat_12,number) }
+(L:RADAR_TRACK_SPEED_12,knots) 700 > if{ 1 (>L:RWRThreat_12,number) }
+(L:RADAR_TRACK_VALID_12,number) 0 == (L:RADAR_TRACK_SPEED_12,knots) 200 &lt; or if{ 0 (>L:RWRTrack_12,bool) } els{ 1 (>L:RWRTrack_12,bool) }
+(L:RWRThreat_12,number) 0 &gt; (L:RWRThreat_12,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_12,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 12 == if{
+(L:RADAR_TRACK_VALID_12,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_12,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_12,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_12,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_12,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_12,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_12,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_12,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_12,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_12,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_12,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_13,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_13,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_13,degrees)                        
+(L:RADAR_TRACK_BEARING_13,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_13,degrees)
+(L:RADAR_TRACK_AZ_13,degrees) 180 > if{ (L:RADAR_TRACK_AZ_13,degrees) 360 - (>L:RADAR_TRACK_AZ_13,degrees) } 
+
+(L:RADAR_TRACK_SPEED_13,knots) 200 > if{ 3 (>L:RWRThreat_13,number) }
+(L:RADAR_TRACK_SPEED_13,knots) 400 > if{ 2 (>L:RWRThreat_13,number) }
+(L:RADAR_TRACK_SPEED_13,knots) 700 > if{ 1 (>L:RWRThreat_13,number) }
+(L:RADAR_TRACK_VALID_13,number) 0 == (L:RADAR_TRACK_SPEED_13,knots) 200 &lt; or if{ 0 (>L:RWRTrack_13,bool) } els{ 1 (>L:RWRTrack_13,bool) }
+(L:RWRThreat_13,number) 0 &gt; (L:RWRThreat_13,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_13,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 13 == if{
+(L:RADAR_TRACK_VALID_13,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_13,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_13,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_13,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_13,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_13,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_13,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_13,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_13,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_13,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_13,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_14,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_14,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_14,degrees)                          
+(L:RADAR_TRACK_BEARING_14,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_14,degrees)
+(L:RADAR_TRACK_AZ_14,degrees) 180 > if{ (L:RADAR_TRACK_AZ_14,degrees) 360 - (>L:RADAR_TRACK_AZ_14,degrees) }  
+
+(L:RADAR_TRACK_SPEED_14,knots) 200 > if{ 3 (>L:RWRThreat_14,number) }
+(L:RADAR_TRACK_SPEED_14,knots) 400 > if{ 2 (>L:RWRThreat_14,number) }
+(L:RADAR_TRACK_SPEED_14,knots) 700 > if{ 1 (>L:RWRThreat_14,number) }
+(L:RADAR_TRACK_VALID_14,number) 0 == (L:RADAR_TRACK_SPEED_14,knots) 200 &lt; or if{ 0 (>L:RWRTrack_14,bool) } els{ 1 (>L:RWRTrack_14,bool) }
+(L:RWRThreat_14,number) 0 &gt; (L:RWRThreat_14,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_14,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 14 == if{
+(L:RADAR_TRACK_VALID_14,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_14,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_14,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_14,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_14,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_14,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_14,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_14,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_14,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_14,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_14,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_15,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_15,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_15,degrees)                         
+(L:RADAR_TRACK_BEARING_15,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_15,degrees)
+(L:RADAR_TRACK_AZ_15,degrees) 180 > if{ (L:RADAR_TRACK_AZ_15,degrees) 360 - (>L:RADAR_TRACK_AZ_15,degrees) } 
+
+(L:RADAR_TRACK_SPEED_15,knots) 200 > if{ 3 (>L:RWRThreat_15,number) }
+(L:RADAR_TRACK_SPEED_15,knots) 400 > if{ 2 (>L:RWRThreat_15,number) }
+(L:RADAR_TRACK_SPEED_15,knots) 700 > if{ 1 (>L:RWRThreat_15,number) }
+(L:RADAR_TRACK_VALID_15,number) 0 == (L:RADAR_TRACK_SPEED_15,knots) 200 &lt; or if{ 0 (>L:RWRTrack_15,bool) } els{ 1 (>L:RWRTrack_15,bool) }
+(L:RWRThreat_15,number) 0 &gt; (L:RWRThreat_15,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_15,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 15 == if{
+(L:RADAR_TRACK_VALID_15,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_15,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_15,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_15,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_15,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_15,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_15,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_15,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_15,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_15,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_15,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_16,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_16,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_16,degrees)                           
+(L:RADAR_TRACK_BEARING_16,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_16,degrees)
+(L:RADAR_TRACK_AZ_16,degrees) 180 > if{ (L:RADAR_TRACK_AZ_16,degrees) 360 - (>L:RADAR_TRACK_AZ_16,degrees) }
+
+(L:RADAR_TRACK_SPEED_16,knots) 200 > if{ 3 (>L:RWRThreat_16,number) }
+(L:RADAR_TRACK_SPEED_16,knots) 400 > if{ 2 (>L:RWRThreat_16,number) }
+(L:RADAR_TRACK_SPEED_16,knots) 700 > if{ 1 (>L:RWRThreat_16,number) }
+(L:RADAR_TRACK_VALID_16,number) 0 == (L:RADAR_TRACK_SPEED_16,knots) 200 &lt; or if{ 0 (>L:RWRTrack_16,bool) } els{ 1 (>L:RWRTrack_16,bool) }
+(L:RWRThreat_16,number) 0 &gt; (L:RWRThreat_16,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_16,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 16 == if{
+(L:RADAR_TRACK_VALID_16,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_16,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_16,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_16,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_16,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_16,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_16,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_16,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_16,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_16,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_16,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_17,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_17,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_17,degrees)                            
+(L:RADAR_TRACK_BEARING_17,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_17,degrees)
+(L:RADAR_TRACK_AZ_17,degrees) 180 > if{ (L:RADAR_TRACK_AZ_17,degrees) 360 - (>L:RADAR_TRACK_AZ_17,degrees) }  
+
+(L:RADAR_TRACK_SPEED_17,knots) 200 > if{ 3 (>L:RWRThreat_17,number) }
+(L:RADAR_TRACK_SPEED_17,knots) 400 > if{ 2 (>L:RWRThreat_17,number) }
+(L:RADAR_TRACK_SPEED_17,knots) 700 > if{ 1 (>L:RWRThreat_17,number) }
+(L:RADAR_TRACK_VALID_17,number) 0 == (L:RADAR_TRACK_SPEED_17,knots) 200 &lt; or if{ 0 (>L:RWRTrack_17,bool) } els{ 1 (>L:RWRTrack_17,bool) }
+(L:RWRThreat_17,number) 0 &gt; (L:RWRThreat_17,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_17,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 17 == if{
+(L:RADAR_TRACK_VALID_17,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_17,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_17,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_17,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_17,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_17,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_17,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_17,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_17,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_17,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_17,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_18,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_18,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_18,degrees)                            
+(L:RADAR_TRACK_BEARING_18,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_18,degrees)
+(L:RADAR_TRACK_AZ_18,degrees) 180 > if{ (L:RADAR_TRACK_AZ_18,degrees) 360 - (>L:RADAR_TRACK_AZ_18,degrees) }  
+
+(L:RADAR_TRACK_SPEED_18,knots) 200 > if{ 3 (>L:RWRThreat_18,number) }
+(L:RADAR_TRACK_SPEED_18,knots) 400 > if{ 2 (>L:RWRThreat_18,number) }
+(L:RADAR_TRACK_SPEED_18,knots) 700 > if{ 1 (>L:RWRThreat_18,number) }
+(L:RADAR_TRACK_VALID_18,number) 0 == (L:RADAR_TRACK_SPEED_18,knots) 200 &lt; or if{ 0 (>L:RWRTrack_18,bool) } els{ 1 (>L:RWRTrack_18,bool) }
+(L:RWRThreat_18,number) 0 &gt; (L:RWRThreat_18,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_18,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 18 == if{
+(L:RADAR_TRACK_VALID_18,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_18,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_18,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_18,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_18,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_18,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_18,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_18,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_18,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_18,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_18,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_19,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_19,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_19,degrees)                         
+(L:RADAR_TRACK_BEARING_19,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_19,degrees)
+(L:RADAR_TRACK_AZ_19,degrees) 180 > if{ (L:RADAR_TRACK_AZ_19,degrees) 360 - (>L:RADAR_TRACK_AZ_19,degrees) } 
+
+(L:RADAR_TRACK_SPEED_19,knots) 200 > if{ 3 (>L:RWRThreat_19,number) }
+(L:RADAR_TRACK_SPEED_19,knots) 400 > if{ 2 (>L:RWRThreat_19,number) }
+(L:RADAR_TRACK_SPEED_19,knots) 700 > if{ 1 (>L:RWRThreat_19,number) }
+(L:RADAR_TRACK_VALID_19,number) 0 == (L:RADAR_TRACK_SPEED_19,knots) 200 &lt; or if{ 0 (>L:RWRTrack_19,bool) } els{ 1 (>L:RWRTrack_19,bool) }
+(L:RWRThreat_19,number) 0 &gt; (L:RWRThreat_19,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_19,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 19 == if{
+(L:RADAR_TRACK_VALID_19,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_19,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_19,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_19,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_19,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_19,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_19,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_19,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_19,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_19,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_19,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_20,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_20,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_20,degrees)                           
+(L:RADAR_TRACK_BEARING_20,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_20,degrees)
+(L:RADAR_TRACK_AZ_20,degrees) 180 > if{ (L:RADAR_TRACK_AZ_20,degrees) 360 - (>L:RADAR_TRACK_AZ_20,degrees) } 
+
+(L:RADAR_TRACK_SPEED_20,knots) 200 > if{ 3 (>L:RWRThreat_20,number) }
+(L:RADAR_TRACK_SPEED_20,knots) 400 > if{ 2 (>L:RWRThreat_20,number) }
+(L:RADAR_TRACK_SPEED_20,knots) 700 > if{ 1 (>L:RWRThreat_20,number) }
+(L:RADAR_TRACK_VALID_20,number) 0 == (L:RADAR_TRACK_SPEED_20,knots) 200 &lt; or if{ 0 (>L:RWRTrack_20,bool) } els{ 1 (>L:RWRTrack_20,bool) }
+(L:RWRThreat_20,number) 0 &gt; (L:RWRThreat_20,number) (L:RWRWarningLevelSound) &lt; and if{ (L:RWRThreat_20,number) (>L:RWRWarningLevelSound) }
+
+(L:TargetNumber,number) 20 == if{
+(L:RADAR_TRACK_VALID_20,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_20,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_20,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_20,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_20,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_20,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_20,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_20,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_20,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_20,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_20,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_21,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_21,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_21,degrees) 
+(L:RADAR_TRACK_BEARING_21,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_21,degrees)
+(L:RADAR_TRACK_AZ_21,degrees) 180 > if{ (L:RADAR_TRACK_AZ_21,degrees) 360 - (>L:RADAR_TRACK_AZ_21,degrees) }
+
+(L:RADAR_TRACK_SPEED_21,knots) 200 > if{ 3 (>L:RWRThreat_21,number) }
+(L:RADAR_TRACK_SPEED_21,knots) 400 > if{ 2 (>L:RWRThreat_21,number) }
+(L:RADAR_TRACK_SPEED_21,knots) 700 > if{ 1 (>L:RWRThreat_21,number) }
+(L:RADAR_TRACK_VALID_21,number) 0 == (L:RADAR_TRACK_SPEED_21,knots) 200 &lt; or if{ 0 (>L:RWRTrack_21,bool) } els{ 1 (>L:RWRTrack_21,bool) }
+
+(L:TargetNumber,number) 21 == if{ 
+(L:RADAR_TRACK_VALID_21,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_21,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_21,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_21,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_21,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_21,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_21,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_21,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_21,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_21,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_21,degrees) (>L:TargetAzimuth,degrees)
+}                          
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_22,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_22,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_22,degrees)                         
+(L:RADAR_TRACK_BEARING_22,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_22,degrees)
+(L:RADAR_TRACK_AZ_22,degrees) 180 > if{ (L:RADAR_TRACK_AZ_22,degrees) 360 - (>L:RADAR_TRACK_AZ_22,degrees) }
+
+(L:RADAR_TRACK_SPEED_22,knots) 200 > if{ 3 (>L:RWRThreat_22,number) }
+(L:RADAR_TRACK_SPEED_22,knots) 400 > if{ 2 (>L:RWRThreat_22,number) }
+(L:RADAR_TRACK_SPEED_22,knots) 700 > if{ 1 (>L:RWRThreat_22,number) }
+(L:RADAR_TRACK_VALID_22,number) 0 == (L:RADAR_TRACK_SPEED_22,knots) 200 &lt; or if{ 0 (>L:RWRTrack_22,bool) } els{ 1 (>L:RWRTrack_22,bool) }
+
+(L:TargetNumber,number) 22 == if{ 
+(L:RADAR_TRACK_VALID_22,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_22,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_22,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_22,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_22,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_22,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_22,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_22,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_22,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_22,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_22,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_23,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_23,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_23,degrees)                           
+(L:RADAR_TRACK_BEARING_23,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_23,degrees)
+(L:RADAR_TRACK_AZ_23,degrees) 180 > if{ (L:RADAR_TRACK_AZ_23,degrees) 360 - (>L:RADAR_TRACK_AZ_23,degrees) }  
+
+(L:RADAR_TRACK_SPEED_23,knots) 200 > if{ 3 (>L:RWRThreat_23,number) }
+(L:RADAR_TRACK_SPEED_23,knots) 400 > if{ 2 (>L:RWRThreat_23,number) }
+(L:RADAR_TRACK_SPEED_23,knots) 700 > if{ 1 (>L:RWRThreat_23,number) }
+(L:RADAR_TRACK_VALID_23,number) 0 == (L:RADAR_TRACK_SPEED_23,knots) 200 &lt; or if{ 0 (>L:RWRTrack_23,bool) } els{ 1 (>L:RWRTrack_23,bool) }
+
+(L:TargetNumber,number) 23 == if{
+(L:RADAR_TRACK_VALID_23,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_23,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_23,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_23,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_23,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_23,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_23,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_23,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_23,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_23,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_23,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_24,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_24,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_24,degrees)                        
+(L:RADAR_TRACK_BEARING_24,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_24,degrees)
+(L:RADAR_TRACK_AZ_24,degrees) 180 > if{ (L:RADAR_TRACK_AZ_24,degrees) 360 - (>L:RADAR_TRACK_AZ_24,degrees) } 
+
+(L:RADAR_TRACK_SPEED_24,knots) 200 > if{ 3 (>L:RWRThreat_24,number) }
+(L:RADAR_TRACK_SPEED_24,knots) 400 > if{ 2 (>L:RWRThreat_24,number) }
+(L:RADAR_TRACK_SPEED_24,knots) 700 > if{ 1 (>L:RWRThreat_24,number) }
+(L:RADAR_TRACK_VALID_24,number) 0 == (L:RADAR_TRACK_SPEED_24,knots) 200 &lt; or if{ 0 (>L:RWRTrack_24,bool) } els{ 1 (>L:RWRTrack_24,bool) }
+
+(L:TargetNumber,number) 24 == if{ 
+(L:RADAR_TRACK_VALID_24,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_24,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_24,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_24,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_24,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_24,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_24,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_24,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_24,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_24,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_24,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_25,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_25,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_25,degrees)                       
+(L:RADAR_TRACK_BEARING_25,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_25,degrees)
+(L:RADAR_TRACK_AZ_25,degrees) 180 > if{ (L:RADAR_TRACK_AZ_25,degrees) 360 - (>L:RADAR_TRACK_AZ_25,degrees) }  
+
+(L:RADAR_TRACK_SPEED_25,knots) 200 > if{ 3 (>L:RWRThreat_25,number) }
+(L:RADAR_TRACK_SPEED_25,knots) 400 > if{ 2 (>L:RWRThreat_25,number) }
+(L:RADAR_TRACK_SPEED_25,knots) 700 > if{ 1 (>L:RWRThreat_25,number) }
+(L:RADAR_TRACK_VALID_25,number) 0 == (L:RADAR_TRACK_SPEED_25,knots) 200 &lt; or if{ 0 (>L:RWRTrack_25,bool) } els{ 1 (>L:RWRTrack_25,bool) }
+
+(L:TargetNumber,number) 25 == if{ 
+(L:RADAR_TRACK_VALID_25,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_25,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_25,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_25,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_25,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_25,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_25,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_25,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_25,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_25,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_25,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_26,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_26,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_26,degrees)                          
+(L:RADAR_TRACK_BEARING_26,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_26,degrees)
+(L:RADAR_TRACK_AZ_26,degrees) 180 > if{ (L:RADAR_TRACK_AZ_26,degrees) 360 - (>L:RADAR_TRACK_AZ_26,degrees) }  
+
+(L:RADAR_TRACK_SPEED_26,knots) 200 > if{ 3 (>L:RWRThreat_26,number) }
+(L:RADAR_TRACK_SPEED_26,knots) 400 > if{ 2 (>L:RWRThreat_26,number) }
+(L:RADAR_TRACK_SPEED_26,knots) 700 > if{ 1 (>L:RWRThreat_26,number) }
+(L:RADAR_TRACK_VALID_26,number) 0 == (L:RADAR_TRACK_SPEED_26,knots) 200 &lt; or if{ 0 (>L:RWRTrack_26,bool) } els{ 1 (>L:RWRTrack_26,bool) }
+
+(L:TargetNumber,number) 26 == if{ 
+(L:RADAR_TRACK_VALID_26,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_26,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_26,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_26,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_26,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_26,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_26,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_26,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_26,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_26,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_26,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_27,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_27,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_27,degrees)                           
+(L:RADAR_TRACK_BEARING_27,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_27,degrees)
+(L:RADAR_TRACK_AZ_27,degrees) 180 > if{ (L:RADAR_TRACK_AZ_27,degrees) 360 - (>L:RADAR_TRACK_AZ_27,degrees) }  
+
+(L:RADAR_TRACK_SPEED_27,knots) 200 > if{ 3 (>L:RWRThreat_27,number) }
+(L:RADAR_TRACK_SPEED_27,knots) 400 > if{ 2 (>L:RWRThreat_27,number) }
+(L:RADAR_TRACK_SPEED_27,knots) 700 > if{ 1 (>L:RWRThreat_27,number) }
+(L:RADAR_TRACK_VALID_27,number) 0 == (L:RADAR_TRACK_SPEED_27,knots) 200 &lt; or if{ 0 (>L:RWRTrack_27,bool) } els{ 1 (>L:RWRTrack_27,bool) }
+
+(L:TargetNumber,number) 27 == if{ 
+(L:RADAR_TRACK_VALID_27,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_27,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_27,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_27,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_27,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_27,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_27,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_27,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_27,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_27,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_27,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_28,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_28,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_28,degrees)                        
+(L:RADAR_TRACK_BEARING_28,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_28,degrees)
+(L:RADAR_TRACK_AZ_28,degrees) 180 > if{ (L:RADAR_TRACK_AZ_28,degrees) 360 - (>L:RADAR_TRACK_AZ_28,degrees) } 
+
+(L:RADAR_TRACK_SPEED_28,knots) 200 > if{ 3 (>L:RWRThreat_28,number) }
+(L:RADAR_TRACK_SPEED_28,knots) 400 > if{ 2 (>L:RWRThreat_28,number) }
+(L:RADAR_TRACK_SPEED_28,knots) 700 > if{ 1 (>L:RWRThreat_28,number) }
+(L:RADAR_TRACK_VALID_28,number) 0 == (L:RADAR_TRACK_SPEED_28,knots) 200 &lt; or if{ 0 (>L:RWRTrack_28,bool) } els{ 1 (>L:RWRTrack_28,bool) }
+
+(L:TargetNumber,number) 28 == if{ 
+(L:RADAR_TRACK_VALID_28,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_28,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_28,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_28,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_28,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_28,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_28,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_28,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_28,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_28,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_28,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_29,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_29,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_29,degrees)                        
+(L:RADAR_TRACK_BEARING_29,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_29,degrees)
+(L:RADAR_TRACK_AZ_29,degrees) 180 > if{ (L:RADAR_TRACK_AZ_29,degrees) 360 - (>L:RADAR_TRACK_AZ_29,degrees) }  
+
+(L:RADAR_TRACK_SPEED_29,knots) 200 > if{ 3 (>L:RWRThreat_29,number) }
+(L:RADAR_TRACK_SPEED_29,knots) 400 > if{ 2 (>L:RWRThreat_29,number) }
+(L:RADAR_TRACK_SPEED_29,knots) 700 > if{ 1 (>L:RWRThreat_29,number) }
+(L:RADAR_TRACK_VALID_29,number) 0 == (L:RADAR_TRACK_SPEED_29,knots) 200 &lt; or if{ 0 (>L:RWRTrack_29,bool) } els{ 1 (>L:RWRTrack_29,bool) }
+
+(L:TargetNumber,number) 29 == if{
+(L:RADAR_TRACK_VALID_29,number) (>L:TargetValid,bool) 
+(L:RADAR_TRACK_BEARING_29,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_29,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_29,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_29,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_29,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_29,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_29,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_29,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_29,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_29,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_30,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_30,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_30,degrees)                        
+(L:RADAR_TRACK_BEARING_30,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_30,degrees)
+(L:RADAR_TRACK_AZ_30,degrees) 180 > if{ (L:RADAR_TRACK_AZ_30,degrees) 360 - (>L:RADAR_TRACK_AZ_30,degrees) } 
+
+(L:RADAR_TRACK_SPEED_30,knots) 200 > if{ 3 (>L:RWRThreat_30,number) }
+(L:RADAR_TRACK_SPEED_30,knots) 400 > if{ 2 (>L:RWRThreat_30,number) }
+(L:RADAR_TRACK_SPEED_30,knots) 700 > if{ 1 (>L:RWRThreat_30,number) }
+(L:RADAR_TRACK_VALID_30,number) 0 == (L:RADAR_TRACK_SPEED_30,knots) 200 &lt; or if{ 0 (>L:RWRTrack_30,bool) } els{ 1 (>L:RWRTrack_30,bool) }
+
+(L:TargetNumber,number) 30 == if{ 
+(L:RADAR_TRACK_VALID_30,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_30,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_30,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_30,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_30,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_30,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_30,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_30,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_30,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_30,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_30,degrees) (>L:TargetAzimuth,degrees)
+}     
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_31,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_31,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_31,degrees)
+(L:RADAR_TRACK_BEARING_31,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_31,degrees)
+(L:RADAR_TRACK_AZ_31,degrees) 180 > if{ (L:RADAR_TRACK_AZ_31,degrees) 360 - (>L:RADAR_TRACK_AZ_31,degrees) }
+
+(L:RADAR_TRACK_SPEED_31,knots) 200 > if{ 3 (>L:RWRThreat_31,number) }
+(L:RADAR_TRACK_SPEED_31,knots) 400 > if{ 2 (>L:RWRThreat_31,number) }
+(L:RADAR_TRACK_SPEED_31,knots) 700 > if{ 1 (>L:RWRThreat_31,number) }
+(L:RADAR_TRACK_VALID_31,number) 0 == (L:RADAR_TRACK_SPEED_31,knots) 200 &lt; or if{ 0 (>L:RWRTrack_31,bool) } els{ 1 (>L:RWRTrack_31,bool) }
+
+(L:TargetNumber,number) 31 == if{ 
+(L:RADAR_TRACK_VALID_31,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_31,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_31,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_31,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_31,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_31,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_31,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_31,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_31,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_31,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_31,degrees) (>L:TargetAzimuth,degrees)
+}                                   
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_32,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_32,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_32,degrees)
+(L:RADAR_TRACK_BEARING_32,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_32,degrees)
+(L:RADAR_TRACK_AZ_32,degrees) 180 > if{ (L:RADAR_TRACK_AZ_32,degrees) 360 - (>L:RADAR_TRACK_AZ_32,degrees) }     
+
+(L:RADAR_TRACK_SPEED_32,knots) 200 > if{ 3 (>L:RWRThreat_32,number) }
+(L:RADAR_TRACK_SPEED_32,knots) 400 > if{ 2 (>L:RWRThreat_32,number) }
+(L:RADAR_TRACK_SPEED_32,knots) 700 > if{ 1 (>L:RWRThreat_32,number) }
+(L:RADAR_TRACK_VALID_32,number) 0 == (L:RADAR_TRACK_SPEED_32,knots) 200 &lt; or if{ 0 (>L:RWRTrack_32,bool) } els{ 1 (>L:RWRTrack_32,bool) }
+
+(L:TargetNumber,number) 32 == if{ 
+(L:RADAR_TRACK_VALID_32,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_32,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_32,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_32,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_32,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_32,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_32,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_32,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_32,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_32,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_32,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_33,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_33,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_33,degrees)
+(L:RADAR_TRACK_BEARING_33,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_33,degrees)
+(L:RADAR_TRACK_AZ_33,degrees) 180 > if{ (L:RADAR_TRACK_AZ_33,degrees) 360 - (>L:RADAR_TRACK_AZ_33,degrees) }     
+
+(L:RADAR_TRACK_SPEED_33,knots) 200 > if{ 3 (>L:RWRThreat_33,number) }
+(L:RADAR_TRACK_SPEED_33,knots) 400 > if{ 2 (>L:RWRThreat_33,number) }
+(L:RADAR_TRACK_SPEED_33,knots) 700 > if{ 1 (>L:RWRThreat_33,number) }
+(L:RADAR_TRACK_VALID_33,number) 0 == (L:RADAR_TRACK_SPEED_33,knots) 200 &lt; or if{ 0 (>L:RWRTrack_33,bool) } els{ 1 (>L:RWRTrack_33,bool) }
+
+(L:TargetNumber,number) 33 == if{ 
+(L:RADAR_TRACK_VALID_33,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_33,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_33,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_33,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_33,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_33,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_33,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_33,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_33,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_33,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_33,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_34,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_34,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_34,degrees)
+(L:RADAR_TRACK_BEARING_34,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_34,degrees)
+(L:RADAR_TRACK_AZ_34,degrees) 180 > if{ (L:RADAR_TRACK_AZ_34,degrees) 360 - (>L:RADAR_TRACK_AZ_34,degrees) }     
+
+(L:RADAR_TRACK_SPEED_34,knots) 200 > if{ 3 (>L:RWRThreat_34,number) }
+(L:RADAR_TRACK_SPEED_34,knots) 400 > if{ 2 (>L:RWRThreat_34,number) }
+(L:RADAR_TRACK_SPEED_34,knots) 700 > if{ 1 (>L:RWRThreat_34,number) }
+(L:RADAR_TRACK_VALID_34,number) 0 == (L:RADAR_TRACK_SPEED_34,knots) 200 &lt; or if{ 0 (>L:RWRTrack_34,bool) } els{ 1 (>L:RWRTrack_34,bool) }
+
+(L:TargetNumber,number) 34 == if{ 
+(L:RADAR_TRACK_VALID_34,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_34,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_34,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_34,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_34,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_34,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_34,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_34,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_34,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_34,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_34,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_35,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_35,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_35,degrees)  
+(L:RADAR_TRACK_BEARING_35,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_35,degrees)
+(L:RADAR_TRACK_AZ_35,degrees) 180 > if{ (L:RADAR_TRACK_AZ_35,degrees) 360 - (>L:RADAR_TRACK_AZ_35,degrees) }     
+
+(L:RADAR_TRACK_SPEED_35,knots) 200 > if{ 3 (>L:RWRThreat_35,number) }
+(L:RADAR_TRACK_SPEED_35,knots) 400 > if{ 2 (>L:RWRThreat_35,number) }
+(L:RADAR_TRACK_SPEED_35,knots) 700 > if{ 1 (>L:RWRThreat_35,number) }
+(L:RADAR_TRACK_VALID_35,number) 0 == (L:RADAR_TRACK_SPEED_35,knots) 200 &lt; or if{ 0 (>L:RWRTrack_35,bool) } els{ 1 (>L:RWRTrack_35,bool) }
+
+(L:TargetNumber,number) 35 == if{ 
+(L:RADAR_TRACK_VALID_35,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_35,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_35,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_35,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_35,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_35,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_35,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_35,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_35,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_35,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_35,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_36,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_36,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_36,degrees)
+(L:RADAR_TRACK_BEARING_36,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_36,degrees)
+(L:RADAR_TRACK_AZ_36,degrees) 180 > if{ (L:RADAR_TRACK_AZ_36,degrees) 360 - (>L:RADAR_TRACK_AZ_36,degrees) }     
+
+(L:RADAR_TRACK_SPEED_36,knots) 200 > if{ 3 (>L:RWRThreat_36,number) }
+(L:RADAR_TRACK_SPEED_36,knots) 400 > if{ 2 (>L:RWRThreat_36,number) }
+(L:RADAR_TRACK_SPEED_36,knots) 700 > if{ 1 (>L:RWRThreat_36,number) }
+(L:RADAR_TRACK_VALID_36,number) 0 == (L:RADAR_TRACK_SPEED_36,knots) 200 &lt; or if{ 0 (>L:RWRTrack_36,bool) } els{ 1 (>L:RWRTrack_36,bool) }
+
+(L:TargetNumber,number) 36 == if{ 
+(L:RADAR_TRACK_VALID_36,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_36,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_36,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_36,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_36,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_36,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_36,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_36,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_36,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_36,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_36,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_37,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_37,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_37,degrees)
+(L:RADAR_TRACK_BEARING_37,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_37,degrees)
+(L:RADAR_TRACK_AZ_37,degrees) 180 > if{ (L:RADAR_TRACK_AZ_37,degrees) 360 - (>L:RADAR_TRACK_AZ_37,degrees) }     
+
+(L:RADAR_TRACK_SPEED_37,knots) 200 > if{ 3 (>L:RWRThreat_37,number) }
+(L:RADAR_TRACK_SPEED_37,knots) 400 > if{ 2 (>L:RWRThreat_37,number) }
+(L:RADAR_TRACK_SPEED_37,knots) 700 > if{ 1 (>L:RWRThreat_37,number) }
+(L:RADAR_TRACK_VALID_37,number) 0 == (L:RADAR_TRACK_SPEED_37,knots) 200 &lt; or if{ 0 (>L:RWRTrack_37,bool) } els{ 1 (>L:RWRTrack_37,bool) }
+
+(L:TargetNumber,number) 37 == if{ 
+(L:RADAR_TRACK_VALID_37,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_37,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_37,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_37,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_37,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_37,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_37,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_37,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_37,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_37,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_37,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_38,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_38,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_38,degrees) 
+(L:RADAR_TRACK_BEARING_38,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_38,degrees)
+(L:RADAR_TRACK_AZ_38,degrees) 180 > if{ (L:RADAR_TRACK_AZ_38,degrees) 360 - (>L:RADAR_TRACK_AZ_38,degrees) }     
+
+(L:RADAR_TRACK_SPEED_38,knots) 200 > if{ 3 (>L:RWRThreat_38,number) }
+(L:RADAR_TRACK_SPEED_38,knots) 400 > if{ 2 (>L:RWRThreat_38,number) }
+(L:RADAR_TRACK_SPEED_38,knots) 700 > if{ 1 (>L:RWRThreat_38,number) }
+(L:RADAR_TRACK_VALID_38,number) 0 == (L:RADAR_TRACK_SPEED_38,knots) 200 &lt; or if{ 0 (>L:RWRTrack_38,bool) } els{ 1 (>L:RWRTrack_38,bool) }
+
+(L:TargetNumber,number) 38 == if{ 
+(L:RADAR_TRACK_VALID_38,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_38,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_38,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_38,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_38,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_38,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_38,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_38,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_38,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_38,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_38,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_39,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_39,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_39,degrees)
+(L:RADAR_TRACK_BEARING_39,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_39,degrees)
+(L:RADAR_TRACK_AZ_39,degrees) 180 > if{ (L:RADAR_TRACK_AZ_39,degrees) 360 - (>L:RADAR_TRACK_AZ_39,degrees) }     
+
+(L:RADAR_TRACK_SPEED_39,knots) 200 > if{ 3 (>L:RWRThreat_39,number) }
+(L:RADAR_TRACK_SPEED_39,knots) 400 > if{ 2 (>L:RWRThreat_39,number) }
+(L:RADAR_TRACK_SPEED_39,knots) 700 > if{ 1 (>L:RWRThreat_39,number) }
+(L:RADAR_TRACK_VALID_39,number) 0 == (L:RADAR_TRACK_SPEED_39,knots) 200 &lt; or if{ 0 (>L:RWRTrack_39,bool) } els{ 1 (>L:RWRTrack_39,bool) }
+
+(L:TargetNumber,number) 39 == if{ 
+(L:RADAR_TRACK_VALID_39,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_39,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_39,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_39,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_39,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_39,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_39,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_39,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_39,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_39,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_39,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_40,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_40,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_40,degrees)
+(L:RADAR_TRACK_BEARING_40,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_40,degrees)
+(L:RADAR_TRACK_AZ_40,degrees) 180 > if{ (L:RADAR_TRACK_AZ_40,degrees) 360 - (>L:RADAR_TRACK_AZ_40,degrees) }     
+
+(L:RADAR_TRACK_SPEED_40,knots) 200 > if{ 3 (>L:RWRThreat_40,number) }
+(L:RADAR_TRACK_SPEED_40,knots) 400 > if{ 2 (>L:RWRThreat_40,number) }
+(L:RADAR_TRACK_SPEED_40,knots) 700 > if{ 1 (>L:RWRThreat_40,number) }
+(L:RADAR_TRACK_VALID_40,number) 0 == (L:RADAR_TRACK_SPEED_40,knots) 200 &lt; or if{ 0 (>L:RWRTrack_40,bool) } els{ 1 (>L:RWRTrack_40,bool) }
+
+(L:TargetNumber,number) 40 == if{ 
+(L:RADAR_TRACK_VALID_40,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_40,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_40,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_40,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_40,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_40,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_40,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_40,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_40,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_40,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_40,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_41,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_41,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_41,degrees)
+(L:RADAR_TRACK_BEARING_41,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_41,degrees)
+(L:RADAR_TRACK_AZ_41,degrees) 180 > if{ (L:RADAR_TRACK_AZ_41,degrees) 360 - (>L:RADAR_TRACK_AZ_41,degrees) }
+
+(L:RADAR_TRACK_SPEED_41,knots) 200 > if{ 3 (>L:RWRThreat_41,number) }
+(L:RADAR_TRACK_SPEED_41,knots) 400 > if{ 2 (>L:RWRThreat_41,number) }
+(L:RADAR_TRACK_SPEED_41,knots) 700 > if{ 1 (>L:RWRThreat_41,number) }
+(L:RADAR_TRACK_VALID_41,number) 0 == (L:RADAR_TRACK_SPEED_41,knots) 200 &lt; or if{ 0 (>L:RWRTrack_41,bool) } els{ 1 (>L:RWRTrack_41,bool) }
+
+(L:TargetNumber,number) 41 == if{ 
+(L:RADAR_TRACK_VALID_41,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_41,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_41,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_41,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_41,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_41,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_41,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_41,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_41,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_41,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_41,degrees) (>L:TargetAzimuth,degrees)
+}                                   
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_42,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_42,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_42,degrees)
+(L:RADAR_TRACK_BEARING_42,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_42,degrees)
+(L:RADAR_TRACK_AZ_42,degrees) 180 > if{ (L:RADAR_TRACK_AZ_42,degrees) 360 - (>L:RADAR_TRACK_AZ_42,degrees) }     
+
+(L:RADAR_TRACK_SPEED_42,knots) 200 > if{ 3 (>L:RWRThreat_42,number) }
+(L:RADAR_TRACK_SPEED_42,knots) 400 > if{ 2 (>L:RWRThreat_42,number) }
+(L:RADAR_TRACK_SPEED_42,knots) 700 > if{ 1 (>L:RWRThreat_42,number) }
+(L:RADAR_TRACK_VALID_42,number) 0 == (L:RADAR_TRACK_SPEED_42,knots) 200 &lt; or if{ 0 (>L:RWRTrack_42,bool) } els{ 1 (>L:RWRTrack_42,bool) }
+
+(L:TargetNumber,number) 42 == if{ 
+(L:RADAR_TRACK_VALID_42,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_42,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_42,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_42,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_42,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_42,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_42,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_42,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_42,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_42,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_42,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_43,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_43,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_43,degrees)
+(L:RADAR_TRACK_BEARING_43,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_43,degrees)
+(L:RADAR_TRACK_AZ_43,degrees) 180 > if{ (L:RADAR_TRACK_AZ_43,degrees) 360 - (>L:RADAR_TRACK_AZ_43,degrees) }     
+
+(L:RADAR_TRACK_SPEED_43,knots) 200 > if{ 3 (>L:RWRThreat_43,number) }
+(L:RADAR_TRACK_SPEED_43,knots) 400 > if{ 2 (>L:RWRThreat_43,number) }
+(L:RADAR_TRACK_SPEED_43,knots) 700 > if{ 1 (>L:RWRThreat_43,number) }
+(L:RADAR_TRACK_VALID_43,number) 0 == (L:RADAR_TRACK_SPEED_43,knots) 200 &lt; or if{ 0 (>L:RWRTrack_43,bool) } els{ 1 (>L:RWRTrack_43,bool) }
+
+(L:TargetNumber,number) 43 == if{ 
+(L:RADAR_TRACK_VALID_43,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_43,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_43,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_43,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_43,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_43,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_43,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_43,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_43,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_43,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_43,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_44,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_44,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_44,degrees) 
+(L:RADAR_TRACK_BEARING_44,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_44,degrees)
+(L:RADAR_TRACK_AZ_44,degrees) 180 > if{ (L:RADAR_TRACK_AZ_44,degrees) 360 - (>L:RADAR_TRACK_AZ_44,degrees) }     
+
+(L:RADAR_TRACK_SPEED_44,knots) 200 > if{ 3 (>L:RWRThreat_44,number) }
+(L:RADAR_TRACK_SPEED_44,knots) 400 > if{ 2 (>L:RWRThreat_44,number) }
+(L:RADAR_TRACK_SPEED_44,knots) 700 > if{ 1 (>L:RWRThreat_44,number) }
+(L:RADAR_TRACK_VALID_44,number) 0 == (L:RADAR_TRACK_SPEED_44,knots) 200 &lt; or if{ 0 (>L:RWRTrack_44,bool) } els{ 1 (>L:RWRTrack_44,bool) }
+
+(L:TargetNumber,number) 44 == if{ 
+(L:RADAR_TRACK_VALID_44,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_44,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_44,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_44,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_44,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_44,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_44,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_44,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_44,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_44,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_44,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_45,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_45,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_45,degrees)
+(L:RADAR_TRACK_BEARING_45,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_45,degrees)
+(L:RADAR_TRACK_AZ_45,degrees) 180 > if{ (L:RADAR_TRACK_AZ_45,degrees) 360 - (>L:RADAR_TRACK_AZ_45,degrees) }     
+
+(L:RADAR_TRACK_SPEED_45,knots) 200 > if{ 3 (>L:RWRThreat_45,number) }
+(L:RADAR_TRACK_SPEED_45,knots) 400 > if{ 2 (>L:RWRThreat_45,number) }
+(L:RADAR_TRACK_SPEED_45,knots) 700 > if{ 1 (>L:RWRThreat_45,number) }
+(L:RADAR_TRACK_VALID_45,number) 0 == (L:RADAR_TRACK_SPEED_45,knots) 200 &lt; or if{ 0 (>L:RWRTrack_45,bool) } els{ 1 (>L:RWRTrack_45,bool) }
+
+(L:TargetNumber,number) 45 == if{ 
+(L:RADAR_TRACK_VALID_45,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_45,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_45,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_45,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_45,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_45,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_45,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_45,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_45,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_45,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_45,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_46,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_46,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_46,degrees) 
+(L:RADAR_TRACK_BEARING_46,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_46,degrees)
+(L:RADAR_TRACK_AZ_46,degrees) 180 > if{ (L:RADAR_TRACK_AZ_46,degrees) 360 - (>L:RADAR_TRACK_AZ_46,degrees) }     
+
+(L:RADAR_TRACK_SPEED_46,knots) 200 > if{ 3 (>L:RWRThreat_46,number) }
+(L:RADAR_TRACK_SPEED_46,knots) 400 > if{ 2 (>L:RWRThreat_46,number) }
+(L:RADAR_TRACK_SPEED_46,knots) 700 > if{ 1 (>L:RWRThreat_46,number) }
+(L:RADAR_TRACK_VALID_46,number) 0 == (L:RADAR_TRACK_SPEED_46,knots) 200 &lt; or if{ 0 (>L:RWRTrack_46,bool) } els{ 1 (>L:RWRTrack_46,bool) }
+
+(L:TargetNumber,number) 46 == if{ 
+(L:RADAR_TRACK_VALID_46,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_46,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_46,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_46,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_46,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_46,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_46,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_46,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_46,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_46,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_46,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_47,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_47,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_47,degrees) 
+(L:RADAR_TRACK_BEARING_47,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_47,degrees)
+(L:RADAR_TRACK_AZ_47,degrees) 180 > if{ (L:RADAR_TRACK_AZ_47,degrees) 360 - (>L:RADAR_TRACK_AZ_47,degrees) }     
+
+(L:RADAR_TRACK_SPEED_47,knots) 200 > if{ 3 (>L:RWRThreat_47,number) }
+(L:RADAR_TRACK_SPEED_47,knots) 400 > if{ 2 (>L:RWRThreat_47,number) }
+(L:RADAR_TRACK_SPEED_47,knots) 700 > if{ 1 (>L:RWRThreat_47,number) }
+(L:RADAR_TRACK_VALID_47,number) 0 == (L:RADAR_TRACK_SPEED_47,knots) 200 &lt; or if{ 0 (>L:RWRTrack_47,bool) } els{ 1 (>L:RWRTrack_47,bool) }
+
+(L:TargetNumber,number) 47 == if{ 
+(L:RADAR_TRACK_VALID_47,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_47,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_47,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_47,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_47,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_47,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_47,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_47,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_47,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_47,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_47,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_48,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_48,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_48,degrees) 
+(L:RADAR_TRACK_BEARING_48,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_48,degrees)
+(L:RADAR_TRACK_AZ_48,degrees) 180 > if{ (L:RADAR_TRACK_AZ_48,degrees) 360 - (>L:RADAR_TRACK_AZ_48,degrees) }     
+
+(L:RADAR_TRACK_SPEED_48,knots) 200 > if{ 3 (>L:RWRThreat_48,number) }
+(L:RADAR_TRACK_SPEED_48,knots) 400 > if{ 2 (>L:RWRThreat_48,number) }
+(L:RADAR_TRACK_SPEED_48,knots) 700 > if{ 1 (>L:RWRThreat_48,number) }
+(L:RADAR_TRACK_VALID_48,number) 0 == (L:RADAR_TRACK_SPEED_48,knots) 200 &lt; or if{ 0 (>L:RWRTrack_48,bool) } els{ 1 (>L:RWRTrack_48,bool) }
+
+(L:TargetNumber,number) 48 == if{ 
+(L:RADAR_TRACK_VALID_48,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_48,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_48,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_48,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_48,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_48,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_48,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_48,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_48,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_48,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_48,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_49,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_49,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_49,degrees) 
+(L:RADAR_TRACK_BEARING_49,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_49,degrees)
+(L:RADAR_TRACK_AZ_49,degrees) 180 > if{ (L:RADAR_TRACK_AZ_49,degrees) 360 - (>L:RADAR_TRACK_AZ_49,degrees) }     
+
+(L:RADAR_TRACK_SPEED_49,knots) 200 > if{ 3 (>L:RWRThreat_49,number) }
+(L:RADAR_TRACK_SPEED_49,knots) 400 > if{ 2 (>L:RWRThreat_49,number) }
+(L:RADAR_TRACK_SPEED_49,knots) 700 > if{ 1 (>L:RWRThreat_49,number) }
+(L:RADAR_TRACK_VALID_49,number) 0 == (L:RADAR_TRACK_SPEED_49,knots) 200 &lt; or if{ 0 (>L:RWRTrack_49,bool) } els{ 1 (>L:RWRTrack_49,bool) }
+
+(L:TargetNumber,number) 49 == if{ 
+(L:RADAR_TRACK_VALID_49,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_49,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_49,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_49,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_49,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_49,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_49,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_49,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_49,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_49,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_49,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_50,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_50,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_50,degrees)
+(L:RADAR_TRACK_BEARING_50,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_50,degrees)
+(L:RADAR_TRACK_AZ_50,degrees) 180 > if{ (L:RADAR_TRACK_AZ_50,degrees) 360 - (>L:RADAR_TRACK_AZ_50,degrees) }     
+
+(L:RADAR_TRACK_SPEED_50,knots) 200 > if{ 3 (>L:RWRThreat_50,number) }
+(L:RADAR_TRACK_SPEED_50,knots) 400 > if{ 2 (>L:RWRThreat_50,number) }
+(L:RADAR_TRACK_SPEED_50,knots) 700 > if{ 1 (>L:RWRThreat_50,number) }
+(L:RADAR_TRACK_VALID_50,number) 0 == (L:RADAR_TRACK_SPEED_50,knots) 200 &lt; or if{ 0 (>L:RWRTrack_50,bool) } els{ 1 (>L:RWRTrack_50,bool) }
+
+(L:TargetNumber,number) 50 == if{ 
+(L:RADAR_TRACK_VALID_50,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_50,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_50,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_50,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_50,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_50,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_50,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_50,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_50,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_50,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_50,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_51,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_51,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_51,degrees)
+(L:RADAR_TRACK_BEARING_51,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_51,degrees)
+(L:RADAR_TRACK_AZ_51,degrees) 180 > if{ (L:RADAR_TRACK_AZ_51,degrees) 360 - (>L:RADAR_TRACK_AZ_51,degrees) }
+
+(L:RADAR_TRACK_SPEED_51,knots) 200 > if{ 3 (>L:RWRThreat_51,number) }
+(L:RADAR_TRACK_SPEED_51,knots) 400 > if{ 2 (>L:RWRThreat_51,number) }
+(L:RADAR_TRACK_SPEED_51,knots) 700 > if{ 1 (>L:RWRThreat_51,number) }
+(L:RADAR_TRACK_VALID_51,number) 0 == (L:RADAR_TRACK_SPEED_51,knots) 200 &lt; or if{ 0 (>L:RWRTrack_51,bool) } els{ 1 (>L:RWRTrack_51,bool) }
+
+(L:TargetNumber,number) 51 == if{ 
+(L:RADAR_TRACK_VALID_51,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_51,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_51,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_51,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_51,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_51,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_51,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_51,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_51,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_51,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_51,degrees) (>L:TargetAzimuth,degrees)
+}                                   
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_52,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_52,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_52,degrees)
+(L:RADAR_TRACK_BEARING_52,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_52,degrees)
+(L:RADAR_TRACK_AZ_52,degrees) 180 > if{ (L:RADAR_TRACK_AZ_52,degrees) 360 - (>L:RADAR_TRACK_AZ_52,degrees) }     
+
+(L:RADAR_TRACK_SPEED_52,knots) 200 > if{ 3 (>L:RWRThreat_52,number) }
+(L:RADAR_TRACK_SPEED_52,knots) 400 > if{ 2 (>L:RWRThreat_52,number) }
+(L:RADAR_TRACK_SPEED_52,knots) 700 > if{ 1 (>L:RWRThreat_52,number) }
+(L:RADAR_TRACK_VALID_52,number) 0 == (L:RADAR_TRACK_SPEED_52,knots) 200 &lt; or if{ 0 (>L:RWRTrack_52,bool) } els{ 1 (>L:RWRTrack_52,bool) }
+
+(L:TargetNumber,number) 52 == if{ 
+(L:RADAR_TRACK_VALID_52,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_52,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_52,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_52,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_52,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_52,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_52,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_52,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_52,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_52,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_52,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_53,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_53,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_53,degrees)
+(L:RADAR_TRACK_BEARING_53,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_53,degrees)
+(L:RADAR_TRACK_AZ_53,degrees) 180 > if{ (L:RADAR_TRACK_AZ_53,degrees) 360 - (>L:RADAR_TRACK_AZ_53,degrees) }     
+
+(L:RADAR_TRACK_SPEED_53,knots) 200 > if{ 3 (>L:RWRThreat_53,number) }
+(L:RADAR_TRACK_SPEED_53,knots) 400 > if{ 2 (>L:RWRThreat_53,number) }
+(L:RADAR_TRACK_SPEED_53,knots) 700 > if{ 1 (>L:RWRThreat_53,number) }
+(L:RADAR_TRACK_VALID_53,number) 0 == (L:RADAR_TRACK_SPEED_53,knots) 200 &lt; or if{ 0 (>L:RWRTrack_53,bool) } els{ 1 (>L:RWRTrack_53,bool) }
+
+(L:TargetNumber,number) 53 == if{ 
+(L:RADAR_TRACK_VALID_53,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_53,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_53,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_53,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_53,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_53,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_53,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_53,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_53,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_53,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_53,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_54,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_54,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_54,degrees) 
+(L:RADAR_TRACK_BEARING_54,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_54,degrees)
+(L:RADAR_TRACK_AZ_54,degrees) 180 > if{ (L:RADAR_TRACK_AZ_54,degrees) 360 - (>L:RADAR_TRACK_AZ_54,degrees) }     
+
+(L:RADAR_TRACK_SPEED_54,knots) 200 > if{ 3 (>L:RWRThreat_54,number) }
+(L:RADAR_TRACK_SPEED_54,knots) 400 > if{ 2 (>L:RWRThreat_54,number) }
+(L:RADAR_TRACK_SPEED_54,knots) 700 > if{ 1 (>L:RWRThreat_54,number) }
+(L:RADAR_TRACK_VALID_54,number) 0 == (L:RADAR_TRACK_SPEED_54,knots) 200 &lt; or if{ 0 (>L:RWRTrack_54,bool) } els{ 1 (>L:RWRTrack_54,bool) }
+
+(L:TargetNumber,number) 54 == if{ 
+(L:RADAR_TRACK_VALID_54,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_54,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_54,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_54,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_54,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_54,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_54,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_54,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_54,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_54,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_54,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_55,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_55,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_55,degrees)
+(L:RADAR_TRACK_BEARING_55,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_55,degrees)
+(L:RADAR_TRACK_AZ_55,degrees) 180 > if{ (L:RADAR_TRACK_AZ_55,degrees) 360 - (>L:RADAR_TRACK_AZ_55,degrees) }     
+
+(L:RADAR_TRACK_SPEED_55,knots) 200 > if{ 3 (>L:RWRThreat_55,number) }
+(L:RADAR_TRACK_SPEED_55,knots) 400 > if{ 2 (>L:RWRThreat_55,number) }
+(L:RADAR_TRACK_SPEED_55,knots) 700 > if{ 1 (>L:RWRThreat_55,number) }
+(L:RADAR_TRACK_VALID_55,number) 0 == (L:RADAR_TRACK_SPEED_55,knots) 200 &lt; or if{ 0 (>L:RWRTrack_55,bool) } els{ 1 (>L:RWRTrack_55,bool) }
+
+(L:TargetNumber,number) 55 == if{ 
+(L:RADAR_TRACK_VALID_55,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_55,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_55,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_55,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_55,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_55,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_55,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_55,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_55,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_55,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_55,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_56,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_56,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_56,degrees) 
+(L:RADAR_TRACK_BEARING_56,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_56,degrees)
+(L:RADAR_TRACK_AZ_56,degrees) 180 > if{ (L:RADAR_TRACK_AZ_56,degrees) 360 - (>L:RADAR_TRACK_AZ_56,degrees) }     
+
+(L:RADAR_TRACK_SPEED_56,knots) 200 > if{ 3 (>L:RWRThreat_56,number) }
+(L:RADAR_TRACK_SPEED_56,knots) 400 > if{ 2 (>L:RWRThreat_56,number) }
+(L:RADAR_TRACK_SPEED_56,knots) 700 > if{ 1 (>L:RWRThreat_56,number) }
+(L:RADAR_TRACK_VALID_56,number) 0 == (L:RADAR_TRACK_SPEED_56,knots) 200 &lt; or if{ 0 (>L:RWRTrack_56,bool) } els{ 1 (>L:RWRTrack_56,bool) }
+
+(L:TargetNumber,number) 56 == if{ 
+(L:RADAR_TRACK_VALID_56,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_56,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_56,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_56,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_56,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_56,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_56,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_56,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_56,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_56,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_56,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_57,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_57,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_57,degrees) 
+(L:RADAR_TRACK_BEARING_57,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_57,degrees)
+(L:RADAR_TRACK_AZ_57,degrees) 180 > if{ (L:RADAR_TRACK_AZ_57,degrees) 360 - (>L:RADAR_TRACK_AZ_57,degrees) }     
+
+(L:RADAR_TRACK_SPEED_57,knots) 200 > if{ 3 (>L:RWRThreat_57,number) }
+(L:RADAR_TRACK_SPEED_57,knots) 400 > if{ 2 (>L:RWRThreat_57,number) }
+(L:RADAR_TRACK_SPEED_57,knots) 700 > if{ 1 (>L:RWRThreat_57,number) }
+(L:RADAR_TRACK_VALID_57,number) 0 == (L:RADAR_TRACK_SPEED_57,knots) 200 &lt; or if{ 0 (>L:RWRTrack_57,bool) } els{ 1 (>L:RWRTrack_57,bool) }
+
+(L:TargetNumber,number) 57 == if{ 
+(L:RADAR_TRACK_VALID_57,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_57,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_57,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_57,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_57,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_57,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_57,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_57,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_57,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_57,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_57,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_58,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_58,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_58,degrees) 
+(L:RADAR_TRACK_BEARING_58,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_58,degrees)
+(L:RADAR_TRACK_AZ_58,degrees) 180 > if{ (L:RADAR_TRACK_AZ_58,degrees) 360 - (>L:RADAR_TRACK_AZ_58,degrees) }     
+
+(L:RADAR_TRACK_SPEED_58,knots) 200 > if{ 3 (>L:RWRThreat_58,number) }
+(L:RADAR_TRACK_SPEED_58,knots) 400 > if{ 2 (>L:RWRThreat_58,number) }
+(L:RADAR_TRACK_SPEED_58,knots) 700 > if{ 1 (>L:RWRThreat_58,number) }
+(L:RADAR_TRACK_VALID_58,number) 0 == (L:RADAR_TRACK_SPEED_58,knots) 200 &lt; or if{ 0 (>L:RWRTrack_58,bool) } els{ 1 (>L:RWRTrack_58,bool) }
+
+(L:TargetNumber,number) 58 == if{ 
+(L:RADAR_TRACK_VALID_58,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_58,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_58,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_58,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_58,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_58,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_58,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_58,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_58,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_58,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_58,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_59,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_59,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_59,degrees) 
+(L:RADAR_TRACK_BEARING_59,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_59,degrees)
+(L:RADAR_TRACK_AZ_59,degrees) 180 > if{ (L:RADAR_TRACK_AZ_59,degrees) 360 - (>L:RADAR_TRACK_AZ_59,degrees) }     
+
+(L:RADAR_TRACK_SPEED_59,knots) 200 > if{ 3 (>L:RWRThreat_59,number) }
+(L:RADAR_TRACK_SPEED_59,knots) 400 > if{ 2 (>L:RWRThreat_59,number) }
+(L:RADAR_TRACK_SPEED_59,knots) 700 > if{ 1 (>L:RWRThreat_59,number) }
+(L:RADAR_TRACK_VALID_59,number) 0 == (L:RADAR_TRACK_SPEED_59,knots) 200 &lt; or if{ 0 (>L:RWRTrack_59,bool) } els{ 1 (>L:RWRTrack_59,bool) }
+
+(L:TargetNumber,number) 59 == if{ 
+(L:RADAR_TRACK_VALID_59,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_59,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_59,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_59,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_59,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_59,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_59,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_59,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_59,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_59,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_59,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:RADAR_TRACK_LONGITUDE_60,degrees) (>C:fs9gps:GeoCalcLongitude2,degrees) 
+(L:RADAR_TRACK_LATITUDE_60,degrees)  (>C:fs9gps:GeoCalcLatitude2,degrees)
+(C:fs9gps:GeoCalcBearing,degrees) (L:AircraftHeadingDelta,degrees) -  (>L:RADAR_TRACK_BEARING_60,degrees)
+(L:RADAR_TRACK_BEARING_60,degrees) (A:Plane heading degrees gyro,degrees) - dnor (>L:RADAR_TRACK_AZ_60,degrees)
+(L:RADAR_TRACK_AZ_60,degrees) 180 > if{ (L:RADAR_TRACK_AZ_60,degrees) 360 - (>L:RADAR_TRACK_AZ_60,degrees) }     
+
+(L:RADAR_TRACK_SPEED_60,knots) 200 > if{ 3 (>L:RWRThreat_60,number) }
+(L:RADAR_TRACK_SPEED_60,knots) 400 > if{ 2 (>L:RWRThreat_60,number) }
+(L:RADAR_TRACK_SPEED_60,knots) 700 > if{ 1 (>L:RWRThreat_60,number) }
+(L:RADAR_TRACK_VALID_60,number) 0 == (L:RADAR_TRACK_SPEED_60,knots) 200 &lt; or if{ 0 (>L:RWRTrack_60,bool) } els{ 1 (>L:RWRTrack_60,bool) }
+
+(L:TargetNumber,number) 60 == if{ 
+(L:RADAR_TRACK_VALID_60,number) (>L:TargetValid,bool)
+(L:RADAR_TRACK_BEARING_60,degrees) (>L:TargetBearing,degrees)
+(L:RADAR_TRACK_DISTANCE_60,nmiles) (>L:TargetDistance,nmiles)
+(L:RADAR_TRACK_SPEED_60,knots) (>L:TargetSpeed,knots)
+(L:RADAR_TRACK_ID_60,string) (L:TargetID,string)
+(L:RADAR_TRACK_TYPE_60,string) (L:TargetType,string)
+(L:RADAR_TRACK_ALT_MSL_60,feet) (>L:TargetAltitude,feet)
+(L:RADAR_TRACK_ALT_AGL_60,feet) (>L:TargetAltitudeAGL,feet)
+(L:RADAR_TRACK_STAB_ELEVATION_60,degrees) (>L:TargetElevation,degrees)
+(L:RADAR_TRACK_HEADING_60,degrees) (>L:TargetHeading,degrees)
+(L:RADAR_TRACK_AZ_60,degrees) (>L:TargetAzimuth,degrees)
+}                           
+</Value>
+</Select>
+</Element>
+
+<!-- SITUATIONAL AWARENESS -->
+
+
+<Element>
+<Select>
+<Value>
+(L:TargetNumber,number) (L:PrevTargetNumber,number) &gt; if{ 1 (>L:TargetNumberDelta,number) }
+(L:TargetNumber,number) (L:PrevTargetNumber,number) &lt; if{ -1 (>L:TargetNumberDelta,number) }
+(L:TargetNumber,number) 60 &gt; if{ 0 (>L:TargetNumber,number) }
+(L:TargetNumber,number) 0 &lt; if{ 50 (>L:TargetNumber,number) }
+(L:TargetNumber,number) 0 &gt; (L:TargetValid,bool) ! and if{ (L:TargetNumber,number) (L:TargetNumberDelta,number) + (>L:TargetNumber,number) }
+
+(L:TargetNumber,number) (>L:PrevTargetNumber,number)
+</Value>
+</Select>
+</Element>
+
+<!-- Zoom factors -->
+<Element>
+<Select>
+<Value>
+(L:TSDMapInc,bool) if{ (L:TSD_Zoom,number) ++ (>L:TSD_Zoom,number) 0 (>L:TSDMapInc,bool) }
+(L:TSDMapDec,bool) if{ (L:TSD_Zoom,number) -- (>L:TSD_Zoom,number) 0 (>L:TSDMapDec,bool) }
+
+(L:TSD_Zoom,number) 0 == if{ 10 (>L:TSD_Range,number) 8 (>L:TSD_Map_Zoom,number) 2 (>L:TSD_MapRange1,number) 5 (>L:TSD_MapRange2,number) 7 (>L:TSD_MapRange3,number) }
+(L:TSD_Zoom,number) 1 == if{ 20 (>L:TSD_Range,number) 9 (>L:TSD_Map_Zoom,number) 5 (>L:TSD_MapRange1,number) 10 (>L:TSD_MapRange2,number) 15 (>L:TSD_MapRange3,number) } }
+(L:TSD_Zoom,number) 2 == if{ 40 (>L:TSD_Range,number) 10 (>L:TSD_Map_Zoom,number) 10 (>L:TSD_MapRange1,number) 20 (>L:TSD_MapRange2,number) 30 (>L:TSD_MapRange3,number) } }
+(L:TSD_Zoom,number) 3 == if{ 60 (>L:TSD_Range,number) 11 (>L:TSD_Map_Zoom,number) 15 (>L:TSD_MapRange1,number) 30 (>L:TSD_MapRange2,number) 45 (>L:TSD_MapRange3,number) } }
+(L:TSD_Zoom,number) 4 == if{ 80 (>L:TSD_Range,number) 12 (>L:TSD_Map_Zoom,number) 20 (>L:TSD_MapRange1,number) 40 (>L:TSD_MapRange2,number) 60 (>L:TSD_MapRange3,number) } }
+(L:TSD_Zoom,number) 4 > if{ 4 (>L:TSD_Zoom,number) }
+(L:TSD_Zoom,number) 0 &lt; if{ 0 (>L:TSD_Zoom,number) }
+
+(L:TSD_Range,number) (>L:TSD_Map_Range,number)
+
+
+(L:TSD1_Zoom,number) 0 == if{ 10 (>L:TSD1_Range,number) 40.4 (>L:TSD1_Pix_per_Nmile,number) }
+(L:TSD1_Zoom,number) 1 == if{ 20 (>L:TSD1_Range,number) 20.2 (>L:TSD1_Pix_per_Nmile,number) }
+(L:TSD1_Zoom,number) 2 == if{ 40 (>L:TSD1_Range,number) 10.1 (>L:TSD1_Pix_per_Nmile,number) }
+(L:TSD1_Zoom,number) 3 == if{ 80 (>L:TSD1_Range,number) 5.05 (>L:TSD1_Pix_per_Nmile,number) }
+(L:TSD1_Zoom,number) 4 == if{ 160 (>L:TSD1_Range,number) 2.525 (>L:TSD1_Pix_per_Nmile,number) }
+(L:TSD1_Zoom,number) 5 == if{ 320 (>L:TSD1_Range,number) 1.2625 (>L:TSD1_Pix_per_Nmile,number) }
+(L:TSD1_Zoom,number) 6 == if{ 5 (>L:TSD1_Zoom,number) }
+(L:TSD1_Zoom,number) 0 &lt; if{ 0 (>L:TSD1_Zoom,number) }
+
+(L:TSD2_Zoom,number) 0 == if{ 10 (>L:TSD2_Range,number) 40.4 (>L:TSD2_Pix_per_Nmile,number) }
+(L:TSD2_Zoom,number) 1 == if{ 20 (>L:TSD2_Range,number) 20.2 (>L:TSD2_Pix_per_Nmile,number) }
+(L:TSD2_Zoom,number) 2 == if{ 40 (>L:TSD2_Range,number) 10.1 (>L:TSD2_Pix_per_Nmile,number) }
+(L:TSD2_Zoom,number) 3 == if{ 80 (>L:TSD2_Range,number) 5.05 (>L:TSD2_Pix_per_Nmile,number) }
+(L:TSD2_Zoom,number) 4 == if{ 160 (>L:TSD2_Range,number) 2.525 (>L:TSD2_Pix_per_Nmile,number) }
+(L:TSD2_Zoom,number) 5 == if{ 320 (>L:TSD2_Range,number) 1.2625 (>L:TSD2_Pix_per_Nmile,number) }
+(L:TSD2_Zoom,number) 6 == if{ 5 (>L:TSD2_Zoom,number) }
+(L:TSD2_Zoom,number) 0 &lt; if{ 0 (>L:TSD2_Zoom,number) }
+
+(L:TSD3_Zoom,number) 0 == if{ 10 (>L:TSD3_Range,number) 40.4 (>L:TSD3_Pix_per_Nmile,number) }
+(L:TSD3_Zoom,number) 1 == if{ 20 (>L:TSD3_Range,number) 20.2 (>L:TSD3_Pix_per_Nmile,number) }
+(L:TSD3_Zoom,number) 2 == if{ 40 (>L:TSD3_Range,number) 10.1 (>L:TSD3_Pix_per_Nmile,number) }
+(L:TSD3_Zoom,number) 3 == if{ 80 (>L:TSD3_Range,number) 5.05 (>L:TSD3_Pix_per_Nmile,number) }
+(L:TSD3_Zoom,number) 4 == if{ 160 (>L:TSD3_Range,number) 2.525 (>L:TSD3_Pix_per_Nmile,number) }
+(L:TSD3_Zoom,number) 5 == if{ 320 (>L:TSD3_Range,number) 1.2625 (>L:TSD3_Pix_per_Nmile,number) }
+(L:TSD3_Zoom,number) 6 == if{ 5 (>L:TSD3_Zoom,number) }
+(L:TSD3_Zoom,number) 0 &lt; if{ 0 (>L:TSD3_Zoom,number) }
+</Value>
+</Select>
+</Element>
+
+
+<!-- Limit HDG pointer rendering for visual issue -->
+
+<Element>
+<Select>
+<Value>
+(A:NAV1 OBS,degrees) (A:Plane heading degrees gyro,degrees) - 309 > if{
+(A:NAV1 OBS,degrees) (A:Plane heading degrees gyro,degrees) - dgrd (>L:TSD_HDG_Rotation,radians)
+}
+(A:NAV1 OBS,degrees) (A:Plane heading degrees gyro,degrees) - 51 &lt; if{
+(A:NAV1 OBS,degrees) (A:Plane heading degrees gyro,degrees) - dgrd (>L:TSD_HDG_Rotation,radians)
+}
+(A:NAV1 OBS,degrees) (A:Plane heading degrees gyro,degrees) - 50 >  (A:NAV1 OBS,degrees) (A:Plane heading degrees gyro,degrees) - 309 &lt; and if{
+180 dgrd (>L:TSD_HDG_Rotation,radians)
+}
+(A:ADF1 radial,degrees) 309 > if{
+(A:ADF1 radial,degrees) dgrd (>L:TSD_ADF_Rotation,radians)
+}
+(A:ADF1 radial,degrees) 51 &lt; if{
+(A:ADF1 radial,degrees) dgrd (>L:TSD_ADF_Rotation,radians)
+}
+(A:ADF1 radial,degrees) 50 > (A:ADF1 radial,degrees) 309 &lt; and if{
+180 dgrd (>L:TSD_ADF_Rotation,radians)
+}
+</Value>
+</Select>
+</Element> 
+
+<!-- Master Mode -->
+<Element>
+<Select>
+<Value>
+0 (>L:FLT_MODE,number) 
+(L:TargetAltitudeAGL,feet) 50 &lt; (L:TargetNumber,number) 0 > and (A:Gear left position,percent) 90 &lt; and if{ 2 (>L:FLT_MODE,number)  } 
+(L:TargetAltitudeAGL,feet) 50 > (L:TargetNumber,number) 0 > and (A:Gear left position,percent) 90 &lt; and if{ 1 (>L:FLT_MODE,number)  } 
+</Value>
+</Select>
+</Element>
+
+<!-- Mapping -->
+<Element>
+<Select>
+<Value>
+(L:TSD1Map,number) 1 == (L:TSD1View,bool) ! and if{ 1 (>L:TSD1MapView,bool) } els{ 0 (>L:TSD1MapView,bool) } 
+(L:TSD2Map,number) 1 == (L:TSD2View,bool) ! and if{ 1 (>L:TSD2MapView,bool) } els{ 0 (>L:TSD2MapView,bool) } 
+(L:TSD3Map,number) 1 == (L:TSD3View,bool) ! and if{ 1 (>L:TSD3MapView,bool) } els{ 0 (>L:TSD3MapView,bool) } 
+</Value>
+</Select>
+</Element>
+
+<!-- TSD Lower Border - sets lower border for TSD window -->
+<Element>
+<Select>
+<Value>
+(L:MFD1_Subportal,number) 1 == if{ -80 (>L:MFD1_TSD_min,number) } els{ -212 (>L:MFD1_TSD_min,number) } 
+(L:MFD2_Subportal,number) 1 == if{ -80 (>L:MFD2_TSD_min,number) } els{ -212 (>L:MFD2_TSD_min,number) } 
+(L:MFD3_Subportal,number) 1 == if{ -80 (>L:MFD3_TSD_min,number) } els{ -212 (>L:MFD3_TSD_min,number) } 
+(L:MFD4_Subportal,number) 1 == if{ -80 (>L:MFD4_TSD_min,number) } els{ -212 (>L:MFD4_TSD_min,number) } 
+</Value>
+</Select>
+</Element>
+
+
+<!-- IsRadarRadiating -->
+<Element>
+<Select>
+<Value>
+0 (>L:RadarIsRadiating,bool)
+(L:RadarStatus,enum) 2 &gt; if{ 1 (>L:RadarIsRadiating,bool) } 
+</Value>
+</Select>
+</Element>
+
+<!-- IsRadarRadiating -->
+<Element>
+<Select>
+<Value>
+(A:GPS WP NEXT ID,string) 'unknown' scmp 0 == if{ 'ALPHA' (>A:GPS WP NEXT ID,string) }
+(A:GPS WP DESIRED TRACK,degrees) (>L:GPSDesiredTrack,degrees)
+1 (>A:GPS OBS ACTIVE,bool)
+310 (>A:GPS OBS VALUE,degrees) (>L:GPSOBS,degrees)
+</Value>
+</Select>
+</Element>
+
+<!-- Data Link code -->
+<Element>
+<Select>
+<Value>
+(A:TRANSPONDER1 CODE,number) (>L:TransponderCodeOwnship,enum)
+</Value>
+</Select>
+</Element>
+
+<!-- Data Link code TSD FILTER F-ALL - TRUSTED - RADAR - ESM -->
+<Element>
+<Select>
+<Value>
+(L:TSD_Filter,enum) 2 &gt; if{ 0 (>L:TSD_Filter,enum) }
+</Value>
+</Select>
+</Element>
+
+</Gauge>

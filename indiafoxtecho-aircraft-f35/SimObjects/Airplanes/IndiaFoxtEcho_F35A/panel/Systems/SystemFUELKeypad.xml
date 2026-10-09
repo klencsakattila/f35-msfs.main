@@ -1,0 +1,155 @@
+<Gauge Name="AP" Version="1.0">
+<Update Frequency="18"/> 
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_digit_counter,number) 0 == if{
+0 (>L:FUEL_digit_1,number)
+0 (>L:FUEL_digit_2,number)
+0 (>L:FUEL_digit_3,number)
+0 (>L:FUEL_digit_4,number)
+0 (>L:FUEL_digit_5,number)
+0 (>L:FUEL_digit_6,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_NewDigit, number) 1 == if{
+(L:FUEL_digit_counter,number) 1 + (>L:FUEL_digit_counter,number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_digit_counter,number) 1 == if{
+(L:FUEL_Digit, number) (>L:FUEL_digit_1,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_digit_counter,number) 2 == if{
+(L:FUEL_Digit, number) (>L:FUEL_digit_2,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_digit_counter,number) 3 == if{
+(L:FUEL_Digit, number) (>L:FUEL_digit_3,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_digit_counter,number) 4 == if{
+(L:FUEL_Digit, number) (>L:FUEL_digit_4,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_digit_counter,number) 5 == if{
+(L:FUEL_Digit, number) (>L:FUEL_digit_5,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_digit_counter,number) 6 == if{
+(L:FUEL_Digit, number) (>L:FUEL_digit_6,number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_digit_counter,number) 2 == if{
+(L:FUEL_mode,number) 2 == if{
+(L:FUEL_digit_1,number) 1000 * (L:FUEL_digit_2,number) 100 * + (>L:FUEL_JOKER, number)
+0 (>L:FUEL_mode,number) 0 (>L:FUELKeypad, bool)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_digit_counter,number) 2 == if{
+(L:FUEL_mode,number) 1 == if{
+(L:FUEL_digit_1,number) 1000 * (L:FUEL_digit_2,number) 100 * + (>L:FUEL_BINGO, number)
+0 (>L:FUEL_mode,number) 0 (>L:FUELKeypad, bool)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_digit_counter,number) 2 == if{
+(L:FUEL_mode,number) 3 == if{
+(L:FUEL_digit_1,number) 1000 * (L:FUEL_digit_2,number) 100 * + (>L:FUEL_DUMPCO, number)
+0 (>L:FUEL_mode,number) 0 (>L:FUELKeypad, bool)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:FUEL_NewDigit, number) 1 == if{
+0 (>L:FUEL_NewDigit, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+FUEL DUMP CUTOUT
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+(A:FUEL TOTAL QUANTITY WEIGHT, pounds) (L:FUEL_DUMPCO, number) &lt; if{
+0 (&gt;K:FUEL_DUMP_SWITCH_SET, bool)
+}
+</Value>
+</Select>
+</Element>
+
+</Gauge>

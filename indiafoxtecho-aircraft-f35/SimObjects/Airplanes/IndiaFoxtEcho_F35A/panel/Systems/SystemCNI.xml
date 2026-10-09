@@ -1,0 +1,883 @@
+<Gauge Name="CNI" Version="1.0">
+<Update Frequency="18"/> 
+
+<Comment>
+CNI modes:
+1 -> Com 1 standby
+2 -> Com 2 standby
+3 -> Nav 1 standby
+4 -> XPNDR MODE 3
+5 -> ADF Freq Set
+6 -> Com 1 set and swap
+7 -> Com 2 set and swap
+8 -> NAV 1 set and swap
+9 -> Com 3 set and swap
+10 -> TACAN set
+11 -> XPDR MODE 1
+12 -> XPDR MODE 2
+13 -> XPDR MODE 4
+14 -> BARO SETTING inHG
+15 -> BARO SETTING HPA
+16 -> ALOW
+17 -> Lights Console BRT
+18 -> Lights Position BRT
+19 -> Lights Formation BRT
+20 -> Lights Ref Bay BRT
+21 -> Lights Ref Fld BRT
+22 -> Lights Ref SPT BRT
+
+25 -> LIS
+26 -> ALOW2
+27 -> MAN MTC
+
+30 -> Waypoint number
+31 -> New Waypoint Lat
+32 -> New Waypoint Long
+
+CNI_Enter
+1 -> BACK
+2 -> ENTER
+3 -> CLR
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 1 &lt; if{
+0 (>L:CNI_digit_1,number)
+0 (>L:CNI_digit_2,number)
+0 (>L:CNI_digit_3,number)
+0 (>L:CNI_digit_4,number)
+0 (>L:CNI_digit_5,number)
+0 (>L:CNI_digit_6,number)
+0 (>L:CNI_digit_7,number)
+0 (>L:CNI_digit_8,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_Enter, number) 2 == if{
+0 (>L:CNI_Digit, number)
+1 (>L:CNI_NewDigit, number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:CNI_NewDigit, number) 1 == if{
+(L:CNI_digit_counter,number) 1 + (>L:CNI_digit_counter,number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:CNI_Enter, number) 3 == if{
+0 (>L:CNI_digit_1,number)
+0 (>L:CNI_digit_2,number)
+0 (>L:CNI_digit_3,number)
+0 (>L:CNI_digit_4,number)
+0 (>L:CNI_digit_5,number)
+0 (>L:CNI_digit_6,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 1 == (L:CNI_NewDigit, number) 1 == and if{
+(L:CNI_Digit, number) (>L:CNI_digit_1,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 2 == (L:CNI_NewDigit, number) 1 == and if{
+(L:CNI_Digit, number) (>L:CNI_digit_2,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 3 == (L:CNI_NewDigit, number) 1 == and if{
+(L:CNI_Digit, number) (>L:CNI_digit_3,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 == (L:CNI_NewDigit, number) 1 == and if{
+(L:CNI_Digit, number) (>L:CNI_digit_4,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 5 == (L:CNI_NewDigit, number) 1 == and if{
+(L:CNI_Digit, number) (>L:CNI_digit_5,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 6 == (L:CNI_NewDigit, number) 1 == and if{
+(L:CNI_Digit, number) (>L:CNI_digit_6,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 7 == (L:CNI_NewDigit, number) 1 == and if{
+(L:CNI_Digit, number) (>L:CNI_digit_7,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 8 == (L:CNI_NewDigit, number) 1 == and if{
+(L:CNI_Digit, number) (>L:CNI_digit_8,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 9 == (L:CNI_NewDigit, number) 1 == and if{
+(L:CNI_Digit, number) (>L:CNI_digit_9,number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 1 == (L:CNI_Enter, number) 1 ==  and if{
+0 (>L:CNI_digit_1,number)
+(L:CNI_digit_counter,number) 1 - (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 2 == (L:CNI_Enter, number) 1 ==  and if{
+0 (>L:CNI_digit_2,number)
+(L:CNI_digit_counter,number) 1 - (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 3 == (L:CNI_Enter, number) 1 ==  and if{
+0 (>L:CNI_digit_3,number)
+(L:CNI_digit_counter,number) 1 - (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 == (L:CNI_Enter, number) 1 ==  and if{
+0 (>L:CNI_digit_4,number)
+(L:CNI_digit_counter,number) 1 - (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 5 == (L:CNI_Enter, number) 1 ==  and if{
+0 (>L:CNI_digit_5,number)
+(L:CNI_digit_counter,number) 1 - (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 6 == (L:CNI_Enter, number) 1 ==  and if{
+0 (>L:CNI_digit_6,number)
+(L:CNI_digit_counter,number) 1 - (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 7 == (L:CNI_Enter, number) 1 ==  and if{
+0 (>L:CNI_digit_7,number)
+(L:CNI_digit_counter,number) 1 - (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 8 == (L:CNI_Enter, number) 1 ==  and if{
+0 (>L:CNI_digit_8,number)
+(L:CNI_digit_counter,number) 1 - (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 9 == (L:CNI_Enter, number) 1 ==  and if{
+0 (>L:CNI_digit_9,number)
+(L:CNI_digit_counter,number) 1 - (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+STANDBY COMM1
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 6 == if{
+(L:CNI_mode,number) 1 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) + (L:CNI_digit_4,number) 0.1 * + (L:CNI_digit_5,number) 0.01 * + (L:CNI_digit_6,number) 0.001 * + 0.00001 + (>L:COM_Freq, Mhz)
+(L:COM_Freq, Mhz) 1000000 * (>K:COM_STBY_RADIO_SET_HZ)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+STANDBY COMM2
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 6 == if{
+(L:CNI_mode,number) 2 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) + (L:CNI_digit_4,number) 0.1 * + (L:CNI_digit_5,number) 0.01 * + (L:CNI_digit_6,number) 0.001 * + 0.00001 + (>L:COM_Freq, Mhz)
+(L:COM_Freq, Mhz) 1000000 * (>K:COM2_STBY_RADIO_SET_HZ)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+STANDBY NAV1
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 &gt; if{
+(L:CNI_mode,number) 3 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) + (L:CNI_digit_4,number) 0.1 * + (L:CNI_digit_5,number) 0.01 * + (L:CNI_digit_6,number) 0.001 * + 0.00001 + (>L:COM_Freq, Mhz)
+(L:COM_Freq, Frequency BCD16) (>K:NAV1_STBY_SET)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+XPDR MODE 3
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 3 &gt; if{
+(L:CNI_mode,number) 4 == if{
+(L:CNI_digit_1,number) 1000 * (L:CNI_digit_2,number) 100 * + (L:CNI_digit_3,number) 10 * + (L:CNI_digit_4,number) + (>L:XPDR_Code, enum)
+(L:XPDR_Code, Bco16) (>K:XPNDR_SET)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+ADF SET
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 &gt; if{
+(L:CNI_mode,number) 5 == if{
+(L:CNI_digit_1,number) 1000 * (L:CNI_digit_2,number) 100 * + (L:CNI_digit_3,number) 10 * + (L:CNI_digit_4,number) + (L:CNI_digit_5,number) 0.1 * + (>L:ADF_Freq, KHz)
+(L:COM_Freq, Frequency BCD16) (>K:ADF_SET)
+(L:ADF_Freq, KHz)
+10000 * s0 10 %
+s2 l0 10 / flr 10 % 16 * l2 +
+s2 l0 100 / flr 10 % 256 * l2 +
+s2 l0 1000 / flr 10 % 4096 * l2 +
+s2 l0 10000 / flr 10 % 65536 * l2 +
+s2 l0 100000 / flr 10 % 1048576 * l2 +
+s2 l0 1000000 / flr 10 % 16777216 * l2 +
+s2 l0 10000000 / flr 10 % 268435456 * l2 +
+s2 (>K:ADF_COMPLETE_SET)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+COM 1
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 6 == if{
+(L:CNI_mode,number) 6 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) + (L:CNI_digit_4,number) 0.1 * + (L:CNI_digit_5,number) 0.01 * + (L:CNI_digit_6,number) 0.001 * + 0.00001 + (>L:COM_Freq, Mhz)
+(L:COM_Freq, Mhz) 1000000 * (>K:COM_RADIO_SET_HZ)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+COM 2
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 6 == if{
+(L:CNI_mode,number) 7 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) + (L:CNI_digit_4,number) 0.1 * + (L:CNI_digit_5,number) 0.01 * + (L:CNI_digit_6,number) 0.001 * + 0.00001 + (>L:COM_Freq, Mhz)
+(L:COM_Freq, Mhz) 1000000 * (>K:COM2_RADIO_SET_HZ)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+NAV 1
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 &gt; if{
+(L:CNI_mode,number) 8 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) + (L:CNI_digit_4,number) 0.1 * + (L:CNI_digit_5,number) 0.01 * + (L:CNI_digit_6,number) 0.001 * + 0.00001 + (>L:COM_Freq, number)
+(L:COM_Freq, number) 1000000 * (>K:NAV1_RADIO_SET_HZ)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+COM 3
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 6 == if{
+(L:CNI_mode,number) 9 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) + (L:CNI_digit_4,number) 0.1 * + (L:CNI_digit_5,number) 0.01 * + (L:CNI_digit_6,number) 0.001 * + 0.00001 + (>L:COM_Freq, Mhz)
+1 (>K:COM3_RADIO_SWAP) (L:COM_Freq, Frequency BCD16) (>K:COM3_RADIO_SET)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+TACAN
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 2 &gt; if{
+(L:CNI_mode,number) 10 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) + (>L:TacanChannelCommanded, number) 1 (>L:TacanUpdate, bool)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Unsupported XPDR MODES 
+11 Mode 1
+12 Mode 2
+13 Mode 4
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 2 == if{
+(L:CNI_mode,number) 11 == if{
+(L:CNI_digit_1,number) 10 * (L:CNI_digit_2,number) + (>L:IFFMode1, number)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 == if{
+(L:CNI_mode,number) 12 == if{
+(L:CNI_digit_1,number) 1000 * (L:CNI_digit_2,number) 100 * + (L:CNI_digit_3,number) 10 * + (L:CNI_digit_4,number) + (>L:IFFMode2, number)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 == if{
+(L:CNI_mode,number) 13 == if{
+(L:CNI_digit_1,number) 1000 * (L:CNI_digit_2,number) 100 * + (L:CNI_digit_3,number) 10 * + (L:CNI_digit_4,number) + (>L:IFFMode4, number)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+BARO 14 in inHG 15 in hPA
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 == if{
+
+(L:CNI_mode,number) 14 == if{
+(L:CNI_digit_1,number) 10 * (L:CNI_digit_2,number) + (L:CNI_digit_3,number) 0.1 * + (L:CNI_digit_4,number) 0.01 * + 16 * 33.8639 * (>K:KOHLSMAN_SET, Millibars)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) 0 (>L:MenuBaro, number) }
+
+(L:CNI_mode,number) 15 == if{
+(L:CNI_digit_1,number) 1000 * (L:CNI_digit_2,number) 100 * + (L:CNI_digit_3,number) 10 * + (L:CNI_digit_4,number) + 16 * (>K:KOHLSMAN_SET, Millibars)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) 1 (>L:MenuBaro, number) }
+
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+ALOW
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 == if{
+(L:CNI_mode,number) 16 == if{
+(L:CNI_digit_1,number) 1000 * (L:CNI_digit_2,number) 100 * + (L:CNI_digit_3,number) 10 * + (L:CNI_digit_4,number) + (>L:ALOW_value, number)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) 0 (>L:ALOW_armed, bool) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+LIS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 == if{
+(L:CNI_mode,number) 25 == if{
+(L:CNI_digit_1,number) 10000 * (L:CNI_digit_2,number) 1000 * + (L:CNI_digit_3,number) 100 * + (L:CNI_digit_4,number) 10 * + (>L:LIS_value, number)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) 0 (>L:LIS_armed, bool) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+ALOW 2
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 == if{
+(L:CNI_mode,number) 26 == if{
+(L:CNI_digit_1,number) 1000 * (L:CNI_digit_2,number) 100 * + (L:CNI_digit_3,number) 10 * + (L:CNI_digit_4,number) + (>L:ALOW2_value, number)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) 0 (>L:ALOW2_armed, bool) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+MAN MTC
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 4 == if{
+(L:CNI_mode,number) 27 == if{
+(L:CNI_digit_1,number) 1000 * (L:CNI_digit_2,number) 100 * + (L:CNI_digit_3,number) 10 * + (L:CNI_digit_4,number) + (>L:MANMTC_value, number)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<!-->
+17  Lights Console BRT
+18  Lights Position BRT
+19  Lights Formation BRT
+20  Lights Ref Bay BRT
+21  Lights Ref Fld BRT
+22  Lights Ref SPT BRT
+</!-->
+
+
+
+<Comment>
+CONSOLE LT
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 2 == if{
+(L:CNI_mode,number) 17 == if{
+(L:CNI_digit_1,number) 10 * (L:CNI_digit_2,number) + (>K:LIGHT_POTENTIOMETER_21_SET, percent)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+POSITION LT
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 2 == if{
+(L:CNI_mode,number) 18 == if{
+(L:CNI_digit_1,number) 10 * (L:CNI_digit_2,number) + (>K:LIGHT_POTENTIOMETER_23_SET, percent)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+FORMATION
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 2 == if{
+(L:CNI_mode,number) 19 == if{
+(L:CNI_digit_1,number) 10 * (L:CNI_digit_2,number) + (>L:FormationLights, number)
+0 (>L:CNI_mode,number) 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_Enter, number) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+<!-->
+WAYPOINT SECTIONS
+
+30 select active waypoint
+
+31 Add new waypoint latitude North
+32 Add new waypoint latitude South
+33 Add new waypoint longitude East
+34 Add new waypoint longitude West
+</!-->
+
+<Element>
+<Select>
+<Value>
+(L:CNI_NewDigit, number) 1 == if{
+0 (>L:CNI_NewDigit, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+WAYPOINT NUMBER
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 2 &gt; if{
+(L:CNI_mode,number) 30 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) + (>C:fs9gps:FlightPlanActiveWaypoint)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Waypoint North
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 8 == if{
+(L:CNI_mode,number) 31 == if{
+(L:CNI_digit_1,number) 10 * (L:CNI_digit_2,number) 1 * + (L:CNI_digit_3,number) 0.1 * + (L:CNI_digit_4,number) 0.01 * + (L:CNI_digit_5,number) 0.001 * + (L:CNI_digit_6,number) 0.0001 * + (L:CNI_digit_7,number) 0.00001 * + (L:CNI_digit_8,number) 0.000001 * + (>L:FlightPlanNewWaypointLatitude, degrees)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Waypoint South
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 8 == if{
+(L:CNI_mode,number) 32 == if{
+(L:CNI_digit_1,number) 10 * (L:CNI_digit_2,number) 1 * + (L:CNI_digit_3,number) 0.1 * + (L:CNI_digit_4,number) 0.01 * + (L:CNI_digit_5,number) 0.001 * + (L:CNI_digit_6,number) 0.0001 * + (L:CNI_digit_7,number) 0.00001 * + (L:CNI_digit_8,number) 0.000001 * + -1 * (>L:FlightPlanNewWaypointLatitude, degrees)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Waypoint East
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 9 == if{
+(L:CNI_mode,number) 33 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) 1 * + (L:CNI_digit_4,number) 0.1 * + (L:CNI_digit_5,number) 0.01 * + (L:CNI_digit_6,number) 0.001 * + (L:CNI_digit_7,number) 0.0001 * + (L:CNI_digit_8,number) 0.00001 * + (L:CNI_digit_9,number) 0.000001 * + (>L:FlightPlanNewWaypointLongitude, degrees)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Waypoint West
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 9 == if{
+(L:CNI_mode,number) 34 == if{
+(L:CNI_digit_1,number) 100 * (L:CNI_digit_2,number) 10 * + (L:CNI_digit_3,number) 1 * + (L:CNI_digit_4,number) 0.1 * + (L:CNI_digit_5,number) 0.01 * + (L:CNI_digit_6,number) 0.001 * + (L:CNI_digit_7,number) 0.0001 * + (L:CNI_digit_8,number) 0.00001 * + (L:CNI_digit_9,number) 0.000001 * + -1 * (>L:FlightPlanNewWaypointLongitude, degrees)
+0 (>L:CNI_mode,number)
+0 (>L:CNI_digit_counter,number)
+0 (>L:CNI_Enter, number)
+}
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+0 (>L:CNI_Only1,bool)
+0 (>L:CNI_Only10,bool)
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 0 == (L:CNI_mode,number) 0 &gt; and (L:CNI_mode,number) 4 &lt; and if{
+1 (>L:CNI_Only1,bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 0 == (L:CNI_mode,number) 5 &gt; and (L:CNI_mode,number) 9 &lt; and if{
+1 (>L:CNI_Only1,bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CNI_digit_counter,number) 0 == (L:CNI_mode,number) 5 == (L:CNI_mode,number) 10 == or and if{
+1 (>L:CNI_Only10,bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+COMM SPACING MODE
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:COM SPACING MODE:1, enum) (>L:COM1Spacing, enum)
+
+</Value>
+</Select>
+</Element>
+
+</Gauge>

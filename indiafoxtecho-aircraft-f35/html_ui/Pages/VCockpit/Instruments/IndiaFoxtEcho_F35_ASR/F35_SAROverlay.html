@@ -1,0 +1,27 @@
+<script type="text/html" id="AS04F_HMD">
+    <div id="Mainframe">
+        <div id="Electricity" state="off">
+            <div class="main-screen hmd-display">
+                <div id="hmd-airspeed"> </div>
+                <div id="hmd-vertical-speed">
+				</div>		
+
+
+                <svg id="SARarrowOverlay" viewBox="0 0 512 512"> 
+				<g id="OwnshipNorth">
+				<path id="northarrow" d="M 380 400 l 0 30 l 0 -60 l -5 10 l 5 -10 l 5 10 l -5 -10" stroke="#00ffff" fill="none" stroke-width="2" />
+				</g>
+                </svg> 
+				
+				<div id="hud-latitude">LATITUDE</div>			
+				<div id="hud-longitude">LONGITUDE</div>
+
+
+            </div>
+        </div>
+    </div>
+</script>
+
+<link rel="stylesheet" href="F35_SAROverlay.css" />
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/IndiaFoxtEcho_F35_SAR/F35_SAROverlay.js">

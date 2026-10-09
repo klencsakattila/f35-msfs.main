@@ -1,0 +1,121 @@
+@font-face {
+  font-family: "F-35 HMD";
+  src: url("/Fonts/F-35_HMD-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Rubik Light";
+  src: url("/Fonts/Rubik-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Arial";
+  src: url("/Fonts/arialnb.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+.hmd-display {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-weight: 300;
+  font-family: "F-35 HMD";
+  font-size: 45px;
+  color: #67FF37;
+}
+.hmd-display .full-screen-hmd-element {
+  position: absolute;
+  overflow: visible;
+}
+.hmd-display #hmd-airspeed, .hmd-display #hmd-altitude {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  top: 52%;
+  height: 11%;
+  padding-right: 5px;
+}
+.hmd-display #hmd-airspeed {
+  left: 14%;
+  width: 12%;
+  font-size: 130%;
+}
+.hmd-display #hmd-altitude {
+  right: 11%;
+  width: 14%;
+}
+.hmd-display #hmd-altitude #hmd-altitude-small {
+  padding: 0 0 4px 0px;
+}
+.hmd-display #hmd-altitude #hmd-altitude-large {
+  font-size: 130%;
+}
+.hmd-display #hmd-altitude-mode {
+  position: absolute;
+  top: 40%;
+  font-size: 130%;
+  right: 7%;
+}
+.hmd-display #hmd-norad {
+  position: absolute;
+  width: 100%;
+  top: -0.5%;
+  text-align: center;
+}
+.hmd-display #hmd-left-panel, .hmd-display #hmd-right-panel {
+  position: absolute;
+  top: 65%;
+  text-align: right;
+  width: 20%;
+}
+.hmd-display #hmd-left-panel {
+  left: 10%;
+}
+.hmd-display #hmd-left-panel #hmd-left-panel-col-1, .hmd-display #hmd-left-panel #hmd-left-panel-col-2 {
+  display: inline-block;
+  vertical-align: top;
+  width: 45%;
+}
+
+.hmd-display #hmd-alpha-label {
+  font-family: "F-35 HMD";
+}
+.hmd-display #hmd-center-cross {
+  position: absolute;
+  width: 10%;
+  left: 45%;
+  top: 45%;
+}
+
+.hmd-display #hmd-heading-marker {
+  position: absolute;
+  width: 2%;
+  left: 49%;
+  top: 28%;
+}
+
+.hmd-display #hmd-right-panel {
+  position: absolute;
+  top: 80%;
+  right: 0%;
+  text-align: right;
+}
+
+.hmd-display #hmd-clock {
+  position: absolute;
+  top: 90%;
+  right: 3%;
+  text-align: right;
+}
+.hmd-display #hmd-masterarm {
+  position: absolute;
+  top: 95%;
+  left: 35%;
+  text-align: left;
+}
+
+
+/*# sourceMappingURL=FA18_HMD.css.map */

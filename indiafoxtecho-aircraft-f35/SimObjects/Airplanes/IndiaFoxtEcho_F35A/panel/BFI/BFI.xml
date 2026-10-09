@@ -1,0 +1,321 @@
+<Gauge Name="T-6B Backup Flight Instrument (BFI)" Version="1.0">
+
+
+<Element>
+<Visible>(A:ELECTRICAL MASTER BATTERY, bool) (L:BFI_Power, bool) and</Visible>
+		
+	<Element>
+		<Image Name="BFI_BG.bmp" Transparent="Yes" ImageSizes="247,245" Bright="Yes"/>
+		
+		<Element>
+		<Visible>(L:BFI_ALIGN,enum) 1 ==</Visible>
+			<Element> <!-- BFI Pitch Ladder - No Ladder -->
+				<Position X="0" Y="0"/>
+				<MaskImage Name="BFI_Ladder_BG_MASK.bmp" ImageSizes="247,245">
+					<Axis X="119" Y="116"/>
+				</MaskImage>
+				<Image Name="BFI_Ladder_BG.bmp" ImageSizes="450,821" Bright="Yes"/>
+				<Shift>
+					<Value Maximum="90" Minimum="-90">(A:PLANE PITCH DEGREES,degrees) /-/ </Value>
+					<Nonlinearity> 
+						<Item Value="90" X="-225" Y="-104"/>
+						<Item Value="0" X="-225" Y="-410"/>
+						<Item Value="-90" X="-225" Y="-716"/>
+					</Nonlinearity>
+				</Shift>	
+				<Rotate>
+					<Value>(A:PLANE BANK DEGREES,radians)</Value>
+				</Rotate>				
+			</Element>		
+
+			<Element> <!-- BFI Pitch Ladder - Compass -->
+				<Position X="0" Y="0"/>
+				<MaskImage Name="BFI_Compass_MASK.bmp" ImageSizes="247,245">
+					<Axis X="119" Y="116"/>
+				</MaskImage>
+				<Image Name="BFI_Compass_BG.bmp" ImageSizes="450,821" Bright="Yes"/>
+				<Shift>
+					<Value Maximum="90" Minimum="-90">(A:PLANE PITCH DEGREES,degrees) /-/ </Value>
+					<Nonlinearity> 
+						<Item Value="90" X="-225" Y="-104"/>
+						<Item Value="0" X="-225" Y="-410"/>
+						<Item Value="-90" X="-225" Y="-716"/>
+					</Nonlinearity>
+				</Shift>	
+				<Rotate>
+					<Value>(A:PLANE BANK DEGREES,radians)</Value>
+				</Rotate>				
+			</Element>			
+			
+			<Element> <!-- BFI Pitch Ladder - Ladder -->
+				<Position X="0" Y="0"/>
+				<MaskImage Name="BFI_Ladder_MASK.bmp" ImageSizes="247,245">
+					<Axis X="119" Y="116"/>
+				</MaskImage>
+				<Image Name="BFI_Ladder_Full.bmp" ImageSizes="220,821" Bright="Yes"/>
+				<Shift>
+					<Value Maximum="90" Minimum="-90">(A:PLANE PITCH DEGREES,degrees) /-/ </Value>
+					<Nonlinearity> 
+						<Item Value="90" X="-110" Y="-104"/>
+						<Item Value="0" X="-110" Y="-410"/>
+						<Item Value="-90" X="-110" Y="-716"/>
+					</Nonlinearity>
+				</Shift>	
+				<Rotate>
+					<Value>(A:PLANE BANK DEGREES,radians)</Value>
+				</Rotate>			
+			</Element>	
+			
+			<Element> <!-- BFI Roll Marker -->
+				<Position X="119" Y="116"/>
+				<Image Name="BFI_Roll_Indicator.bmp" ImageSizes="12,7" Bright="Yes">
+					<Axis X="5.5" Y="-75"/> 
+				</Image>
+				<Rotate>
+					<Value>(A:PLANE BANK DEGREES,radians)</Value>
+				</Rotate>			
+			</Element>			
+			
+		</Element>		
+		
+		<Element> <!-- BFI ASI Tape Background -->
+		<Position X="0" Y="0"/>
+			<Image Name="BFI_ASI_Tape_BG.bmp" ImageSizes="247,245" Bright="Yes"/>			
+		</Element>		
+		
+	
+		<Element> <!-- BFI Airspeed Indicator - Tape -->
+			<Position X="0" Y="0"/>
+			<MaskImage Name="BFI_ASI_Tape_MASK.bmp" ImageSizes="247,245">
+				<Axis X="0" Y="122"/>
+			</MaskImage>
+			<Image Name="BFI_ASI_Tape.bmp" ImageSizes="44,3072" Bright="Yes"/>
+			<Shift>
+				<Value Maximum="600" Minimum="0">(L:AIRSPEED_Equivalent,number) </Value>
+				<Nonlinearity> 
+					<Item Value="0" X="0" Y="-2689"/>
+					<Item Value="50" X="0" Y="-2479"/>
+					<Item Value="100" X="0" Y="-2269"/>
+					<Item Value="150" X="0" Y="-2059"/>
+					<Item Value="200" X="0" Y="-1849"/>
+					<Item Value="250" X="0" Y="-1639"/>
+					<Item Value="300" X="0" Y="-1429"/>
+					<Item Value="350" X="0" Y="-1219"/>
+					<Item Value="400" X="0" Y="-1008"/>
+					<Item Value="430" X="0" Y="-883"/>
+				</Nonlinearity>
+			</Shift>			
+		</Element>	
+
+		<Element> <!-- BFI ASI Tape Background -->
+		<Position X="0" Y="0"/>
+			<Image Name="BFI_ASI_Tape_BG.bmp" ImageSizes="247,245" Bright="Yes"/>			
+		</Element>		
+
+		<Element> <!-- BFI Airspeed Indicator - Tape -->
+			<Position X="0" Y="0"/>
+			<MaskImage Name="BFI_ASI_Digits_MASK.bmp" ImageSizes="247,245">
+				<Axis X="0" Y="122"/>
+			</MaskImage>
+			<Image Name="BFI_ASI_Digits.bmp" ImageSizes="13,512" Bright="Yes"/>
+			<Shift>
+				<Value Maximum="10" Minimum="0">(L:AIRSPEED_Equivalent,number) 1 / 10 % </Value>
+				<Nonlinearity> 
+					<Item Value="0" X="30" Y="-256"/>
+					<Item Value="10" X="30" Y="-25"/>
+				</Nonlinearity>
+			</Shift>			
+		</Element>
+		<Element> <!-- BFI Airspeed Indicator - Tape -->
+			<Position X="0" Y="0"/>
+			<MaskImage Name="BFI_ASI_Digits_MASK.bmp" ImageSizes="247,245">
+				<Axis X="0" Y="122"/>
+			</MaskImage>
+			<Image Name="BFI_ASI_Digits.bmp" ImageSizes="13,512" Bright="Yes"/>
+			<Shift>
+				<Value Maximum="10" Minimum="0">(L:AIRSPEED_Equivalent,number) 10 / 10 % flr </Value>
+				<Nonlinearity> 
+					<Item Value="0" X="15" Y="-256"/>
+					<Item Value="10" X="15" Y="-25"/>
+				</Nonlinearity>
+			</Shift>			
+		</Element>
+		<Element> <!-- BFI Airspeed Indicator - Tape -->
+			<Position X="0" Y="0"/>
+			<MaskImage Name="BFI_ASI_Digits_MASK.bmp" ImageSizes="247,245">
+				<Axis X="0" Y="122"/>
+			</MaskImage>
+			<Image Name="BFI_ASI_Digits.bmp" ImageSizes="13,512" Bright="Yes"/>
+			<Shift>
+				<Value Maximum="10" Minimum="0">(L:AIRSPEED_Equivalent,number) 100 / 10 % flr </Value>
+				<Nonlinearity> 
+					<Item Value="0" X="0" Y="-256"/>
+					<Item Value="10" X="0" Y="-25"/>
+				</Nonlinearity>
+			</Shift>			
+		</Element>
+		
+		
+		<Element> <!-- BFI Altitude Indicator - Tape -->
+			<Position X="0" Y="0"/>
+			<MaskImage Name="BFI_ALT_Tape_MASK.bmp" ImageSizes="247,245">
+				<Axis X="0" Y="122"/>
+			</MaskImage>
+			<Image Name="BFI_ALT_Tape.bmp" ImageSizes="51,7189" Bright="Yes"/>
+			<Shift>
+				<Value Maximum="31000" Minimum="0">(A:INDICATED ALTITUDE,feet) </Value>
+				<Nonlinearity> 
+					<Item Value="0" X="196" Y="-6858"/>
+					<Item Value="5000" X="196" Y="-5811"/>
+					<Item Value="10000" X="196" Y="-4761"/>
+					<Item Value="15000" X="196" Y="-3711"/>					
+					<Item Value="20000" X="196" Y="-2661"/>
+					<Item Value="25000" X="196" Y="-1611"/>
+					<Item Value="30000" X="196" Y="-561"/>
+					<Item Value="31000" X="196" Y="-351"/>
+				</Nonlinearity>
+			</Shift>			
+		</Element>			
+		
+		<Element> <!-- BFI ALT Tape Background -->
+		<Position X="0" Y="0"/>
+			<Image Name="BFI_ALT_Tape_BG.bmp" ImageSizes="247,245" Bright="Yes"/>			
+		</Element>		
+
+		<Element> <!-- BFI Airspeed Indicator - Tape -->
+			<Position X="0" Y="0"/>
+			<MaskImage Name="BFI_ALT_Digits_MASK.bmp" ImageSizes="247,245">
+				<Axis X="0" Y="122"/>
+			</MaskImage>
+			<Image Name="BFI_ALT_10.bmp" ImageSizes="16,512" Bright="Yes"/>
+			<Shift>
+				<Value Maximum="10" Minimum="0">(A:INDICATED ALTITUDE,feet) 10 / 10 % </Value>
+				<Nonlinearity> 
+					<Item Value="0" X="231" Y="-256"/>
+					<Item Value="10" X="231" Y="-25"/>
+				</Nonlinearity>
+			</Shift>			
+		</Element>
+		<Element> <!-- BFI Airspeed Indicator - Tape -->
+			<Position X="0" Y="0"/>
+			<MaskImage Name="BFI_ALT_Digits_MASK.bmp" ImageSizes="247,245">
+				<Axis X="0" Y="122"/>
+			</MaskImage>
+			<Image Name="BFI_ASI_Digits.bmp" ImageSizes="13,512" Bright="Yes"/>
+			<Shift>
+				<Value Maximum="10" Minimum="0">(A:INDICATED ALTITUDE,feet) 100 / 10 % flr </Value>
+				<Nonlinearity> 
+					<Item Value="0" X="216" Y="-256"/>
+					<Item Value="10" X="216" Y="-25"/>
+				</Nonlinearity>
+			</Shift>			
+		</Element>
+		<Element> <!-- BFI Airspeed Indicator - Tape -->
+			<Position X="0" Y="0"/>
+			<MaskImage Name="BFI_ALT_Digits_MASK.bmp" ImageSizes="247,245">
+				<Axis X="0" Y="122"/>
+			</MaskImage>
+			<Image Name="BFI_ASI_Digits.bmp" ImageSizes="13,512" Bright="Yes"/>
+			<Shift>
+				<Value Maximum="10" Minimum="0">(A:INDICATED ALTITUDE,feet) 1000 / 10 % flr </Value>
+				<Nonlinearity> 
+					<Item Value="0" X="202" Y="-256"/>
+					<Item Value="10" X="202" Y="-25"/>
+				</Nonlinearity>
+			</Shift>			
+		</Element>
+		<Element> <!-- BFI Airspeed Indicator - Tape -->
+			<Position X="0" Y="0"/>
+			<MaskImage Name="BFI_ALT_Digits_MASK.bmp" ImageSizes="247,245">
+				<Axis X="0" Y="122"/>
+			</MaskImage>
+			<Image Name="BFI_ALT_10K.bmp" ImageSizes="13,512" Bright="Yes"/>
+			<Shift>
+				<Value Maximum="10" Minimum="0">(A:INDICATED ALTITUDE,feet) 10000 / 10 % flr </Value>
+				<Nonlinearity> 
+					<Item Value="0" X="187" Y="-256"/>
+					<Item Value="10" X="187" Y="-25"/>
+				</Nonlinearity>
+			</Shift>			
+		</Element>
+			
+		<Element>
+		<Visible>(L:BFI_ALIGN,enum) 1 == (L:BFI_COMPASS_FAIL,enum) 0 == and 1 or</Visible>
+			
+			<Element> <!-- BFI Compass Ruler -->
+				<Position X="0" Y="0"/>
+				<MaskImage Name="BFI_Compass_MASK.bmp" ImageSizes="247,245">
+					<Axis X="119" Y="213"/>
+				</MaskImage>
+				<Image Name="BFI_Compass_Bar.bmp" ImageSizes="1368,32" Bright="Yes"/>
+				<Shift>
+					<Value Maximum="360" Minimum="0">(A:Plane heading degrees gyro, degrees)</Value>
+					<Nonlinearity> 
+						<Item Value="0" X="-149" Y="0"/>
+						<Item Value="90" X="-416" Y="0"/>
+						<Item Value="180" X="-683" Y="0"/>
+						<Item Value="270" X="-950" Y="0"/>
+						<Item Value="360" X="-1217" Y="0"/>					
+					</Nonlinearity>
+				</Shift>			
+			</Element>	
+		
+			<Element> <!-- BFI Horizon Marker -->
+				<Position X="118" Y="213"/>
+				<Image Name="BFI_Compass_Ref.bmp" ImageSizes="2,32" Bright="Yes"/>			
+			</Element>			
+		
+		</Element>
+		
+		<Element>
+		<Visible>(L:BFI_ALIGN,enum) 0 == (L:BFI_COMPASS_FAIL,enum) 1 == or 0 and</Visible>
+			
+			<Element> <!-- BFI Horizon Marker -->
+				<Position X="44" Y="213"/>
+				<Image Name="BFI_Compass_Fail.bmp" ImageSizes="158,33" Bright="Yes"/>			
+			</Element>			
+		
+		</Element>	
+	
+	
+		<Element>
+		<Visible>(L:BFI_ALIGN,enum) 0 == </Visible>
+			
+			<Element> 
+				<Position X="80" Y="145"/>
+				<Text X="80" Y="20" Bright="Yes" Length="10" Font="Tahoma"  Bold="Yes" Color="#FFFFFF" Adjust="Center" VerticalAdjust="center">
+					<String>ALIGNING</String>
+				</Text>		
+			</Element>			
+			<Element> 
+				<Position X="90" Y="170"/>
+				<Text X="60" Y="20" Bright="Yes" Length="2" Font="Tahoma"  Bold="Yes" Color="#FFFFFF" Adjust="Center" VerticalAdjust="center">
+					<String>%((L:BFI_ALIGN_COUNTDOWN,enum))%!1d!</String>
+				</Text>		
+			</Element>	
+			
+		</Element>	
+		
+		<Element> <!-- BFI Horizon Marker -->
+		<Position X="0" Y="0"/>
+			<Image Name="BFI_Horizon_Bar.bmp" ImageSizes="247,245" Bright="Yes"/>			
+		</Element>	
+		
+		<Element>
+			<Position X="180" Y="0"/>
+				<Text X="50" Y="25" Bright="Yes" Length="7" Font="Tahoma"  Bold="Yes" Color="cyan" Adjust="right" VerticalAdjust="center">
+					<String>%((A:KOHLSMAN SETTING HG,inHG))%!04.2f!</String>
+				</Text>
+		</Element>	
+	
+		<Element>
+			<Position X="210" Y="43"/>
+				<Text X="45" Y="25" Bright="Yes" Length="7" Font="Tahoma"  Bold="Yes" Color="#FFFFFF" Adjust="Left" VerticalAdjust="center">
+					<String>%((A:VERTICAL SPEED,feet per minute) 10 / )%!4d!0</String>
+				</Text>
+		</Element>	
+		
+	</Element>			
+	
+</Element>
+</Gauge>

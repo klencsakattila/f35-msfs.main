@@ -1,0 +1,17 @@
+<Gauge Name="F35 Spoiler Control DUMMY" Version="1.0">
+<Comment>
+Set Lvar (L:F35Spoiler,percent) to the value of (A:SPOILERS LEFT POSITION,percent) for gauge FCS_Animation_Misc
+when Spoiler is NOT used for weapons drag.
+</Comment>
+
+<Update Frequency="0"/>
+
+<Element>
+  <Select>
+    <Value>
+       (A:SPOILERS LEFT POSITION,percent) (&gt;L:F35Spoiler,percent)
+    </Value>
+  </Select>
+</Element>
+
+</Gauge>

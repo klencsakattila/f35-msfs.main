@@ -1,0 +1,584 @@
+<script type="text/html" id="AS04F_HMD">
+    <div id="Mainframe">
+        <div id="Electricity" state="off">
+            <div class="main-screen hmd-display">
+                <div id="hmd-airspeed"></div>
+                <div id="hmd-vertical-speed"></div>
+
+
+                <div id="hmd-left-panel">
+                </div>
+                <div id="hmd-right-panel">
+                </div>
+	 
+                <div id="hmd-camera-pitch"></div>
+                <div id="hmd-true-heading"></div>
+
+                <svg id="hmd-heading" class="full-screen-hmd-element" width="1024" height="576" viewBox="0 0 1000 562.5" xmlns="http://www.w3.org/2000/svg">
+                    <g id="hmd-heading-compass"></g>
+                </svg>
+
+
+                <svg id="hmd-center-cross" viewBox="0 0 100 100">
+					<g id="f35planesymbol">
+					<path d="M 50 20 l 3 4 l 0 11 l 3 -3 l 3 12 l 10 7 l 0 5 l -7 2 l 4 6 l 0 4 l -9 2 l 0 -6 l -5 0" stroke="#000000" fill="none" stroke-width="5" />
+					<path d="M 50 20 l -3 4 l 0 11 l -3 -3 l -3 12 l -10 7 l 0 5 l 7 2 l -4 6 l 0 4 l 9 2 l 0 -6 l 5 0" stroke="#000000" fill="none" stroke-width="5" />
+					<path d="M 50 20 l 3 4 l 0 11 l 3 -3 l 3 12 l 10 7 l 0 5 l -7 2 l 4 6 l 0 4 l -9 2 l 0 -6 l -5 0" stroke="#00ffff" fill="none" stroke-width="3" />
+					<path d="M 50 20 l -3 4 l 0 11 l -3 -3 l -3 12 l -10 7 l 0 5 l 7 2 l -4 6 l 0 4 l 9 2 l 0 -6 l 5 0" stroke="#00ffff" fill="none" stroke-width="3" />
+					</g>
+                </svg>
+
+		
+                <svg id="hmd-heading-marker" viewBox="0 0 50 50">
+                </svg>
+
+				<svg id="rangerings" class="full-screen-hmd-element" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+					 <circle cx="256" cy="256" r="75" stroke="#aaaaaa" fill="none" stroke-width="1"></circle>
+					 <circle cx="256" cy="256" r="150" stroke="#aaaaaa" fill="none" stroke-width="1"></circle>
+					 <circle cx="256" cy="256" r="225" stroke="#aaaaaa" fill="none" stroke-width="1"></circle>
+					 <circle cx="256" cy="256" r="300" stroke="#aaaaaa" fill="none" stroke-width="1"></circle>			
+					 <path d="M 256 90 l 0 20" stroke="#aaaaaa" fill="none" stroke-width="5" />						 
+				</svg>
+				
+				<svg id="radarlimits" class="full-screen-hmd-element" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+					<g id="Radar_limit_AA1_min">
+					<path d="M 256 256 l 0 -400" stroke="#00ffff" fill="none" stroke-width="1" />
+					</g>
+					<g id="Radar_limit_AA1_max">
+					<path d="M 256 256 l 0 -400" stroke="#00ffff" fill="none" stroke-width="1" />
+					</g>	
+
+					<g id="Radar_limit_AA2_min">
+					<path d="M 256 256 l 0 -400" stroke="#ff00ff" fill="none" stroke-width="1" />
+					</g>
+					<g id="Radar_limit_AA2_max">
+					<path d="M 256 256 l 0 -400" stroke="#ff00ff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_limit_AS_min">
+					<path d="M 256 256 l 0 -400" stroke="#00ff00" fill="none" stroke-width="1" />
+					</g>
+					<g id="Radar_limit_AS_max">
+					<path d="M 256 256 l 0 -400" stroke="#00ff00" fill="none" stroke-width="1" />
+					</g>					
+
+					<g id="Radar_limit_OFF">					
+					<rect x="256" y="256" width="1" height="300" fill="#aaaaaa" transform="rotate(170 256 256)" />
+					<rect x="256" y="256" width="1" height="300" fill="#aaaaaa" transform="rotate(-170 256 256)" />
+					</g>						
+				</svg>
+
+                <svg id="hmd-AA-0" viewBox="0 0 512 512">			
+					<g id="Radar_track_1">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_2">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_3">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_4">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_5">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_6">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_7">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_8">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_9">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_10">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_11">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_12">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_13">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_14">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_15">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_16">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_17">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_18">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_19">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_20">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_21">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_22">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_23">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_24">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_25">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_26">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_27">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_28">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_29">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_30">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_31">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_32">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_33">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_34">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_35">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_36">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_37">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_38">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_39">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_40">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_41">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_42">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_43">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_44">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_45">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_46">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_47">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_48">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_49">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_50">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_51">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_52">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_53">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_54">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_55">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_56">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_57">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_58">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_59">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_60">
+					<path d="M 251 251 l 10 0 l 0 10 l -10 0 l 0 -10" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+
+					<g id="Radar_track_AS_1">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_AS_2">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_3">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_4">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_5">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_6">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_AS_7">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_8">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_9">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_10">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_11">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_AS_12">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_13">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_14">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_15">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_16">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_AS_17">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_18">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_19">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_20">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_21">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_AS_22">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_23">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_24">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_25">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_26">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_AS_27">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_28">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_29">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_30">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_31">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_AS_32">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_33">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_34">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_35">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_36">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_AS_37">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_38">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_39">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_40">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_41">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_AS_42">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_43">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_44">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_45">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_46">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>	
+	
+					<g id="Radar_track_AS_47">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+
+					<g id="Radar_track_AS_48">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_49">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+					
+					<g id="Radar_track_AS_50">
+					<path d="M 256 252 l 5 8 l -10 0 Z" stroke="#ffffff" fill="none" stroke-width="1" />
+					</g>
+	
+                </svg>
+
+
+
+
+                <div id="compass_element">
+				<svg id="compass_element_misc" class="full-screen-hmd-element" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+				
+				  <style>
+				.small {
+					font: italic 13px sans-serif;
+				}
+				.heavy {
+				font: bold 30px sans-serif;
+				}
+				</style>
+				
+				<g id="compass_elements">
+					<text x="253" y="120" fill="#aaaaaa" font-size="15" font-family="F-35 HMD" transform="rotate(0 256 256)">N</text>
+					<text x="253" y="120" fill="#aaaaaa" font-size="15" font-family="F-35 HMD" transform="rotate(90 256 256)">E</text>
+					<text x="253" y="120" fill="#aaaaaa" font-size="15" font-family="F-35 HMD" transform="rotate(180 256 256)">S</text>
+					<text x="253" y="120" fill="#aaaaaa" font-size="15" font-family="F-35 HMD" transform="rotate(270 256 256)">W</text>
+					<text x="250" y="117" fill="#aaaaaa" font-size="10" font-family="F-35 HMD" transform="rotate(30 256 256)">030</text>
+					<text x="250" y="117" fill="#aaaaaa" font-size="10" font-family="F-35 HMD" transform="rotate(60 256 256)">060</text>
+					<text x="250" y="117" fill="#aaaaaa" font-size="10" font-family="F-35 HMD" transform="rotate(120 256 256)">120</text>
+					<text x="250" y="117" fill="#aaaaaa" font-size="10" font-family="F-35 HMD" transform="rotate(150 256 256)">150</text>
+					<text x="250" y="117" fill="#aaaaaa" font-size="10" font-family="F-35 HMD" transform="rotate(210 256 256)">210</text>
+					<text x="250" y="117" fill="#aaaaaa" font-size="10" font-family="F-35 HMD" transform="rotate(240 256 256)">240</text>
+					<text x="250" y="117" fill="#aaaaaa" font-size="10" font-family="F-35 HMD" transform="rotate(300 256 256)">300</text>
+					<text x="250" y="117" fill="#aaaaaa" font-size="10" font-family="F-35 HMD" transform="rotate(330 256 256)">330</text>
+					
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(10 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(20 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(40 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(50 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(10 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(70 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(80 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(100 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(110 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(130 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(140 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(160 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(170 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(190 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(200 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(220 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(230 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(250 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(260 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(280 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(290 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(310 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(320 256 256)" />					
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(340 256 256)" />
+					<rect x="256" y="106" width="2" height="8" fill="#aaaaaa" transform="rotate(350 256 256)" />					
+				</g>
+				</svg>
+                </div>
+				
+				<div id="range-value1">10</div>
+				<div id="range-value2">20</div>				
+                <div id="range-value3">30</div>
+				
+            </div>
+        </div>
+    </div>
+</script>
+
+<link rel="stylesheet" href="F35_TSD.css" />
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/IndiaFoxtEcho_F35_Map/F35_TSD.js">

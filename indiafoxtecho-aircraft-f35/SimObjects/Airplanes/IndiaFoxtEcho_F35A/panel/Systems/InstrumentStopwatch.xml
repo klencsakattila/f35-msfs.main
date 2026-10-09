@@ -1,0 +1,32 @@
+<Gauge Name="EmptyGauge" Version="1.0">
+
+<Comment>
+**************
+Stopwatch
+**************
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+
+(L:StopwatchStatus, number) 0 == if{ 0 (>L:Running, bool) }
+(L:StopwatchStatus, number) 1 == if{ 1 (>L:Running, bool) }
+(L:StopwatchStatus, number) 2 == if{ 0 (>L:Running, bool) }
+(L:StopwatchStatus, number) 3 == if{ 1 (>L:StopwatchReset, bool) 0 (>L:StopwatchStatus, number) }
+
+(L:StopwatchReset, bool) if{ 0 (>L:TotalRunning,seconds) 0 (>L:Running,bool) 0 (>L:StopwatchReset, bool) }
+
+(L:Running, bool) ! if{ (P:Absolute time, seconds) (>L:Offset, seconds) }
+
+(L:Running,bool) if{ (P:Absolute time, seconds) (L:Offset,seconds) - (>L:TotalRunning,seconds) } els{ (P:Absolute time, seconds) (L:TotalRunning,seconds) - (>L:Offset,seconds) } 
+
+(L:TotalRunning,seconds) flr 60 % (>L:StopwatchSeconds, number)
+(L:TotalRunning,seconds) 60 / 60 % (>L:StopwatchMinutes, number)
+(L:TotalRunning,seconds) 3600 / 24 % (>L:StopwatchHours, number)
+</Value>
+</Select>
+</Element>
+
+</Gauge>

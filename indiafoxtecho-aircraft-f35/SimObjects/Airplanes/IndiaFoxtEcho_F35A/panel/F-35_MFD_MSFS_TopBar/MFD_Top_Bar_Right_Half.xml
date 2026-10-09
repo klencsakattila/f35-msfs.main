@@ -1,0 +1,2194 @@
+<SimBase.Document Type="AceXML" version="1,0" id="autopilot">
+    <Descr>AceXML Document</Descr>
+    <Filename>mfdcontrolbar_RT.xml</Filename>
+    <SimGauge.Gauge id="autopilot" ArtDirectory=".">
+        <FloatPosition>0.000,0.000</FloatPosition>
+        <Size>1024,100</Size>
+
+<Element id="Main Gauge">
+<Visibility>
+(L:MFD3_StandbyCounter, number) 0 &gt; (L:MFD_Top_Bar_Swap, bool) ! and
+</Visibility>	
+
+<Element id="BackgroundScreen">
+<FloatPosition>0,0</FloatPosition>
+<Image Name="MFDTopBarRightHalf.png">
+<Transparent>True</Transparent>
+
+</Image>
+</Element>
+   
+        <Element id="Active Frequency Readout COM1">
+            <FloatPosition>120.000,7.000</FloatPosition>
+            <GaugeText id="Active Frequency Readout">
+                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00ECEC</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:Com active frequency:1,Megahertz))%!6.3f!%</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>140,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element>
+
+        <Element id="Active Frequency Readout COM1">
+            <FloatPosition>220.000,9.000</FloatPosition>
+            <GaugeText id="Active Frequency Readout">
+                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00ECEC</FontColor>
+                <FontHeight>16</FontHeight>
+                <GaugeString>%((A:COM ACTIVE FREQ IDENT:1, string))%!s!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>140,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element>		
+		
+		<Element id="Active Frequency Readout COM2">
+            <FloatPosition>120.000,43.000</FloatPosition>
+            <GaugeText id="Active Frequency Readout">
+                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00ECEC</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:Com active frequency:2,Megahertz))%!6.3f!%</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>140,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element>
+
+        <Element id="Active Frequency Readout COM1">
+            <FloatPosition>220.000,45.000</FloatPosition>
+            <GaugeText id="Active Frequency Readout">
+                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00ECEC</FontColor>
+                <FontHeight>16</FontHeight>
+                <GaugeString>%((A:COM ACTIVE FREQ IDENT:2, string))%!s!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>140,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element>			
+		
+
+        <Element id="Active Frequency Readout">
+            <FloatPosition>120.000,77.000</FloatPosition>
+            <GaugeText id="Active Frequency Readout">
+                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00ECEC</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:Com active frequency:3,Megahertz))%!6.3f!%</GaugeString>	
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>140,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element>
+
+        <Element id="Active Frequency Readout COM1">
+            <FloatPosition>220.000,79.000</FloatPosition>
+            <GaugeText id="Active Frequency Readout">
+                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00ECEC</FontColor>
+                <FontHeight>16</FontHeight>
+                <GaugeString>%((A:COM ACTIVE FREQ IDENT:3, string))%!s!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>140,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element>				
+
+
+        <Element id="XPNDR Status">
+            <FloatPosition>630.000,0.000</FloatPosition>
+            <GaugeText id="XPNDR Code">                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>%((A:TRANSPONDER STATE:1, enum) 2 &lt; if{ 0xFFFF00 } els{ 0xFFFFFF } )</FontColor>
+                <FontHeight>22</FontHeight>
+                <GaugeString>IFF</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>100,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element>
+
+        <Element id="XPNDR Status">
+		<Visibility>(A:TRANSPONDER STATE:1, enum) 0 &gt;</Visibility>		
+            <FloatPosition>630.000,0.000</FloatPosition>
+            <GaugeText id="XPNDR Code">                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>0xFFFFFF</FontColor>
+                <FontHeight>22</FontHeight>
+                <GaugeString>MAN</GaugeString>
+                <HorizontalAlign>RIGHT</HorizontalAlign>
+                <Size>100,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element>		
+        <Element id="XPNDR Status">
+		<Visibility>(A:TRANSPONDER STATE:1, enum) 0 ==</Visibility>		
+            <FloatPosition>630.000,0.000</FloatPosition>
+            <GaugeText id="XPNDR Code">                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>0xFFFFFF</FontColor>
+                <FontHeight>22</FontHeight>
+                <GaugeString>OFF</GaugeString>
+                <HorizontalAlign>RIGHT</HorizontalAlign>
+                <Size>100,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element>	
+
+        <Element id="XPNDR Code">
+		<Visibility>(A:TRANSPONDER STATE:1, enum) 0 &gt;</Visibility>		
+            <FloatPosition>630.000,25.000</FloatPosition>
+            <GaugeText id="XPNDR Code">                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>0xFFFFFF</FontColor>
+                <FontHeight>22</FontHeight>
+                <GaugeString>1 2 3 A 4</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>100,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element>
+
+        <Element id="XPNDR Code">
+		<Visibility>(A:TRANSPONDER STATE:1, enum) 0 &gt;</Visibility>
+            <FloatPosition>630.000,50.000</FloatPosition>
+            <GaugeText id="XPNDR Code">                
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>%((A:TRANSPONDER STATE:1, enum) 3 &lt; if{ 0xFFFF00 } els{ 0xFFFFFF } )</FontColor>
+                <FontHeight>22</FontHeight>
+                <GaugeString>%((L:IFFMode1,number))%!02d!   %((A:TRANSPONDER1 CODE, BCO16) sp0)%(l0 12 &gt;&gt; 15 &amp;)%!d!%(l0 8 &gt;&gt; 15 &amp;)%!d!%(l0 4 &gt;&gt; 15 &amp;)%!d!%(l0 15 &amp;)%!d!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>100,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+        </Element> 
+
+	  
+<Element id="Waypoint">
+<FloatPosition>0.000,0.000</FloatPosition>
+<Visibility>
+(L:NAVMode,number) 2 &lt;
+</Visibility>  
+
+        <Element id="eng Background">
+            <Visibility>1</Visibility>
+            <FloatPosition>400.000,10.000</FloatPosition>
+             <Image id="Image" Name="PCD_RTE_Square.png">
+            <Transparent>False</Transparent>
+            <Bright>False</Bright>
+        </Image>
+        </Element>
+  
+	  
+	  	<Element id="Waypoint Readout">
+            <FloatPosition>450.000,12.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:GPS FLIGHT PLAN WP INDEX, number))%!1d!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,40</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+	  
+	  	 <Element id="Waypoint ID">
+            <FloatPosition>400.000,32.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:GPS WP NEXT ID, string))%!s!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,40</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+		
+		<Element id="Waypoint Time To Go">
+            <FloatPosition>400.000,52.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:GPS WP ETE,seconds) flr 3600 / flr 99 min)%!02d!%:%((A:GPS WP ETE,seconds) flr 60 / flr 60 %)%!02d!%:%((A:GPS WP ETE,seconds) flr 60 %)%!02d!%</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+	  
+	  	<Element id="Waypoint BearingaAndRange">
+            <FloatPosition>400.000,72.000</FloatPosition>
+			<Visibility>
+			(L:NAVMode,number) 1 ==
+			</Visibility>  
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>RTE1</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+</Element>
+
+
+<Element id="Waypoint">
+<FloatPosition>0.000,0.000</FloatPosition>
+<Visibility>
+(L:NAVMode,number) 2 ==
+</Visibility>  
+
+        <Element id="eng Background">
+            <Visibility>1</Visibility>
+            <FloatPosition>400.000,10.000</FloatPosition>
+             <Image id="Image" Name="PCD_RTE_Circle.png">
+            <Transparent>False</Transparent>
+            <Bright>False</Bright>
+        </Image>
+        </Element>
+  
+	  
+	  	<Element id="Waypoint Readout">
+            <FloatPosition>450.000,12.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>000</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,40</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+	  
+	  	 <Element id="NAV Ident">
+            <FloatPosition>400.000,32.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:Nav1 ident, string))%!s!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,40</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+		
+		<Element id="VOR OR ILS">
+            <FloatPosition>400.000,52.000</FloatPosition>
+			<Visibility>(A:NAV HAS GLIDE SLOPE:1,bool) !</Visibility>
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>VOR %((A:Nav active frequency:1,Megahertz))%!6.3f!%</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+		<Element id="VOR OR ILS">
+            <FloatPosition>400.000,52.000</FloatPosition>
+			<Visibility>(A:NAV HAS GLIDE SLOPE:1,bool)</Visibility>
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>ILS %((A:Nav active frequency:1,Megahertz))%!6.3f!%</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+</Element>
+
+<Element id="Waypoint">
+<FloatPosition>0.000,0.000</FloatPosition>
+<Visibility>
+(L:NAVMode,number) 3 ==
+</Visibility>  
+
+        <Element id="eng Background">
+            <Visibility>1</Visibility>
+            <FloatPosition>400.000,10.000</FloatPosition>
+             <Image id="Image" Name="PCD_RTE_Circle.png">
+            <Transparent>False</Transparent>
+            <Bright>False</Bright>
+        </Image>
+        </Element>
+  
+	  
+	  	<Element id="Waypoint Readout">
+            <FloatPosition>450.000,12.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>000</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,40</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+	  
+	  	 <Element id="NAV Ident">
+            <FloatPosition>400.000,32.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:TACAN STATION IDENT:2, string))%!s!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,40</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+		
+		<Element id="TACAN X">
+            <FloatPosition>400.000,52.000</FloatPosition>
+	<Visibility>(A:TACAN ACTIVE MODE:2,bool) !</Visibility>
+            <GaugeText id="ALT Readout">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>TCN %((A:TACAN ACTIVE CHANNEL:2,number))%!03d!X</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+		<Element id="TACAN Y">
+            <FloatPosition>400.000,52.000</FloatPosition>
+	<Visibility>(A:TACAN ACTIVE MODE:2,bool)</Visibility>
+            <GaugeText id="ALT Readout">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>TCN %((A:TACAN ACTIVE CHANNEL:2,number))%!03d!Y</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+</Element>
+
+
+	     <Element id="Clock">
+            <FloatPosition>860.000,32.000</FloatPosition>
+            <GaugeText id="Dry Readout">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((L:MenuTime,enum))%{case}%{:0}%((L:ClockHours,number))%!02d!:%((L:ClockMinutes,number))%!02d!:%((L:ClockSeconds,number))%!02d!%Z%{:1}%((L:ClockHours,number))%!02d!:%((L:ClockMinutes,number))%!02d!:%((L:ClockSeconds,number))%!02d!%{end}</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>200,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element> 
+
+	     <Element id="Stopwatch">
+		 <Visibility>(L:TotalRunning,seconds) 0 &gt;</Visibility>
+            <FloatPosition>860.000,12.000</FloatPosition>
+            <GaugeText id="Dry Readout">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((L:StopwatchHours,number))%!02d!:%((L:StopwatchMinutes,number))%!02d!:%((L:StopwatchSeconds,number))%!02d!%</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>200,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element> 
+		
+      <Element id="Barometer Readout">
+            <FloatPosition>770.000,0.000</FloatPosition>
+			<Visibility>(L:MenuBaro, number) 0 ==</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:KOHLSMAN SETTING HG,inHg))%!2.2f!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,100</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+      <Element id="Barometer Readout">
+            <FloatPosition>770.000,0.000</FloatPosition>
+			<Visibility>(L:MenuBaro, number) 1 ==</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:KOHLSMAN SETTING MB,millibar))%!4d!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,100</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element> 		
+		
+
+		<Element id="CABIN PRESS Readout">
+            <FloatPosition>750.000,21.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="ALT Readout">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>CAB %((L:CabinPressNumber, number) 99999 min 0 max)%!04d!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,40</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+		<Element id="ALOW Readout">
+            <FloatPosition>750.000,40.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="SPD Readout">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+				<GaugeString>ALOW %((L:ALOW_value, number))%!04d!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+		
+		<Element id="GCAS Readout">
+            <FloatPosition>750.000,59.000</FloatPosition>
+            <GaugeText id="HDG Readout">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+				<GaugeString>%((L:GCASMode,enum))%{case}%{:0}GCAS STBY%{:1}GCAS MAN%{:2}GCAS AUTO%{end}</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+		<Element id="MTC Setting">
+            <FloatPosition>750.000,78.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="SPD Readout">
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+				<GaugeString>%((L:GCASLevel,enum))%{case}%{:0}MTC  %((L:MANMTC_value, number))%!04d! %{:1}MTC  MIN%{:2}MTC  STRF%{end}</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>110,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+            <Element id="Wind Direction Readout">
+                <FloatPosition>860.000,52</FloatPosition>
+                <GaugeText id="Wind Direction Readout">
+                    <Bold>False</Bold>
+                    
+                    <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                    <FontHeight>20</FontHeight>
+                    <GaugeString>WIND:</GaugeString>
+                    <HorizontalAlign>LEFT</HorizontalAlign>
+                    <Size>40,20</Size>
+                    <Transparent>True</Transparent>
+                </GaugeText>
+            </Element>
+
+            <Element id="Wind Direction Readout">
+                <FloatPosition>860.000,72</FloatPosition>
+                <GaugeText id="Wind Direction Readout">
+                    <Bold>False</Bold>
+                    
+                    <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                    <FontHeight>20</FontHeight>
+                    <GaugeString>%((A:Ambient Wind Direction,degrees) (A:MAGVAR, degrees) - dnor s0 (A:Ambient Wind Velocity,knots) 0 &gt;)%{if}%(l0)%!03d!%{else}---%{end}/%((A:Ambient Wind Velocity,knots) s0 0 &gt;)%{if}%(l0)%!3d!%{else}---%{end}</GaugeString>
+                    <HorizontalAlign>LEFT</HorizontalAlign>
+                    <Size>200,20</Size>
+                    <Transparent>True</Transparent>
+                </GaugeText>
+            </Element>
+
+<Element id="PopUp CNI">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD3_Screen, number) 230 == (L:MFD3_PopTimer, enum) 0 &gt; and (L:MFD3_PopTimer, enum) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="popup_cni.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="PopUp Menu">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD4_Screen, number) 225 == (L:MFD4_Screen, number) 226 == or (L:MFD4_PopTimer, enum) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="popup_menu.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>		
+
+<Element id="PopUp NAV">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD3_Screen, number) 227 == (L:MFD3_Screen, number) 233 == or (L:MFD3_Screen, number) 236 == or (L:MFD3_PopTimer, enum) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="popup_nav.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="PopUp IFF">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD4_Screen, number) 228 == (L:MFD4_PopTimer, enum) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="popup_IFF.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>		
+
+<Element id="PopUp BARO">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD4_Screen, number) 229 == (L:MFD4_PopTimer, enum) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="popup_BARO.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>		
+
+<Element id="PopUp TIME">
+<FloatPosition>110.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD4_Screen, number) 239 == (L:MFD4_PopTimer, enum) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="popup_BARO.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>	
+
+</Element>
+
+<Element id="Main Gauge">
+<Visibility>
+(L:MFD3_StandbyCounter, number) 0 &gt; (L:MFD_Top_Bar_Swap, bool) and
+</Visibility>	
+
+<Element id="BackgroundScreen">
+<FloatPosition>0,0</FloatPosition>
+<Image Name="MFDTopBarRightHalfSwapped.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+        
+<Element id="Eng 1 N1 Bug">
+<FloatPosition>116,44</FloatPosition>
+<Image Name="MFDTopBarThrottle.png">
+<Transparent>True</Transparent>
+<Axis>5,40</Axis>
+</Image>
+<Rotation id="Rotation">
+<Expression id="Expression">
+<Minimum>0.000</Minimum>
+<Maximum>100.000</Maximum>
+<Script>(A:General Eng Throttle Lever Position:1,percent) (L:EngineThrustMinimum,number) max 2.7 * dgrd</Script>
+</Expression>
+</Rotation>
+</Element>
+		
+<Element id="Eng 1 N1 Bug">
+<FloatPosition>116,44</FloatPosition>
+<Image Name="MFDTopBarRPM.png">
+<Transparent>True</Transparent>
+<Axis>5,40</Axis>
+</Image>
+<Rotation id="Rotation">
+<Expression id="Expression">
+<Minimum>0.000</Minimum>
+<Maximum>100.000</Maximum>
+<Script>(A:Turb eng1 JET Thrust:1, pound) 300 / 120 min (L:EngineThrustMinimum,number) max abs 2.7 * dgrd</Script>
+</Expression>
+</Rotation>
+</Element>
+
+<Element id="Eng 1 N1 Readout">
+<FloatPosition>52.000,2.000</FloatPosition>
+<GaugeText id="N2 Readout">
+<Bold>False</Bold>
+<FontFace>F-35_PCD SemCond</FontFace>
+<FontColor>%((A:Turb eng1 N2, percent) abs 105 &gt; if{ 'RED' } els{ 0x01E00D } )</FontColor>
+<FontHeight>22</FontHeight>
+<GaugeString>%((A:Turb eng1 JET Thrust:1, pound) 300 / 150 min (L:EngineThrustMinimum,number) max abs)%!d!</GaugeString>
+<HorizontalAlign>RIGHT</HorizontalAlign>
+<Size>60,20</Size>
+<Transparent>True</Transparent>
+</GaugeText>
+</Element>
+
+<Element id="FF">
+<FloatPosition>38.000,76.000</FloatPosition>
+<GaugeText id="N2 Readout">
+<Bold>False</Bold>
+<FontFace>F-35_PCD SemCond</FontFace>
+<FontColor>#BBBBBB</FontColor>
+<FontHeight>18</FontHeight>
+<GaugeString>%((A:Turb eng1 fuel flow pph, pounds per hour) 60 / abs 99999 min 1 /)%!d!</GaugeString>
+<HorizontalAlign>RIGHT</HorizontalAlign>
+<Size>60,20</Size>
+<Transparent>True</Transparent>
+</GaugeText>
+</Element>
+
+<Element id="ICE">
+<FloatPosition>100.000,83.000</FloatPosition>
+<Visibility>
+(A:ENG ANTI ICE:1, bool) ! (A:STRUCTURAL ICE PCT, percent) 10 &gt; and
+</Visibility>
+<GaugeText id="N2 Readout">
+<Bold>False</Bold>
+<FontFace>F-35_PCD SemCond</FontFace>
+<FontColor>#FFFF00</FontColor>
+<FontHeight>16</FontHeight>
+<GaugeString>I-DET</GaugeString>
+<HorizontalAlign>RIGHT</HorizontalAlign>
+<Size>60,20</Size>
+<Transparent>True</Transparent>
+</GaugeText>
+</Element>
+
+<Element id="ICE">
+<FloatPosition>100.000,83.000</FloatPosition>
+<Visibility>
+(A:ENG ANTI ICE:1, bool)
+</Visibility>
+<GaugeText id="N2 Readout">
+<Bold>False</Bold>
+<FontFace>F-35_PCD SemCond</FontFace>
+<FontColor>#FFFFFF</FontColor>
+<FontHeight>16</FontHeight>
+<GaugeString>A-ICE</GaugeString>
+<HorizontalAlign>RIGHT</HorizontalAlign>
+<Size>60,20</Size>
+<Transparent>True</Transparent>
+</GaugeText>
+</Element>
+
+
+<Element id="PopUp ENG">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD3_Screen, number) 207 == (L:MFD3_PopTimer, enum) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="popup_eng.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="PopUp FUE">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD3_Screen, number) 211 == (L:MFD3_PopTimer, enum) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="popup_fue.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="PopUp SMS">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD3_Screen, number) 215 == (L:MFD3_PopTimer, enum) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="popup_sms.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="PopUp FCS">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD3_Screen, number) 208 == (L:MFD3_PopTimer, enum) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="popup_fcs.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="Alert Burn">
+<FloatPosition>158.0,0.000</FloatPosition>
+<Visibility>
+(A:TURB ENG AFTERBURNER PCT ACTIVE:1, Percent) 0 == (L:IPPMFDBurn, bool) 0 &gt; and
+</Visibility>
+<Image id="Image" Name="MFDTopIPPBurn.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="Alert Engine">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(A:TURB ENG AFTERBURNER PCT ACTIVE:1, Percent) 0 &gt; (L:STOVLMode,enum) 0 == and
+</Visibility>
+<Image id="Image" Name="alert_eng.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="Alert Fuel">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(A:FUEL TOTAL QUANTITY WEIGHT, pounds) 2000 &lt; (L:IFR_doors_status, percent) 99 &gt; or 0 and
+</Visibility>
+<Image id="Image" Name="alert_fue.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="Alert SMS">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:weapon_doors_status, number) 100 == 0 and
+</Visibility>
+<Image id="Image" Name="alert_sms.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="Alert FCS">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+0
+</Visibility>
+<Image id="Image" Name="alert_fcs.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>   
+
+<Element id="Gear">
+<FloatPosition>440.500,30.000</FloatPosition>
+<Visibility>(A:Gear center position,percent) 0 &gt; (A:Gear center position,percent) 100 &lt; and (A:Gear left position,percent) 0 &gt; (A:Gear left position,percent) 100 &lt; and or (A:Gear right position,percent) 0 &gt; (A:Gear right position,percent) 100 &lt; and or</Visibility>
+<Image id="Image" Name="flightdata_gear_transit.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="Gear">
+<FloatPosition>440.500,30.000</FloatPosition>
+<Visibility>(A:Gear center position,percent) near 100 == (A:Gear left position,percent) near 100 == and (A:Gear right position,percent) near 100 == and</Visibility>
+<Image id="Image" Name="flightdata_gear.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+
+      <Element id="SIDEWINDER">
+            <FloatPosition>290.000,5.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="Slammer">               
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FF00</FontColor>
+                <FontHeight>20</FontHeight>
+		<GaugeString>%((L:AM_QTY,number))%!1.0f!</GaugeString>               
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,30</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+      <Element id="ARMRAAM">
+            <FloatPosition>290.000,30.000</FloatPosition>
+		<Visibility>1</Visibility>
+            <GaugeText id="Sidewinder">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FF00</FontColor>
+                <FontHeight>20</FontHeight>
+               	<GaugeString>%((L:SW_QTY,number) (L:A132_QTY,number) +)%!1.0f!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,30</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+      <Element id="GUN">
+            <FloatPosition>290.000,53.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="Sidwinder">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FF00</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((L:GUN_QTY,number))%!03d!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,30</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+      <Element id="BOMB">
+            <FloatPosition>290.000,78.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="Sidwinder">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FF00</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((L:Int_bomb,number))%!1.0f!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+      <Element id="CHAFF">
+            <FloatPosition>320.000,5.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="Sidwinder">
+                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((L:CHAFF,number))%!02.0f!</GaugeString>
+                <HorizontalAlign>CENTER</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+      <Element id="FLARES">
+            <FloatPosition>320.000,23.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="Sidwinder">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((L:FLARES,number))%!02.0f!</GaugeString>
+                <HorizontalAlign>CENTER</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+       <Element id="TOTWEIGHT">
+            <FloatPosition>130.000,11.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="Sidwinder">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:total weight, pounds) 1000 /)%!02.1f!</GaugeString>
+                <HorizontalAlign>RIGHT</HorizontalAlign>
+                <Size>100,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+      <Element id="FUEWEIGHT">
+            <FloatPosition>130.000,32.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="Sidwinder">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#C243FD</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:FUEL TOTAL QUANTITY WEIGHT, pounds) 1000 / )%!02.1f!</GaugeString>
+                <HorizontalAlign>RIGHT</HorizontalAlign>
+                <Size>100,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+      <Element id="FUEWEIGHT">
+            <FloatPosition>130.000,52.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="Sidwinder">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#C243FD</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:FUEL TOTAL QUANTITY WEIGHT, pounds) (A:FUEL TANK EXTERNAL1 QUANTITY, gallons) (A:FUEL WEIGHT PER GALLON, pounds) * - (A:FUEL TANK EXTERNAL2 QUANTITY, gallons) (A:FUEL WEIGHT PER GALLON, pounds) * - 1000 / )%!02.1f!</GaugeString>
+                <HorizontalAlign>RIGHT</HorizontalAlign>
+                <Size>100,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+      <Element id="FUEWEIGHT">
+            <FloatPosition>130.000,72.000</FloatPosition>
+			<Visibility>1</Visibility>
+            <GaugeText id="Sidwinder">                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#C243FD</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:FUEL TANK EXTERNAL1 QUANTITY, gallons) (A:FUEL TANK EXTERNAL2 QUANTITY, gallons) + (A:FUEL WEIGHT PER GALLON, pounds) * 1000 / )%!02.1f!</GaugeString>
+                <HorizontalAlign>RIGHT</HorizontalAlign>
+                <Size>100,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+				<Element id="Fueltank">
+				<FloatPosition>236,5.000</FloatPosition>
+					<Rectangle id="Rectangle">                					
+                						<Width>42</Width>
+              					 <Height>95</Height>
+							<HeightScript> (A:FUEL TOTAL QUANTITY WEIGHT, pounds) 1000 / 18 - 5 * /-/ </HeightScript>
+               					 <FillColor>black</FillColor>
+							</Rectangle>	
+		</Element>
+
+
+			<Element id="Flight_Data_BINGO">
+				<FloatPosition>245.000,97.000</FloatPosition>
+				<Image id="Image" Name="MFDTopBarBingoLine.png">
+					<Transparent>True</Transparent>					
+				</Image>
+				<Shift id="Shift">
+					<Scale>0.000,-5</Scale>
+					<Expression id="Expression">
+						<Minimum>0.000</Minimum>
+						<Maximum>12.000</Maximum>
+						<Script>(L:FUEL_BINGO, number) 1000 /</Script>
+					</Expression>
+					<FailureTable id="FailureTable">
+						<Failure id="Failure">
+						</Failure>
+					</FailureTable>
+
+				</Shift>
+			</Element>
+
+
+			<Element id="Flight_Data_JOKER">
+				<FloatPosition>245.000,97.000</FloatPosition>
+				<Image id="Image" Name="MFDTopBarJokerLine.png">
+					<Transparent>True</Transparent>					
+				</Image>
+				<Shift id="Shift">
+					<Scale>0.000,-5</Scale>
+					<Expression id="Expression">
+						<Minimum>0.000</Minimum>
+						<Maximum>12.000</Maximum>
+						<Script>(L:FUEL_JOKER, number) 1000 /</Script>
+					</Expression>
+					<FailureTable id="FailureTable">
+						<Failure id="Failure">
+						</Failure>
+					</FailureTable>
+
+				</Shift>
+			</Element>
+
+       <Element id="Clear AP">
+            <Visibility>
+                (A:Autopilot master, bool) ! (A:AUTOPILOT THROTTLE ARM, bool) ! and
+            </Visibility>
+            <FloatPosition>895.000,0.000</FloatPosition>
+             <Image id="Image" Name="APAT.png">
+            <Transparent>False</Transparent>
+        </Image>
+        </Element>
+     
+
+      <Element id="Attitude Set">
+            <FloatPosition>885.000,10.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:Autopilot altitude lock, bool) and (A:AUTOPILOT ATTITUDE HOLD, bool) ! and (L:AP_AltMode,bool) ! and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:Autopilot altitude lock var, feet) 1000 / int)%!02d!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+      <Element id="Altitude Set">
+            <FloatPosition>907.000,13.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:Autopilot altitude lock, bool) and (A:AUTOPILOT ATTITUDE HOLD, bool) ! and (L:AP_AltMode,bool) ! and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>15</FontHeight>
+                <GaugeString>%((A:Autopilot altitude lock var, feet) 1000 % 100 /)%!01d!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+      <Element id="Altitude hold">
+            <FloatPosition>885.000,10.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:Autopilot altitude lock, bool) and (A:AUTOPILOT ATTITUDE HOLD, bool) ! and (L:AP_AltMode,bool) and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>ALT</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>			
+      <Element id="Attitude hold">
+            <FloatPosition>885.000,10.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:Autopilot altitude lock, bool) ! and (A:AUTOPILOT ATTITUDE HOLD, bool) and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>ATT</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>	
+
+      <Element id="AP Altitude">
+	  <Visibility>(A:Autopilot master, bool) (A:AUTOPILOT THROTTLE ARM, bool) or</Visibility>
+      <Element id="AP Altitude">
+            <FloatPosition>930.000,10.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:Autopilot altitude lock, bool) (A:AUTOPILOT ATTITUDE HOLD, bool) or and !</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>V</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+      <Element id="AP Altitude">
+            <FloatPosition>930.000,10.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:Autopilot altitude lock, bool) (A:AUTOPILOT ATTITUDE HOLD, bool) or and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>V</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>	
+	</Element>
+
+      <Element id="AP Airspeed">
+            <FloatPosition>885.000,40.000</FloatPosition>
+			<Visibility>(A:AUTOPILOT THROTTLE ARM, bool) (A:Autopilot airspeed hold, bool) (A:Autopilot mach hold, bool) or and (L:ATMach,bool) ! and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((L:APSpeedSetKnots,number) 999 min)%!03d!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>		
+      <Element id="AP Airspeed">
+            <FloatPosition>885.000,40.000</FloatPosition>
+			<Visibility>(A:AUTOPILOT THROTTLE ARM, bool) (A:Autopilot airspeed hold, bool) (A:Autopilot mach hold, bool) or and (L:ATMach,bool) and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((L:APSpeedSetMach,number) 100 /)%!1.2f!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>		
+      <Element id="AP Airspeed">
+            <FloatPosition>930.000,40.000</FloatPosition>
+			<Visibility>(A:AUTOPILOT THROTTLE ARM, bool) (A:Autopilot airspeed hold, bool) (A:Autopilot mach hold, bool) or and (L:ATMach,bool) and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>M</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+      <Element id="AP Airspeed">
+            <FloatPosition>930.000,40.000</FloatPosition>
+			<Visibility>(A:AUTOPILOT THROTTLE ARM, bool) (A:Autopilot airspeed hold, bool) (A:Autopilot mach hold, bool) or and (L:ATMach,bool) ! and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>S</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+      <Element id="AP Airspeed">
+            <FloatPosition>930.000,40.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:AUTOPILOT THROTTLE ARM, bool) or (A:Autopilot airspeed hold, bool) ! and (A:Autopilot mach hold, bool) ! and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>S</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>		
+		
+	
+
+
+      <Element id="AP heading">
+            <FloatPosition>885.000,70.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:AUTOPILOT HEADING LOCK, bool) and (A:Autopilot nav1 lock, bool) ! and (A:AUTOPILOT APPROACH HOLD, bool) ! and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>%((A:Autopilot heading lock dir,degrees) 359 min)%!03d!</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>	
+      <Element id="AP Heading">
+            <FloatPosition>885.000,70.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:AUTOPILOT HEADING LOCK, bool) ! and (A:Autopilot nav1 lock, bool) and (A:GPS DRIVES NAV1, bool) and (A:AUTOPILOT APPROACH HOLD, bool) ! and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>RTE</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>	
+
+      <Element id="AP Heading">
+            <FloatPosition>885.000,70.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:AUTOPILOT HEADING LOCK, bool) ! and (A:Autopilot nav1 lock, bool) and (A:GPS DRIVES NAV1, bool) ! and (A:AUTOPILOT APPROACH HOLD, bool) ! and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>VOR</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>	
+      <Element id="AP Heading">
+            <FloatPosition>885.000,70.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:AUTOPILOT APPROACH HOLD, bool) and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>APP</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>
+
+
+	 <Element id="AP Heading">
+	 <Visibility>(A:Autopilot master, bool) (A:AUTOPILOT THROTTLE ARM, bool) or</Visibility>
+      <Element id="AP Heading">
+            <FloatPosition>930.000,70.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:AUTOPILOT HEADING LOCK, bool) (A:Autopilot nav1 lock, bool) or (A:AUTOPILOT APPROACH HOLD, bool) or and !</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#00FFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>H</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>	
+      <Element id="AP Heading">
+            <FloatPosition>930.000,70.000</FloatPosition>
+			<Visibility>(A:Autopilot master, bool) (A:AUTOPILOT HEADING LOCK, bool) (A:Autopilot nav1 lock, bool) or (A:AUTOPILOT APPROACH HOLD, bool) or and</Visibility>
+            <GaugeText>                
+                <Bold>False</Bold>
+                <FontFace>F-35_PCD SemCond</FontFace>
+                <FontColor>#FFFFFF</FontColor>
+                <FontHeight>20</FontHeight>
+                <GaugeString>H</GaugeString>
+                <HorizontalAlign>LEFT</HorizontalAlign>
+                <Size>112,20</Size>
+                <Transparent>True</Transparent>
+            </GaugeText>
+		</Element>			
+	</Element>	
+
+
+<Element id="Warning - CLEAR ALL">
+<FloatPosition>512.000,0.000</FloatPosition>
+<Visibility>(L:ICAWS_Line1, enum) 0 !=</Visibility>
+<Rectangle id="Rectangle">
+<Width>355</Width><Height>100</Height>
+<FillColor>0x010101</FillColor>
+</Rectangle>
+</Element>
+
+// NEW ICAWS HERE LINE 1
+
+<Element id="ICAWS Line"><FloatPosition>512,0</FloatPosition> 
+<Select><Expression><Script>(L:ICAWS_Line1, enum)</Script></Expression>
+<Case><ExpressionResult>0</ExpressionResult></Case>
+<Case><ExpressionResult>1</ExpressionResult><Image Name="ICAWS_ENGFIRE.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>2</ExpressionResult><Image Name="ICAWS_GPWS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>3</ExpressionResult><Image Name="ICAWS_STALL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>4</ExpressionResult><Image Name="ICAWS_FUELLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>5</ExpressionResult><Image Name="ICAWS_ENGRPMLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>6</ExpressionResult><Image Name="ICAWS_BINGO.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>7</ExpressionResult><Image Name="ICAWS_GENERFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>8</ExpressionResult><Image Name="ICAWS_ENGRPMHI.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>9</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>10</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>11</ExpressionResult><Image Name="ICAWS_BATTFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>12</ExpressionResult><Image Name="ICAWS_WINGFOLD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>13</ExpressionResult><Image Name="ICAWS_PARKBRK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>14</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>15</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>16</ExpressionResult><Image Name="ICAWS_ENGINEFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>17</ExpressionResult><Image Name="ICAWS_LAUNCHBAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>18</ExpressionResult><Image Name="ICAWS_BATTFAIL28V.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>19</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>20</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>21</ExpressionResult><Image Name="ICAWS_SEATHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>22</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>23</ExpressionResult><Image Name="ICAWS_CANOPYHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>24</ExpressionResult><Image Name="ICAWS_ICC1AND2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>25</ExpressionResult><Image Name="ICAWS_ICC1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>26</ExpressionResult><Image Name="ICAWS_ICC2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>27</ExpressionResult><Image Name="ICAWS_CABINPRESS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>28</ExpressionResult><Image Name="ICAWS_BOS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>29</ExpressionResult><Image Name="ICAWS_FCSDEGR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>30</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>31</ExpressionResult><Image Name="ICAWS_JOKER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>32</ExpressionResult><Image Name="ICAWS_SEAT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>33</ExpressionResult><Image Name="ICAWS_WEPDOORL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>34</ExpressionResult><Image Name="ICAWS_WEPDOORR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>35</ExpressionResult><Image Name="ICAWS_CREWLADDER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>36</ExpressionResult><Image Name="ICAWS_VSBITRUNNING.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>37</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>38</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>39</ExpressionResult><Image Name="ICAWS_OVERSPEED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>40</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>41</ExpressionResult><Image Name="ICAWS_AIRDATADEGD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>42</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>43</ExpressionResult><Image Name="ICAWS_GEARFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>44</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>45</ExpressionResult><Image Name="ICAWS_IPPCOMBUSTION.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>46</ExpressionResult><Image Name="ICAWS_OVERG.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>47</ExpressionResult><Image Name="ICAWS_REFUELDOOR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>48</ExpressionResult><Image Name="ICAWS_GENERFAIL3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>49</ExpressionResult><Image Name="ICAWS_ENGSTARTASSIST.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>50</ExpressionResult><Image Name="ICAWS_OBOGSBIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>51</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>52</ExpressionResult><Image Name="ICAWS_ENGICEDETECTED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>53</ExpressionResult><Image Name="ICAWS_TEST1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>54</ExpressionResult><Image Name="ICAWS_TEST2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>55</ExpressionResult><Image Name="ICAWS_TEST3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>56</ExpressionResult><Image Name="ICAWS_VSBITNOGO.png"><Transparent>False</Transparent></Image></Case>
+
+<Case><ExpressionResult>106</ExpressionResult><Image Name="ICAWS_BINGO_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>108</ExpressionResult><Image Name="ICAWS_ENGRPMHI_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>109</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>110</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>111</ExpressionResult><Image Name="ICAWS_BATTFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>114</ExpressionResult><Image Name="ICAWS_SEATCANOPY_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>115</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>118</ExpressionResult><Image Name="ICAWS_BATTFAIL28V_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>120</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>121</ExpressionResult><Image Name="ICAWS_SEATHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>122</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>123</ExpressionResult><Image Name="ICAWS_CANOPYHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>124</ExpressionResult><Image Name="ICAWS_ICC1AND2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>125</ExpressionResult><Image Name="ICAWS_ICC1_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>126</ExpressionResult><Image Name="ICAWS_ICC2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>127</ExpressionResult><Image Name="ICAWS_CABINPRESS_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>129</ExpressionResult><Image Name="ICAWS_FCSDEGR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>130</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>137</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>138</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>139</ExpressionResult><Image Name="ICAWS_OVERSPEED_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>140</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>141</ExpressionResult><Image Name="ICAWS_AIRDATADEGD_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>142</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>143</ExpressionResult><Image Name="ICAWS_GEARFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>144</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>147</ExpressionResult><Image Name="ICAWS_REFUELDOOR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>148</ExpressionResult><Image Name="ICAWS_GENERFAIL3_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>151</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH_ACK.png"><Transparent>False</Transparent></Image>
+</Case>
+</Select>
+</Element>
+
+<Element id="ICAWS Line"><FloatPosition>512,25</FloatPosition> 
+<Select><Expression><Script>(L:ICAWS_Line2, enum)</Script></Expression>
+<Case><ExpressionResult>0</ExpressionResult></Case>
+<Case><ExpressionResult>1</ExpressionResult><Image Name="ICAWS_ENGFIRE.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>2</ExpressionResult><Image Name="ICAWS_GPWS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>3</ExpressionResult><Image Name="ICAWS_STALL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>4</ExpressionResult><Image Name="ICAWS_FUELLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>5</ExpressionResult><Image Name="ICAWS_ENGRPMLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>6</ExpressionResult><Image Name="ICAWS_BINGO.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>7</ExpressionResult><Image Name="ICAWS_GENERFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>8</ExpressionResult><Image Name="ICAWS_ENGRPMHI.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>9</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>10</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>11</ExpressionResult><Image Name="ICAWS_BATTFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>12</ExpressionResult><Image Name="ICAWS_WINGFOLD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>13</ExpressionResult><Image Name="ICAWS_PARKBRK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>14</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>15</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>16</ExpressionResult><Image Name="ICAWS_ENGINEFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>17</ExpressionResult><Image Name="ICAWS_LAUNCHBAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>18</ExpressionResult><Image Name="ICAWS_BATTFAIL28V.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>19</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>20</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>21</ExpressionResult><Image Name="ICAWS_SEATHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>22</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>23</ExpressionResult><Image Name="ICAWS_CANOPYHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>24</ExpressionResult><Image Name="ICAWS_ICC1AND2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>25</ExpressionResult><Image Name="ICAWS_ICC1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>26</ExpressionResult><Image Name="ICAWS_ICC2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>27</ExpressionResult><Image Name="ICAWS_CABINPRESS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>28</ExpressionResult><Image Name="ICAWS_BOS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>29</ExpressionResult><Image Name="ICAWS_FCSDEGR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>30</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>31</ExpressionResult><Image Name="ICAWS_JOKER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>32</ExpressionResult><Image Name="ICAWS_SEAT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>33</ExpressionResult><Image Name="ICAWS_WEPDOORL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>34</ExpressionResult><Image Name="ICAWS_WEPDOORR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>35</ExpressionResult><Image Name="ICAWS_CREWLADDER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>36</ExpressionResult><Image Name="ICAWS_VSBITRUNNING.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>37</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>38</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>39</ExpressionResult><Image Name="ICAWS_OVERSPEED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>40</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>41</ExpressionResult><Image Name="ICAWS_AIRDATADEGD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>42</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>43</ExpressionResult><Image Name="ICAWS_GEARFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>44</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>45</ExpressionResult><Image Name="ICAWS_IPPCOMBUSTION.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>46</ExpressionResult><Image Name="ICAWS_OVERG.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>47</ExpressionResult><Image Name="ICAWS_REFUELDOOR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>48</ExpressionResult><Image Name="ICAWS_GENERFAIL3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>49</ExpressionResult><Image Name="ICAWS_ENGSTARTASSIST.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>50</ExpressionResult><Image Name="ICAWS_OBOGSBIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>51</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>52</ExpressionResult><Image Name="ICAWS_ENGICEDETECTED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>53</ExpressionResult><Image Name="ICAWS_TEST1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>54</ExpressionResult><Image Name="ICAWS_TEST2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>55</ExpressionResult><Image Name="ICAWS_TEST3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>56</ExpressionResult><Image Name="ICAWS_VSBITNOGO.png"><Transparent>False</Transparent></Image></Case>
+
+<Case><ExpressionResult>106</ExpressionResult><Image Name="ICAWS_BINGO_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>108</ExpressionResult><Image Name="ICAWS_ENGRPMHI_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>109</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>110</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>111</ExpressionResult><Image Name="ICAWS_BATTFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>114</ExpressionResult><Image Name="ICAWS_SEATCANOPY_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>115</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>118</ExpressionResult><Image Name="ICAWS_BATTFAIL28V_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>120</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>121</ExpressionResult><Image Name="ICAWS_SEATHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>122</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>123</ExpressionResult><Image Name="ICAWS_CANOPYHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>124</ExpressionResult><Image Name="ICAWS_ICC1AND2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>125</ExpressionResult><Image Name="ICAWS_ICC1_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>126</ExpressionResult><Image Name="ICAWS_ICC2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>127</ExpressionResult><Image Name="ICAWS_CABINPRESS_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>129</ExpressionResult><Image Name="ICAWS_FCSDEGR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>130</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>137</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>138</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>139</ExpressionResult><Image Name="ICAWS_OVERSPEED_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>140</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>141</ExpressionResult><Image Name="ICAWS_AIRDATADEGD_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>142</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>143</ExpressionResult><Image Name="ICAWS_GEARFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>144</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>147</ExpressionResult><Image Name="ICAWS_REFUELDOOR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>148</ExpressionResult><Image Name="ICAWS_GENERFAIL3_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>151</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH_ACK.png"><Transparent>False</Transparent></Image>
+</Case>
+</Select>
+</Element>
+
+<Element id="ICAWS Line"><FloatPosition>512,50</FloatPosition> 
+<Select><Expression><Script>(L:ICAWS_Line3, enum)</Script></Expression>
+<Case><ExpressionResult>0</ExpressionResult></Case>
+<Case><ExpressionResult>1</ExpressionResult><Image Name="ICAWS_ENGFIRE.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>2</ExpressionResult><Image Name="ICAWS_GPWS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>3</ExpressionResult><Image Name="ICAWS_STALL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>4</ExpressionResult><Image Name="ICAWS_FUELLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>5</ExpressionResult><Image Name="ICAWS_ENGRPMLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>6</ExpressionResult><Image Name="ICAWS_BINGO.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>7</ExpressionResult><Image Name="ICAWS_GENERFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>8</ExpressionResult><Image Name="ICAWS_ENGRPMHI.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>9</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>10</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>11</ExpressionResult><Image Name="ICAWS_BATTFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>12</ExpressionResult><Image Name="ICAWS_WINGFOLD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>13</ExpressionResult><Image Name="ICAWS_PARKBRK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>14</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>15</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>16</ExpressionResult><Image Name="ICAWS_ENGINEFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>17</ExpressionResult><Image Name="ICAWS_LAUNCHBAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>18</ExpressionResult><Image Name="ICAWS_BATTFAIL28V.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>19</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>20</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>21</ExpressionResult><Image Name="ICAWS_SEATHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>22</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>23</ExpressionResult><Image Name="ICAWS_CANOPYHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>24</ExpressionResult><Image Name="ICAWS_ICC1AND2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>25</ExpressionResult><Image Name="ICAWS_ICC1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>26</ExpressionResult><Image Name="ICAWS_ICC2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>27</ExpressionResult><Image Name="ICAWS_CABINPRESS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>28</ExpressionResult><Image Name="ICAWS_BOS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>29</ExpressionResult><Image Name="ICAWS_FCSDEGR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>30</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>31</ExpressionResult><Image Name="ICAWS_JOKER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>32</ExpressionResult><Image Name="ICAWS_SEAT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>33</ExpressionResult><Image Name="ICAWS_WEPDOORL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>34</ExpressionResult><Image Name="ICAWS_WEPDOORR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>35</ExpressionResult><Image Name="ICAWS_CREWLADDER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>36</ExpressionResult><Image Name="ICAWS_VSBITRUNNING.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>37</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>38</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>39</ExpressionResult><Image Name="ICAWS_OVERSPEED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>40</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>41</ExpressionResult><Image Name="ICAWS_AIRDATADEGD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>42</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>43</ExpressionResult><Image Name="ICAWS_GEARFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>44</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>45</ExpressionResult><Image Name="ICAWS_IPPCOMBUSTION.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>46</ExpressionResult><Image Name="ICAWS_OVERG.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>47</ExpressionResult><Image Name="ICAWS_REFUELDOOR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>48</ExpressionResult><Image Name="ICAWS_GENERFAIL3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>49</ExpressionResult><Image Name="ICAWS_ENGSTARTASSIST.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>50</ExpressionResult><Image Name="ICAWS_OBOGSBIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>51</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>52</ExpressionResult><Image Name="ICAWS_ENGICEDETECTED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>53</ExpressionResult><Image Name="ICAWS_TEST1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>54</ExpressionResult><Image Name="ICAWS_TEST2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>55</ExpressionResult><Image Name="ICAWS_TEST3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>56</ExpressionResult><Image Name="ICAWS_VSBITNOGO.png"><Transparent>False</Transparent></Image></Case>
+
+<Case><ExpressionResult>106</ExpressionResult><Image Name="ICAWS_BINGO_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>108</ExpressionResult><Image Name="ICAWS_ENGRPMHI_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>109</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>110</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>111</ExpressionResult><Image Name="ICAWS_BATTFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>114</ExpressionResult><Image Name="ICAWS_SEATCANOPY_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>115</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>118</ExpressionResult><Image Name="ICAWS_BATTFAIL28V_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>120</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>121</ExpressionResult><Image Name="ICAWS_SEATHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>122</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>123</ExpressionResult><Image Name="ICAWS_CANOPYHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>124</ExpressionResult><Image Name="ICAWS_ICC1AND2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>125</ExpressionResult><Image Name="ICAWS_ICC1_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>126</ExpressionResult><Image Name="ICAWS_ICC2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>127</ExpressionResult><Image Name="ICAWS_CABINPRESS_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>129</ExpressionResult><Image Name="ICAWS_FCSDEGR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>130</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>137</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>138</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>139</ExpressionResult><Image Name="ICAWS_OVERSPEED_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>140</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>141</ExpressionResult><Image Name="ICAWS_AIRDATADEGD_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>142</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>143</ExpressionResult><Image Name="ICAWS_GEARFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>144</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>147</ExpressionResult><Image Name="ICAWS_REFUELDOOR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>148</ExpressionResult><Image Name="ICAWS_GENERFAIL3_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>151</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH_ACK.png"><Transparent>False</Transparent></Image>
+</Case>
+</Select>
+</Element>
+
+<Element id="ICAWS Line"><FloatPosition>512,75</FloatPosition> 
+<Select><Expression><Script>(L:ICAWS_Line4, enum)</Script></Expression>
+<Case><ExpressionResult>0</ExpressionResult></Case>
+<Case><ExpressionResult>1</ExpressionResult><Image Name="ICAWS_ENGFIRE.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>2</ExpressionResult><Image Name="ICAWS_GPWS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>3</ExpressionResult><Image Name="ICAWS_STALL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>4</ExpressionResult><Image Name="ICAWS_FUELLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>5</ExpressionResult><Image Name="ICAWS_ENGRPMLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>6</ExpressionResult><Image Name="ICAWS_BINGO.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>7</ExpressionResult><Image Name="ICAWS_GENERFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>8</ExpressionResult><Image Name="ICAWS_ENGRPMHI.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>9</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>10</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>11</ExpressionResult><Image Name="ICAWS_BATTFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>12</ExpressionResult><Image Name="ICAWS_WINGFOLD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>13</ExpressionResult><Image Name="ICAWS_PARKBRK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>14</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>15</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>16</ExpressionResult><Image Name="ICAWS_ENGINEFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>17</ExpressionResult><Image Name="ICAWS_LAUNCHBAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>18</ExpressionResult><Image Name="ICAWS_BATTFAIL28V.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>19</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>20</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>21</ExpressionResult><Image Name="ICAWS_SEATHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>22</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>23</ExpressionResult><Image Name="ICAWS_CANOPYHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>24</ExpressionResult><Image Name="ICAWS_ICC1AND2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>25</ExpressionResult><Image Name="ICAWS_ICC1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>26</ExpressionResult><Image Name="ICAWS_ICC2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>27</ExpressionResult><Image Name="ICAWS_CABINPRESS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>28</ExpressionResult><Image Name="ICAWS_BOS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>29</ExpressionResult><Image Name="ICAWS_FCSDEGR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>30</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>31</ExpressionResult><Image Name="ICAWS_JOKER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>32</ExpressionResult><Image Name="ICAWS_SEAT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>33</ExpressionResult><Image Name="ICAWS_WEPDOORL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>34</ExpressionResult><Image Name="ICAWS_WEPDOORR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>35</ExpressionResult><Image Name="ICAWS_CREWLADDER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>36</ExpressionResult><Image Name="ICAWS_VSBITRUNNING.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>37</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>38</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>39</ExpressionResult><Image Name="ICAWS_OVERSPEED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>40</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>41</ExpressionResult><Image Name="ICAWS_AIRDATADEGD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>42</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>43</ExpressionResult><Image Name="ICAWS_GEARFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>44</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>45</ExpressionResult><Image Name="ICAWS_IPPCOMBUSTION.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>46</ExpressionResult><Image Name="ICAWS_OVERG.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>47</ExpressionResult><Image Name="ICAWS_REFUELDOOR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>48</ExpressionResult><Image Name="ICAWS_GENERFAIL3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>49</ExpressionResult><Image Name="ICAWS_ENGSTARTASSIST.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>50</ExpressionResult><Image Name="ICAWS_OBOGSBIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>51</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>52</ExpressionResult><Image Name="ICAWS_ENGICEDETECTED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>53</ExpressionResult><Image Name="ICAWS_TEST1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>54</ExpressionResult><Image Name="ICAWS_TEST2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>55</ExpressionResult><Image Name="ICAWS_TEST3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>56</ExpressionResult><Image Name="ICAWS_VSBITNOGO.png"><Transparent>False</Transparent></Image></Case>
+
+
+<Case><ExpressionResult>106</ExpressionResult><Image Name="ICAWS_BINGO_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>108</ExpressionResult><Image Name="ICAWS_ENGRPMHI_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>109</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>110</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>111</ExpressionResult><Image Name="ICAWS_BATTFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>114</ExpressionResult><Image Name="ICAWS_SEATCANOPY_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>115</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>118</ExpressionResult><Image Name="ICAWS_BATTFAIL28V_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>120</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>121</ExpressionResult><Image Name="ICAWS_SEATHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>122</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>123</ExpressionResult><Image Name="ICAWS_CANOPYHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>124</ExpressionResult><Image Name="ICAWS_ICC1AND2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>125</ExpressionResult><Image Name="ICAWS_ICC1_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>126</ExpressionResult><Image Name="ICAWS_ICC2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>127</ExpressionResult><Image Name="ICAWS_CABINPRESS_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>129</ExpressionResult><Image Name="ICAWS_FCSDEGR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>130</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>137</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>138</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>139</ExpressionResult><Image Name="ICAWS_OVERSPEED_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>140</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>141</ExpressionResult><Image Name="ICAWS_AIRDATADEGD_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>142</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>143</ExpressionResult><Image Name="ICAWS_GEARFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>144</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>147</ExpressionResult><Image Name="ICAWS_REFUELDOOR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>148</ExpressionResult><Image Name="ICAWS_GENERFAIL3_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>151</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH_ACK.png"><Transparent>False</Transparent></Image>
+</Case>
+</Select>
+</Element>
+
+<Element id="Warning">
+<FloatPosition>0.000,0.000</FloatPosition>
+<Visibility>
+(L:ICAWS_CAUTION, bool) !
+(L:ICAWS_WARNING, bool) ! and
+</Visibility>
+
+<Element id="ICAWS Line"><FloatPosition>685,0</FloatPosition> 
+<Select><Expression><Script>(L:ICAWS_Line5, enum)</Script></Expression>
+<Case><ExpressionResult>0</ExpressionResult></Case>
+<Case><ExpressionResult>1</ExpressionResult><Image Name="ICAWS_ENGFIRE.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>2</ExpressionResult><Image Name="ICAWS_GPWS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>3</ExpressionResult><Image Name="ICAWS_STALL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>4</ExpressionResult><Image Name="ICAWS_FUELLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>5</ExpressionResult><Image Name="ICAWS_ENGRPMLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>6</ExpressionResult><Image Name="ICAWS_BINGO.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>7</ExpressionResult><Image Name="ICAWS_GENERFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>8</ExpressionResult><Image Name="ICAWS_ENGRPMHI.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>9</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>10</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>11</ExpressionResult><Image Name="ICAWS_BATTFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>12</ExpressionResult><Image Name="ICAWS_WINGFOLD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>13</ExpressionResult><Image Name="ICAWS_PARKBRK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>14</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>15</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>16</ExpressionResult><Image Name="ICAWS_ENGINEFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>17</ExpressionResult><Image Name="ICAWS_LAUNCHBAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>18</ExpressionResult><Image Name="ICAWS_BATTFAIL28V.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>19</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>20</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>21</ExpressionResult><Image Name="ICAWS_SEATHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>22</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>23</ExpressionResult><Image Name="ICAWS_CANOPYHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>24</ExpressionResult><Image Name="ICAWS_ICC1AND2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>25</ExpressionResult><Image Name="ICAWS_ICC1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>26</ExpressionResult><Image Name="ICAWS_ICC2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>27</ExpressionResult><Image Name="ICAWS_CABINPRESS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>28</ExpressionResult><Image Name="ICAWS_BOS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>29</ExpressionResult><Image Name="ICAWS_FCSDEGR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>30</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>31</ExpressionResult><Image Name="ICAWS_JOKER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>32</ExpressionResult><Image Name="ICAWS_SEAT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>33</ExpressionResult><Image Name="ICAWS_WEPDOORL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>34</ExpressionResult><Image Name="ICAWS_WEPDOORR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>35</ExpressionResult><Image Name="ICAWS_CREWLADDER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>36</ExpressionResult><Image Name="ICAWS_VSBITRUNNING.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>37</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>38</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>39</ExpressionResult><Image Name="ICAWS_OVERSPEED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>40</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>41</ExpressionResult><Image Name="ICAWS_AIRDATADEGD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>42</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>43</ExpressionResult><Image Name="ICAWS_GEARFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>44</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>45</ExpressionResult><Image Name="ICAWS_IPPCOMBUSTION.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>46</ExpressionResult><Image Name="ICAWS_OVERG.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>47</ExpressionResult><Image Name="ICAWS_REFUELDOOR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>48</ExpressionResult><Image Name="ICAWS_GENERFAIL3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>49</ExpressionResult><Image Name="ICAWS_ENGSTARTASSIST.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>50</ExpressionResult><Image Name="ICAWS_OBOGSBIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>51</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>52</ExpressionResult><Image Name="ICAWS_ENGICEDETECTED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>53</ExpressionResult><Image Name="ICAWS_TEST1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>54</ExpressionResult><Image Name="ICAWS_TEST2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>55</ExpressionResult><Image Name="ICAWS_TEST3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>56</ExpressionResult><Image Name="ICAWS_VSBITNOGO.png"><Transparent>False</Transparent></Image></Case>
+
+
+<Case><ExpressionResult>106</ExpressionResult><Image Name="ICAWS_BINGO_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>108</ExpressionResult><Image Name="ICAWS_ENGRPMHI_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>109</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>110</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>111</ExpressionResult><Image Name="ICAWS_BATTFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>114</ExpressionResult><Image Name="ICAWS_SEATCANOPY_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>115</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>118</ExpressionResult><Image Name="ICAWS_BATTFAIL28V_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>120</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>121</ExpressionResult><Image Name="ICAWS_SEATHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>122</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>123</ExpressionResult><Image Name="ICAWS_CANOPYHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>124</ExpressionResult><Image Name="ICAWS_ICC1AND2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>125</ExpressionResult><Image Name="ICAWS_ICC1_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>126</ExpressionResult><Image Name="ICAWS_ICC2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>127</ExpressionResult><Image Name="ICAWS_CABINPRESS_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>129</ExpressionResult><Image Name="ICAWS_FCSDEGR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>130</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>137</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>138</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>139</ExpressionResult><Image Name="ICAWS_OVERSPEED_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>140</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>141</ExpressionResult><Image Name="ICAWS_AIRDATADEGD_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>142</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>143</ExpressionResult><Image Name="ICAWS_GEARFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>144</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>147</ExpressionResult><Image Name="ICAWS_REFUELDOOR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>148</ExpressionResult><Image Name="ICAWS_GENERFAIL3_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>151</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH_ACK.png"><Transparent>False</Transparent></Image>
+</Case>
+</Select>
+</Element>
+
+<Element id="ICAWS Line"><FloatPosition>685,25</FloatPosition> 
+<Select><Expression><Script>(L:ICAWS_Line6, enum)</Script></Expression>
+<Case><ExpressionResult>0</ExpressionResult></Case>
+<Case><ExpressionResult>1</ExpressionResult><Image Name="ICAWS_ENGFIRE.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>2</ExpressionResult><Image Name="ICAWS_GPWS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>3</ExpressionResult><Image Name="ICAWS_STALL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>4</ExpressionResult><Image Name="ICAWS_FUELLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>5</ExpressionResult><Image Name="ICAWS_ENGRPMLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>6</ExpressionResult><Image Name="ICAWS_BINGO.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>7</ExpressionResult><Image Name="ICAWS_GENERFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>8</ExpressionResult><Image Name="ICAWS_ENGRPMHI.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>9</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>10</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>11</ExpressionResult><Image Name="ICAWS_BATTFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>12</ExpressionResult><Image Name="ICAWS_WINGFOLD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>13</ExpressionResult><Image Name="ICAWS_PARKBRK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>14</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>15</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>16</ExpressionResult><Image Name="ICAWS_ENGINEFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>17</ExpressionResult><Image Name="ICAWS_LAUNCHBAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>18</ExpressionResult><Image Name="ICAWS_BATTFAIL28V.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>19</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>20</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>21</ExpressionResult><Image Name="ICAWS_SEATHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>22</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>23</ExpressionResult><Image Name="ICAWS_CANOPYHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>24</ExpressionResult><Image Name="ICAWS_ICC1AND2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>25</ExpressionResult><Image Name="ICAWS_ICC1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>26</ExpressionResult><Image Name="ICAWS_ICC2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>27</ExpressionResult><Image Name="ICAWS_CABINPRESS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>28</ExpressionResult><Image Name="ICAWS_BOS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>29</ExpressionResult><Image Name="ICAWS_FCSDEGR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>30</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>31</ExpressionResult><Image Name="ICAWS_JOKER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>32</ExpressionResult><Image Name="ICAWS_SEAT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>33</ExpressionResult><Image Name="ICAWS_WEPDOORL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>34</ExpressionResult><Image Name="ICAWS_WEPDOORR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>35</ExpressionResult><Image Name="ICAWS_CREWLADDER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>36</ExpressionResult><Image Name="ICAWS_VSBITRUNNING.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>37</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>38</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>39</ExpressionResult><Image Name="ICAWS_OVERSPEED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>40</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>41</ExpressionResult><Image Name="ICAWS_AIRDATADEGD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>42</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>43</ExpressionResult><Image Name="ICAWS_GEARFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>44</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>45</ExpressionResult><Image Name="ICAWS_IPPCOMBUSTION.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>46</ExpressionResult><Image Name="ICAWS_OVERG.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>47</ExpressionResult><Image Name="ICAWS_REFUELDOOR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>48</ExpressionResult><Image Name="ICAWS_GENERFAIL3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>49</ExpressionResult><Image Name="ICAWS_ENGSTARTASSIST.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>50</ExpressionResult><Image Name="ICAWS_OBOGSBIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>51</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>52</ExpressionResult><Image Name="ICAWS_ENGICEDETECTED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>53</ExpressionResult><Image Name="ICAWS_TEST1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>54</ExpressionResult><Image Name="ICAWS_TEST2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>55</ExpressionResult><Image Name="ICAWS_TEST3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>56</ExpressionResult><Image Name="ICAWS_VSBITNOGO.png"><Transparent>False</Transparent></Image></Case>
+
+
+<Case><ExpressionResult>106</ExpressionResult><Image Name="ICAWS_BINGO_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>108</ExpressionResult><Image Name="ICAWS_ENGRPMHI_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>109</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>110</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>111</ExpressionResult><Image Name="ICAWS_BATTFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>114</ExpressionResult><Image Name="ICAWS_SEATCANOPY_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>115</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>118</ExpressionResult><Image Name="ICAWS_BATTFAIL28V_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>120</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>121</ExpressionResult><Image Name="ICAWS_SEATHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>122</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>123</ExpressionResult><Image Name="ICAWS_CANOPYHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>124</ExpressionResult><Image Name="ICAWS_ICC1AND2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>125</ExpressionResult><Image Name="ICAWS_ICC1_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>126</ExpressionResult><Image Name="ICAWS_ICC2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>127</ExpressionResult><Image Name="ICAWS_CABINPRESS_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>129</ExpressionResult><Image Name="ICAWS_FCSDEGR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>130</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>137</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>138</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>139</ExpressionResult><Image Name="ICAWS_OVERSPEED_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>140</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>141</ExpressionResult><Image Name="ICAWS_AIRDATADEGD_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>142</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>143</ExpressionResult><Image Name="ICAWS_GEARFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>144</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>147</ExpressionResult><Image Name="ICAWS_REFUELDOOR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>148</ExpressionResult><Image Name="ICAWS_GENERFAIL3_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>151</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH_ACK.png"><Transparent>False</Transparent></Image>
+</Case>
+</Select>
+</Element>
+
+<Element id="ICAWS Line"><FloatPosition>685,50</FloatPosition> 
+<Select><Expression><Script>(L:ICAWS_Line7, enum)</Script></Expression>
+<Case><ExpressionResult>0</ExpressionResult></Case>
+<Case><ExpressionResult>1</ExpressionResult><Image Name="ICAWS_ENGFIRE.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>2</ExpressionResult><Image Name="ICAWS_GPWS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>3</ExpressionResult><Image Name="ICAWS_STALL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>4</ExpressionResult><Image Name="ICAWS_FUELLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>5</ExpressionResult><Image Name="ICAWS_ENGRPMLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>6</ExpressionResult><Image Name="ICAWS_BINGO.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>7</ExpressionResult><Image Name="ICAWS_GENERFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>8</ExpressionResult><Image Name="ICAWS_ENGRPMHI.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>9</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>10</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>11</ExpressionResult><Image Name="ICAWS_BATTFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>12</ExpressionResult><Image Name="ICAWS_WINGFOLD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>13</ExpressionResult><Image Name="ICAWS_PARKBRK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>14</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>15</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>16</ExpressionResult><Image Name="ICAWS_ENGINEFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>17</ExpressionResult><Image Name="ICAWS_LAUNCHBAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>18</ExpressionResult><Image Name="ICAWS_BATTFAIL28V.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>19</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>20</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>21</ExpressionResult><Image Name="ICAWS_SEATHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>22</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>23</ExpressionResult><Image Name="ICAWS_CANOPYHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>24</ExpressionResult><Image Name="ICAWS_ICC1AND2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>25</ExpressionResult><Image Name="ICAWS_ICC1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>26</ExpressionResult><Image Name="ICAWS_ICC2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>27</ExpressionResult><Image Name="ICAWS_CABINPRESS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>28</ExpressionResult><Image Name="ICAWS_BOS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>29</ExpressionResult><Image Name="ICAWS_FCSDEGR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>30</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>31</ExpressionResult><Image Name="ICAWS_JOKER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>32</ExpressionResult><Image Name="ICAWS_SEAT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>33</ExpressionResult><Image Name="ICAWS_WEPDOORL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>34</ExpressionResult><Image Name="ICAWS_WEPDOORR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>35</ExpressionResult><Image Name="ICAWS_CREWLADDER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>36</ExpressionResult><Image Name="ICAWS_VSBITRUNNING.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>37</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>38</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>39</ExpressionResult><Image Name="ICAWS_OVERSPEED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>40</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>41</ExpressionResult><Image Name="ICAWS_AIRDATADEGD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>42</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>43</ExpressionResult><Image Name="ICAWS_GEARFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>44</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>45</ExpressionResult><Image Name="ICAWS_IPPCOMBUSTION.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>46</ExpressionResult><Image Name="ICAWS_OVERG.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>47</ExpressionResult><Image Name="ICAWS_REFUELDOOR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>48</ExpressionResult><Image Name="ICAWS_GENERFAIL3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>49</ExpressionResult><Image Name="ICAWS_ENGSTARTASSIST.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>50</ExpressionResult><Image Name="ICAWS_OBOGSBIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>51</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>52</ExpressionResult><Image Name="ICAWS_ENGICEDETECTED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>53</ExpressionResult><Image Name="ICAWS_TEST1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>54</ExpressionResult><Image Name="ICAWS_TEST2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>55</ExpressionResult><Image Name="ICAWS_TEST3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>56</ExpressionResult><Image Name="ICAWS_VSBITNOGO.png"><Transparent>False</Transparent></Image></Case>
+
+
+<Case><ExpressionResult>106</ExpressionResult><Image Name="ICAWS_BINGO_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>108</ExpressionResult><Image Name="ICAWS_ENGRPMHI_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>109</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>110</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>111</ExpressionResult><Image Name="ICAWS_BATTFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>114</ExpressionResult><Image Name="ICAWS_SEATCANOPY_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>115</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>118</ExpressionResult><Image Name="ICAWS_BATTFAIL28V_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>120</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>121</ExpressionResult><Image Name="ICAWS_SEATHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>122</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>123</ExpressionResult><Image Name="ICAWS_CANOPYHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>124</ExpressionResult><Image Name="ICAWS_ICC1AND2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>125</ExpressionResult><Image Name="ICAWS_ICC1_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>126</ExpressionResult><Image Name="ICAWS_ICC2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>127</ExpressionResult><Image Name="ICAWS_CABINPRESS_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>129</ExpressionResult><Image Name="ICAWS_FCSDEGR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>130</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>137</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>138</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>139</ExpressionResult><Image Name="ICAWS_OVERSPEED_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>140</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>141</ExpressionResult><Image Name="ICAWS_AIRDATADEGD_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>142</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>143</ExpressionResult><Image Name="ICAWS_GEARFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>144</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>147</ExpressionResult><Image Name="ICAWS_REFUELDOOR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>148</ExpressionResult><Image Name="ICAWS_GENERFAIL3_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>151</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH_ACK.png"><Transparent>False</Transparent></Image>
+</Case>
+</Select>
+</Element>
+
+<Element id="ICAWS Line"><FloatPosition>685,75</FloatPosition> 
+<Select><Expression><Script>(L:ICAWS_Line8, enum)</Script></Expression>
+<Case><ExpressionResult>0</ExpressionResult></Case>
+<Case><ExpressionResult>1</ExpressionResult><Image Name="ICAWS_ENGFIRE.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>2</ExpressionResult><Image Name="ICAWS_GPWS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>3</ExpressionResult><Image Name="ICAWS_STALL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>4</ExpressionResult><Image Name="ICAWS_FUELLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>5</ExpressionResult><Image Name="ICAWS_ENGRPMLOW.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>6</ExpressionResult><Image Name="ICAWS_BINGO.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>7</ExpressionResult><Image Name="ICAWS_GENERFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>8</ExpressionResult><Image Name="ICAWS_ENGRPMHI.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>9</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>10</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>11</ExpressionResult><Image Name="ICAWS_BATTFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>12</ExpressionResult><Image Name="ICAWS_WINGFOLD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>13</ExpressionResult><Image Name="ICAWS_PARKBRK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>14</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>15</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>16</ExpressionResult><Image Name="ICAWS_ENGINEFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>17</ExpressionResult><Image Name="ICAWS_LAUNCHBAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>18</ExpressionResult><Image Name="ICAWS_BATTFAIL28V.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>19</ExpressionResult><Image Name="ICAWS_SEATCANOPY.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>20</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>21</ExpressionResult><Image Name="ICAWS_SEATHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>22</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>23</ExpressionResult><Image Name="ICAWS_CANOPYHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>24</ExpressionResult><Image Name="ICAWS_ICC1AND2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>25</ExpressionResult><Image Name="ICAWS_ICC1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>26</ExpressionResult><Image Name="ICAWS_ICC2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>27</ExpressionResult><Image Name="ICAWS_CABINPRESS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>28</ExpressionResult><Image Name="ICAWS_BOS.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>29</ExpressionResult><Image Name="ICAWS_FCSDEGR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>30</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>31</ExpressionResult><Image Name="ICAWS_JOKER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>32</ExpressionResult><Image Name="ICAWS_SEAT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>33</ExpressionResult><Image Name="ICAWS_WEPDOORL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>34</ExpressionResult><Image Name="ICAWS_WEPDOORR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>35</ExpressionResult><Image Name="ICAWS_CREWLADDER.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>36</ExpressionResult><Image Name="ICAWS_VSBITRUNNING.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>37</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>38</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>39</ExpressionResult><Image Name="ICAWS_OVERSPEED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>40</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>41</ExpressionResult><Image Name="ICAWS_AIRDATADEGD.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>42</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>43</ExpressionResult><Image Name="ICAWS_GEARFAIL.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>44</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>45</ExpressionResult><Image Name="ICAWS_IPPCOMBUSTION.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>46</ExpressionResult><Image Name="ICAWS_OVERG.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>47</ExpressionResult><Image Name="ICAWS_REFUELDOOR.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>48</ExpressionResult><Image Name="ICAWS_GENERFAIL3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>49</ExpressionResult><Image Name="ICAWS_ENGSTARTASSIST.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>50</ExpressionResult><Image Name="ICAWS_OBOGSBIT.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>51</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>52</ExpressionResult><Image Name="ICAWS_ENGICEDETECTED.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>53</ExpressionResult><Image Name="ICAWS_TEST1.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>54</ExpressionResult><Image Name="ICAWS_TEST2.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>55</ExpressionResult><Image Name="ICAWS_TEST3.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>56</ExpressionResult><Image Name="ICAWS_VSBITNOGO.png"><Transparent>False</Transparent></Image></Case>
+
+
+<Case><ExpressionResult>106</ExpressionResult><Image Name="ICAWS_BINGO_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>108</ExpressionResult><Image Name="ICAWS_ENGRPMHI_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>109</ExpressionResult><Image Name="ICAWS_WEAPDOOROPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>110</ExpressionResult><Image Name="ICAWS_REFUELSYSOPN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>111</ExpressionResult><Image Name="ICAWS_BATTFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>114</ExpressionResult><Image Name="ICAWS_SEATCANOPY_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>115</ExpressionResult><Image Name="ICAWS_CREWLADDERHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>118</ExpressionResult><Image Name="ICAWS_BATTFAIL28V_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>120</ExpressionResult><Image Name="ICAWS_WINGFOLDHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>121</ExpressionResult><Image Name="ICAWS_SEATHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>122</ExpressionResult><Image Name="ICAWS_PARKBRKHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>123</ExpressionResult><Image Name="ICAWS_CANOPYHIGH_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>124</ExpressionResult><Image Name="ICAWS_ICC1AND2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>125</ExpressionResult><Image Name="ICAWS_ICC1_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>126</ExpressionResult><Image Name="ICAWS_ICC2_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>127</ExpressionResult><Image Name="ICAWS_CABINPRESS_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>129</ExpressionResult><Image Name="ICAWS_FCSDEGR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>130</ExpressionResult><Image Name="ICAWS_FCSPOWERLIMIT_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>137</ExpressionResult><Image Name="ICAWS_OVERSPEEDAAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>138</ExpressionResult><Image Name="ICAWS_OVERSPEEDGEAR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>139</ExpressionResult><Image Name="ICAWS_OVERSPEED_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>140</ExpressionResult><Image Name="ICAWS_OVERSPEEDHOOK_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>141</ExpressionResult><Image Name="ICAWS_AIRDATADEGD_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>142</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>143</ExpressionResult><Image Name="ICAWS_GEARFAIL_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>144</ExpressionResult><Image Name="ICAWS_FUELDUMPOPEN_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>147</ExpressionResult><Image Name="ICAWS_REFUELDOOR_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>148</ExpressionResult><Image Name="ICAWS_GENERFAIL3_ACK.png"><Transparent>False</Transparent></Image></Case>
+<Case><ExpressionResult>151</ExpressionResult><Image Name="ICAWS_ENGICEDETECTEDHIGH_ACK.png"><Transparent>False</Transparent></Image>
+</Case>
+</Select>
+</Element>
+
+</Element>
+
+
+<Element id="Warning">
+<FloatPosition>685.000,0.000</FloatPosition>
+<Visibility>
+(L:ICAWS_CAUTION, bool) 
+(L:ICAWS_WARNING, bool) ! and
+</Visibility>
+<Image id="Image" Name="caution.png">
+<Transparent>False</Transparent>
+</Image>
+</Element>
+
+<Element id="WARNING">
+<FloatPosition>685.000,0.000</FloatPosition>
+<Visibility>
+(L:ICAWS_WARNING, bool)
+</Visibility>
+<Image id="Image" Name="warning.png">
+<Transparent>False</Transparent>
+</Image>
+</Element>
+
+
+<Element id="Warning">
+<FloatPosition>685.000,50.000</FloatPosition>
+<Visibility>
+(L:ICAWS_CAUTION, bool)
+(L:ICAWS_WARNING, bool) and
+</Visibility>
+<Image id="Image" Name="caution.png">
+<Transparent>False</Transparent>
+</Image>
+</Element>
+
+<Element id="PopUp ICAWS">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD4_Screen, number) 213 ==
+</Visibility>
+<Image id="Image" Name="popup_icaws.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+<Element id="PopUp AP">
+<FloatPosition>0.0,0.000</FloatPosition>
+<Visibility>
+(L:MFD4_Screen, number) 224 ==
+</Visibility>
+<Image id="Image" Name="popup_ap.png">
+<Transparent>True</Transparent>
+</Image>
+</Element>
+
+
+</Element>
+
+<Element id="STANDBY - CLEAR ALL">
+<FloatPosition>0.000,0.000</FloatPosition>
+<Visibility>
+(L:MFD3_StandbyCounter, number) 2160 &lt;
+</Visibility>
+<Rectangle id="Rectangle">
+<Width>1024</Width><Height>100</Height>
+<FillColor>0x010101</FillColor>
+</Rectangle>
+</Element>
+
+<Element id="fuel">
+<FloatPosition>30.000,10.000</FloatPosition>
+<Visibility>
+(L:MFD3_StandbyCounter, number) 2160 &lt; (L:MFD3_StandbyCounter, number) 500 &gt; and
+</Visibility>
+<GaugeText id="Fuel">
+<FontFace>F-35_PCD SemCond</FontFace>
+<FontColor>0xFFFF00</FontColor>
+<FontHeight>18</FontHeight>
+<GaugeString>
+%F-35 LIGHTNING II FOR MICROSOFT FLIGHT SIMULATOR\n
+%PANORAMIC CONTROL DISPLAY CODE \n
+%VERSION %((L:VerDigit1,number))%!1d!.%((L:VerDigit2,number))%!1d!.%((L:VerDigit3,number))%!1d! DATE %((L:VerDate,number))%!1d!% RADAR MODULE VERSION %((L:RADAR_VERSION_MAJ,number))%!1d!.%((L:RADAR_VERSION_MIN,number))%!1d!%\n
+%CREATED BY INDIAFOXTECHO (C) 2021\n
+</GaugeString>
+<HorizontalAlign>LEFT</HorizontalAlign>
+<Size>1024,100</Size>
+<Transparent>True</Transparent>
+</GaugeText>
+</Element>
+
+<Element><Visibility>(L:FAB2PCDTouchTimer,enum) 0 &gt;</Visibility>	
+<FloatPosition>0,45</FloatPosition>
+<Image Name="PCDCrosshair.png"><Transparent>True</Transparent><Axis>42,42.000</Axis></Image>
+<Shift id="Shift"><Scale>1,0.000</Scale><Expression><Minimum>0.000</Minimum><Maximum>1024.000</Maximum>
+<Script>(L:FAB2PCDTouchPosition, enum)</Script>
+</Expression></Shift>
+</Element>		
+
+<Element><Visibility>3 7 (L:FAB2PCDTouchTimer,enum) rng</Visibility>	
+<FloatPosition>0,45</FloatPosition>
+<Image Name="PCDCrosshair_sel.png"><Transparent>True</Transparent><Axis>42,42.000</Axis></Image>
+<Shift id="Shift"><Scale>1,0.000</Scale><Expression><Minimum>0.000</Minimum><Maximum>1024.000</Maximum>
+<Script>(L:FAB2PCDTouchPosition, enum)</Script>
+</Expression></Shift>
+</Element>	
+      
+     
+</SimGauge.Gauge>
+</SimBase.Document>

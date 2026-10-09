@@ -1,0 +1,93 @@
+<Gauge Name="AvionicsControl" Version="1.0">
+
+
+<Comment>
+Camera Angle Management
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+(A:Attitude indicator pitch degrees,degrees) (>L:DASCameraPitchCommanded, degrees)
+(A:Attitude indicator bank degrees,degrees) (>L:DASCameraBankCommanded, degrees)
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+DAS Angle
+0 = NAV Mode
+2 = STOVL HOVER
+
+DASStatus 
+0 - off
+1 - cooling down
+2 - ready
+</Comment>
+
+<Element>
+<Select>
+<Value>
+0 (>L:DASCameraMode, number)
+(L:STOVLMode,number) 2 == if{ 2 (>L:DASCameraMode, number) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:IPPGenerator,bool) ! if{ 7650 (>L:DASCooling,number) } els{ (L:DASCooling,number) 1 - 0 max (>L:DASCooling,number) }
+0 (>L:DASStatus, enum) 0 (>L:DASAvailable,bool)
+(L:DASCooling,number) 18 / 60 / int (>L:DASCoolingMinutes,number)
+(L:DASCooling,number) 18 / 60 % int (>L:DASCoolingSeconds,number)
+(L:DASCooling,number) 7561 &lt; if{ 1 (>L:DASStatus, enum) 0 (>L:DASAvailable,bool) }
+(L:DASCooling,number) 10 &lt; if{ 1 (>L:DASStatus, enum) 1 (>L:DASAvailable,bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+TFLIR MODE
+0 = FLIR
+2 = IRST
+
+TFLIRStatus 
+0 - off
+1 - cooling down
+2 - ready
+
+TFLIRAvailable - true if imagery is available
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:IPPGenerator,bool) if{ (L:TFLIRTimeout, number) 1 + 4001 min (>L:TFLIRTimeout, number) } els{ 0 (>L:TFLIRTimeout, number) }
+0 (>L:TFLIRStatus, enum) 0 (>L:TFLIRAvailable, bool)
+(L:TFLIRTimeout, number) 50 &gt; if{ 1 (>L:TFLIRStatus, enum) 0 (>L:TFLIRAvailable, bool)  }
+(L:TFLIRTimeout, number) 3999 &gt; if{ 2 (>L:TFLIRStatus, enum) 1 (>L:TFLIRAvailable, bool) }
+0 (>L:TFLIRIsMasked, bool)
+(L:TFLIRCameraMode, bool) (A:Attitude indicator bank degrees,degrees) abs 75 &gt; and if{ 1 (>L:TFLIRIsMasked, bool) }
+(L:TFLIRCameraMode, bool) (A:Attitude indicator pitch degrees,degrees) abs 80 &gt; and if{ 1 (>L:TFLIRIsMasked, bool) }
+(L:TFLIRIsMasked, bool) if{ 0 (>L:TFLIRAvailable, bool) }
+
+(L:TFLIRCameraPitch, degree) 0 &lt; if{ 0 (>L:TFLIRCameraPitch, degree) }
+(L:TFLIRCameraPitch, degree) 90 &gt; if{ 90 (>L:TFLIRCameraPitch, degree) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:IPPGenerator,bool) (L:ASRMode, enum) 1 == and (L:RadarStatus,enum) 3 == (L:RadarStatus,enum) 4 == or and if{ 1 (>L:ASRImageryVisible,bool) } els{ 0 (>L:ASRImageryVisible,bool) }
+</Value>
+</Select>
+</Element>
+
+
+</Gauge>

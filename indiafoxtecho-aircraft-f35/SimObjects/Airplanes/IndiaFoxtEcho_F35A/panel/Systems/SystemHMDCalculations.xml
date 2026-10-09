@@ -1,0 +1,708 @@
+<Gauge Name="F-35 HMD" Version="1.0">
+
+
+<Element>
+
+	<Element>
+		<Select>
+			<Value>
+				(L:switch_hud_reject_mode, number) (&gt;L:HUD Reject Mode, number)
+			</Value>
+		</Select>
+	</Element>
+
+<Element>
+
+<Visible>
+(A:ELECTRICAL MASTER BATTERY, bool) (L:HUDPower, bool) &amp;&amp; (L:TrainingHUDDisabled, bool) ! &amp;&amp;
+</Visible>
+
+////////////
+<Element>
+	<Element>
+		<Element>	
+			<Macro Name="HUD_X_limit1">-6.0</Macro>
+			<Macro Name="HUD_X_limit2">6.0</Macro>
+			<Macro Name="HUD_Y_limit1">-5.0</Macro>
+			<Macro Name="HUD_Y_limit2">10</Macro>
+
+			<Macro Name="BGOH">
+				(L:Point_X_ref, degrees) @HUD_X_limit1 &gt;
+				(L:Point_X_ref, degrees) @HUD_X_limit2 &lt;
+				(L:Point_Y_ref, degrees) @HUD_Y_limit1 &gt;
+				(L:Point_Y_ref, degrees) @HUD_Y_limit2 &lt;
+				&amp;&amp; &amp;&amp; &amp;&amp;
+				if{ 1 } els{ 0 }
+			</Macro>
+			<Select>
+				<Value>
+					@BGOH (&gt;L:BGOH, bool)
+					(L:Point_X_ref, degrees) (&gt;L:Point_X_ref_HUD, degrees)
+					(L:Point_Y_ref, degrees) (&gt;L:Point_Y_ref_HUD, degrees)
+
+					(L:Point_X_ref_HUD, degrees) @HUD_X_limit1 &lt;
+					if{
+						(L:Point_Y_ref_HUD, degrees) @HUD_X_limit1 * (L:Point_X_ref_HUD, degrees) / (&gt;L:Point_Y_ref_HUD, degrees)
+						@HUD_X_limit1 (&gt;L:Point_X_ref_HUD, degrees)
+					}
+					(L:Point_X_ref_HUD, degrees) @HUD_X_limit2 &gt;
+					if{
+						(L:Point_Y_ref_HUD, degrees) @HUD_X_limit2 * (L:Point_X_ref_HUD, degrees) / (&gt;L:Point_Y_ref_HUD, degrees)
+						@HUD_X_limit2 (&gt;L:Point_X_ref_HUD, degrees)
+					}
+					(L:Point_Y_ref_HUD, degrees) @HUD_Y_limit1 &lt;
+					if{
+						(L:Point_X_ref_HUD, degrees) @HUD_Y_limit1 * (L:Point_Y_ref_HUD, degrees) / (&gt;L:Point_X_ref_HUD, degrees)
+						@HUD_Y_limit1 (&gt;L:Point_Y_ref_HUD, degrees)
+					}
+					(L:Point_Y_ref_HUD, degrees) @HUD_Y_limit2 &gt;
+					if{
+						(L:Point_X_ref_HUD, degrees) @HUD_Y_limit2 * (L:Point_Y_ref_HUD, degrees) / (&gt;L:Point_X_ref_HUD, degrees)
+						@HUD_Y_limit2 (&gt;L:Point_Y_ref_HUD, degrees)
+					}
+				</Value>
+			</Select>
+		</Element>
+	</Element>
+
+	
+	<Element>
+		<Select>
+			<Value>
+				<Macro Name="On_Glass">@1 abs 6.0 &lt; -4.0 10.9 @2 rng &amp;&amp; if{ 1 } els{ (L:Flashing) }</Macro>
+				(L:AA Switch, bool)	@On_Glass((L:GNRT_X, degrees),(L:GNRT_Y, degrees)) &amp;&amp; (L:TrainingSADSDisabled, bool) ! &amp;&amp; (L:GinaDisabled, number) 0 == &amp;&amp; (>L:IsGunPipperVisible, bool)
+			</Value>
+		</Select>
+	</Element>
+	
+</Element>
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	//------- insert frequently used variables
+	<Element>
+		<Element>
+			<Select>
+				<Value>
+					(P:LOCAL TIME, seconds) s0 0.40 % 0.20 &lt; l0 (L:Time-3, seconds) == || (&gt;L:IsFlashTime, bool)
+					(L:Time-2, seconds) (&gt;L:Time-3, seconds)
+					(L:Time-1, seconds) (&gt;L:Time-2, seconds)
+					l0 (&gt;L:Time-1, seconds)
+				</Value>
+			</Select>
+		</Element>
+		<Macro Name="MinSpeed">50</Macro>
+		<Macro Name="AboveMinSpeed">(A:Airspeed indicated, knots) @MinSpeed &gt;</Macro>
+		<Element>
+			<Select>
+				<Value>@AboveMinSpeed
+					if{
+						(A:VELOCITY BODY X, m/s) (A:VELOCITY BODY Z, m/s) atg2 rddg /-/ (&gt;L:DriftX, degrees)
+						(A:VELOCITY BODY Y, m/s) (A:VELOCITY BODY Z, m/s) atg2 rddg /-/ (&gt;L:DriftY, degrees)
+					}
+					els{
+						(A:PLANE PITCH DEGREES,degrees) (A:PLANE BANK DEGREES,radians) sin * /-/ (&gt;L:DriftX, degrees)
+						(A:PLANE PITCH DEGREES,degrees) (A:PLANE BANK DEGREES,radians) cos * /-/ (&gt;L:DriftY, degrees)
+					}
+				</Value>
+			</Select>
+		</Element>
+		<Element>
+			<Select>
+				<Value>@AboveMinSpeed (L:Cage switch,enum) 0 &gt; &amp;&amp; 0 &amp;&amp;
+					if{
+						(L:DriftX, degrees) (A:PLANE BANK DEGREES, radians) cos (A:PLANE BANK DEGREES, radians) cos * * /-/ (&gt;L:CageX, degrees)
+						(L:DriftX, degrees) (A:PLANE BANK DEGREES, radians) cos (A:PLANE BANK DEGREES, radians) sin * * (&gt;L:CageY, degrees)
+ 
+					}
+					els{
+						0 (&gt;L:CageX, degrees)
+						0 (&gt;L:CageY, degrees)
+					}
+				</Value>
+			</Select>
+		</Element>
+
+		<Element>
+			<Select>
+				<Value>
+				0 if{
+				(A:VELOCITY BODY X, feet per second) (>L:VBodyX, feet per second)
+				(A:VELOCITY BODY Y, feet per second) (>L:VBodyY, feet per second)
+				(A:VELOCITY BODY Z, feet per second) (>L:VBodyZ, feet per second)
+				@AboveMinSpeed if{ 
+				(A:VELOCITY BODY X, feet per second) (A:VELOCITY BODY Z, feet per second) atg2 rddg (>L:VVectX, degrees)
+				(A:VELOCITY BODY X, feet per second) (A:VELOCITY BODY Z, feet per second) atg2 rddg (>L:VVectY, degrees)
+				}
+				els{
+						0 (&gt;L:DriftX, degrees)
+						(A:PLANE PITCH DEGREES,degrees) (&gt;L:DriftY, degrees)
+				}
+				}				
+				</Value>
+			</Select>
+		</Element>	
+		
+		
+		<Element>
+			<Select>
+				<Value>(L:DriftX, degrees) (L:CageX, degrees) + (&gt;L:VVectX, degrees)</Value>
+			</Select>
+		</Element>
+		<Element>
+			<Select>
+				<Value>(L:DriftY, degrees) (L:CageY, degrees) + (&gt;L:VVectY, degrees)</Value>
+			</Select>
+		</Element>
+		<Element>
+			<Select>
+				<Value>(L:DriftX, degrees) abs 7 &lt; -5 11 (L:DriftY, degrees) rng &amp;&amp; if{ 1 (&gt;L:GhostVectorOnGlass, enum) } els{ 0 (&gt;L:GhostVectorOnGlass, enum) }</Value>
+			</Select>
+		</Element>
+		<Element>
+			<Select>
+				<Value>(L:VVectX, degrees) abs 7 &lt; -5 11 (L:VVectY, degrees) rng &amp;&amp; if{ 1 (&gt;L:VectorOnGlass, enum) } els{ 0 (&gt;L:VectorOnGlass, enum) }</Value>
+			</Select>
+		</Element>
+	</Element>
+
+	//------- Pitch ladder movement macros and variables
+	<Element>	
+		<Macro Name="SinBank">(A:PLANE BANK DEGREES, radians) sin</Macro>
+		<Macro Name="CosBank">(A:PLANE BANK DEGREES, radians) cos</Macro>
+
+		<Macro Name="LadderRefIsVV">(L:VectorOnGlass, enum) @AboveMinSpeed &amp;&amp;</Macro>
+		<Macro Name="LadderRefX">@LadderRefIsVV if{ (L:VVectX, degrees) } els{ 0 }</Macro>
+		<Macro Name="LadderRefY">@LadderRefIsVV if{ (L:VVectY, degrees) } els{ 0 }</Macro>
+		<Macro Name="ClimbAngle">(A:VELOCITY WORLD Y, m/s) (A:GROUND VELOCITY, m/s) atg2 rddg /-/</Macro>
+		<Macro Name="LadderRefAngle">@LadderRefIsVV if{ @ClimbAngle } els{ (A:PLANE PITCH DEGREES, degrees) }</Macro>
+		<Macro Name="LadderTransitionSpeed">6.00</Macro>
+
+		<Macro Name="LadderIsNearRef">
+			@LadderTransitionSpeed (L:delta time, seconds) * (&gt;L:LadderStep, degrees)
+			@LadderRefX (L:LadderX, degrees) - sqr @LadderRefY (L:LadderY, degrees) - sqr + sqrt (&gt;L:LadderOffset, degrees)
+			(L:LadderStep, degrees) (L:LadderOffset, degrees) &gt;=
+		</Macro>
+		<Macro Name="LadderMove">		
+			@LadderRefX  (L:LadderX, degrees) -  (L:LadderStep, degrees) *   (L:LadderOffset, degrees)  /   (L:LadderX, degrees) + (&gt;L:LadderX, degrees)
+			@LadderRefY  (L:LadderY, degrees) - (L:LadderStep, degrees) *   (L:LadderOffset, degrees)  /  (L:LadderY, degrees) + (&gt;L:LadderY, degrees)
+			(L:LadderY, degrees) @CosBank * (L:LadderX, degrees) @SinBank * + (A:PLANE PITCH DEGREES, degrees) + (&gt;L:LadderAngle, degrees)
+		</Macro>
+		<Macro Name="LadderSnap">
+			@LadderRefX  (&gt;L:LadderX, degrees)
+			@LadderRefY  (&gt;L:LadderY, degrees)
+			@LadderRefAngle  (&gt;L:LadderAngle, degrees)		
+		</Macro>
+		<Element>
+			<Select>
+				<Value>@LadderRefIsVV (L:LadderRefWasVV, enum) == ! if{ @LadderRefIsVV (&gt;L:LadderRefWasVV, enum) 1 (&gt;L:LadderTransitionTrigger, bool) }</Value>
+			</Select>
+		</Element>
+		<Element>
+			<Select>
+				<Value>(P:LOCAL TIME, seconds) s0 (L:Last time, seconds) - s1 0 &gt; if{ l1 (&gt;L:delta time, seconds) l0 (&gt;L:Last time, seconds) }</Value>
+			</Select>
+		</Element>
+		<Element>
+			<Select>
+				<Value>(L:LadderTransitionTrigger, bool)  if{ @LadderIsNearRef ! if{ @LadderMove } els{ @LadderSnap 0 (&gt;L:LadderTransitionTrigger, bool) } } els{ @LadderSnap }</Value>
+			</Select>
+		</Element>
+	</Element>
+
+
+
+
+
+	//------- HUD graphical elements and text
+	<Element>
+
+
+		//---------- WATERLINE VISIBILITY
+
+		<Element> <Select> <Value>
+		(L:VectorOnGlass, enum) ! (L:GinaDisabled, number) 1 == or (A:GEAR CENTER POSITION, percent) 99 &gt; or (>L:IsWaterlineVisible, bool)
+		</Value> </Select> </Element>
+					
+		
+		//---------- VELOCITY VECTOR VISIBILITY
+
+		<Element> <Select> <Value>
+		(L:VectorOnGlass, enum) 0 == if{ (L:IsFlashTime) (L:GinaDisabled, number) 0 == and } els{ (L:VectorOnGlass, enum) 1 == (L:GinaDisabled, number) 0 == and } (>L:IsVVVisible, bool)
+		</Value> </Select> </Element>
+
+		//---------- BANK SCALE VISIBILITY
+
+		<Element> <Select> <Value>
+		(L:HUD Reject Mode, enum) 2 &lt; (L:AA Switch, bool) ! and (>L:IsBankScaleVisible, bool)
+		</Value> </Select> </Element>
+
+
+		//---- ENERGY CARET
+			
+		<Element> <Select> <Value>
+		(A:ACCELERATION BODY Z, feet per second squared) (>L:EnergyCaretY, number)
+		</Value> </Select> </Element>
+		
+		//---------- GERA DOWN SYMBOLOGY
+
+		<Element> <Select> <Value>
+		(A:GEAR TOTAL PCT EXTENDED, percent) 0 &gt; (>L:GearDownSymbology,bool)
+		</Value> </Select> </Element>		
+		
+		//---------- GHOST VELOCITY VECTOR VISIBILITY
+
+		<Element> <Select> <Value>
+		(L:Cage switch,enum) 0 &gt;  @AboveMinSpeed &amp;&amp; if{ (L:VectorOnGlass, enum) 0 == if{ (L:IsFlashTime) } els{ (L:GhostVectorOnGlass, enum) 1 == } } (>L:IsGhostVVVisible, bool)
+		</Value> </Select> </Element>
+
+		//---------- DISABLE VV AND GHOST IF GINA IS DISABLED
+		
+		<Element> <Select> <Value>
+		(L:GinaDisabled, number) 0 &gt; if{ 0 (>L:IsVVVisible, bool)  0 (>L:IsGhostVVVisible, bool) 1 (>L:IsWaterlineVisible, bool) }
+		</Value> </Select> </Element>
+
+		//---------- VELOCITY VECTOR AND GHOST LIMITS
+
+		<Element> <Select> <Value>		
+		(L:VVectX, degrees) -7 &lt; if{ -7 (>L:VVectX, degrees) }
+		(L:VVectX, degrees) 7 &gt; if{ 7 (>L:VVectX, degrees) }
+		(L:VVectY, degrees) -3 &lt; if{ -3 (>L:VVectY, degrees) }
+		(L:VVectY, degrees) 11 &gt; if{ 11 (>L:VVectY, degrees) }
+		</Value> </Select> </Element>
+
+		//---------- GHOST VELOCITY VECTOR CALCULATION
+		
+		<Element> <Select> <Value>
+		(L:VVectX, degrees) (>L:GhostVVectX, degrees)
+		(L:VVectY, degrees) (>L:GhostVVectY, degrees)
+		</Value> </Select> </Element>		
+		
+		<Element> <Select> <Value>
+		(L:Cage switch,enum) 0 &gt;  @AboveMinSpeed &amp;&amp; if{
+			 1 (>L:IsVVVisible, bool)
+			(L:VVectX, degrees) -2 &lt; if{ -2 (>L:VVectX, degrees) }
+			(L:VVectX, degrees) 2 &gt; if{ 2 (>L:VVectX, degrees) }
+			(L:VVectY, degrees) -1.5 &lt; if{ -1.5 (>L:VVectY, degrees) }
+			(L:VVectY, degrees) 5 &gt; if{ 5 (>L:VVectY, degrees) }
+		}
+		</Value> </Select> </Element>
+
+
+		//---------- AIRSPEED / ALTITUDE AND BOXES VISIBILITY
+
+		<Element> <Select> <Value>
+		(L:HUD Reject Mode, enum) 3 &lt; (L:TrainingSADSDisabled, bool) ! and (>L:IsAirspeedBoxVisible, bool)
+		</Value> </Select> </Element>
+		
+		<Element> <Select> <Value>
+		(L:HUD Reject Mode, enum) 3 &lt; (L:TrainingSADSDisabled, bool) ! and (>L:IsAltitudeBoxVisible, bool)
+		</Value> </Select> </Element>
+
+		<Element> <Select> <Value>
+		(L:TrainingSADSDisabled, bool) ! (>L:IsAirspeedVisible, bool)
+		</Value> </Select> </Element>
+
+		<Element> <Select> <Value>
+		(L:TrainingSADSDisabled, bool) ! (>L:IsAltitudeVisible, bool)
+		</Value> </Select> </Element>
+
+		<Element> <Select> <Value>
+		(L:AA Switch, bool) ! (L:GinaDisabled, number) 0 == and (>L:IsVSIVisible, bool)
+		</Value> </Select> </Element>
+
+		
+		<Element> <Select> <Value>
+		(A:Radio Height, feet) 9999 &lt; (A:PLANE BANK DEGREES, degrees) abs 40 &lt; and
+		if{ 
+		(L:ALOW, bool) (L:ALOWTimer,number) 0 &gt; (L:ALOWTimer,number) 60 &lt; and or (L:ALOW2Timer,number) 0 &gt; (L:ALOW2Timer,number) 60 &lt; and or if{ (L:IsFlashTime) (>L:IsRadaltVisible, bool) }
+		els{ 1 (>L:IsRadaltVisible, bool) }		
+		} 
+		els{ 
+		0 (>L:IsRadaltVisible, bool)
+		} 	
+
+		</Value> </Select> </Element>
+
+
+		//---------- REJECT MODE CAPTIONS --------
+		
+
+		<Element> <Select> <Value>
+		1 (>L:IsAlphaVisible, bool)
+		</Value> </Select> </Element>
+		
+		<Element> <Select> <Value>
+		(L:HUD Reject Mode, enum) 1 &lt; (A:GEAR TOTAL PCT EXTENDED, percent) 0 &gt; and (>L:IsAlphaCaretVisible, bool)
+		</Value> </Select> </Element>
+
+		<Element> <Select> <Value>
+		1 (>L:IsGroundSpeedVisible, bool)
+		</Value> </Select> </Element>
+		
+		<Element> <Select> <Value>
+		1 (>L:IsMachVisible, bool)
+		</Value> </Select> </Element>
+
+		<Element> <Select> <Value>
+		1 (>L:IsGForceVisible, bool)
+		</Value> </Select> </Element>
+		
+		<Element> <Select> <Value>
+		(A:MAX G FORCE, G force) 4 &gt; (>L:IsMaxGForceVisible, bool)
+		(A:MAX G FORCE, G force) (>L:MaxGForceValue, bool)
+		</Value> </Select> </Element>
+
+
+		//----------   HUD CLOCK
+		
+		<Element> <Select> <Value>
+		1 (>L:IsClockVisible, bool)
+		(L:MenuTime, number) 0 == if{ 
+		(P:Zulu time,hours) flr 23 + 24 % 1 + (>L:ClockHours, number)
+		(P:Zulu time,minutes) flr 60 % (>L:ClockMinutes, number)
+		(P:Zulu time,seconds) flr 60 % (>L:ClockSeconds, number)
+		} 
+		els{ 
+		(P:Local time,hours) flr 23 + 24 % 1 + (>L:ClockHours, number)
+		(P:Local time,minutes) flr 60 % (>L:ClockMinutes, number)
+		(P:Local time,seconds) flr 60 % (>L:ClockSeconds, number)
+		} 
+		(L:ClockHours, number) 23.9999 &gt; if{ 0 (>L:ClockHours, number) } 		
+		</Value> </Select> </Element>
+		
+
+
+		//----------Low Altitude Warning (displayed for 3 seconds when descending below radar low altitude limit (LAW) setting - 400 ft default)
+		<Element>
+			<Macro Name="LAW_setting">(L:ALOW, enum)</Macro>
+			<Element>
+				<Select>
+					<Value>
+						(L:Low Altitude Warning, bool)
+						(A:Radio Height, feet) (L:Radio Height-1, feet) @LAW_setting rng
+						(A:Vertical speed, feet per minute) 0 &lt; &amp;&amp; ||					
+						if{ 
+							(L:LAW_timer, seconds) 0 ==
+							if{ 
+								(P:Absolute Time, seconds) (&gt;L:LAW_timer, seconds)
+							} 
+							(P:Absolute Time, seconds) (L:LAW_timer, seconds) - 3 &lt; (&gt;L:Low Altitude Warning, bool)
+						} 
+						els{ 
+							0 (&gt;L:Low Altitude Warning, bool) 
+							0 (&gt;L:LAW_timer, seconds) 
+						}
+						(A:Radio Height, feet) (&gt;L:Radio Height-1, feet)
+					</Value>
+				</Select>
+			</Element>				
+
+			//--------- WARNING W
+			<Element>
+				<Select>
+					<Value>
+					0 (>L:IsWarningVisible, bool)
+					(L:Low Altitude Warning, bool) (L:Warning, bool) or (L:IsFlashTime) and (L:RadaltStatus, number) 2 == and (>L:IsWarningVisible, bool)	
+					(L:PULL_UP_WARNING)	(L:IsFlashTime) and	(L:IsWarningVisible, bool)	0 &gt; if{ 1 (>L:IsWarningVisible, bool) }		
+					</Value>
+				</Select>
+			</Element>		
+		</Element>			
+
+		//--------- CAUTION
+
+		//----------BINGO Warning trigger (displayed for 30 seconds when fuel drops below BNGO setting - default is 900 lbs or about 30%)
+		<Element>
+			<Macro Name="BNGO_setting">(L:Setting BNGO, enum)</Macro>
+			<Macro Name="BNGO_display">30</Macro>
+
+			<Element>
+				<Select>
+					<Value>
+						(L:Setting BNGO, enum) (L:Setting BNGO-1, enum) != 
+						(A:FUEL TOTAL QUANTITY WEIGHT, lbs) @BNGO_setting &lt; &amp;&amp; (&gt;L:Check_fuel, bool)			
+					</Value>
+				</Select>
+			</Element>
+			<Element>
+				<Select>
+					<Value>
+						(L:BNGO Warning, bool)
+						(A:FUEL TOTAL QUANTITY WEIGHT, lbs) (L:FUEL TOTAL QUANTITY WEIGHT-1, lbs) @BNGO_setting rng ||
+						(L:Check_fuel, bool) ||
+						if{ 
+							(L:BNGO_timer, seconds) 0 ==
+							if{ 
+								(P:Absolute Time, seconds) (&gt;L:BNGO_timer, seconds)
+								1 (&gt;L:BNGO Sound, bool)
+							}
+							els{ 0 (&gt;L:BNGO Sound, bool) }
+
+							(A:FUEL TOTAL QUANTITY WEIGHT, lbs) @BNGO_setting &lt;
+							if{
+								(P:Absolute Time, seconds) (L:BNGO_timer, seconds) - @BNGO_display &lt; (&gt;L:BNGO Warning, bool)
+							}
+							els{ 0 (&gt;L:BNGO Warning, bool) }
+						} 
+						els{ 
+							0 (&gt;L:BNGO Warning, bool) 
+							0 (&gt;L:BNGO_timer, seconds) 
+						}
+						(A:FUEL TOTAL QUANTITY WEIGHT, lbs) (&gt;L:FUEL TOTAL QUANTITY WEIGHT-1, lbs)
+						(L:Setting BNGO, enum) (&gt;L:Setting BNGO-1, enum)						
+					</Value>
+				</Select>
+			</Element>
+		</Element>
+
+		 //--- BNGO AND CAUTION
+		 
+		<Element>
+		<Select>
+		<Value>
+		(A:STALL WARNING, bool) ! (A:OVERSPEED WARNING, bool) ! and (L:Caution, bool) ! and (L:BNGO Warning, bool) and (L:IsFlashTime) and (>L:IsBingoVisible, bool)
+		(A:STALL WARNING, bool) (A:OVERSPEED WARNING, bool) or (L:Caution, bool) or (L:IsFlashTime) and (L:BNGO Warning, bool) ! and (>L:IsCautionVisible, bool)
+		</Value>
+		</Select>
+		</Element>		
+		 
+
+
+		//--------- Ground Proximity Warning System (GPWS)
+		<Element>
+			<Macro Name="Minimum_Warning_Time">5.0</Macro>
+			<Macro Name="Roll_delay">(A:PLANE BANK DEGREES, radians) abs 2.7 /</Macro>
+
+			<Macro Name="Total_Warning_Time">@Minimum_Warning_Time @Roll_delay +</Macro>
+
+			<Macro Name="Initial_Altitude_Loss">(A:VELOCITY WORLD Y, feet per second) /-/ @Total_Warning_Time *</Macro>
+
+			<Macro Name="Recovery_max_G">4.0</Macro>
+			<Macro Name="ClimbAngle_rad">(A:VELOCITY WORLD Y, m/s) (A:GROUND VELOCITY, m/s) atg2 /-/</Macro>
+			<Macro Name="Recovery_altitude_loss">1 @ClimbAngle_rad cos - (A:VELOCITY BODY Z, m/s) sqr * 9.81 / @Recovery_max_G / 0.3048 /</Macro>
+
+			<Macro Name="Dive_Altitude">@Initial_Altitude_Loss @Recovery_altitude_loss +</Macro>
+
+			<Macro Name="Floor_Airspeed">(L:WoffW Time, seconds) 60 &lt; if{ 250 } els{ 200 }</Macro>
+			<Macro Name="Floor_vsi">(L:WoffW Time, seconds) 60 &lt; if{ -300 } els{ -1500 }</Macro>
+			<Macro Name="Gear">(L:WoffW Time, seconds) 60 &lt; if{ 1 } els{ (A:GEAR HANDLE POSITION, percent) }</Macro>
+
+			<Macro Name="vsi_less_than">(A:VELOCITY WORLD Y, feet per minute) @1 &lt; if{ 1 } els{ 0 }</Macro>
+
+			<Macro Name="Below">(A:Radio height, feet) @1 &lt; if{ 1 } els{ 0 }</Macro>
+			<Macro Name="Above">@Below(@1) ! </Macro>
+
+			<Macro Name="Faster">(A:AIRSPEED INDICATED, knots) @1 &gt; if{ 1 } els{ 0 }</Macro>
+			<Macro Name="Slower">@Faster(@1) !</Macro>
+
+
+			<Macro Name="CFIT">
+				@Above(150) 	@vsi_less_than(0)		@Below(@Dive_Altitude)		&amp;&amp; &amp;&amp;
+				@Below(90)	@vsi_less_than(0) 		@Faster(@Floor_Airspeed) 		&amp;&amp; &amp;&amp; ||
+				@Below(150)	@vsi_less_than(@Floor_vsi) 	@Slower(@Floor_Airspeed)	@Gear	&amp;&amp; &amp;&amp; &amp;&amp; ||
+				(A:Sim On Ground, bool) ! &amp;&amp;
+				if{ 1 }
+				els{ 0 }
+			</Macro>
+
+			<Macro Name="CHECK_GEAR">
+						(A:Radio height, feet) 150 &lt;
+						(A:Vertical speed, feet per minute) -100 &lt; &amp;&amp;
+						(A:AIRSPEED INDICATED, knots) 200 &lt; &amp;&amp;
+						(A:GEAR HANDLE POSITION, percent) 0 == &amp;&amp;
+						if{ 1 }
+						els{ 0 }
+			</Macro>
+
+			//--------- Weight-off-Wheels Timer
+			<Element>
+				<Select>
+					<Value>
+						(A:Sim On Ground, bool)
+						if{ (P:LOCAL TIME, seconds) (&gt;L:WoffW Start Time, seconds) 0 (&gt;L:WoffW Time, seconds) }
+						els{ (P:LOCAL TIME, seconds) (L:WoffW Start Time, seconds) - (&gt;L:WoffW Time, seconds) }
+					</Value>
+				</Select>
+			</Element>
+
+			//--------- Warnings
+			<Element>
+				<Select>
+					<Value>						
+					</Value>
+				</Select>
+			</Element>
+			
+			//--------- DECEL
+			<Element>
+				<Select>
+					<Value>
+						(L:STOVLMode,enum) 2 == (L:DECELL,bool) and	(&gt;L:DecelWarning,bool)
+					</Value>
+				</Select>
+			</Element>			
+			
+
+		</Element>
+
+		 //--- Scratchpad
+		<Element>
+			<Select>
+				<Value>		 
+				(L:Valid_Scratchpad, bool) (L:IsFlashTime) or (L:DEP_MODE) and (>L:IsScratchpadVisible, bool)
+				</Value>
+			</Select>
+		</Element>				
+
+
+
+
+
+	</Element>  //---- END HUD graphical elements and text
+
+
+		//---------- NAV MODE  --------
+
+		// If no steering mode is selected, marker should go to commanded heading
+	
+		<Element> <Select> <Value>
+		(L:HSIWaypointSteering, bool) ! (L:GinaDisabled, bool) ! and (L:HSIWaypointSteering, bool) ! and (L:HSIVORSteering, bool) ! and if{
+		(A:AUTOPILOT HEADING LOCK DIR,degrees) dnor (A:PLANE HEADING DEGREES MAGNETIC,degrees) - dnor s2 180 &gt; if{ l2 360 - (>L:HeadingMarkerUnrestricted, number) } els{ l2 (>L:HeadingMarkerUnrestricted, number) }
+		}
+		</Value> </Select> </Element>	
+
+		// GPS Waypoint
+		
+		<Element> <Select> <Value>
+		(L:NavMode, number) 1 == if{
+		(A:GPS WP BEARING,degrees) dnor (A:PLANE HEADING DEGREES MAGNETIC,degrees) - dnor s2 180 &gt; if{ l2 360 - (>L:HeadingMarkerUnrestricted, number) } els{ l2 (>L:HeadingMarkerUnrestricted, number) }
+		(A:GPS WP BEARING,degrees) dnor (>L:navBearing, number) 
+		(A:GPS WP DISTANCE,nmiles) 0 max (>L:navDistance, number)
+		(A:GPS WP ETE,seconds) flr 3600 / 99 min 0 max flr (>L:TimeToSteerHours, number)
+		(A:GPS WP ETE,seconds) flr 60 / 60 % 0 max flr (>L:TimeToSteerMinutes, number)
+		(A:GPS WP ETE,seconds) flr 60 % 0 max (>L:TimeToSteerSeconds, number)
+		(A:GPS FLIGHT PLAN WP INDEX, number) (>L:NavWaypoint, number)	
+		(A:GPS WP NEXT ID, string) (>L:NavIdent, String)		
+		}
+		</Value> </Select> </Element>
+
+		// VOR Locator
+		
+		<Element> <Select> <Value>
+		(L:NavMode, number) 2 == if{
+		(A:NAV1 RADIAL,degrees) 180 + dnor (A:PLANE HEADING DEGREES MAGNETIC,degrees) - dnor s2 180 &gt; if{ l2 360 - (>L:HeadingMarkerUnrestricted, number) } els{ l2 (>L:HeadingMarkerUnrestricted, number) }
+		(A:NAV1 RADIAL,degrees) 180 + dnor (>L:navBearing, number) 		
+		(A:NAV1 DME, nmiles) 0 max (>L:navDistance, number)
+		(A:NAV1 DME, nmiles) (A:GPS Ground Speed,knots) / 99 min 0 max flr (>L:TimeToSteerHours, number)
+		(A:NAV1 DME, nmiles) (A:GPS Ground Speed,knots) / 60 * 60 % 0 max flr (>L:TimeToSteerMinutes, number)
+		(A:NAV1 DME, nmiles) (A:GPS Ground Speed,knots) / 3600 * 60 % 0 max flr (>L:TimeToSteerSeconds, number)
+		(A:Nav1 ident, string) (>L:NavIdent, String)	
+		(A:NAV HAS GLIDE SLOPE:1,bool) (>L:NavIsILS, bool)			
+		(A:NAV HAS GLIDE SLOPE:1,bool) if{ }
+		}
+		</Value> </Select> </Element>
+
+		// TACAN Locator
+		
+		<Element> <Select> <Value>
+		(L:NavMode, number) 3 == if{
+		(A:NAV HAS NAV:2, bool) if{ (A:NAV RADIAL:2,degrees) 180 + dnor (A:PLANE HEADING DEGREES MAGNETIC,degrees) - dnor s2 180 &gt; if{ l2 360 - (>L:HeadingMarkerUnrestricted, number) } els{ l2 (>L:HeadingMarkerUnrestricted, number) } }
+		(A:NAV HAS TACAN:2, bool) if{ (A:TACAN STATION RADIAL:2,degrees) 180 + dnor (A:PLANE HEADING DEGREES MAGNETIC,degrees) - dnor s2 180 &gt; if{ l2 360 - (>L:HeadingMarkerUnrestricted, number) } els{ l2 (>L:HeadingMarkerUnrestricted, number) } }
+		3 (>L:navMode, number) 
+		(A:NAV HAS NAV:2, bool) if{ (A:NAV RELATIVE BEARING TO STATION:2,degrees) dgrd  (>L:navBearing, number) }
+		(A:NAV HAS TACAN:2, bool) if{ (A:TACAN STATION RADIAL:2,degrees) 180 + (A:Plane heading degrees gyro,degrees) - dgrd  (>L:navBearing, number) 	 }	
+ 
+ 		(A:NAV HAS NAV:2, bool) (A:NAV HAS DME:2, bool) and if{
+		(A:NAV2 DME, nmiles) 0 max (>L:navDistance, number)
+		(A:NAV2 DME, nmiles) (A:GPS Ground Speed,knots) / 99 min 0 max flr (>L:TimeToSteerHours, number)
+		(A:NAV2 DME, nmiles) (A:GPS Ground Speed,knots) / 60 * 60 % 0 max flr (>L:TimeToSteerMinutes, number)
+		(A:NAV2 DME, nmiles) (A:GPS Ground Speed,knots) / 3600 * 60 % 0 max flr (>L:TimeToSteerSeconds, number)
+		(A:Nav2 ident, string) (>L:NavIdent, String) }	
+
+		(A:NAV HAS TACAN:2, bool) if{
+		(A:TACAN STATION DISTANCE:2, nmiles) 0 max (>L:navDistance, number)
+		(A:TACAN STATION DISTANCE:2, nmiles) (A:GPS Ground Speed,knots) / 99 min 0 max flr (>L:TimeToSteerHours, number)
+		(A:TACAN STATION DISTANCE:2, nmiles) (A:GPS Ground Speed,knots) / 60 * 60 % 0 max flr (>L:TimeToSteerMinutes, number)
+		(A:TACAN STATION DISTANCE:2, nmiles) (A:GPS Ground Speed,knots) / 3600 * 60 % 0 max flr (>L:TimeToSteerSeconds, number)
+		(A:TACAN STATION IDENT, string) (>L:NavIdent, String) }	 
+				
+		}
+		</Value> </Select> </Element>
+
+		<Element> <Select> <Value>
+		(L:HeadingMarkerUnrestricted, number) -10 max 10 min (>L:HeadingMarker, number)
+		</Value> </Select> </Element>		
+
+		<Element> <Select> <Value>
+		(L:HUD Reject Mode, enum) 1 &lt; (A:GEAR TOTAL PCT EXTENDED,percent) 0 == and (>L:IsHeadingMarkerVisible, bool)
+		</Value> </Select> </Element>
+
+		<Element> <Select> <Value>
+		(L:Master_Mode, enum) 0 == if{ 0 }
+		</Value> </Select> </Element>
+
+		// ---- Angle of attack ----
+		(A:INCIDENCE ALPHA, degrees) (>L:AngleOfAttackXML, degrees)
+		
+
+		//---------- Autopilot  --------
+
+		<Element> <Select> <Value>		
+		(A:Autopilot heading lock dir,degrees) (>L:AutopilotCommandedHeading, number)
+		(A:Autopilot airspeed hold var, knots) (>L:AutopilotCommandedSpeed, number)
+		(A:Autopilot altitude lock var, feet) (>L:AutopilotCommandedAltitude, number)
+		(A:Autopilot airspeed hold, bool) (A:Autopilot mach hold, bool) or (A:AUTOPILOT THROTTLE ARM, bool) and (A:Autopilot master, bool) and if{ 1 (>L:AutopilotSpeedHold, bool) } els{ 0 (>L:AutopilotSpeedHold, bool) }
+		(A:Autopilot altitude lock, bool) (A:Autopilot master, bool) and (L:AP_AltMode,bool) ! and if{ 1 (>L:AutopilotAltitudeHold, bool) } els{ 0 (>L:AutopilotAltitudeHold, bool) }
+		(A:Autopilot altitude lock, bool) (A:Autopilot master, bool) and (L:AP_AltMode,bool) and if{ 1 (>L:AutopilotAltitudeSet, bool) } els{ 0 (>L:AutopilotAltitudeSet, bool) }
+		(A:Autopilot master, bool) (A:AUTOPILOT HEADING LOCK, bool) and (A:Autopilot nav1 lock, bool) ! and (A:AUTOPILOT APPROACH HOLD, bool) ! and if{ 1 (>L:AutopilotHeadingHold, bool) } els{ 0 (>L:AutopilotHeadingHold, bool) }
+		(A:Autopilot master, bool) (A:AUTOPILOT HEADING LOCK, bool) ! and (A:Autopilot nav1 lock, bool) and (A:GPS DRIVES NAV1, bool) and (A:AUTOPILOT APPROACH HOLD, bool) ! and if{ 1 (>L:AutopilotHeadingRTE, bool) } els{ 0 (>L:AutopilotHeadingRTE, bool) }
+		(A:Autopilot master, bool) (A:AUTOPILOT HEADING LOCK, bool) ! and (A:Autopilot nav1 lock, bool) and (A:GPS DRIVES NAV1, bool) ! and (A:AUTOPILOT APPROACH HOLD, bool) ! and if{ 1 (>L:AutopilotHeadingVOR, bool) } els{ 0 (>L:AutopilotHeadingVOR, bool) }
+		(A:Autopilot master, bool) (A:AUTOPILOT APPROACH HOLD, bool) and if{ 1 (>L:AutopilotHeadingAPP, bool) } els{ 0 (>L:AutopilotHeadingAPP, bool) }
+		</Value> </Select> </Element>
+		
+
+		//---------- ILS --------		
+		<Element> <Select> <Value>
+		(A:NAV HAS GLIDE SLOPE:1,bool) (>L:NavHasGlideslope, bool)
+		(A:NAV CDI:1, number) (>L:NavCDI, number)
+		(A:NAV GSI:1, number) (>L:NavGSI, number)
+		</Value> </Select> </Element>
+
+		//---------- HMD VISIBILITY IF CAMERA TRACING WORKS--------		
+		<Element> <Select> <Value>
+		1 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number)
+		(L:KnobHMD, number) 0 == (>L:IsHMDOccluded, bool)		
+		(A:CAMERA GAMEPLAY PITCH YAW:0, degrees) 10 &lt; (A:CAMERA GAMEPLAY PITCH YAW:1, degrees) abs 15 &lt; and if{ 1 (>L:IsHMDOccluded, bool) }
+		(A:CAMERA GAMEPLAY PITCH YAW:0, degrees) -15 &lt; (A:CAMERA GAMEPLAY PITCH YAW:1, degrees) abs 27 &lt; and if{ 1 (>L:IsHMDOccluded, bool) }	
+		(A:CAMERA GAMEPLAY PITCH YAW:0, degrees) -25 &lt; (A:CAMERA GAMEPLAY PITCH YAW:1, degrees) abs 45 &lt; and if{ 1 (>L:IsHMDOccluded, bool) }			
+		(A:CAMERA GAMEPLAY PITCH YAW:0, degrees) -35 &lt; if{ 1 (>L:IsHMDOccluded, bool) }			
+		(A:CAMERA GAMEPLAY PITCH YAW:0, degrees) (>L:CAMERAPITCH, degrees)
+		(A:CAMERA GAMEPLAY PITCH YAW:1, degrees) (>L:CAMERAYAW, degrees)			
+		</Value> </Select> </Element>
+
+		//---------- HMD SHOW IF ELECTRICITY IS AVAILABLE --------		
+		<Element> <Select> <Value>	
+		(A:ELECTRICAL MASTER BATTERY, bool) (L:KnobHMD, number) 0 &gt; and (L:HMDHidden, bool) ! and (A:CAMERA STATE, enum) 2 == and if{
+		0 (>L:HMDNotVisible, bool) 
+				(E:TIME OF DAY, enum) 0 == (L:KnobHMD, number) 2 == and if{ (L:SwitchHMDBRT, bool) ! if{ 0.42 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) } els{ 0.85 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) }  } 
+				(E:TIME OF DAY, enum) 1 == (L:KnobHMD, number) 2 == and if{ (L:SwitchHMDBRT, bool) ! if{ 0.6 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) } els{ 1 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) }  }  
+				(E:TIME OF DAY, enum) 2 == (L:KnobHMD, number) 2 == and if{ (L:SwitchHMDBRT, bool) ! if{ 0.42 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) } els{ 0.85 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) }  }  			
+				(E:TIME OF DAY, enum) 3 == (L:KnobHMD, number) 2 == and if{ (L:SwitchHMDBRT, bool) ! if{ 0.35 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) } els{ 0.7 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) }  } 
+				(L:KnobHMD, number) 1 == if{ (L:SwitchHMDBRT, bool) ! if{ 0.35 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) } els{ 0.7 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) }  }
+				(L:KnobHMD, number) 3 == if{ (L:SwitchHMDBRT, bool) ! if{ 0.6 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) } els{ 1 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number) }  } 
+		}
+		els{
+		0 (>L:AS04F_HELMET_MOUNTED_DISPLAY_BRIGHTNESS, number)
+		1 (>L:HMDNotVisible, bool) 
+		}	
+		</Value> </Select> </Element>
+
+//---- Close Color 1
+</Element>
+
+
+</Element>  //---- CLOSE GAUGE
+</Gauge>

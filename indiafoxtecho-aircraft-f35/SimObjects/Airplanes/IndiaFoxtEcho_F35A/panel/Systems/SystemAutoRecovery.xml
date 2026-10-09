@@ -1,0 +1,55 @@
+<Gauge Name="AutoRecovery" Version="2.0">
+<Comment>
+
+AutoRecovery
+
+</Comment>
+
+<Update Frequency="0"/>
+
+
+<Element>
+  <Select>
+    <Value>
+     (L:SwitchAutoRecovery, bool) if{ (A:SIM ON GROUND, bool) (A:YOKE X POSITION, percent) 25 &lt; and (A:YOKE X POSITION, percent) 75 &gt; and (A:YOKE Y POSITION, percent) 20 &lt; and (A:YOKE Y POSITION, percent) 80 &lt; and if{ 0 (>L:SwitchAutoRecovery, bool) } }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+     (L:SwitchAutoRecovery, bool) if{ (A:PLANE BANK DEGREES, radians) rddg -30 max 30 min -100 * (&gt;K:AILERON_SET) }
+     (L:SwitchAutoRecovery, bool) if{ (A:PLANE PITCH DEGREES, radians) rddg 8 + -30 max 30 min -400 * (&gt;K:ELEVATOR_SET) }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+	     (L:GCASMode, enum) 3 == if{ 0 (>L:GCASMode, enum) }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+		0 (>L:GCASActive, bool)
+	    (L:GCASMode, enum) 0 == if{ 1 (>L:GCASSilencer, bool) }	els{ 0 (>L:GCASSilencer, bool) }		
+	    (L:GCASMode, enum) 2 == (A:GPWS Warning, bool) and (L:STOVLMode,enum) 1 &lt; and (A:Gear center position,percent) 98 &gt; (A:Vertical speed,feet per minute) 2000 &lt; and ! and (L:GCASSilecencer,bool) ! and if{ 1 (>L:GCASActive, bool) }
+    </Value>
+  </Select>
+</Element>
+
+<Element>
+  <Select>
+    <Value>
+     (L:GCASActive, bool) if{ (A:PLANE BANK DEGREES, radians) rddg -30 max 30 min -100 * (&gt;K:AILERON_SET) }
+     (L:GCASActive, bool) if{ (A:PLANE PITCH DEGREES, radians) rddg 12 + -30 max 30 min -600 * (&gt;K:ELEVATOR_SET) }
+    </Value>
+  </Select>
+</Element>
+
+</Gauge>

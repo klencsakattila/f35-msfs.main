@@ -1,0 +1,41 @@
+﻿<link rel="stylesheet" href="F35_RPMD.css" />
+
+<script type="text/html" id="F35_RPMD">
+    <glasscockpit-highlight id="highlight" style="position:absolute; width: 100%; height:100%;"></glasscockpit-highlight>
+    <div id="Mainframe">
+        <div id="Electricity" state="off">
+
+            <div id="Camera">
+                <div id="CameraMap">
+				<map-instrument id="RPMD" map-mode="plan" bing-id="PFD_RPMD" show-bing-map="true" show-flight-plan="false" show-roads="true" show-airways="true" show-airports="true" show-tcas="true" show-traffic="true" show-intersections="true" show-vors="true" show-ndbs="false" show-airspaces="true" config-path="/Pages/VCockpit/Instruments/IndiaFoxtEcho_F35_Map/"></map-instrument>
+
+                <svg id="CameraOverlay" viewBox="0 0 512 512">
+                </svg>          
+                </div>
+            </div>
+
+		<f35-ddi-hs-indicator id="Compass"></f35-ddi-hs-indicator>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" import-script="/JS/SimPlane.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/Templates/Highlight/highlight.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/Utils/RadioNav.js"></script>
+
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/Shared/Map/MapInstrument.html"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/NavSystem.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/BaseAirliners.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/BaseNDCompass.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/MFD/NDCompass.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/MFD/NDInfo.js"></script>
+
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/IndiaFoxtEcho_F35_Map/F35_RPMD.js">
+
+</script>

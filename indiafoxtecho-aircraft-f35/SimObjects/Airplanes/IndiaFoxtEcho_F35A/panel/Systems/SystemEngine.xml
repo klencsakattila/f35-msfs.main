@@ -1,0 +1,47 @@
+<Gauge Name="AvionicsControl" Version="1.0">
+
+<Comment>
+Engine calculations
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+(A:TURB ENG N2:1, percent) 80 - abs 5 * 0 max 100 min (>L:NozzleOpening, number)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Afterburner
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:TURB ENG AFTERBURNER PCT ACTIVE:1, Percent) 0 &gt; (L:NozzleAngle,number) 3 &lt; and (>L:Afterburner,enum)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Mach Wall is afterburner is subsonic // DISABLED
+</Comment>
+
+<Element> <Select> <Value>
+(A:TURB ENG AFTERBURNER PCT ACTIVE:1, Percent) 0 == (A:Airspeed mach, mach) 0.99 &gt; and 0 and if{
+(A:VELOCITY BODY Z,feet/second) 0.5 - (>A:VELOCITY BODY Z,feet/second) }
+}
+</Value> </Select> </Element>
+
+<Comment>
+Engine thrust bias
+</Comment>
+
+<Element> <Select> <Value>
+(A:Turb eng1 N1, percent) 2 / 15 min (>L:EngineThrustMinimum,number)
+</Value> </Select> </Element>
+
+
+</Gauge>

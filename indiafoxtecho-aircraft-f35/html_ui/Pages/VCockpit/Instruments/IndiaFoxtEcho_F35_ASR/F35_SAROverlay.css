@@ -1,0 +1,57 @@
+@font-face {
+  font-family: "F-35 HMD";
+  src: url("/Fonts/F-35_HMD-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "F35_PCD SemCond";
+  src: url("//Fonts/F-35_HMD-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+.hmd-display {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-weight: 300;
+  font-family: "F-35 HMD";
+  font-size: 40px;
+  color: #00ffff;
+}
+.hmd-display .full-screen-hmd-element {
+  position: absolute;
+  overflow: visible;
+}
+.hmd-display #hmd-airspeed, .hmd-display #hmd-altitude {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  top: 40%;
+  height: 11%;
+  padding-right: 5px;
+}
+
+#hud-latitude {
+  position: absolute;
+  top: 17%;
+  left: 28%;
+  font-size: 17px;
+  text-align: left;
+  font-family: "F-35 HMD";
+  color: #00ffff;
+}
+
+#hud-longitude {
+  position: absolute;
+  top: 21%;
+  left: 28%;
+  font-size: 17px;
+  text-align: left;
+  font-family: "F-35 HMD";
+  color: #00ffff;
+}
+
+
+/*# sourceMappingURL=FA18_HMD.css.map */

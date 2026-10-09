@@ -1,0 +1,85 @@
+<Gauge Name="Replacement Animations for launch bar and tailhook" Version="1.0">
+
+<Comment>
+Special Animations for the F-35
+Weapon Bay Doors and Nose Gear Doors
+
+(L:switch_weapon_doors, bool) true if doors are commanded to open
+(L:weapon_doors_status, number) 0 to 100, animation position
+
+In-Flight-Refuel System
+
+(L:switch_IFR_door, bool) true if doors are commanded to open
+(L:IFR_doors_status, number) 0 to 100, animation position
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:switch_weapon_doors, bool) (L:weapon_doors_status, number) 100 &lt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:weapon_doors_status, number) 4 + (>L:weapon_doors_status, number) }
+(L:switch_weapon_doors, bool) ! (L:weapon_doors_status, number) 0 &gt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:weapon_doors_status, number) 4 - (>L:weapon_doors_status, number) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:switch_IFR_door, bool) (L:IFR_doors_status, number) 100 &lt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:IFR_doors_status, number) 4 + (>L:IFR_doors_status, number) }
+(L:switch_IFR_door, bool) ! (L:IFR_doors_status, number) 0 &gt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:IFR_doors_status, number) 4 - (>L:IFR_doors_status, number) }
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:STOVLMode,enum) 2 == (L:InnerBayDoorsCalc,number) 100 &lt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:InnerBayDoorsCalc,number) 4 + (>L:InnerBayDoorsCalc,number) }
+(L:STOVLMode,enum) 2 != (L:InnerBayDoorsCalc,number) 0 &gt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:InnerBayDoorsCalc,number) 4 - (>L:InnerBayDoorsCalc,number) }
+
+(L:weapon_doors_status, number) (L:InnerBayDoorsCalc,number) &gt; if{ (L:weapon_doors_status, number) (>L:InnerBayDoors,number) }
+els{ (L:InnerBayDoorsCalc,number)  (>L:InnerBayDoors,number) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+Gear door animations
+(L:NoseGearDoorClick, bool)
+(L:NoseGearDoorConsentClick, bool)
+</Comment>
+
+
+<Element>
+<Select>
+<Value>
+(L:NoseGearDoorClick, bool) (L:NoseGearDoorOpening, enum) 0 == and (A:AIRSPEED MACH, mach) 0.6 &lt; and (A:AIRSPEED INDICATED, knots) 300 &lt; and if{ 1 (>L:Gear_Door_Consent,number) }
+(L:NoseGearDoorClick, bool) (L:NoseGearDoorOpening, enum) 0 &gt; and if{ -1 (>L:GearDoorOpening,number) }
+(A:AIRSPEED MACH, mach) 0.6 &gt; (A:AIRSPEED INDICATED, knots) 300 &gt; and if{ 0 (>L:Gear_Door_Consent,number) }
+
+(L:NoseGearDoorConsentClick, bool) if{ 1 (>L:GearDoorOpening,number) 0 (>L:Gear_Door_Consent,number) }
+(L:GearDoorOpening,number) 1 == if{ (L:NoseGearDoorOpening, enum) 1 + 100 min (>L:NoseGearDoorOpening, enum) }
+(L:GearDoorOpening,number) -1 == if{ (L:NoseGearDoorOpening, enum) 1 - 0 max (>L:NoseGearDoorOpening, enum) }
+
+(L:NoseGearDoorOpening, enum) 0 == if{ 0 (>L:GearDoorOpening,number) }
+(L:NoseGearDoorOpening, enum) 100 == if{ 0 (>L:GearDoorOpening,number) }
+
+(A:Gear center position,percent) 99 &gt; if{ 0 (>L:NoseGearDoorOpening, enum) 0 (>L:GearDoorOpening,number) 0 (>L:Gear_Door_Consent,number) }
+
+0 (>L:NoseGearDoorClick, bool)
+0 (>L:NoseGearDoorConsentClick, bool)
+
+(A:NAV HAS GLIDE SLOPE:1,bool) (A:Gear center position, percent) 99 &gt; (L:NoseGearDoorOpening, enum) 99 &gt; or and (>L:ILSReceiverEnabled,bool)
+</Value>
+</Select>
+</Element>
+
+</Gauge>

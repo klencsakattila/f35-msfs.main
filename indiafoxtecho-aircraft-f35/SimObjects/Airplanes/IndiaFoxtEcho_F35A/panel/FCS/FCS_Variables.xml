@@ -1,0 +1,391 @@
+<Gauge Name="FCS_Animation_control_and_miscellaneous" Version="1.1">
+
+<Update Frequency="0"/>
+
+<Comment>
+*********************************************************************
+This gauge provides animation control and misc functions for the F-35
+*********************************************************************
+
+V1.2 (Changed by Dino for MSFS)
+- Restored A: variables for spoilers
+
+V1.1 (changed by Rob):
+- Vars (A:SPOILERS LEFT/RIGHT POSITION,percent) replaced by (L:F35Spoiler,percent) controlled from the gauge SpoilerControl.xml.
+
+- Added
+ (A:AIRSPEED MACH,number) (&gt;L:F14_PrevMACH,number)
+ to the Sonic Boom Effect code, so the Lvar is only set when speed increases.
+
+
+</Comment>
+
+<Comment>
+***************
+AUTOTRIM FLAG
+***************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:FLY BY WIRE ELAC SWITCH, bool) (A:FLY BY WIRE FAC SWITCH, bool) and (A:FLY BY WIRE SEC SWITCH, bool) and if{ 1 (>L:AutotrimEnabled, bool) } els{ 0 (>L:AutotrimEnabled, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+**********
+Engage/Disengage Flight Control Computer upon flaps lever position
+********** 
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:AlternateLandingFBW,bool) if{ 
+(A:FLAPS HANDLE INDEX:1, number) 0 &gt; if{ 
+(A:FLY BY WIRE ELAC SWITCH, bool) if{ (>K:FLY_BY_WIRE_ELAC_TOGGLE) }
+(A:FLY BY WIRE FAC SWITCH, bool) if{ (>K:FLY_BY_WIRE_FAC_TOGGLE) } 
+(A:FLY BY WIRE SEC SWITCH, bool) if{ (>K:FLY_BY_WIRE_SEC_TOGGLE) }
+1 (>L:TestFBW,bool) 
+}
+(A:FLAPS HANDLE INDEX:1, number) 0 == if{ 
+(A:FLY BY WIRE ELAC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_ELAC_TOGGLE) }
+(A:FLY BY WIRE FAC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_FAC_TOGGLE) } 
+(A:FLY BY WIRE SEC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_SEC_TOGGLE) }
+2 (>L:TestFBW,bool)  
+}
+}
+els{
+(A:GEAR CENTER POSITION, percent) 1 &gt; (A:FLAPS HANDLE INDEX:1, number) 0 &gt; or if{ 
+(A:FLY BY WIRE ELAC SWITCH, bool) if{ (>K:FLY_BY_WIRE_ELAC_TOGGLE) }
+(A:FLY BY WIRE FAC SWITCH, bool) if{ (>K:FLY_BY_WIRE_FAC_TOGGLE) } 
+(A:FLY BY WIRE SEC SWITCH, bool) if{ (>K:FLY_BY_WIRE_SEC_TOGGLE) }
+3 (>L:TestFBW,bool) 
+}
+(A:GEAR CENTER POSITION, percent) 1 &gt; (A:FLAPS HANDLE INDEX:1, number) 0 &gt; or ! if{ 
+(A:FLY BY WIRE ELAC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_ELAC_TOGGLE) }
+(A:FLY BY WIRE FAC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_FAC_TOGGLE) } 
+(A:FLY BY WIRE SEC SWITCH, bool) ! if{ (>K:FLY_BY_WIRE_SEC_TOGGLE) } 
+4 (>L:TestFBW,bool) 
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*********************
+Restore original variables
+*********************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:SPOILERS RIGHT POSITION,percent) (>L:F35Spoiler,percent)
+0 (>L:VSTOLAirbrakesDeployed,bool)
+(A:SPOILERS RIGHT POSITION,percent) 30 &gt; if{ 1 (>L:VSTOLAirbrakesDeployed,bool) }
+</Value>
+</Select>
+</Element>
+
+
+
+<Comment>
+************************
+Should Pilot figure show
+************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+0 (>L:Pilot_0_Invisible, bool)
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:Payload Station Weight:1, pounds) 90 &lt; if{ 1 (>L:Pilot_0_Invisible, bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:Config_Pilot_0_Invisible, bool) if{ 1 (>L:Pilot_0_Invisible, bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:GENERAL ENG PCT MAX RPM:1, percent) 5 &lt; (A:SIM ON GROUND, bool) 1 == and (A:SURFACE RELATIVE GROUND SPEED, Knots) 5 &lt; and (A:Brake parking indicator, bool) and if{ 1 (>L:Pilot_0_Invisible, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+************************
+IF STOVL MODE IS ENGAGED
+************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:STOVLMode, number) 1 &gt; (L:STOVLFCSBias, number) 100 &lt; and if{
+(L:STOVLFCSBias, number) 1 + (>L:STOVLFCSBias, number)
+}
+(L:STOVLMode, number) 2 &lt; (L:STOVLFCSBias, number) 0 &gt; and if{
+(L:STOVLFCSBias, number) 1 - (>L:STOVLFCSBias, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+************************
+FADEOUT FOR STOVL
+************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+100 (A:TAILHOOK POSITION, Percent over 100) - 100 / (>L:FCS_FADE_OUT, number) 
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*************************************
+FCS Animation Control FOR PCD DISPLAY
+*************************************
+</Comment>
+
+<Comment>
+RUDDER 
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:TURB ENG CORRECTED N1:1, percent) 10 &gt; if{
+	(L:F35Model, number) 1 == (A:Tailhook handle, bool) and if{ 50 (>L:FCS_Rudder_RT, number) 50 (>L:FCS_Rudder_LT, number) } 
+	els{ 
+		(A:RUDDER DEFLECTION PCT, percent) 50 + (A:SPOILERS RIGHT POSITION,percent) 0.75 * + (>L:FCS_Rudder_RT, number)  
+		(A:RUDDER DEFLECTION PCT, percent) 50 + (A:SPOILERS RIGHT POSITION,percent) 0.75 * - (>L:FCS_Rudder_LT, number)  
+		} 	
+	}
+els{ 50 (>L:FCS_Rudder_RT, number) 50 (>L:FCS_Rudder_LT, number) } 
+(L:FCS_Rudder_RT, number) 0 max 100 min (>L:FCS_Rudder_RT, number)
+(L:FCS_Rudder_LT, number) 0 max 100 min (>L:FCS_Rudder_LT, number)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+SLAT
+</Comment>
+
+<Element>
+<Select>
+<Value>
+		(A:TURB ENG CORRECTED N1:1, percent) 10 &gt; if{
+		(A:LEADING EDGE FLAPS LEFT PERCENT, percent) (A:SPOILERS LEFT POSITION,percent) + (L:STOVLFCSBias, number) - (>L:FCS_Slat_LT, number)
+		}
+		els{ 0 (>L:FCS_Slat_LT, number) } 
+		(L:FCS_Slat_LT, number) 0 max 100 min (>L:FCS_Slat_LT, number)
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+		(A:TURB ENG CORRECTED N1:1, percent) 10 &gt; if{
+		(A:LEADING EDGE FLAPS RIGHT PERCENT, percent) (A:SPOILERS RIGHT POSITION,percent) + (L:STOVLFCSBias, number) - (>L:FCS_Slat_RT, number)
+		}
+		els{ 0 (>L:FCS_Slat_RT, number) } 
+		(L:FCS_Slat_RT, number) 0 max 100 min (>L:FCS_Slat_RT, number)		
+</Value>
+</Select>
+</Element>
+
+<Comment>
+FLAPERONS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+		(A:TURB ENG CORRECTED N1:1, percent) 10 &gt; if{
+		(L:F35Model, number) 1 == (A:Tailhook handle, bool) and if{ (A:AILERON LEFT DEFLECTION PCT, percent) -0.25 * 50 + (A:SPOILERS LEFT POSITION,percent) 0.75  * (A:SIM ON GROUND, enum) -2 * 1 + * + (A:ELEVATOR DEFLECTION PCT, percent) -0.10 * + (A:TRAILING EDGE FLAPS RIGHT PERCENT, percent) 0.5 * + (L:launch_bar_animation, number) 0.25 * + (L:FCS_FADE_OUT, number) * (A:TAILHOOK POSITION, Percent over 100) 0.25 * + (A:ELEVATOR DEFLECTION PCT, percent) 0.15 * + (L:STOVLFCSBias, number) (L:PoFFCSBiasFlaperon, number) max + (>L:FCS_Flaperon_RT, number) }
+		els{ (A:AILERON LEFT DEFLECTION PCT, percent) -0.25 * 50 + (A:SPOILERS LEFT POSITION,percent) 0.75  * (A:SIM ON GROUND, enum) -2 * 1 + * + (A:ELEVATOR DEFLECTION PCT, percent) -0.10 * + (A:TRAILING EDGE FLAPS RIGHT PERCENT, percent) 0.5 * + (L:launch_bar_animation, number) 0.25 * + (L:STOVLFCSBias, number) (L:PoFFCSBiasFlaperon, number) max + (>L:FCS_Flaperon_RT, number) }
+		}
+		els{ 50 (>L:FCS_Flaperon_RT, number) }
+		(L:FCS_Flaperon_RT, number) 0 max 100 min (>L:FCS_Flaperon_RT, number)
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+		(A:TURB ENG CORRECTED N1:1, percent) 10 &gt; if{
+		(L:F35Model, number) 1 == (A:Tailhook handle, bool) and if{ (A:AILERON LEFT DEFLECTION PCT, percent) 0.25 * 50 + (A:SPOILERS LEFT POSITION,percent) 0.75  * (A:SIM ON GROUND, enum) -2 * 1 + * + (A:ELEVATOR DEFLECTION PCT, percent) -0.10 * + (A:TRAILING EDGE FLAPS RIGHT PERCENT, percent) 0.5 * + (L:launch_bar_animation, number) 0.25 * + (L:FCS_FADE_OUT, number) * (A:TAILHOOK POSITION, Percent over 100) 0.25 * + (A:ELEVATOR DEFLECTION PCT, percent) 0.15 * + (L:STOVLFCSBias, number) (L:PoFFCSBiasFlaperon, number) max + (>L:FCS_Flaperon_LT, number) }
+		els{ (A:AILERON LEFT DEFLECTION PCT, percent) 0.25 * 50 + (A:SPOILERS LEFT POSITION,percent) 0.75 * (A:SIM ON GROUND, enum) -2 * 1 + * + (A:ELEVATOR DEFLECTION PCT, percent) -0.10 * + (A:TRAILING EDGE FLAPS LEFT PERCENT, percent) 0.5 * + (L:launch_bar_animation, number) 0.25 * + (L:STOVLFCSBias, number) (L:PoFFCSBiasFlaperon, number) max + (>L:FCS_Flaperon_LT, number) }
+		}
+		els{ 50 (>L:FCS_Flaperon_LT, number) }
+		(L:FCS_Flaperon_LT, number) 0 max 100 min (>L:FCS_Flaperon_LT, number)		
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+TAILERONS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+		(A:TURB ENG CORRECTED N1:1, percent) 10 &gt; if{
+		(L:F35Model, number) 1 == (A:Tailhook handle, bool) and if{ (A:AILERON RIGHT DEFLECTION PCT, percent) 0.5 * 50 + (L:launch_bar_animation, number) 0.3 * + (A:ELEVATOR DEFLECTION PCT, percent) 0.5 * + (L:FCS_FADE_OUT, number) * (A:TAILHOOK POSITION, Percent over 100) 0.5 * + (L:STOVLFCSBias, number) - (>L:FCS_Taileron_RT, number) }
+		els{ (A:AILERON RIGHT DEFLECTION PCT, percent) 0.5 * 50 + (L:launch_bar_animation, number) 0.3 * + (A:ELEVATOR DEFLECTION PCT, percent) 0.5 * + (L:STOVLFCSBias, number) + (>L:FCS_Taileron_RT, number) }
+		}
+		els{ 50 (>L:FCS_Taileron_RT, number) }
+		(L:FCS_Taileron_RT, number) 0 max 100 min (>L:FCS_Taileron_RT, number)		
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+		(A:TURB ENG CORRECTED N1:1, percent) 10 &gt; if{
+		(L:F35Model, number) 1 == (A:Tailhook handle, bool) and if{ (A:AILERON RIGHT DEFLECTION PCT, percent) 0.5 * 50 + (L:launch_bar_animation, number) 0.3 * + (A:ELEVATOR DEFLECTION PCT, percent) 0.5 * + (L:FCS_FADE_OUT, number) * (A:TAILHOOK POSITION, Percent over 100) 0.5 * + (L:STOVLFCSBias, number) - (>L:FCS_Taileron_LT, number)  }
+		els{ (A:AILERON RIGHT DEFLECTION PCT, percent) -0.5 * 50 + (L:launch_bar_animation, number) 0.3 * + (A:ELEVATOR DEFLECTION PCT, percent) 0.5 * + (L:STOVLFCSBias, number) + (>L:FCS_Taileron_LT, number)  }
+		}
+		els{ 50 (>L:FCS_Taileron_LT, number)  }
+		(L:FCS_Taileron_LT, number) 0 max 100 min (>L:FCS_Taileron_LT, number)	
+</Value>
+</Select>
+</Element>
+
+
+
+<Comment>
+*******************
+EQUIVALENT AIRSPEED
+*******************
+</Comment>
+
+<Element>
+    <Select>
+        <Value>(L:Airspeed_mode,number) 0 == if{ (A:Ambient pressure,millibar) 1013.25 / sqrt (A:AIRSPEED mach,machs) * 661.48 * (&gt;L:AIRSPEED_Equivalent,number) }</Value>
+    </Select>
+</Element>
+
+<Element>
+    <Select>
+        <Value>(L:Airspeed_mode,number) 1 == if{ (A:Airspeed indicated,knots) (&gt;L:AIRSPEED_Equivalent,number) }</Value>
+    </Select>
+</Element>
+
+<Element>
+    <Select>
+        <Value>(L:Airspeed_mode,number) 1 &gt; if{ 0 (>L:Airspeed_mode,number) }</Value>
+    </Select>
+</Element>
+
+
+
+<Comment>
+***************
+AUTOMATIC LAUNCH BAR RETRACTION
+***************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:LAUNCHBAR POSITION:1, percent) 100 ==
+if{
+(A:LAUNCHBAR SWITCH,number) 100 * 95 &gt;    
+if{    
+(A:RADIO HEIGHT,feet) 50 &gt; 
+if{
+(&gt;K:TOGGLE_LAUNCH_BAR_SWITCH) (L:switch_launch_bar) ! (&gt;L:switch_launch_bar)
+}
+}
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+******************************
+FAN new animation
+******************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:Custom_Animation_1, number) (A:ENG N1 RPM:1, percent) 0.02 * + (>L:Custom_Animation_1, number)
+(L:Custom_Animation_1, number) 100 &gt; if{ 0 (>L:Custom_Animation_1, number) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+******************************
+Speedbrake
+******************************
+</Comment>
+
+<Comment>
+******************************
+FCS Bias depending on PhaseOfFlight
+0 - Power off
+1 - Take-off
+2 - Up and Away
+3 - Landing
+******************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:PoFFCSBiasFlaperon, number)
+
+(A:TURB ENG N2:1, percent) 55 &lt; if{ 0 (>L:PoF,enum) }
+(L:PoF,enum) 0 == (A:TURB ENG N2:1, percent) 56 &gt; and if{ 1 (>L:PoF,enum) }
+(L:PoF,enum) 1 == (A:SIM ON GROUND, bool) ! and (A:GEAR HANDLE POSITION, percent) 1 &lt; and if{ 2 (>L:PoF,enum) }
+(L:PoF,enum) 2 == (A:GEAR HANDLE POSITION, percent) 99 &gt; and if{ 3 (>L:PoF,enum) }
+(L:PoF,enum) 3 == (A:GEAR HANDLE POSITION, percent) 1 &lt; and if{ 2 (>L:PoF,enum) }
+(L:PoF,enum) 3 == (A:SURFACE RELATIVE GROUND SPEED, knots) 10 &lt; and if{ 0 (>L:PoF,enum) }
+
+(L:PoF,enum) 0 == if{ 0 (>L:PoFFCSBiasFlaperonTarget, number) }
+(L:PoF,enum) 1 == if{ 17 (>L:PoFFCSBiasFlaperonTarget, number) }
+(L:PoF,enum) 2 == if{ 0 (>L:PoFFCSBiasFlaperonTarget, number) }
+(L:PoF,enum) 3 == if{ 25 (>L:PoFFCSBiasFlaperonTarget, number) }
+
+(L:PoFFCSBiasFlaperon, number) (L:PoFFCSBiasFlaperonTarget, number) &lt; if{ (L:PoFFCSBiasFlaperon, number) 1 + (>L:PoFFCSBiasFlaperon, number) }
+(L:PoFFCSBiasFlaperon, number) (L:PoFFCSBiasFlaperonTarget, number) &gt; if{ (L:PoFFCSBiasFlaperon, number) 1 - (>L:PoFFCSBiasFlaperon, number) }
+(A:SIM ON GROUND, bool) if{ 1 (>L:SpeedBrakeFlaperonDirection, enum) } els{ 1 (>L:SpeedBrakeFlaperonDirection, enum) }
+</Value>
+</Select>
+</Element>
+
+
+</Gauge>

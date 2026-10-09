@@ -1,0 +1,125 @@
+<SimBase.Document Type="AceXML" version="1,0">
+    <Descr>
+    </Descr>
+
+    <SimGauge.Gauge id="Radio" ArtDirectory=".">
+        <FloatPosition>0.000,0.000</FloatPosition>
+        <Size>83,52</Size>
+
+<Element id="Master control">
+<Visibility>(L:ElectricalPowerAvailable,bool)</Visibility>
+
+<Element id="Digit">
+<Visibility>
+(L:ElectricalPowerAvailable,bool)
+</Visibility>
+<FloatPosition>0.000,0.000</FloatPosition>
+<Image id="Image" Name="Brake_Background.bmp">
+<Transparent>False</Transparent>
+<Bright>False</Bright>
+</Image>
+</Element>
+
+<Element id="DIGIT1">
+<FloatPosition>14,3</FloatPosition>
+
+<Element id="Digit">
+<Visibility>(L:BrakeDigit1, number) 0 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit0.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit1, number) 1 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit1.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit1, number) 2 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit2.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit1, number) 3 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit3.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit1, number) 4 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit4.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit1, number) 5 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit5.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit1, number) 6 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit6.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit1, number) 7 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit7.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit1, number) 8 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit8.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit1, number) 9 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit9.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+
+</Element>
+
+<Element id="DIGIT2">
+<FloatPosition>46,3</FloatPosition>
+
+<Element id="Digit">
+<Visibility>(L:BrakeDigit2, number) 0 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit0.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit2, number) 1 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit1.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit2, number) 2 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit2.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit2, number) 3 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit3.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit2, number) 4 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit4.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit2, number) 5 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit5.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit2, number) 6 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit6.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit2, number) 7 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit7.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit2, number) 8 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit8.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+<Element id="Digit">
+<Visibility>(L:BrakeDigit2, number) 9 ==</Visibility> <FloatPosition>0,0</FloatPosition>
+<Image id="Image" Name="Radio_Green_Digit9.bmp"> <Transparent>True</Transparent> <Bright>False</Bright> </Image> 
+</Element>
+
+</Element>
+
+
+// ********************** Below ends the main element *************
+
+</Element>
+
+
+
+
+
+    </SimGauge.Gauge>
+</SimBase.Document>

@@ -1,0 +1,293 @@
+<Gauge Name="AvionicsControl" Version="1.0">
+
+<Comment>
+INITIALIZATION IN ANY CASE
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:F35AvionicsInit,bool) !
+if{
+100 (>L:NeedleOxygenQuantity, number)
+0 (>L:HUDCage,bool)
+1 (>K:AVIONICS_MASTER_SET)
+1 (>L:Control_Stick_Visible, bool)
+1 (>L:F35AvionicsInitTest, number)
+1 (>L:CrewAccessLadder, bool)
+6 (>L:MFD_HSI_MAP_SCALE, enum)
+1 (>L:SwitchGeneric4Pos7, number)
+1 (>L:TAWSSelected, bool)
+1 (>L:BFI_Power, bool)
+30 (>L:BFI_ALIGN_COUNTDOWN,enum)
+30 (>L:RemainingBrakeApplication,number)
+(A:GPS FLIGHT PLAN WP COUNT, number) 0 > if{ 1 (>L:NavMode, enum) }
+189 (>L:AIM9XMinWeight, number) 201 (>L:AIM9XMaxWeight, number)
+329 (>L:AIM120MinWeight, number) 351 (>L:AIM120MaxWeight, number)
+529 (>L:GBU12MinWeight, number) 561 (>L:GBU12MaxWeight, number)
+1999 (>L:GBU31MinWeight, number) 2101 (>L:GBU31MaxWeight, number)
+499 (>L:GunpodMinWeight, number) 601 (>L:GunpodMaxWeight, number)
+(A:LIGHT RECOGNITION, bool) if{ 1 (>TOGGLE_RECOGNITION_LIGHTS) }
+1 (>L:Defog, bool)
+6 (>L:MFD1_Screen, number)
+0 (>L:MFD1_Subportal, number)
+18 (>L:MFD1_Subportal1, number)  
+4 (>L:MFD1_Subportal2, number)  
+8 (>L:MFD2_Screen, number)
+1 (>L:MFD2_Subportal, number)
+12 (>L:MFD2_Subportal1, number)  
+15 (>L:MFD2_Subportal2, number)  
+7 (>L:MFD3_Screen, number)
+1 (>L:MFD3_Subportal, number)
+13 (>L:MFD3_Subportal1, number)  
+17 (>L:MFD3_Subportal2, number)  
+11 (>L:MFD4_Screen, number)
+0 (>L:MFD4_Subportal, number)
+8 (>L:MFD4_Subportal1, number)
+6 (>L:MFD4_Subportal2, number)
+
+1 (>L:EngineIceSystem, enum)
+
+1.8 (>L:SwitchHMDBRT, number)
+1 (>L:SwitchMFDBRT, number)
+
+40 (>L:FormationLights, number)
+
+150 (>L:OBOGSLitres, number)
+1 (>L:IPPCabinPressureSelector, enum)
+
+1 (>A:TACAN AVAILABLE:2, bool)
+
+(A:COM SPACING MODE:1, enum) 0 == if{ 1 (>K:COM_1_SPACING_MODE_SWITCH) }
+(A:COM SPACING MODE:2, enum) 0 == if{ 1 (>K:COM_2_SPACING_MODE_SWITCH) }
+(A:COM SPACING MODE:3, enum) 0 == if{ 1 (>K:COM_3_SPACING_MODE_SWITCH) }
+
+1 (>L:VerDigit1,number)
+3 (>L:VerDigit2,number)
+8 (>L:VerDigit3,number)
+20241023 (>L:VerDate,number)
+0 (>L:isPacifist, bool)
+0 (>L:WeaponSelected, enum)
+
+1 (>L:SyntheticImagery, bool)
+0 (>L:isXBox, bool)
+0 (>L:DisableRemoveBeforeFlight, bool)
+1 (>L:IndicatorBright, bool)
+
+3 (>L:ASRRangeSelection,enum)
+30 (>L:ASRRange, number)
+0 (>L:RadarSearchAspectAA1,enum)
+1 (>L:RadarSearchAspectAA2,enum) 
+
+1 (>L:FlightPositionOwnship, number)
+'SABRE11' (>L:CallsignLongOwnship,string)
+'SA11' (>L:CallsignShortOwnship,string)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+INITIALIZATION WITH AIRCRAFT ON THE GROUND
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:F35AvionicsInit,bool) ! (A:SIM ON GROUND, bool) and if{
+100 (>L:CanopyOpen, number)
+100 (>L:CrewAccessLadder2, number)
+1 (>L:CanopyCommand, bool)
+1 (>L:SafetyPin1, bool)
+1 (>L:SafetyPin2, bool)
+2 (>L:F35AvionicsInitTest, number)
+(A:ANTISKID BRAKES ACTIVE, bool) ! if{ 1 (>K:ANTISKID_BRAKES_TOGGLE) }
+(A:MASTER IGNITION SWITCH, bool) if{ 1 (>K:TOGGLE_MASTER_IGNITION_SWITCH) }
+(A:LIGHT LOGO ON, bool) if{ 1 (>K:TOGGLE_LOGO_LIGHTS) }
+1 (>K:MIXTURE_LEAN)
+1 (>K:FUEL_SELECTOR_ALL)
+0 (>L:IPPMasterSwitch, bool)  
+0 (>L:ICC1Switch, bool) 
+0 (>L:ICC2Switch, bool) 
+0 (>L:IPPModeSelector, enum) 
+1 (>L:IPPCabinPressureSelector, enum) 
+0 (>L:IPPEmergencyShutOff, bool) 
+(A:INTERACTIVE POINT OPEN:0, percent) 1 &lt; (A:ENG N1 RPM:1, percent) 5 &lt; if{ 0 (>K:TOGGLE_AIRCRAFT_EXIT, bool) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+INITIALIZATION WITH AIRCRAFT SWITCHES ON
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:F35AvionicsInit,bool) ! if{
+(A:ELECTRICAL MASTER BATTERY, bool) (A:GENERAL ENG MASTER ALTERNATOR:1, bool) and if{
+0 (>L:CanopyOpen, number)
+0 (>L:CanopyCommand, bool)
+1 (>L:SwitchOxygen, bool)
+1 (>L:SwitchOxygenFlow, bool)
+1 (>L:EjectionSeatArmPilot, bool)
+1 (>L:HUDPower, bool)
+3 (>L:F35AvionicsInitTest, number)
+0 (>L:SafetyPin1, bool)
+0 (>L:SafetyPin2, bool)
+0 (>L:CrewAccessLadder, bool)
+1 (>K:MIXTURE_RICH)
+(A:ANTISKID BRAKES ACTIVE, bool) ! if{ 1 (>K:ANTISKID_BRAKES_TOGGLE) }
+(A:MASTER IGNITION SWITCH, bool) ! if{ 1 (>K:TOGGLE_MASTER_IGNITION_SWITCH) }
+(A:LIGHT WING, bool) if{ 1 (>TOGGLE_WING_LIGHTS) }
+(A:LIGHT LOGO ON, bool) if{ 1 (>K:TOGGLE_LOGO_LIGHTS) }
+1 (>L:IPPMasterSwitch, bool)  
+1 (>L:ICC1Switch, bool) 
+1 (>L:ICC2Switch, bool) 
+1 (>L:IPPModeSelector, enum) 
+1 (>L:IPPCabinPressureSelector, enum) 
+0 (>L:IPPEmergencyShutOff, bool) 
+
+
+
+2 (>L:KnobHMD, number)
+1 (>L:PCDNightDay, bool)
+
+3000 (>L:MFD1_StandbyCounter, number)
+3000 (>L:MFD3_StandbyCounter, number)
+6 (>L:MFD1_Screen, number)
+0 (>L:MFD1_Subportal, number)
+18 (>L:MFD1_Subportal1, number)  
+17 (>L:MFD1_Subportal2, number)  
+8 (>L:MFD2_Screen, number)
+1 (>L:MFD2_Subportal, number)
+12 (>L:MFD2_Subportal1, number)  
+15 (>L:MFD2_Subportal2, number)  
+7 (>L:MFD3_Screen, number)
+1 (>L:MFD3_Subportal, number)
+13 (>L:MFD3_Subportal1, number)  
+4 (>L:MFD3_Subportal2, number)  
+11 (>L:MFD4_Screen, number)
+0 (>L:MFD4_Subportal, number)
+8 (>L:MFD4_Subportal1, number)
+6 (>L:MFD4_Subportal2, number)
+
+100 (>L:DASCooling,number)
+3900 (>L:TFLIRTimeout, number)
+1 (>L:VSBITComplete,bool)
+
+1 (>L:PCDPreset, enum)
+}
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+INITIALIZATION COMPLETE
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:F35AvionicsInit,bool) !
+if{
+1 (>L:F35AvionicsInit,bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+MAINTEINANCE DOORS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:SIM ON GROUND, bool) (A:BRAKE PARKING POSITION, percent) 0 > and (A:ENG N2 RPM:1, percent) 1 &lt; and (A:ELECTRICAL MASTER BATTERY, bool) ! and (A:GENERAL ENG MASTER ALTERNATOR:1, bool) ! and (A:PLANE ALTITUDE,feet) 50 &lt; (A:PLANE ALTITUDE,feet) 100 > or and
+if{ (L:AccessDoorTimer,number) 1 + (>L:AccessDoorTimer,number) }
+els{ 0 (>L:AccessDoorTimer,number) 0 (>L:AccessDoorRT,number) 0 (>L:AccessDoorRT,number) }
+(L:AccessDoorTimer,number) 200 > if{ 101 (>L:AccessDoorTimer,number) 100 (>L:AccessDoorRT,number) 100 (>L:AccessDoorRT,number) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+PROXY COMMANDS
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:WATER RUDDER HANDLE POSITION, bool) (>L:ProxyVariable1,bool)
+(A:ANNUNCIATOR SWITCH, bool) (>L:ProxyVariable2,bool)
+(A:TOW RELEASE HANDLE, bool) (>L:ProxyVariable3,bool)
+(A:SMOKESYSTEM AVAILABLE, bool) (>L:ProxyVariable4,bool)
+
+(L:AdditionalKeyBindings, bool) if{
+(L:ProxyVariable1,bool) (L:PrevProxyVariable1,bool) != if{ (L:switch_weapon_doors, bool) ! (>L:switch_weapon_doors, bool) }
+(L:ProxyVariable2,bool) (L:PrevProxyVariable2,bool) != if{ (L:switch_IFR_door, bool) ! (>L:switch_IFR_door, bool) }
+}
+
+(L:ProxyVariable1,bool) (>L:PrevProxyVariable1,bool)
+(L:ProxyVariable2,bool) (>L:PrevProxyVariable2,bool)
+(L:ProxyVariable3,bool) (>L:PrevProxyVariable3,bool)
+(L:ProxyVariable4,bool) (>L:ProvProxyVariable4,bool)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+HMD Visor
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:KnobHMD,number) 0 &gt; (L:HMDVisorToggle, bool) ! and if{ (L:HMDVisorPosition,number) 2 + 100 min (>L:HMDVisorPosition,number) }
+(L:KnobHMD,number) 0 &gt; (L:HMDVisorToggle, bool) and if{ (L:HMDVisorPosition,number) 2 + 50 min (>L:HMDVisorPosition,number) }
+(L:KnobHMD,number) 0 == if{ (L:HMDVisorPosition,number) 2 - 0 max (>L:HMDVisorPosition,number) }
+</Value>
+</Select>
+</Element>
+
+<Comment>
+VARIABLES FOR DEBUG
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:TURB ENG TANK SELECTOR:1, enum) (>L:FuelValveStatus,enum)
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:CABIN NO SMOKING ALERT SWITCH, bool) (>L:Test1, bool)
+(A:CABIN SEATBELTS ALERT SWITCH, bool) (>L:Test2, bool)
+(A:LIGHT PEDESTRAL, bool) (>L:Test3, bool)
+(A:TAILHOOK HANDLE, bool) (>L:Test4, bool)
+(A:RETRACT FLOAT SWITCH, bool) (>L:Test5, bool)
+(A:TURB ENG AFTERBURNER PCT ACTIVE:1, Percent) (>L:Test6,bool)
+(A:FLY BY WIRE ELAC SWITCH, bool) (>L:FlyByWireElacSwitch, bool)
+(A:FLY BY WIRE SEC SWITCH, bool) (>L:FlyByWireSecSwitch, bool)
+(A:FLY BY WIRE FAC SWITCH, bool) (>L:FlyByWireFacSwitch, bool)
+(A:AI AUTOTRIM ACTIVE, bool) (>L:FlyByWireAT, bool)
+</Value>
+</Select>
+</Element>
+
+
+
+
+</Gauge>
+
+
+

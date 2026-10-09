@@ -1,0 +1,167 @@
+:root {
+  --bodyHeightScale: 1;
+}
+
+@keyframes TemporaryShow {
+  0%, 100% {
+    visibility: visible;
+  }
+}
+@keyframes TemporaryHide {
+  0%, 100% {
+    visibility: hidden;
+  }
+}
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+html body {
+  -webkit-user-select: none;
+  font-family: var(--font);
+  font-size: calc(var(--viewportHeightRatio) * (36px / 21.6) * var(--currentPageHeight) / 100 );
+  color: white;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#highlight {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#Electricity {
+  width: 100%;
+  height: 100%;
+}
+#Electricity[state=off] {
+  display: none;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("/Fonts/RobotoMono-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto-Light";
+  src: url("/Fonts/RobotoMono-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("/Fonts/RobotoMono-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("/Fonts/Roboto-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto-Light";
+  src: url("/Fonts/Roboto-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("/Fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+darkstar-mfd-element #Mainframe {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  font-family: Roboto-Bold;
+  background-color: #030b0f;
+  opacity: 0.5;
+}
+
+darkstar-mfd-element #Mainframe #Camera {
+  transform: rotateX(0);
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  width: 150%;
+  height: 150%;
+}
+darkstar-mfd-element #Mainframe #Camera #CameraMap {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  z-index: -1;
+}
+darkstar-mfd-element #Mainframe #Camera #CameraMap #CameraInstrument #MapOrientation, darkstar-mfd-element #Mainframe #Camera #CameraMap #CameraInstrument #MapRange {
+  display: none;
+}
+darkstar-mfd-element #Mainframe #Camera #CameraMap #CameraInstrument #MapSVG, darkstar-mfd-element #Mainframe #Camera #CameraMap #CameraInstrument #road-network-canvas {
+  transform: rotateX(0);
+  position: absolute;
+}
+darkstar-mfd-element #Mainframe #Camera #CameraMap #CameraInstrument bing-map {
+  transform: rotateX(0);
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+darkstar-mfd-element #Mainframe #Camera #CameraMap #CameraMask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: #030b0f;
+  align-items: center;
+  justify-content: center;
+  font-size: 100%;
+}
+darkstar-mfd-element #Mainframe #Camera #CameraMap #CameraAltitudeContainer {
+  position: absolute;
+  width: 100%;
+  height: 8%;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  opacity: 0.0;
+  font-size: 100%;
+}
+darkstar-mfd-element #Mainframe #Camera #CameraMap #CameraPosition {
+  position: absolute;
+  width: 100%;
+  height: 8%;
+  left: 0;
+  top: 93%;
+  display: flex;
+  justify-content: center;
+  opacity: 0.0;
+  font-size: 200%;
+}
+darkstar-mfd-element #Mainframe #Camera #CameraOverlay {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+/*# sourceMappingURL=F35_RPMD.css.map */

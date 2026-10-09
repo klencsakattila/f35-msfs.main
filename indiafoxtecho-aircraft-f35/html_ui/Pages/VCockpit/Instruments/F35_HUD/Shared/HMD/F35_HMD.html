@@ -1,0 +1,62 @@
+<script type="text/html" id="AS04F_HMD">
+    <div id="Mainframe">
+        <div id="Electricity" state="off">
+            <div class="main-screen hmd-display">
+                <div id="hmd-airspeed"></div>
+                <div id="hmd-altitude">
+                    <span id="hmd-altitude-large"></span>
+                    <span id="hmd-altitude-small"></span>
+                </div>
+                <div id="hmd-altitude-mode"></div>
+
+                <div id="hmd-left-panel">
+                    <div id="hmd-left-panel-col-1">
+                       <div id="hmd-mach-label">GS</div>
+					   <div id="hmd-alpha-label">&alpha;</div>
+                    </div>
+                    <div id="hmd-left-panel-col-2">                        
+                        <div id="hmd-mach-value">0.48</div>
+						<div id="hmd-aoa-value">4.2</div>
+                    </div>
+                </div>
+                <div id="hmd-right-panel">
+                    <div id="hmd-atc-engaged">ATC</div>
+                </div>
+     
+
+	 
+                <div id="hmd-norad"></div>
+
+                <svg id="hmd-heading" class="full-screen-hmd-element" width="1024" height="576" viewBox="0 0 1000 562.5" xmlns="http://www.w3.org/2000/svg">
+                    <clipPath id="hmd-heading-clip">
+                        <rect x="768" y="200" width="512" height="125" />
+                    </clipPath>
+
+                    <g id="hmd-heading-tape-group"></g>
+                </svg>
+
+                <svg id="hmd-center-cross" viewBox="0 0 100 100">
+                    <line x1="42" x2="58" y1="50" y2="50" stroke="#67ff37" stroke-width="3"/>
+                    <line x1="50" x2="50" y1="42" y2="58" stroke="#67ff37" stroke-width="3"/>
+                </svg>
+				
+                <svg id="hmd-heading-marker" viewBox="0 0 50 50">
+                    <line x1="25" x2="13" y1="0" y2="25" stroke="#67ff37" stroke-width="4"/>
+                    <line x1="25" x2="37" y1="0" y2="25" stroke="#67ff37" stroke-width="4"/>
+                </svg>
+
+				<div id="hmd-right-panel">
+					<div id="hmd-steering-data">text</div>
+					<div id="hmd-time-to-steer">00:00</div>
+				</div>				
+				<div id="hmd-clock">00:00:00Z</div>
+				
+				<div id="hmd-masterarm"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<link rel="stylesheet" href="F35_HMD.css" />
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/F35_HUD/Shared/HMD/F35_HMD.js"></script>

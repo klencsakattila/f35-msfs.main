@@ -1,0 +1,242 @@
+<Gauge Name="AvionicsControl" Version="1.0">
+
+<Comment>
+**************************
+TACAN FREQUENCY CONVERSION
+**************************
+</Comment> 
+
+<Element>
+<Select>
+<Value>
+<!--(A:NAV OBS:1, degrees) (A:NAV OBS:2, degrees) != if{ (A:NAV OBS:1, degrees) (>K:VOR2_SET, degrees) }-->
+(A:NAV OBS:1, degrees) (A:TACAN OBS:1, degrees) != if{ (A:NAV OBS:1, degrees) (>K:TACAN1_SET, degrees) }
+(A:NAV OBS:2, degrees) (A:TACAN OBS:2, degrees) != if{ (A:NAV OBS:2, degrees) (>K:TACAN2_SET, degrees) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+0 (>L:TacanChannelY, bool)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Between 108 and 112.2:
+from Tacan to VHF: (Tacan Channel/10) + 106.3 -> frequency
+from VHF to Tacan: (frequency - 106.3) * 10 -> Tacan Channel
+</Comment> 
+
+<Element>
+<Select>
+<Value>
+(A:Nav active frequency:2,Megahertz) 107.99 &gt; (A:Nav active frequency:2,Megahertz) 112.26 &lt; and
+if{
+(A:Nav active frequency:2,Megahertz) 10 int * 1063 - (>L:TacanChannel, enum) 
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+Between 112.3 and 117.9:
+from Tacan to VHF: (Tacan Channel/10) + 105.3 -> frequency
+from VHF to Tacan: (frequency - 105.3) * 10 -> Tacan Channel
+</Comment> 
+
+
+<Element>
+<Select>
+<Value>
+(A:Nav active frequency:2,Megahertz) 112.29 &gt; (A:Nav active frequency:2,Megahertz) 117.95 &lt; and
+if{
+(A:Nav active frequency:2,Megahertz) 10 int * 1053 - (>L:TacanChannel, enum) 
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+Higher frequencies, not supported by FSX
+</Comment> 
+
+<Element>
+<Select>
+<Value>
+(A:Nav active frequency:2,Megahertz) 133.29 &gt; (A:Nav active frequency:2,Megahertz) 134.21 &lt; and
+if{
+(A:Nav active frequency:2,Megahertz) 10 int * 1273 - (>L:TacanChannel, enum) 
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:Nav active frequency:2,Megahertz) 134.39 &gt; (A:Nav active frequency:2,Megahertz) 135.95 &lt; and
+if{
+(A:Nav active frequency:2,Megahertz) 10 int * 1343 - (>L:TacanChannel, enum) 
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:Nav active frequency:2,Megahertz) 10 * (A:Nav active frequency:2,Megahertz) 10 * int - 0.1 &gt; if{
+1 (>L:TacanChannelY, bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+**************************
+TACAN CHANNEL CONVERSION
+**************************
+</Comment> 
+
+<Element>
+<Select>
+<Value>
+(L:TacanChannelCommanded, number) 126 &gt; if{
+1 (>L:TacanChannelCommanded, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TacanChannelCommanded, number) 1 &lt; if{
+126 (>L:TacanChannelCommanded, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TacanChannelCommanded, number) 0 &gt; (L:TacanChannelCommanded, number) 17 &lt; and (L:TacanChannelYCommanded, bool) ! and if{
+1343.01 (L:NEW_TACAN_channel, number) + 0.1 * (>L:TACAN_Freq, Mhz)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TacanChannelCommanded, number) 16 &gt; (L:TacanChannelCommanded, number) 60 &lt; and (L:TacanChannelYCommanded, bool) ! and if{
+1063.01 (L:TacanChannelCommanded, number) + 0.1 * (>L:TACAN_Freq, Mhz)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TacanChannelCommanded, number) 59 &gt; (L:TacanChannelCommanded, number) 70 &lt; and (L:TacanChannelYCommanded, bool) ! and if{
+1273.01 (L:TacanChannelCommanded, number) + 0.1 * (>L:TACAN_Freq, Mhz)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TacanChannelCommanded, number) 69 &gt; (L:TacanChannelCommanded, number) 127 &lt; and (L:TacanChannelYCommanded, bool) ! and if{
+1053.01 (L:TacanChannelCommanded, number) + 0.1 * (>L:TACAN_Freq, Mhz)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TacanChannelCommanded, number) 0 &gt; (L:TacanChannelCommanded, number) 17 &lt; and (L:TacanChannelYCommanded, bool) and if{
+1343.51 (L:TacanChannelCommanded, number) + 0.1 * (>L:TACAN_Freq, Mhz)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TacanChannelCommanded, number) 16 &gt; (L:TacanChannelCommanded, number) 60 &lt; and (L:TacanChannelYCommanded, bool) and if{
+1063.51 (L:TacanChannelCommanded, number) + 0.1 * (>L:TACAN_Freq, Mhz)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TacanChannelCommanded, number) 59 &gt; (L:TacanChannelCommanded, number) 70 &lt; and (L:TacanChannelYCommanded, bool) and if{
+1273.51 (L:TacanChannelCommanded, number) + 0.1 * (>L:TACAN_Freq, Mhz)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TacanChannelCommanded, number) 69 &gt; (L:TacanChannelCommanded, number) 127 &lt; and (L:TacanChannelYCommanded, bool) and if{
+1053.51 (L:TacanChannelCommanded, number) + 0.1 * (>L:TACAN_Freq, Mhz)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:TacanUpdate, bool) 0 &gt; if{
+(L:TACAN_Freq, Frequency BCD16) (>K:NAV2_RADIO_SET)
+0 (>L:TacanUpdate, bool)
+(L:TacanChannelCommanded, number) (>K:TACAN2_ACTIVE_CHANNEL_SET)
+(L:TacanChannelCommanded, number) (>K:TACAN1_ACTIVE_CHANNEL_SET)
+(L:TacanChannelYCommanded, bool) (>K:TACAN1_ACTIVE_MODE_SET)
+(L:TacanChannelYCommanded, bool) (>K:TACAN2_ACTIVE_MODE_SET)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:NAV HAS TACAN:1, bool) if{ (A:TACAN STATION RADIAL:1,degrees) 180 + dnor (A:PLANE HEADING DEGREES MAGNETIC,degrees) - dnor s2 180 &gt; if{ l2 360 - (>L:TacanBearing1, degrees) } els{ l2 (>L:TacanBearing1, degrees) } }
+(A:NAV HAS TACAN:2, bool) if{ (A:TACAN STATION RADIAL:2,degrees) 180 + dnor (A:PLANE HEADING DEGREES MAGNETIC,degrees) - dnor s2 180 &gt; if{ l2 360 - (>L:TacanBearing2, degrees) } els{ l2 (>L:TacanBearing2, degrees) } }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+</Value>
+</Select>
+</Element>
+
+
+ 
+
+</Gauge>
+
+
+

@@ -1,0 +1,238 @@
+<Gauge Name="F35 Spoiler Control" Version="1.3">
+<Comment>
+This gauge controls the FS-Spoiler for Dino's V3.01 and V2.41 F35 package (A,B,C).
+Works for FSX and P3D, and with or without TacPack installed.
+
+What it does:
+By controlling the SpoilerHandle, it splits to FS-SPoiler range in two parts: max. 45 percent contribution for externally loaded weapons/tanks drag,
+and 55 percent for actual spoiler (airbrakes).
+Individual weapons in the internal bay don't contribute to drag; instead a fixed drag is used when the internal bay is open. 
+
+Notes:
+- In the .air files, the Spoiler drag coefficient needs to be raised, to get the same Spoiler (airbrakes) drag as before.
+  Meaning that at SpoilerHandle 55 percent (airbrakes extended, no external loadout), drag is the same as previously.
+  .. For V2.41: from 122 to 250.
+  .. For V3.01: from 240 to 400.
+- In V2.41, the spoiler surfaces (rudder, flaps, slats) are visually modelled by directly using the FS-SPoiler extention value.
+  Meaning that with no spoiler (airbrakes) deployed, and at max. weapons drag, the spoiler looks "a little" extended.
+  In V3.01 of the F35 package this is solved.
+
+In detail:
+The FS-Spoiler function is used to induce external weapons/tank drag, in the following way:
+  - (A:SPOILERS HANDLE POSITION,percent) is set to 0.1 for value (L:F35TotalDrag,number) = 0
+  - (A:SPOILERS HANDLE POSITION,percent) is set to 45 for value (L:F35TotalDrag,number) = (L:F35TotalDragMax,number) or higher.
+  - And lineairly in between.
+  - The result of (A:SPOILERS HANDLE POSITION,percent) is increased by 0 (spoiler retracted) or 55 (spoiler extended).
+  - For initialisation purposes and ToggleSpoiler tracking, the (A:SPOILERS HANDLE POSITION,percent) is forced to 0.1 at aircraft load.
+
+The value of (L:F35TotalDrag,number) is calculated as the sum of estimated drag contribution per actual, external loaded tank/weapon.
+Which is estimated based on shape.
+The presence of a pylon only, or tank/weapon plus pylon, is detected by reading the actual weight of the loadout per Payload Station,
+as described in the F35 manual. 
+
+Type                     PossibleStations   Weight/ID    Dragnumber
+====                     ================   =========    ==========
+Internal bay doors       -                  -            10
+Pylon only               1,2,3,9,10,11      194 or 350   2
+Sidewinder + pylon       1,11               382          1.5+1=2.5
+Gunpod                   6                  550          6
+External tank + pylon    3,9                731          7+1=8
+GBU31 + pylon            2,3,9,10           2475         3+1=4         (F-35B: STA 3 and 9 only)
+GBU12 + pylon            2,3,9,10           960          2+1=3
+GBU10 + pylon            2,3,9,10           2464         4+1=5       (F-35B: STA 3 and 9 only)
+JSOW + pylon             2,3,9,10           1391         5+1=6
+MK84 + pylon             2,3,9,10           2389         5+1=6       (F-35B: STA 3 and 9 only)
+MK83 + pylon             2,3,9,10           1336         4+1=5
+MK82 + pylon             2,3,9,10           908          3+1=4
+
+Notes:
+- (A:PAYLOAD STATION WEIGHT:2,pounds) corresponds with STA 1, etc.
+- The value of an estimated Dragnumber by itself is arbitary; only the ratio is important.
+- With these Dragnumbers, the max. loadout drag (L:F35TotalDragMax,number), at which
+  45 percent Spoiler is set:
+  200 + 2*50 + 2*170 + 2*115 + 120 =  990 (i.e. 45 percent SpoilerHandle).
+
+
+Speed indications, measured with V2.41 of the F-35B (at 1000 ft, 90 percent Throttle, ca. 50.000 lbs total weight).
+- No weapons drag, no spoiler:                        570 Knots GS (0  percent SpoilerHandle).
+- Max. weapons drag, no spoiler:                      450 knots IAS (45 percent SpoilerHamdle).
+- No Weapons drag, spoiler deployed:                  410 Knots IAS (55 percent SpoilerHandle).
+- Max. weapons drag, spoiler extended:                330 knots GS (100 percent SpoilerHamdle).
+
+
+V1.1:
+- Increased update freq. for Spoiler animation
+- Uses new Var (L:F35Spoiler,percent) for V3.01 and up (has no effect on the V2.41 visual models.)
+
+V1.2:
+- changed description.
+- Added fixed drag for internal bays/doors.
+- changed ratio spoiler-weapons drag from 65-35 to 55-45.
+- changed some drag number (forgot to include the pylons)
+- added Payload Station Lvars, if/when used in the .mdls.
+
+
+COPYRIGHT STATEMENT
+==================
+This gauge is especially created and tweaked for the Dino's F35 package.
+It may NOT be renamed, copied, re-uploaded, modified, or bundled in an other archive
+without my prior, written consent.
+
+Rob Barendregt, 8 June 2016
+Email: rc.barendregt@planet.nl
+</Comment>
+
+<Update Frequency="0"/>
+
+<!-- Initialisation -->
+<Element>
+  <Select>
+    <Value>
+      (L:F35SpoilerControlInit,bool) ! 
+      if{
+        (A:SPOILERS HANDLE POSITION,percent) 0.09 &gt; (A:SPOILERS HANDLE POSITION,percent) 0.11 &lt; &amp;&amp;
+        if{
+          1 (&gt;L:F35SpoilerControlInit,bool)
+          99 (&gt;L:F35TotalDragMax,number)
+          45 (&gt;L:F35MaxWeaponsSpoilerHandle,number)  (* Means the Weapons/Airbrakes SpoilerHandle ratio is 45 / 55 (100-45) *)
+        }
+        els{
+          0.1 163.84 * (&gt;K:SPOILERS_SET)
+        }
+      }
+    </Value>
+  </Select>
+</Element>
+
+
+<!-- Calculate total weapons drag -->
+<Element>
+  <Select>
+    <Value>
+      (* Internal bay and doors only *)
+      (A:EXIT OPEN:2,percent) 0.1 * sp20
+
+      (* Pylon only *)
+      (A:PAYLOAD STATION WEIGHT:2,pounds)   near 194 == (A:PAYLOAD STATION WEIGHT:2,pounds)  near 350 == || if{ l20 1 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:3,pounds)   near 194 == (A:PAYLOAD STATION WEIGHT:3,pounds)  near 350 == || if{ l20 1 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:4,pounds)   near 194 == (A:PAYLOAD STATION WEIGHT:4,pounds)  near 350 == || if{ l20 1 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:10,pounds)  near 194 == (A:PAYLOAD STATION WEIGHT:10,pounds) near 350 == || if{ l20 1 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:11,pounds)  near 194 == (A:PAYLOAD STATION WEIGHT:11,pounds) near 350 == || if{ l20 1 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:12,pounds)  near 194 == (A:PAYLOAD STATION WEIGHT:12,pounds) near 350 == || if{ l20 1 + sp20 }
+
+      (* Sidewinder *)
+      (A:PAYLOAD STATION WEIGHT:2,pounds)   near 382 == if{ l20 2.5 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:12,pounds)  near 382 == if{ l20 2.5 + sp20 }
+
+      (* Gunpod *)
+      (A:PAYLOAD STATION WEIGHT:7,pounds)   near 550 == if{ l20 6 + sp20 }
+
+      (* Empty External tank *)
+      (A:PAYLOAD STATION WEIGHT:4,pounds)   near 731 == if{ l20 8 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:10,pounds)  near 731 == if{ l20 8 + sp20 }
+
+      (* GBU31 *)
+      (A:PAYLOAD STATION WEIGHT:3,pounds)  near 2475 == if{ l20 4 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:4,pounds)  near 2475 == if{ l20 4 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:10,pounds) near 2475 == if{ l20 4 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:11,pounds) near 2475 == if{ l20 4 + sp20 }
+
+      (* GBU12 *)
+      (A:PAYLOAD STATION WEIGHT:3,pounds)   near 960 == if{ l20 3 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:4,pounds)   near 960 == if{ l20 3 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:10,pounds)  near 960 == if{ l20 3 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:11,pounds)  near 960 == if{ l20 3 + sp20 }
+
+      (* GBU10 *)
+      (A:PAYLOAD STATION WEIGHT:3,pounds)  near 2464 == if{ l20 5 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:4,pounds)  near 2464 == if{ l20 5 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:10,pounds) near 2464 == if{ l20 5 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:11,pounds) near 2464 == if{ l20 5 + sp20 }
+
+      (* JSOW *)
+      (A:PAYLOAD STATION WEIGHT:3,pounds)  near 1391 == if{ l20 6 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:4,pounds)  near 1391 == if{ l20 6 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:10,pounds) near 1391 == if{ l20 6 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:11,pounds) near 1391 == if{ l20 6 + sp20 }
+
+      (* MK84 *)
+      (A:PAYLOAD STATION WEIGHT:3,pounds)  near 2389 == if{ l20 6 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:4,pounds)  near 2389 == if{ l20 6 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:10,pounds) near 2389 == if{ l20 6 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:11,pounds) near 2389 == if{ l20 6 + sp20 }
+
+      (* MK83 *)
+      (A:PAYLOAD STATION WEIGHT:3,pounds)  near 1336 == if{ l20 5 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:4,pounds)  near 1336 == if{ l20 5 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:10,pounds) near 1336 == if{ l20 5 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:11,pounds) near 1336 == if{ l20 5 + sp20 }
+
+      (* MK82 *)
+      (A:PAYLOAD STATION WEIGHT:3,pounds)   near 908 == if{ l20 4 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:4,pounds)   near 908 == if{ l20 4 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:10,pounds)  near 908 == if{ l20 4 + sp20 }
+      (A:PAYLOAD STATION WEIGHT:11,pounds)  near 908 == if{ l20 4 + sp20 }
+
+      l20 (&gt;L:F35TotalDrag,number)
+    </Value>
+  </Select>
+</Element>
+
+
+<!-- Spoiler animation, used in gauge FCS_Animation_Misc.xml -->
+<Element>
+  <Select>
+    <Value>
+      (L:VSTOLAirbrakesDeployed,bool) !
+      if{ (L:F35Spoiler,percent) 4 - 0 max }
+      els{ (L:F35Spoiler,percent) 4 + 100 min }
+      (&gt;L:F35Spoiler,percent)
+    </Value>
+  </Select>
+</Element>
+
+<!-- FS-Spoiler drag forcing -->
+<Element>
+  <Select>
+    <Value>
+      (L:F35SpoilerControlInit,bool)
+      if{
+        (A:SPOILERS HANDLE POSITION,percent) 0.05 &lt; (A:SPOILERS HANDLE POSITION,percent) 99.95 &gt; ||
+        if{
+          (L:VSTOLAirbrakesDeployed,bool) ! (&gt;L:VSTOLAirbrakesDeployed,bool)
+          1 sp12
+        }
+        (L:F35TotalDrag,number) (L:F35TotalDragMax,number) / 0 max 1 min (L:F35MaxWeaponsSpoilerHandle,number) * sp11
+        (L:VSTOLAirbrakesDeployed,bool)    100 (L:F35MaxWeaponsSpoilerHandle,number) -   * l11 + sp11
+		<!-- Altitude scalar not required
+		 1   (A:PLANE ALTITUDE,feet) 10000 - 0 max 27000 /    - l11 * sp11--> 
+        l11 0.1 max 99.9 min sp11
+
+        l11 (A:SPOILERS HANDLE POSITION,percent) - abs 0.5 &gt; l12 ||
+        if{ l11 163.84 * (&gt;K:SPOILERS_SET) }
+      }
+    </Value>
+  </Select>
+</Element>
+
+<!-- Set mdl Lvars for payload stations -->
+<Element>
+  <Select>
+    <Value>
+       (A:PAYLOAD STATION WEIGHT:2,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:2,pounds)
+       (A:PAYLOAD STATION WEIGHT:3,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:3,pounds)
+       (A:PAYLOAD STATION WEIGHT:4,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:4,pounds)
+       (A:PAYLOAD STATION WEIGHT:5,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:5,pounds)
+       (A:PAYLOAD STATION WEIGHT:6,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:6,pounds)
+       (A:PAYLOAD STATION WEIGHT:7,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:7,pounds)
+       (A:PAYLOAD STATION WEIGHT:8,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:8,pounds)
+       (A:PAYLOAD STATION WEIGHT:9,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:9,pounds)
+       (A:PAYLOAD STATION WEIGHT:10,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:10,pounds)
+       (A:PAYLOAD STATION WEIGHT:11,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:11,pounds)
+       (A:PAYLOAD STATION WEIGHT:12,pounds)  near (&gt;L:PAYLOAD STATION WEIGHT:12,pounds)
+    </Value>
+  </Select>
+</Element>
+
+
+</Gauge>

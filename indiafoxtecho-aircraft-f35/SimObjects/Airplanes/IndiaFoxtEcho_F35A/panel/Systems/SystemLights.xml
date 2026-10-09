@@ -1,0 +1,105 @@
+<Gauge Name="AvionicsControl" Version="1.0">
+
+<Comment>
+LIGHT HEADLIGHT  Light switch state  Bool  Y  All aircraft  
+LIGHT BRAKE  Light switch state  Bool  Y  All aircraft  
+LIGHT GENERAL  Light switch state  Bool  Y  All aircraft  
+LIGHT STROBE  Light switch state  Bool  Y  All aircraft  
+LIGHT PANEL  Light switch state  Bool  Y  All aircraft  
+LIGHT LANDING  Light switch state  Bool  Y  All aircraft  
+LIGHT TAXI  Light switch state  Bool  Y  All aircraft  
+LIGHT BEACON  Light switch state  Bool  Y  All aircraft  
+LIGHT NAV  Light switch state  Bool  Y  All aircraft  
+LIGHT LOGO  Light switch state  Bool  Y  All aircraft  
+LIGHT WING  Light switch state  Bool  Y  All aircraft  
+LIGHT RECOGNITION  Light switch state  Bool  Y  All aircraft  
+LIGHT CABIN  Light switch state  Bool  Y  All aircraft  
+</Comment>
+
+<Comment>
+*********************************
+DISABLE LANDING AND TAXI LIGHTS IF GEAR UP
+*********************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:LIGHT LANDING, bool) (A:Gear left position,percent) 99 &lt; and if{
+(>K:LANDING_LIGHTS_OFF) }
+</Value>
+</Select>
+</Element> 
+
+<Element>
+<Select>
+<Value>
+(A:LIGHT TAXI, bool) if{ 
+(L:ElectricalPowerAvailable,bool) ! (A:Gear center position,percent) 99 &lt; or (L:SwitchGeneric3Pos10, number) 0 == or (L:SwitchGeneric3Pos10, number) 1 == or if{
+(>K:TOGGLE_TAXI_LIGHTS) }
+}
+</Value>
+</Select>
+</Element> 
+
+<Comment>
+*********************************************
+DISABLE NAV AND STROBE LIGHTS IF WINGS FOLDED
+*********************************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:LIGHT STROBE ON, bool) (L:wingfold_status, number) 0 &gt; and if{ 1 (>K:STROBES_OFF) }
+(A:LIGHT NAV ON, bool) (L:wingfold_status, number) 0 &gt; and if{ 1 (>K:TOGGLE_NAV_LIGHTS) }
+</Value>
+</Select>
+</Element> 
+
+<Comment>
+*********************************************
+Change Lights Intensity
+*********************************************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:BrightnessMode, number) 1 == if{ (A:LIGHT POTENTIOMETER:21, percent) (>L:BrightnessSelection, number) }
+(L:BrightnessMode, number) 2 == if{ (L:FormationLights, number) (>L:BrightnessSelection, number) }
+(L:BrightnessMode, number) 3 == if{ (A:LIGHT POTENTIOMETER:23, percent) (>L:BrightnessSelection, number) }
+</Value>
+</Select>
+</Element> 
+
+
+<Element>
+<Select>
+<Value>
+(L:LightsBrightnessIncrease, bool) if{ 
+(L:PCDBalance, number) 0.05 + (>L:PCDBalance, number)
+0 (>L:LightsBrightnessIncrease, bool)
+}
+(L:LightsBrightnessDecrease, bool) if{ 
+(L:PCDBalance, number) 0.05 - (>L:PCDBalance, number)
+0 (>L:LightsBrightnessDecrease, bool)
+}
+(L:PCDBalance, number) -0.5 &lt; if{ -0.5 (>L:PCDBalance, number) }
+(L:PCDBalance, number) 0.5 &gt; if{ 0.5 (>L:PCDBalance, number) }
+(L:StrobeDim, bool) (A:LIGHT POTENTIOMETER:22, percent) 50 &gt; and if{ 30 (>K:LIGHT_POTENTIOMETER_22_SET, percent) }
+(L:StrobeDim, bool) ! (A:LIGHT POTENTIOMETER:22, percent) 50 &lt; and if{ 100 (>K:LIGHT_POTENTIOMETER_22_SET, percent) }
+
+(L:PCDNightDay, bool) if{ 
+(L:SwitchMFDBRT, number) 2 * (L:PCDBalance, number) 2 * + (>L:PCDBrightnessLeft, number) } 
+els{ (L:SwitchMFDBRT, number) 0.33 * (L:PCDBalance, number) 0.5 * + (>L:PCDBrightnessLeft, number) } 
+
+(L:PCDNightDay, bool) if{ 
+(L:SwitchMFDBRT, number) 2 * (L:PCDBalance, number) 2 * - (>L:PCDBrightnessRight, number) } 
+els{ (L:SwitchMFDBRT, number) 0.33 * (L:PCDBalance, number) 0.5 * - (>L:PCDBrightnessRight, number) } 
+</Value>
+</Select>
+</Element> 
+
+
+</Gauge>

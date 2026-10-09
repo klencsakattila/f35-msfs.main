@@ -1,0 +1,39 @@
+<Gauge Name="SMS" Version="1.0">
+
+<Element>
+<Select>
+<Value>
+0 (&gt;L:F35Model, number)
+15.5 (>L:AOAReference, number)
+5.8 (>L:HUDAOAReference, number)
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:Empty Weight, pounds) 32472 == 
+if{
+1 (&gt;L:F35Model, number)
+15.5 (>L:AOAReference, number)
+5.8 (>L:HUDAOAReference, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:Empty Weight, pounds) 34581 ==
+if{
+2 (&gt;L:F35Model, number)
+17 (>L:AOAReference, number)
+7.2 (>L:HUDAOAReference, number)
+}
+</Value>
+</Select>
+</Element>
+
+</Gauge>

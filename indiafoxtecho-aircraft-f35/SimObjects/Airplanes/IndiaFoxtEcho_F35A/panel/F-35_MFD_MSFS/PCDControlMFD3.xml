@@ -1,0 +1,1964 @@
+<Gauge Name="" Version="1.0">
+<Update Frequency="18"/> 
+
+<Comment>Reset PCD Touchscreen variable</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:MFD3_StandbyCounter, number) 200 &lt; (L:MFD3PCDTouch,enum) 0 != (L:MFD4PCDTouch,enum) 0 != or and if{ 0 (>L:MFD3PCDTouch,enum) 0 (>L:MFD4PCDTouch,enum) } 
+</Value>
+</Select>
+</Element>
+
+<Comment>Portals and Subportals Management</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 199 &lt; (L:MFD3PCDTouch,enum) 36 == and if{
+	(L:MFD3_Subportal, bool) ! (>L:MFD3_Subportal, bool)
+	(L:MFD3_Screen, number) 100 > (L:MFD3_Screen, number) 199 &lt; and
+		if{ 
+			(L:MFD3_TSD_Buffer1, number) (>L:MFD3_Screen, number)
+			(L:MFD3_TSD_Buffer2, number) (>L:MFD4_Screen, number)
+			1 (>L:MFD3_Subportal, number)
+			1 (>L:MFD4_Subportal, number) 
+		}
+}
+
+(L:MFD4_Screen, number) 199 &lt; (L:MFD4PCDTouch,enum) 40 == and if{ 
+	(L:MFD4_Subportal, bool) ! (>L:MFD4_Subportal, bool)
+	(L:MFD3_Screen, number) 100 > (L:MFD3_Screen, number) 199 &lt; and
+		if{ 
+			(L:MFD3_TSD_Buffer1, number) (>L:MFD3_Screen, number)
+			(L:MFD3_TSD_Buffer2, number) (>L:MFD4_Screen, number)
+			1 (>L:MFD3_Subportal, number)
+			1 (>L:MFD4_Subportal, number) 
+		}			
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>Toggle full screen</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 199 &lt; (L:isXBox, bool) ! and (L:MFD3PCDTouch,enum) 40 == and
+if{ 
+(L:MFD3_Screen, number) 100 &lt;
+					if{ 
+						(L:MFD3_Screen, number) 100 > (L:MFD3_Screen, number) 200 &lt; and
+						if{						
+						}
+					els{ (L:MFD3_Screen, number) 18 == (L:MFD3_Screen, number) 19 == or (L:MFD3_Screen, number) 20 == or (L:MFD3_Screen, number) 6 == or (L:MFD3_Screen, number) 7 == or (L:MFD3_Screen, number) 8 == or (L:MFD3_Screen, number) 11 == or (L:MFD3_Screen, number) 12 == or if{
+						(L:MFD3_Screen, number) (>L:MFD3_TSD_Buffer1, number)
+						(L:MFD4_Screen, number) (>L:MFD3_TSD_Buffer2, number)
+
+						(L:MFD3_Screen, number) 100 + (>L:MFD3_Screen, number)										
+						(L:MFD3_Screen, number) (>L:MFD4_Screen, number)
+						
+						0 (>L:MFD3_Subportal, number)
+						0 (>L:MFD4_Subportal, number) 
+						} }
+					}
+						
+els{ (L:MFD3_Screen, number) 100 > (L:MFD3_Screen, number) 199 &lt; and
+					if{ 
+						(L:MFD3_TSD_Buffer1, number) (>L:MFD3_Screen, number)
+						(L:MFD3_TSD_Buffer2, number) (>L:MFD4_Screen, number)
+						0 (>L:MFD3_Subportal, number)
+						0 (>L:MFD4_Subportal, number) 
+						}
+}			
+						
+}
+
+
+(L:MFD4_Screen, number) 199 &lt; (L:isXBox, bool) ! and (L:MFD4PCDTouch,enum) 36 == and
+if{ 
+(L:MFD4_Screen, number) 100 &lt;
+
+					if{ 
+						
+						(L:MFD4_Screen, number) 100 > (L:MFD4_Screen, number) 200 &lt; and
+						
+						if{						
+						}
+						
+						els{ (L:MFD4_Screen, number) 18 == (L:MFD4_Screen, number) 19 == or (L:MFD4_Screen, number) 20 == or (L:MFD4_Screen, number) 6 == or (L:MFD4_Screen, number) 7 == or (L:MFD4_Screen, number) 8 == or (L:MFD4_Screen, number) 11 == or (L:MFD4_Screen, number) 12 == or 
+						if{
+						(L:MFD3_Screen, number) (>L:MFD3_TSD_Buffer1, number)
+						(L:MFD4_Screen, number) (>L:MFD3_TSD_Buffer2, number)
+
+						(L:MFD4_Screen, number) 100 + (>L:MFD4_Screen, number)										
+						(L:MFD4_Screen, number) (>L:MFD3_Screen, number)
+						
+						0 (>L:MFD3_Subportal, number)
+						0 (>L:MFD4_Subportal, number) 
+						} 
+						}
+					}
+						
+els{ (L:MFD3_Screen, number) 100 > (L:MFD3_Screen, number) 199 &lt; and
+					if{ 
+						(L:MFD3_TSD_Buffer1, number) (>L:MFD3_Screen, number)
+						(L:MFD3_TSD_Buffer2, number) (>L:MFD4_Screen, number)
+						1 (>L:MFD3_Subportal, number)
+						1 (>L:MFD4_Subportal, number) 
+						}
+}			
+						
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>Subportal Swap</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Subportal, bool) (L:MFD3_Screen, number) 0 > and (L:MFD3_Screen, number) 100 &lt; and (L:MFD3PCDTouch,enum) 31 == (L:MFD3PCDTouch,enum) 32 == or (L:MFD3PCDTouch,enum) 37 == or and if{
+					(L:MFD3_Screen, number) (>L:MFD3_Subportalbuffer, number) 
+					(L:MFD3_Subportal1, number) (>L:MFD3_Screen, number)
+					(L:MFD3_Subportalbuffer, number) (>L:MFD3_Subportal1, number) }
+					
+(L:MFD3_Subportal, bool) (L:MFD3_Screen, number) 0 > and (L:MFD3_Screen, number) 100 &lt; and (L:MFD3PCDTouch,enum) 34 == (L:MFD3PCDTouch,enum) 35 == or (L:MFD3PCDTouch,enum) 39 == or and  if{
+					(L:MFD3_Screen, number) (>L:MFD3_Subportalbuffer, number) 
+					(L:MFD3_Subportal2, number) (>L:MFD3_Screen, number)
+					(L:MFD3_Subportalbuffer, number) (>L:MFD3_Subportal2, number) }
+
+(L:MFD3_Subportal, bool) ! (L:MFD3PCDTouch,enum) 37 == and (L:MFD3_Screen, number) 199 &lt; and if{
+					(L:MFD3_Screen, number) (>L:MFD3_Subportalbuffer, number) 
+					(L:MFD3_Subportal1, number) (>L:MFD3_Screen, number)
+					(L:MFD3_Subportalbuffer, number) (>L:MFD3_Subportal1, number) }
+
+(L:MFD3_Subportal, bool) ! (L:MFD3PCDTouch,enum) 39 == and (L:MFD3_Screen, number) 199 &lt; and if{
+					(L:MFD3_Screen, number) (>L:MFD3_Subportalbuffer, number) 
+					(L:MFD3_Subportal2, number) (>L:MFD3_Screen, number)
+					(L:MFD3_Subportalbuffer, number) (>L:MFD3_Subportal2, number) }	 	
+
+(L:MFD4_Subportal, bool) (L:MFD4_Screen, number) 0 > and (L:MFD4_Screen, number) 100 &lt; and (L:MFD4PCDTouch,enum) 31 == (L:MFD4PCDTouch,enum) 32 == or (L:MFD4PCDTouch,enum) 37 == or and if{
+					(L:MFD4_Screen, number) (>L:MFD4_Subportalbuffer, number) 
+					(L:MFD4_Subportal1, number) (>L:MFD4_Screen, number)
+					(L:MFD4_Subportalbuffer, number) (>L:MFD4_Subportal1, number) }
+
+(L:MFD4_Subportal, bool) (L:MFD4_Screen, number) 0 > and (L:MFD4_Screen, number) 100 &lt; and (L:MFD4PCDTouch,enum) 34 == (L:MFD4PCDTouch,enum) 35 == or (L:MFD4PCDTouch,enum) 39 == or and if{
+					(L:MFD4_Screen, number) (>L:MFD4_Subportalbuffer, number) 
+					(L:MFD4_Subportal2, number) (>L:MFD4_Screen, number)
+					(L:MFD4_Subportalbuffer, number) (>L:MFD4_Subportal2, number) }
+
+(L:MFD4_Subportal, bool) ! (L:MFD4PCDTouch,enum) 37 == and  (L:MFD4_Screen, number) 199 &lt; and if{
+					(L:MFD4_Screen, number) (>L:MFD4_Subportalbuffer, number) 
+					(L:MFD4_Subportal1, number) (>L:MFD4_Screen, number)
+					(L:MFD4_Subportalbuffer, number) (>L:MFD4_Subportal1, number) }
+
+(L:MFD4_Subportal, bool) ! (L:MFD4PCDTouch,enum) 39 == and (L:MFD4_Screen, number) 199 &lt; and if{
+					(L:MFD4_Screen, number) (>L:MFD4_Subportalbuffer, number) 
+					(L:MFD4_Subportal2, number) (>L:MFD4_Screen, number)
+					(L:MFD4_Subportalbuffer, number) (>L:MFD4_Subportal2, number) }					
+</Value>
+</Select>
+</Element>
+
+<Comment>Go To Screen</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3PCDTouch,enum) 1 == (L:MFD3_Screen, number) 100 &lt; and if{
+(L:MFD3_Screen, number) 199 &lt; if{ (L:MFD3_Screen, number) 0 != if{ (L:MFD3_Screen, number) (>L:MFD3_Screen_BufferFull, number) 0 (>L:MFD3_Screen, number) } els{	(L:MFD3_Screen_BufferFull, number) (>L:MFD3_Screen, number)	} }
+}
+
+(L:MFD4PCDTouch,enum) 1 == (L:MFD4_Screen, number) 100 &lt; and if{
+(L:MFD4_Screen, number) 199 &lt; if{ (L:MFD4_Screen, number) 0 != if{ (L:MFD4_Screen, number) (>L:MFD4_Screen_BufferFull, number) 0 (>L:MFD4_Screen, number) } els{	(L:MFD4_Screen_BufferFull, number) (>L:MFD4_Screen, number)	} }
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>ASR Controls</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 1 == if{
+(L:MFD3PCDTouch,enum) 2 == if{ (L:ASRMode, bool) ! (>L:ASRMode, bool) }
+(L:MFD3PCDTouch,enum) 6 == (L:ASRMode, bool) ! and if{ (L:ASRRangeSelection,enum)  1 + (>L:ASRRangeSelection,enum)  }
+(L:MFD3PCDTouch,enum) 11 == (L:ASRMode, bool) ! and if{ (L:ASRRangeSelection,enum)  1 - (>L:ASRRangeSelection,enum)  }
+(L:MFD3PCDTouch,enum) 26 == (L:ASRMode, enum) 1 == and if{ 
+(L:ASRAltitude, number) (L:ASRAltitudeDelta, number) + (>L:ASRAltitude,number)
+(L:ASRAltitude, number) 0.5 &lt; if{ 0 (>L:ASRAltitude, number) 1 (>L:ASRAltitudeDelta, number) }
+(L:ASRAltitude, number) 8.5 > if{ 9 (>L:ASRAltitude, number) -1 (>L:ASRAltitudeDelta, number) }
+}
+}
+
+(L:MFD4_Screen, number) 1 == if{
+(L:MFD4PCDTouch,enum) 2 == if{ (L:ASRMode, bool) ! (>L:ASRMode, bool) }
+(L:MFD4PCDTouch,enum) 6 == (L:ASRMode, bool) ! and if{ (L:ASRRangeSelection,enum)  1 + (>L:ASRRangeSelection,enum)  }
+(L:MFD4PCDTouch,enum) 11 == (L:ASRMode, bool) ! and if{ (L:ASRRangeSelection,enum)  1 - (>L:ASRRangeSelection,enum)  }
+(L:MFD4PCDTouch,enum) 26 == (L:ASRMode, enum) 1 == and if{ 
+(L:ASRAltitude, number) (L:ASRAltitudeDelta, number) + (>L:ASRAltitude,number)
+(L:ASRAltitude, number) 0.5 &lt; if{ 0 (>L:ASRAltitude, number) 1 (>L:ASRAltitudeDelta, number) }
+(L:ASRAltitude, number) 8.5 > if{ 9 (>L:ASRAltitude, number) -1 (>L:ASRAltitudeDelta, number) }
+}
+}
+</Value>
+</Select>
+</Element>>
+
+<Comment>CHECKLIST Controls</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 2 == if{
+(L:MFD3PCDTouch,enum) 6 == if{ 0 (>L:Checklist_page, number) }
+(L:MFD3PCDTouch,enum) 11 == if{ 1 (>L:Checklist_page, number) }
+(L:MFD3PCDTouch,enum) 16 == if{ 2 (>L:Checklist_page, number) }
+(L:MFD3PCDTouch,enum) 21 == if{ 3 (>L:Checklist_page, number) }
+(L:MFD3PCDTouch,enum) 26 == if{ 4 (>L:Checklist_page, number) }
+(L:MFD3PCDTouch,enum) 31 == if{ 5 (>L:Checklist_page, number) }
+}
+
+(L:MFD4_Screen, number) 2 == if{
+(L:MFD4PCDTouch,enum) 6 == if{ 0 (>L:Checklist_page, number) }
+(L:MFD4PCDTouch,enum) 11 == if{ 1 (>L:Checklist_page, number) }
+(L:MFD4PCDTouch,enum) 16 == if{ 2 (>L:Checklist_page, number) }
+(L:MFD4PCDTouch,enum) 21 == if{ 3 (>L:Checklist_page, number) }
+(L:MFD4PCDTouch,enum) 26 == if{ 4 (>L:Checklist_page, number) }
+(L:MFD4PCDTouch,enum) 31 == if{ 5 (>L:Checklist_page, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>DAS Controls</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 4 == if{
+(L:MFD3PCDTouch,enum) 8 == (L:MFD3PCDTouch,enum) 13 == or (L:MFD3_Subportal,number) 1 == and if{ (L:DASCameraPitch, degree) 5 - 0 max (>L:DASCameraPitch, degree) }
+(L:MFD3PCDTouch,enum) 18 == (L:MFD3PCDTouch,enum) 23 == or (L:MFD3_Subportal,number) 1 == and if{ (L:DASCameraPitch, degree) 5 + 100 min (>L:DASCameraPitch, degree) }
+(L:MFD3PCDTouch,enum) 13 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3_Subportal,number) 0 == and if{ (L:DASCameraPitch, degree) 5 - 0 max (>L:DASCameraPitch, degree) }
+(L:MFD3PCDTouch,enum) 23 == (L:MFD3PCDTouch,enum) 28 == or (L:MFD3_Subportal,number) 0 == and if{ (L:DASCameraPitch, degree) 5 + 100 min (>L:DASCameraPitch, degree) }
+}
+
+(L:MFD4_Screen, number) 4 == if{
+(L:MFD4PCDTouch,enum) 8 == (L:MFD4PCDTouch,enum) 13 == or (L:MFD4_Subportal,number) 1 == and if{ (L:DASCameraPitch, degree) 5 - 0 max (>L:DASCameraPitch, degree) }
+(L:MFD4PCDTouch,enum) 18 == (L:MFD4PCDTouch,enum) 23 == or (L:MFD4_Subportal,number) 1 == and if{ (L:DASCameraPitch, degree) 5 + 100 min (>L:DASCameraPitch, degree) }
+(L:MFD4PCDTouch,enum) 13 == (L:MFD4PCDTouch,enum) 18 == or (L:MFD4_Subportal,number) 0 == and if{ (L:DASCameraPitch, degree) 5 - 0 max (>L:DASCameraPitch, degree) }
+(L:MFD4PCDTouch,enum) 23 == (L:MFD4PCDTouch,enum) 28 == or (L:MFD4_Subportal,number) 0 == and if{ (L:DASCameraPitch, degree) 5 + 100 min (>L:DASCameraPitch, degree) }
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>EFI controls including pop-up and full screen modes</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 106 == if{
+(L:MFD3PCDTouch,enum) 4 == if{ (L:ILSReceiverAvailable,bool) ! (>L:ILSReceiverAvailable,bool) }
+(L:MFD3PCDTouch,enum) 6 == if{ (L:CDIMode, enum) ++ (>L:CDIMode, enum) (L:CDIMode, enum) 4 > if{ 0 (>L:CDIMode, enum) } }
+(L:MFD3PCDTouch,enum) 26 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 4 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 31 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 1 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 7 == if{ 1 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 8 == if{ 2 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 9 == if{ 3 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 12 == if{ 4 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 13 == if{ 5 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 14 == if{ 6 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 17 == if{ 7 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 18 == if{ 8 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 19 == if{ 9 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 23 == if{ 0 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+}
+(L:MFD4_Screen, number) 106 == if{
+(L:MFD4PCDTouch,enum) 10 == if{ 1 (>K:TOGGLE_FLIGHT_DIRECTOR, bool) }
+(L:MFD4PCDTouch,enum) 35 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 2 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 30 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 3 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+}
+
+
+
+(L:MFD3_Screen, number) 6 == if{
+(L:MFD3PCDTouch,enum) 4 == if{ (L:ILSReceiverAvailable,bool) ! (>L:ILSReceiverAvailable,bool) }
+(L:MFD3PCDTouch,enum) 6 == if{ (L:CDIMode, enum) ++ (>L:CDIMode, enum) (L:CDIMode, enum) 4 > if{ 0 (>L:CDIMode, enum) } }
+(L:MFD3PCDTouch,enum) 10 == if{ 1 (>K:TOGGLE_FLIGHT_DIRECTOR, bool) }
+
+(L:MFD3PCDTouch,enum) 7 == if{ 1 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 8 == if{ 2 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 9 == if{ 3 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 12 == if{ 4 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 13 == if{ 5 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 14 == if{ 6 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 17 == if{ 7 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 18 == if{ 8 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 19 == if{ 9 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 23 == if{ 0 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+}
+
+(L:MFD3_Screen, number) 6 == (L:MFD3_Subportal, number) 1 == and if{
+(L:MFD3PCDTouch,enum) 11 == if{ (L:MFD3_EFIS_HSI, bool) ! (>L:MFD3_EFIS_HSI, bool) }
+
+(L:MFD3_EFIS_HSI, bool) if{
+(L:MFD3PCDTouch,enum) 26 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 1 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 30 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 2 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 25 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 3 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 21 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 4 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+}
+
+}
+
+(L:MFD3_Screen, number) 6 == (L:MFD3_Subportal, number) 0 == and if{
+(L:MFD3PCDTouch,enum) 31 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 1 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 35 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 2 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 30 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 3 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 26 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 4 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+}
+
+(L:MFD4_Screen, number) 6 == if{
+(L:MFD4PCDTouch,enum) 4 == if{ (L:ILSReceiverAvailable,bool) ! (>L:ILSReceiverAvailable,bool) }
+(L:MFD4PCDTouch,enum) 6 == if{ (L:CDIMode, enum) ++ (>L:CDIMode, enum) (L:CDIMode, enum) 4 > if{ 0 (>L:CDIMode, enum) } }
+(L:MFD4PCDTouch,enum) 10 == if{ 1 (>K:TOGGLE_FLIGHT_DIRECTOR, bool) }
+
+(L:MFD4PCDTouch,enum) 7 == if{ 1 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 8 == if{ 2 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 9 == if{ 3 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 12 == if{ 4 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 13 == if{ 5 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 14 == if{ 6 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 17 == if{ 7 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 18 == if{ 8 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 19 == if{ 9 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 23 == if{ 0 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+}
+
+(L:MFD4_Screen, number) 6 == (L:MFD4_Subportal, number) 1 == and if{
+(L:MFD4PCDTouch,enum) 11 == if{ (L:MFD4_EFIS_HSI, bool) ! (>L:MFD4_EFIS_HSI, bool) }
+
+(L:MFD4_EFIS_HSI, bool) if{
+(L:MFD4PCDTouch,enum) 26 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 1 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 30 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 2 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 25 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 3 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 21 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 4 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+}
+
+}
+
+(L:MFD4_Screen, number) 6 == (L:MFD4_Screen, number) 206 == or (L:MFD4_Subportal, number) 0 == and if{
+(L:MFD4PCDTouch,enum) 31 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 1 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 35 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 2 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 30 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 3 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 26 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 4 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+}
+
+(L:MFD4_Screen, number) 6 == (L:MFD4_Subportal, number) 0 == and (L:MFD4_EFIS_HSI, bool) and if{
+(L:MFD4PCDTouch,enum) 21 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 1 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 25 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 2 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 20 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 3 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+}
+
+(L:CDIMode, enum) 0 &gt; if{ 1 (>L:MFD_EFIS_CDI, bool) } els{ 0 (>L:MFD_EFIS_CDI, bool) }
+(L:ILSReceiverEnabled,bool) ! if{ 0 (>L:ILSReceiverAvailable,bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>ENGINE Controls including pop up and full screen modes</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 7 == (L:MFD3_Screen, number) 107 == or (L:MFD3_Screen, number) 207 == or if{
+(L:MFD3PCDTouch,enum) 2 == if{ (L:EngineIceSystem,enum) 1 + (>L:EngineIceSystem,enum) }
+(L:MFD3PCDTouch,enum) 4 == if{ (L:ADSHTSystem,enum) 1 + (>L:ADSHTSystem,enum) }
+}
+
+(L:MFD4_Screen, number) 7 == if{
+(L:MFD4PCDTouch,enum) 2 == if{ (L:EngineIceSystem,enum) 1 + (>L:EngineIceSystem,enum) }
+(L:MFD4PCDTouch,enum) 4 == if{ (L:ADSHTSystem,enum) 1 + (>L:ADSHTSystem,enum) }
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>FCS controls including pop-up and full screen modes</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 8 ==  (L:MFD3_Screen, number) 208 == or (L:MFD3_Screen, number) 108 == or if{
+(L:MFD3PCDTouch,enum) 2 == if{ 1 (>L:NoseGearDoorClick, bool) }
+(L:MFD3PCDTouch,enum) 6 == (A:Gear center position,percent) 99 > and (L:F35Model, number) 2 == and if{ (L:switch_launch_bar, bool) ! (>L:switch_launch_bar, bool) (>K:TOGGLE_LAUNCH_BAR_SWITCH, bool) }
+(L:MFD3PCDTouch,enum) 6 == (L:lever_tailhook, bool) and (L:F35Model, number) 1 == and if{ 0 (>K:AP_PANEL_HEADING_HOLD, bool) }
+(L:MFD3PCDTouch,enum) 11 == (L:STOLAutoTakeoff,enum) 0 > and (L:F35Model, number) 1 == and if{ (L:STOLAutoTakeoff,enum) 1 == if{ 2 (>L:STOLAutoTakeoff,enum) } els{ (L:STOLAutoTakeoff,enum) 2 == if{ 0 (>L:STOLAutoTakeoff,enum) } } }
+(L:MFD3PCDTouch,enum) 11 == (A:SURFACE RELATIVE GROUND SPEED, Knots) 15 &lt; and (A:SIM ON GROUND, bool) and (L:F35Model, number) 2 == and if{ (L:lever_wingfold, bool) ! (>L:lever_wingfold, bool) }
+(L:MFD3PCDTouch,enum) 16 == if{ 1 (>K:AP_MASTER, bool) }
+(L:MFD3PCDTouch,enum) 22 == (L:MFD3PCDTouch,enum) 23 == or (L:MFD3PCDTouch,enum) 22 == or if{ 1 (>L:NoseGearDoorConsentClick, bool) }
+(L:MFD3PCDTouch,enum) 24 == (L:MFD3PCDTouch,enum) 25 == or (L:MFD3_Screen, number) 108 == and if{ 1 (>L:NoseGearDoorConsentClick, bool) }
+(L:MFD3PCDTouch,enum) 30 == (L:MFD3_Screen, number) 108 != and if{ 0 (>K:AXIS_ELEV_TRIM_SET, bool) 0 (>K:ELEVATOR_TRIM_SET, bool) 0 (>K:AXIS_AILERONS_SET, bool) 0 (>K:AILERON_TRIM_SET, bool) 0 (>K:AXIS_RUDDER_SET, bool) 0 (>K:RUDDER_TRIM_SET, bool) }
+}
+
+(L:MFD4_Screen, number) 8 == if{
+(L:MFD4PCDTouch,enum) 2 == if{ 1 (>L:NoseGearDoorClick, bool) }
+(L:MFD4PCDTouch,enum) 6 == (A:Gear center position,percent) 99 > and (L:F35Model, number) 2 == and if{ (L:switch_launch_bar, bool) ! (>L:switch_launch_bar, bool) (>K:TOGGLE_LAUNCH_BAR_SWITCH, bool) }
+(L:MFD4PCDTouch,enum) 6 == (L:lever_tailhook, bool) and (L:F35Model, number) 1 == and if{ 0 (>K:AP_PANEL_HEADING_HOLD, bool) }
+(L:MFD4PCDTouch,enum) 11 == (L:STOLAutoTakeoff,enum) 0 > and (L:F35Model, number) 1 == and if{ (L:STOLAutoTakeoff,enum) 1 == if{ 2 (>L:STOLAutoTakeoff,enum) } els{ (L:STOLAutoTakeoff,enum) 2 == if{ 0 (>L:STOLAutoTakeoff,enum) } } }
+(L:MFD4PCDTouch,enum) 11 == (A:SURFACE RELATIVE GROUND SPEED, Knots) 15 &lt; and (A:SIM ON GROUND, bool) and (L:F35Model, number) 2 == and if{ (L:lever_wingfold, bool) ! (>L:lever_wingfold, bool) }
+(L:MFD4PCDTouch,enum) 16 == if{ 1 (>K:AP_MASTER, bool) }
+(L:MFD4PCDTouch,enum) 22 == (L:MFD4PCDTouch,enum) 23 == or (L:MFD4PCDTouch,enum) 22 == or if{ 1 (>L:NoseGearDoorConsentClick, bool) }
+(L:MFD4PCDTouch,enum) 30 == if{ 0 (>K:AXIS_ELEV_TRIM_SET, bool) 0 (>K:ELEVATOR_TRIM_SET, bool) 0 (>K:AXIS_AILERONS_SET, bool) 0 (>K:AILERON_TRIM_SET, bool) 0 (>K:AXIS_RUDDER_SET, bool) 0 (>K:RUDDER_TRIM_SET, bool) }
+}
+
+(L:MFD4_Screen, number) 108 == or if{
+(L:MFD4PCDTouch,enum) 21 == (L:MFD4PCDTouch,enum) 22 == or if{ 1 (>L:NoseGearDoorConsentClick, bool) }
+(L:MFD4PCDTouch,enum) 30 == if{ 0 (>K:AXIS_ELEV_TRIM_SET, bool) 0 (>K:ELEVATOR_TRIM_SET, bool) 0 (>K:AXIS_AILERONS_SET, bool) 0 (>K:AILERON_TRIM_SET, bool) 0 (>K:AXIS_RUDDER_SET, bool) 0 (>K:RUDDER_TRIM_SET, bool) }
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>FUEL controls including pop-up and full screen modes</Comment>
+<Element>
+<Select>
+<Value>		
+(L:MFD3_Screen, number) 11 == if{
+
+(L:MFD3PCDTouch,enum) 2 == if{ 
+	(L:Fuel_Refuel_Consent, bool) (L:Fuel_Refuel_Close_Consent, bool) or if{ 0 (>L:Fuel_Refuel_Consent, bool) 0 (>L:Fuel_Refuel_Close_Consent, bool) }
+	 els{ (L:switch_IFR_door, bool) ! (L:Fuel_Refuel_Consent, bool) ! and if{ 1 (>L:Fuel_Refuel_Consent, bool) 0 (>L:Fuel_Refuel_Close_Consent, bool) } els{ (L:switch_IFR_door, bool) (L:Fuel_Refuel_Close_Consent, bool) ! and if{ 0 (>L:Fuel_Refuel_Consent, bool) 1 (>L:Fuel_Refuel_Close_COnsent, bool) } }
+} }
+
+(L:MFD3PCDTouch,enum) 11 == if{ 
+	(A:FUEL DUMP SWITCH,bool) (L:Fuel_Dump_Consent, bool) or if{ 0 (>L:Fuel_Dump_Consent, bool) } els{ 1 (>L:Fuel_Dump_Consent, bool) }
+	(A:FUEL DUMP SWITCH,Bool) 1 == if{ 0 (>K:FUEL_DUMP_SWITCH_SET, bool) }
+	}
+
+(L:MFD3PCDTouch,enum) 15 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 2 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+(L:MFD3PCDTouch,enum) 20 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 1 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+(L:MFD3PCDTouch,enum) 21 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 3 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+
+(L:MFD3PCDTouch,enum) 17 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or (L:Fuel_Dump_Consent, bool) (A:FUEL DUMP SWITCH,Bool) or and if{ 
+	(A:FUEL DUMP SWITCH,Bool) 0 == if{ 1 (>K:FUEL_DUMP_SWITCH_SET, bool) } els{ 0 (>K:FUEL_DUMP_SWITCH_SET, bool) }
+	0 (>L:Fuel_Dump_Consent, bool) 
+	}
+(L:MFD3PCDTouch,enum) 17 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or (L:Fuel_Refuel_Consent, bool) and if{ 
+	1 (>L:switch_IFR_door, bool)
+	0 (>L:Fuel_Refuel_Consent, bool)
+	0 (>L:Fuel_Refuel_Close_Consent, bool)
+	}
+
+(L:MFD3PCDTouch,enum) 17 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or (L:Fuel_Refuel_Close_Consent, bool) and if{ 
+	0 (>L:switch_IFR_door, bool)
+	0 (>L:Fuel_Refuel_Consent, bool)
+	0 (>L:Fuel_Refuel_Close_Consent, bool)
+	}
+
+
+(L:MFD3PCDTouch,enum) 31 == if{ (A:GENERAL ENG FUEL VALVE:1, bool)  if{  (L:Fuel_MFSOV_Consent, bool) ! if{ 1 (>L:Fuel_MFSOV_Consent, bool) }  } els{ 1 (>K:TOGGLE_FUEL_VALVE_ALL) 0 (>L:Fuel_MFSOV_Consent, number) } }
+(L:MFD3PCDTouch,enum) 17 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or (L:Fuel_MFSOV_Consent, bool) and if{ 
+	(A:GENERAL ENG FUEL VALVE:1, Bool) if{ 1 (>K:TOGGLE_FUEL_VALVE_ALL) }
+	0 (>L:Fuel_MFSOV_Consent, number) 
+	}
+(L:MFD3PCDTouch,enum) 4 == (L:MFD3PCDTouch,enum) 9 == or (L:IFR_doors_status, number) 99 > and (A:SIM ON GROUND,bool) ! and if{ 
+	(A:GENERAL ENG FUEL VALVE:1, Bool) if{ 
+	1 (>L:InFlightRefuel, bool) 
+	(A:Indicated altitude,feet) (>L:RefuelReferenceAltitude, feet)
+	(A:Airspeed indicated,knots) (>L:RefuelReferenceAirspeed, knots)
+	} 
+	els{ 0 (>L:InFlightRefuel, bool) }
+	}
+
+(L:MFD3PCDTouch,enum) 7 == if{ 1 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 8 == if{ 2 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 9 == if{ 3 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 12 == if{ 4 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 13 == if{ 5 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 14 == if{ 6 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 17 == if{ 7 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 18 == if{ 8 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 19 == if{ 9 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 23 == if{ 0 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+}
+
+
+(L:MFD4_Screen, number) 11 == if{
+
+(L:MFD4PCDTouch,enum) 2 == if{ 
+	(L:Fuel_Refuel_Consent, bool) (L:Fuel_Refuel_Close_Consent, bool) or if{ 0 (>L:Fuel_Refuel_Consent, bool) 0 (>L:Fuel_Refuel_Close_Consent, bool) }
+	 els{ (L:switch_IFR_door, bool) ! (L:Fuel_Refuel_Consent, bool) ! and if{ 1 (>L:Fuel_Refuel_Consent, bool) 0 (>L:Fuel_Refuel_Close_Consent, bool) } els{ (L:switch_IFR_door, bool) (L:Fuel_Refuel_Close_Consent, bool) ! and if{ 0 (>L:Fuel_Refuel_Consent, bool) 1 (>L:Fuel_Refuel_Close_COnsent, bool) } }
+} }
+
+(L:MFD4PCDTouch,enum) 11 == if{ 
+	(A:FUEL DUMP SWITCH,bool) (L:Fuel_Dump_Consent, bool) or if{ 0 (>L:Fuel_Dump_Consent, bool) } els{ 1 (>L:Fuel_Dump_Consent, bool) }
+	(A:FUEL DUMP SWITCH,Bool) 1 == if{ 0 (>K:FUEL_DUMP_SWITCH_SET, bool) }
+	}
+
+(L:MFD4PCDTouch,enum) 15 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 2 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+(L:MFD4PCDTouch,enum) 20 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 1 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+(L:MFD4PCDTouch,enum) 21 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 3 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+
+(L:MFD4PCDTouch,enum) 17 == (L:MFD4PCDTouch,enum) 18 == or (L:MFD4PCDTouch,enum) 19 == or (L:Fuel_Dump_Consent, bool) (A:FUEL DUMP SWITCH,Bool) or and if{ 
+	(A:FUEL DUMP SWITCH,Bool) 0 == if{ 1 (>K:FUEL_DUMP_SWITCH_SET, bool) } els{ 0 (>K:FUEL_DUMP_SWITCH_SET, bool) }
+	0 (>L:Fuel_Dump_Consent, bool) 
+	}
+(L:MFD4PCDTouch,enum) 17 == (L:MFD4PCDTouch,enum) 18 == or (L:MFD4PCDTouch,enum) 19 == or (L:Fuel_Refuel_Consent, bool) and if{ 
+	1 (>L:switch_IFR_door, bool)
+	0 (>L:Fuel_Refuel_Consent, bool)
+	0 (>L:Fuel_Refuel_Close_Consent, bool)
+	}
+
+(L:MFD4PCDTouch,enum) 17 == (L:MFD4PCDTouch,enum) 18 == or (L:MFD4PCDTouch,enum) 19 == or (L:Fuel_Refuel_Close_Consent, bool) and if{ 
+	0 (>L:switch_IFR_door, bool)
+	0 (>L:Fuel_Refuel_Consent, bool)
+	0 (>L:Fuel_Refuel_Close_Consent, bool)
+	}
+
+
+(L:MFD4PCDTouch,enum) 31 == if{ (A:GENERAL ENG FUEL VALVE:1, bool)  if{  (L:Fuel_MFSOV_Consent, bool) ! if{ 1 (>L:Fuel_MFSOV_Consent, bool) }  } els{ 1 (>K:TOGGLE_FUEL_VALVE_ALL) 0 (>L:Fuel_MFSOV_Consent, number) } }	
+(L:MFD4PCDTouch,enum) 17 == (L:MFD4PCDTouch,enum) 18 == or (L:MFD4PCDTouch,enum) 19 == or (L:Fuel_MFSOV_Consent, bool) and if{ 
+	(A:GENERAL ENG FUEL VALVE:1, Bool) if{ 1 (>K:TOGGLE_FUEL_VALVE_ALL) }
+	0 (>L:Fuel_MFSOV_Consent, number) 
+	}
+(L:MFD4PCDTouch,enum) 4 == (L:MFD4PCDTouch,enum) 9 == or (L:IFR_doors_status, number) 99 > and (A:SIM ON GROUND,bool) ! and if{ 
+	(A:GENERAL ENG FUEL VALVE:1, Bool) if{ 
+	1 (>L:InFlightRefuel, bool) 
+	(A:Indicated altitude,feet) (>L:RefuelReferenceAltitude, feet)
+	(A:Airspeed indicated,knots) (>L:RefuelReferenceAirspeed, knots)
+	} 
+	els{ 0 (>L:InFlightRefuel, bool) }
+	}
+
+(L:MFD4PCDTouch,enum) 7 == if{ 1 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 8 == if{ 2 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 9 == if{ 3 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 12 == if{ 4 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 13 == if{ 5 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 14 == if{ 6 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 17 == if{ 7 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 18 == if{ 8 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 19 == if{ 9 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 23 == if{ 0 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+}
+
+
+(L:MFD3_Screen, number) 111 == if{
+
+(L:MFD3PCDTouch,enum) 2 == if{ 
+	(L:Fuel_Refuel_Consent, bool) (L:Fuel_Refuel_Close_Consent, bool) or if{ 0 (>L:Fuel_Refuel_Consent, bool) 0 (>L:Fuel_Refuel_Close_Consent, bool) }
+	 els{ (L:switch_IFR_door, bool) ! (L:Fuel_Refuel_Consent, bool) ! and if{ 1 (>L:Fuel_Refuel_Consent, bool) 0 (>L:Fuel_Refuel_Close_Consent, bool) } els{ (L:switch_IFR_door, bool) (L:Fuel_Refuel_Close_Consent, bool) ! and if{ 0 (>L:Fuel_Refuel_Consent, bool) 1 (>L:Fuel_Refuel_Close_COnsent, bool) } }
+} }
+
+(L:MFD3PCDTouch,enum) 11 == if{ 
+	(A:FUEL DUMP SWITCH,bool) (L:Fuel_Dump_Consent, bool) or if{ 0 (>L:Fuel_Dump_Consent, bool) } els{ 1 (>L:Fuel_Dump_Consent, bool) }
+	(A:FUEL DUMP SWITCH,Bool) 1 == if{ 0 (>K:FUEL_DUMP_SWITCH_SET, bool) }
+	}
+
+(L:MFD3PCDTouch,enum) 21 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 3 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+
+(L:MFD3PCDTouch,enum) 20 == (L:Fuel_Dump_Consent, bool) (A:FUEL DUMP SWITCH,Bool) or and if{ 
+	(A:FUEL DUMP SWITCH,Bool) 0 == if{ 1 (>K:FUEL_DUMP_SWITCH_SET, bool) } els{ 0 (>K:FUEL_DUMP_SWITCH_SET, bool) }
+	0 (>L:Fuel_Dump_Consent, bool) 
+	}
+(L:MFD3PCDTouch,enum) 20 == (L:Fuel_Refuel_Consent, bool) and if{ 
+	1 (>L:switch_IFR_door, bool)
+	0 (>L:Fuel_Refuel_Consent, bool)
+	0 (>L:Fuel_Refuel_Close_Consent, bool)
+	}
+
+(L:MFD3PCDTouch,enum) 20 == (L:Fuel_Refuel_Close_Consent, bool) and if{ 
+	0 (>L:switch_IFR_door, bool)
+	0 (>L:Fuel_Refuel_Consent, bool)
+	0 (>L:Fuel_Refuel_Close_Consent, bool)
+	}
+
+
+(L:MFD3PCDTouch,enum) 31 == if{ (A:GENERAL ENG FUEL VALVE:1, bool)  if{  (L:Fuel_MFSOV_Consent, bool) ! if{ 1 (>L:Fuel_MFSOV_Consent, bool) }  } els{ 1 (>K:TOGGLE_FUEL_VALVE_ALL) 0 (>L:Fuel_MFSOV_Consent, number) } }
+(L:MFD3PCDTouch,enum) 20 == (L:Fuel_MFSOV_Consent, bool) and if{ 
+	(A:GENERAL ENG FUEL VALVE:1, Bool) if{ 1 (>K:TOGGLE_FUEL_VALVE_ALL) }
+	0 (>L:Fuel_MFSOV_Consent, number) 
+	}
+(L:MFD3PCDTouch,enum) 4 == (L:IFR_doors_status, number) 99 > and (A:SIM ON GROUND,bool) ! and if{ 
+	(A:GENERAL ENG FUEL VALVE:1, Bool) if{ 
+	1 (>L:InFlightRefuel, bool) 
+	(A:Indicated altitude,feet) (>L:RefuelReferenceAltitude, feet)
+	(A:Airspeed indicated,knots) (>L:RefuelReferenceAirspeed, knots)
+	} 
+	els{ 0 (>L:InFlightRefuel, bool) }
+	}
+
+(L:MFD3PCDTouch,enum) 7 == if{ 1 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 8 == if{ 2 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 9 == if{ 3 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 12 == if{ 4 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 13 == if{ 5 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 14 == if{ 6 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 17 == if{ 7 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 18 == if{ 8 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 19 == if{ 9 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 23 == if{ 0 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+}
+
+
+(L:MFD4_Screen, number) 111 == if{
+
+
+(L:MFD4PCDTouch,enum) 15 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 2 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+(L:MFD4PCDTouch,enum) 20 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 1 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+
+(L:MFD4PCDTouch,enum) 16 == (L:Fuel_Dump_Consent, bool) (A:FUEL DUMP SWITCH,Bool) or and if{ 
+	(A:FUEL DUMP SWITCH,Bool) 0 == if{ 1 (>K:FUEL_DUMP_SWITCH_SET, bool) } els{ 0 (>K:FUEL_DUMP_SWITCH_SET, bool) }
+	0 (>L:Fuel_Dump_Consent, bool) 
+	}
+(L:MFD4PCDTouch,enum) 16 == (L:Fuel_Refuel_Consent, bool) and if{ 
+	1 (>L:switch_IFR_door, bool)
+	0 (>L:Fuel_Refuel_Consent, bool)
+	0 (>L:Fuel_Refuel_Close_Consent, bool)
+	}
+
+(L:MFD4PCDTouch,enum) 16 == (L:Fuel_Refuel_Close_Consent, bool) and if{ 
+	0 (>L:switch_IFR_door, bool)
+	0 (>L:Fuel_Refuel_Consent, bool)
+	0 (>L:Fuel_Refuel_Close_Consent, bool)
+	}
+
+
+(L:MFD4PCDTouch,enum) 16 == (L:Fuel_MFSOV_Consent, bool) and if{ 
+	(A:GENERAL ENG FUEL VALVE:1, Bool) if{ 1 (>K:TOGGLE_FUEL_VALVE_ALL) }
+	0 (>L:Fuel_MFSOV_Consent, number) 
+	}
+(L:MFD4PCDTouch,enum) 7 == (L:IFR_doors_status, number) 99 > and (A:SIM ON GROUND,bool) ! and if{ 
+	(A:GENERAL ENG FUEL VALVE:1, Bool) if{ 
+	1 (>L:InFlightRefuel, bool) 
+	(A:Indicated altitude,feet) (>L:RefuelReferenceAltitude, feet)
+	(A:Airspeed indicated,knots) (>L:RefuelReferenceAirspeed, knots)
+	} 
+	els{ 0 (>L:InFlightRefuel, bool) }
+	}
+}
+
+
+(L:MFD3_Screen, number) 211 == if{
+
+(L:MFD3PCDTouch,enum) 2 == if{ 
+	(L:Fuel_Refuel_Consent, bool) (L:Fuel_Refuel_Close_Consent, bool) or if{ 0 (>L:Fuel_Refuel_Consent, bool) 0 (>L:Fuel_Refuel_Close_Consent, bool) }
+	 els{ (L:switch_IFR_door, bool) ! (L:Fuel_Refuel_Consent, bool) ! and if{ 1 (>L:Fuel_Refuel_Consent, bool) 0 (>L:Fuel_Refuel_Close_Consent, bool) } els{ (L:switch_IFR_door, bool) (L:Fuel_Refuel_Close_Consent, bool) ! and if{ 0 (>L:Fuel_Refuel_Consent, bool) 1 (>L:Fuel_Refuel_Close_COnsent, bool) } }
+} }
+
+(L:MFD3PCDTouch,enum) 11 == if{ 
+	(A:FUEL DUMP SWITCH,bool) (L:Fuel_Dump_Consent, bool) or if{ 0 (>L:Fuel_Dump_Consent, bool) } els{ 1 (>L:Fuel_Dump_Consent, bool) }
+	(A:FUEL DUMP SWITCH,Bool) 1 == if{ 0 (>K:FUEL_DUMP_SWITCH_SET, bool) }
+	}
+
+(L:MFD3PCDTouch,enum) 15 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 2 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+(L:MFD3PCDTouch,enum) 20 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 1 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+(L:MFD3PCDTouch,enum) 21 == if{ (L:FUELKeypad, bool) ! (>L:FUELKeypad, bool) (L:FUELKeypad, bool) if{ 0 (>L:FUEL_digit_counter,number) 0 (>L:FUEL_NewDigit, number) 3 (>L:FUEL_mode,number) } els{ 0 (>L:FUEL_mode,number) } }
+
+(L:MFD3PCDTouch,enum) 17 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or (L:Fuel_Dump_Consent, bool) (A:FUEL DUMP SWITCH,Bool) or and if{ 
+	(A:FUEL DUMP SWITCH,Bool) 0 == if{ 1 (>K:FUEL_DUMP_SWITCH_SET, bool) } els{ 0 (>K:FUEL_DUMP_SWITCH_SET, bool) }
+	0 (>L:Fuel_Dump_Consent, bool) 
+	}
+(L:MFD3PCDTouch,enum) 17 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or (L:Fuel_Refuel_Consent, bool) and if{ 
+	1 (>L:switch_IFR_door, bool)
+	0 (>L:Fuel_Refuel_Consent, bool)
+	0 (>L:Fuel_Refuel_Close_Consent, bool)
+	}
+
+(L:MFD3PCDTouch,enum) 17 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or (L:Fuel_Refuel_Close_Consent, bool) and if{ 
+	0 (>L:switch_IFR_door, bool)
+	0 (>L:Fuel_Refuel_Consent, bool)
+	0 (>L:Fuel_Refuel_Close_Consent, bool)
+	}
+
+
+(L:MFD3PCDTouch,enum) 31 == if{ (A:GENERAL ENG FUEL VALVE:1, bool)  if{  (L:Fuel_MFSOV_Consent, bool) ! if{ 1 (>L:Fuel_MFSOV_Consent, bool) }  } els{ 1 (>K:TOGGLE_FUEL_VALVE_ALL) 0 (>L:Fuel_MFSOV_Consent, number) } }
+(L:MFD3PCDTouch,enum) 17 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or (L:Fuel_MFSOV_Consent, bool) and if{ 
+	(A:GENERAL ENG FUEL VALVE:1, Bool) if{ 1 (>K:TOGGLE_FUEL_VALVE_ALL) }
+	0 (>L:Fuel_MFSOV_Consent, number) 
+	}
+(L:MFD3PCDTouch,enum) 4 == (L:MFD3PCDTouch,enum) 9 == or (L:IFR_doors_status, number) 99 > and (A:SIM ON GROUND,bool) ! and if{ 
+	(A:GENERAL ENG FUEL VALVE:1, Bool) if{ 
+	1 (>L:InFlightRefuel, bool) 
+	(A:Indicated altitude,feet) (>L:RefuelReferenceAltitude, feet)
+	(A:Airspeed indicated,knots) (>L:RefuelReferenceAirspeed, knots)
+	} 
+	els{ 0 (>L:InFlightRefuel, bool) }
+	}
+
+(L:MFD3PCDTouch,enum) 7 == if{ 1 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 8 == if{ 2 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 9 == if{ 3 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 12 == if{ 4 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 13 == if{ 5 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 14 == if{ 6 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 17 == if{ 7 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 18 == if{ 8 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 19 == if{ 9 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 23 == if{ 0 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>ICAWS Controls including pop up and full screen modes</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 13 == if{
+(L:MFD3PCDTouch,enum) 31 == if{ (L:ICAWSTest,bool) ! (>L:ICAWSTest,bool) }
+}
+
+(L:MFD4_Screen, number) 13 == (L:MFD4_Screen, number) 213 == or if{
+(L:MFD4PCDTouch,enum) 31 == if{ (L:ICAWSTest,bool) ! (>L:ICAWSTest,bool) }
+}
+</Value>
+</Select>
+</Element>
+
+
+
+<Comment>SMS Controls including pop up</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 15 == (L:MFD3_Screen, number) 215 == or (L:MFD3_Screen, number) 15 == or if{
+(L:MFD3PCDTouch,enum) 16 == if{ (L:switch_weapon_doors, bool) ! (>L:switch_weapon_doors, bool) }
+(L:MFD3PCDTouch,enum) 8 == (L:MFD3PCDTouch,enum) 12 == or (L:MFD3PCDTouch,enum) 13 == or (L:MFD3PCDTouch,enum) 14 == or if{ 1 (>L:configurationChange, bool) }
+(L:MFD3PCDTouch,enum) 17 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or if{ 1 (>L:WeaponChange, bool) }
+}
+
+(L:MFD4_Screen, number) 15 == if{
+(L:MFD4PCDTouch,enum) 16 == if{ (L:switch_weapon_doors, bool) ! (>L:switch_weapon_doors, bool) }
+(L:MFD4PCDTouch,enum) 8 == (L:MFD4PCDTouch,enum) 12 == or (L:MFD4PCDTouch,enum) 13 == or (L:MFD4PCDTouch,enum) 14 == or if{ 1 (>L:configurationChange, bool) }
+(L:MFD4PCDTouch,enum) 17 == (L:MFD4PCDTouch,enum) 18 == or (L:MFD4PCDTouch,enum) 19 == or if{ 1 (>L:WeaponChange, bool) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>SRCH mode controls</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 16 == if{
+(L:MFD3PCDTouch,enum) 6 == if{ 1 (>L:RadarSleepModeChange, bool) }
+
+(L:MFD3PCDTouch,enum) 7 == if{ (L:RadarSearchAspectAA1,enum) 1 + (>L:RadarSearchAspectAA1,enum) }
+(L:MFD3PCDTouch,enum) 8 == if{ (L:RadarSearchAspectAA2,enum) 1 + (>L:RadarSearchAspectAA2,enum) }
+(L:MFD3PCDTouch,enum) 27 == if{ (L:RadarAA1AzChange, enum) 1 + (>L:RadarAA1AzChange, enum) }
+(L:MFD3PCDTouch,enum) 28 == if{ (L:RadarAA2AzChange, enum) 1 + (>L:RadarAA2AzChange, enum) }
+(L:MFD3PCDTouch,enum) 29 == if{ (L:RadarASAzChange, enum) 1 + (>L:RadarASAzChange, enum) }
+(L:MFD3PCDTouch,enum) 32 == if{ (L:RadarAA1ElChange, bool) 1 + (>L:RadarAA1ElChange, bool) }
+(L:MFD3PCDTouch,enum) 33 == if{ (L:RadarAA2ElChange, bool) 1 + (>L:RadarAA2ElChange, bool) }
+(L:MFD3PCDTouch,enum) 34 == if{ (L:RadarASCtrChange, bool) 1 + (>L:RadarASCtrChange, bool) }
+}
+
+(L:MFD4_Screen, number) 16 == if{
+(L:MFD4PCDTouch,enum) 6 == if{ 1 (>L:RadarSleepModeChange, bool) }
+
+(L:MFD4PCDTouch,enum) 7 == if{ (L:RadarSearchAspectAA1,enum) 1 + (>L:RadarSearchAspectAA1,enum) }
+(L:MFD4PCDTouch,enum) 8 == if{ (L:RadarSearchAspectAA2,enum) 1 + (>L:RadarSearchAspectAA2,enum) }
+(L:MFD4PCDTouch,enum) 27 == if{ (L:RadarAA1AzChange, enum) 1 + (>L:RadarAA1AzChange, enum) }
+(L:MFD4PCDTouch,enum) 28 == if{ (L:RadarAA2AzChange, enum) 1 + (>L:RadarAA2AzChange, enum) }
+(L:MFD4PCDTouch,enum) 29 == if{ (L:RadarASAzChange, enum) 1 + (>L:RadarASAzChange, enum) }
+(L:MFD4PCDTouch,enum) 32 == if{ (L:RadarAA1ElChange, bool) 1 + (>L:RadarAA1ElChange, bool) }
+(L:MFD4PCDTouch,enum) 33 == if{ (L:RadarAA2ElChange, bool) 1 + (>L:RadarAA2ElChange, bool) }
+(L:MFD4PCDTouch,enum) 34 == if{ (L:RadarASCtrChange, bool) 1 + (>L:RadarASCtrChange, bool) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>TFLIR Controls</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 17 == if{
+(L:MFD3PCDTouch,enum) 2 == if{ (L:TFLIRCameraMode,bool) ! (>L:TFLIRCameraMode,bool) }
+(L:MFD3PCDTouch,enum) 25 == if{ (L:TFLIRBLOT,bool) ! (>L:TFLIRBLOT,bool) }
+(L:MFD3PCDTouch,enum) 8 == (L:MFD3PCDTouch,enum) 13 == or (L:MFD3_Subportal,number) 1 == and if{ (L:TFLIRCameraPitch, degree) 5 - 0 max (>L:TFLIRCameraPitch, degree) }
+(L:MFD3PCDTouch,enum) 18 == (L:MFD3PCDTouch,enum) 23 == or (L:MFD3_Subportal,number) 1 == and if{ (L:TFLIRCameraPitch, degree) 5 + 100 min (>L:TFLIRCameraPitch, degree) }
+(L:MFD3PCDTouch,enum) 13 == (L:MFD3PCDTouch,enum) 18 == or (L:MFD3_Subportal,number) 0 == and if{ (L:TFLIRCameraPitch, degree) 5 - 0 max (>L:TFLIRCameraPitch, degree) }
+(L:MFD3PCDTouch,enum) 23 == (L:MFD3PCDTouch,enum) 28 == or (L:MFD3_Subportal,number) 0 == and if{ (L:TFLIRCameraPitch, degree) 5 + 100 min (>L:TFLIRCameraPitch, degree) }
+}
+
+(L:MFD4_Screen, number) 17 == if{
+(L:MFD4PCDTouch,enum) 2 == if{ (L:TFLIRCameraMode,bool) ! (>L:TFLIRCameraMode,bool) }
+(L:MFD4PCDTouch,enum) 25 == if{ (L:TFLIRBLOT,bool) ! (>L:TFLIRBLOT,bool) }
+(L:MFD4PCDTouch,enum) 8 == (L:MFD4PCDTouch,enum) 13 == or (L:MFD4_Subportal,number) 1 == and if{ (L:TFLIRCameraPitch, degree) 5 - 0 max (>L:TFLIRCameraPitch, degree) }
+(L:MFD4PCDTouch,enum) 18 == (L:MFD4PCDTouch,enum) 23 == or (L:MFD4_Subportal,number) 1 == and if{ (L:TFLIRCameraPitch, degree) 5 + 100 min (>L:TFLIRCameraPitch, degree) }
+(L:MFD4PCDTouch,enum) 13 == (L:MFD4PCDTouch,enum) 18 == or (L:MFD4_Subportal,number) 0 == and if{ (L:TFLIRCameraPitch, degree) 5 - 0 max (>L:TFLIRCameraPitch, degree) }
+(L:MFD4PCDTouch,enum) 23 == (L:MFD4PCDTouch,enum) 28 == or (L:MFD4_Subportal,number) 0 == and if{ (L:TFLIRCameraPitch, degree) 5 + 100 min (>L:TFLIRCameraPitch, degree) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>TSD Controls FULL SCREEN MODE</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 118 == (L:MFD3_Screen, number) 119 == or (L:MFD3_Screen, number) 120 == or if{
+(L:MFD3PCDTouch,enum) 7 == if{ (L:TSD_Filter,enum) ++ (>L:TSD_Filter,enum) 0 (>L:MFD3PCDTouch,enum) }
+(L:TSD1Map, bool) ! (L:MFD3PCDTouch,enum) 6 == and (L:MFD3_Screen, number) 118 == and if{ (L:TSD1_Zoom, number) ++ (&gt;L:TSD1_Zoom, number) }
+(L:TSD1Map, bool) ! (L:MFD3PCDTouch,enum) 11 == and (L:MFD3_Screen, number) 118 == and if{ (L:TSD1_Zoom, number) -- (&gt;L:TSD1_Zoom, number) }
+(L:TSD1Map, bool) ! (L:MFD3PCDTouch,enum) 6 == and (L:MFD3_Screen, number) 119 == and if{ (L:TSD2_Zoom, number) ++ (&gt;L:TSD2_Zoom, number) }
+(L:TSD1Map, bool) ! (L:MFD3PCDTouch,enum) 11 == and (L:MFD3_Screen, number) 119 == and if{ (L:TSD2_Zoom, number) -- (&gt;L:TSD2_Zoom, number) }
+(L:TSD1Map, bool) ! (L:MFD3PCDTouch,enum) 6 == and (L:MFD3_Screen, number) 120 == and if{ (L:TSD3_Zoom, number) ++ (&gt;L:TSD3_Zoom, number) }
+(L:TSD1Map, bool) ! (L:MFD3PCDTouch,enum) 11 == and (L:MFD3_Screen, number) 120 == and if{ (L:TSD3_Zoom, number) -- (&gt;L:TSD3_Zoom, number) }
+(L:MFD3PCDTouch,enum) 6 &gt; (L:MFD3PCDTouch,enum) 11 &lt; and
+(L:MFD3PCDTouch,enum) 11 &gt; (L:MFD3PCDTouch,enum) 16 &lt; and or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+(L:MFD3PCDTouch,enum) 16 &gt; (L:MFD3PCDTouch,enum) 21 &lt; and if{ (L:TargetNumber, number) 1 - (>L:TargetNumber, number) }
+(L:MFD3PCDTouch,enum) 25 == (L:MFD3PCDTouch,enum) 30 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) }
+(L:MFD3PCDTouch,enum) 24 == (L:MFD3PCDTouch,enum) 29 == or (L:MFD3PCDTouch,enum) 23 == or (L:MFD3PCDTouch,enum) 28 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+}
+
+(L:MFD4_Screen, number) 118 == (L:MFD4_Screen, number) 119 == or (L:MFD4_Screen, number) 120 == or if{
+(L:MFD4PCDTouch,enum) 5 &gt; (L:MFD4PCDTouch,enum) 10 &lt; and
+(L:MFD4PCDTouch,enum) 10 &gt; (L:MFD4PCDTouch,enum) 15 &lt; and or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+(L:MFD4PCDTouch,enum) 15 &gt; (L:MFD4PCDTouch,enum) 20 &lt; and if{ (L:TargetNumber, number) 1 - (>L:TargetNumber, number) }
+(L:MFD4PCDTouch,enum) 21 == (L:MFD4PCDTouch,enum) 31 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) }
+(L:MFD4PCDTouch,enum) 22 == (L:MFD4PCDTouch,enum) 23 == or (L:MFD4PCDTouch,enum) 27 == or (L:MFD4PCDTouch,enum) 28 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+}
+</Value>
+</Select>
+</Element>
+
+
+
+<Comment>TSD Controls</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 18 == if{
+
+(L:MFD3PCDTouch,enum) 7 == if{ (L:TSD_Filter,enum) ++ (>L:TSD_Filter,enum) 0 (>L:MFD3PCDTouch,enum) }
+
+(L:TSD1Map, bool) ! (L:TSD1View, bool) 2 &lt; and (L:MFD3PCDTouch,enum) 6 == and if{ (L:TSD1_Zoom, number) ++ (&gt;L:TSD1_Zoom, number) }
+(L:TSD1Map, bool) ! (L:TSD1View, bool) 2 &lt; and (L:MFD3PCDTouch,enum) 11 == and if{ (L:TSD1_Zoom, number) -- (&gt;L:TSD1_Zoom, number) }
+
+(L:TSD1Map, bool) (L:TSD1View, bool) 0 == and (L:MFD3PCDTouch,enum) 6 == and if{ 1 (>L:TSDMapInc, bool) }
+(L:TSD1Map, bool) (L:TSD1View, bool) 0 == and (L:MFD3PCDTouch,enum) 11 == and if{ 1 (>L:TSDMapDec, bool) }
+(L:MFD3PCDTouch,enum) 2 == if{ (L:TSD1View,enum) ++ (>L:TSD1View,enum) }
+(L:MFD3PCDTouch,enum) 21 == if{ (L:TSD1Map, number) ! (>L:TSD1Map, number) }
+
+(L:TSD1View,enum) 0 == if{
+		(L:MFD3PCDTouch,enum) 7 == (L:MFD3PCDTouch,enum) 8 == or (L:MFD3PCDTouch,enum) 9 == or (L:MFD3PCDTouch,enum) 12 == or (L:MFD3PCDTouch,enum) 13 == or (L:MFD3PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		(L:MFD3PCDTouch,enum) 17 == or (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 - (>L:TargetNumber, number) }
+	}
+(L:TSD1View,enum) 2 &lt; if{
+		(L:MFD3PCDTouch,enum) 23 == (L:MFD3PCDTouch,enum) 28 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) }
+		(L:MFD3PCDTouch,enum) 22 == (L:MFD3PCDTouch,enum) 27 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+		(L:MFD3PCDTouch,enum) 24 == (L:MFD3PCDTouch,enum) 29 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+	}
+(L:TSD1View,enum) 2 == if{
+		(L:MFD3PCDTouch,enum) 21 == if{ (L:TSD_VSD_RCSDeclutter, bool) ! (>L:TSD_VSD_RCSDeclutter, bool) }
+		(L:MFD3PCDTouch,enum) 13 == (L:MFD3PCDTouch,enum) 18 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) (L:RadarScanVolumeDisplay, number) 2 &gt; if{ 0 (>L:RadarScanVolumeDisplay, number) } }
+		(L:RadarScanVolumeDisplay, number) 0 &gt; (L:RadarScanVolumeDisplay, number) 3 &lt; and if{
+			(L:MFD3PCDTouch,enum) 3 == (L:MFD3PCDTouch,enum) 8 == or if{ 1 (>L:RadarCenterElevationDecrease, bool) }
+			(L:MFD3PCDTouch,enum) 23 == (L:MFD3PCDTouch,enum) 28 == or if{ 1 (>L:RadarCenterElevationIncrease, bool) }
+			(L:MFD3PCDTouch,enum) 7 == (L:MFD3PCDTouch,enum) 12 == or (L:MFD3PCDTouch,enum) 17 == or (L:MFD3PCDTouch,enum) 22 == or if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+			(L:MFD3PCDTouch,enum) 9 == (L:MFD3PCDTouch,enum) 14 == or (L:MFD3PCDTouch,enum) 19 == or (L:MFD3PCDTouch,enum) 24 == or if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+		}
+		(L:RadarScanVolumeDisplay, number) 0 == if{
+			(L:MFD3PCDTouch,enum) 3 == (L:MFD3PCDTouch,enum) 7 == or (L:MFD3PCDTouch,enum) 8 == or (L:MFD3PCDTouch,enum) 9 == or (L:MFD3PCDTouch,enum) 12 == or (L:MFD3PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+			(L:MFD3PCDTouch,enum) 28 == (L:MFD3PCDTouch,enum) 22 == or (L:MFD3PCDTouch,enum) 23 == or (L:MFD3PCDTouch,enum) 24 == or (L:MFD3PCDTouch,enum) 17 == or (L:MFD3PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		}
+	}
+}
+
+(L:MFD3_Screen, number) 19 == if{
+
+(L:MFD3PCDTouch,enum) 7 == if{ (L:TSD_Filter,enum) ++ (>L:TSD_Filter,enum) 0 (>L:MFD3PCDTouch,enum) }
+
+(L:TSD2Map, bool) ! (L:TSD2View, bool) 2 &lt; and (L:MFD3PCDTouch,enum) 6 == and if{ (L:TSD2_Zoom, number) ++ (&gt;L:TSD2_Zoom, number) }
+(L:TSD2Map, bool) ! (L:TSD2View, bool) 2 &lt; and (L:MFD3PCDTouch,enum) 11 == and if{ (L:TSD2_Zoom, number) -- (&gt;L:TSD2_Zoom, number) }
+
+(L:TSD2Map, bool) (L:TSD2View, bool) 0 == and (L:MFD3PCDTouch,enum) 6 == and if{ 1 (>L:TSDMapInc, bool) }
+(L:TSD2Map, bool) (L:TSD2View, bool) 0 == and (L:MFD3PCDTouch,enum) 11 == and if{ 1 (>L:TSDMapDec, bool) }
+(L:MFD3PCDTouch,enum) 2 == if{ (L:TSD2View,enum) ++ (>L:TSD2View,enum) }
+(L:MFD3PCDTouch,enum) 21 == if{ (L:TSD2Map, number) ! (>L:TSD2Map, number) }
+
+(L:TSD2View,enum) 0 == if{
+		(L:MFD3PCDTouch,enum) 7 == (L:MFD3PCDTouch,enum) 8 == or (L:MFD3PCDTouch,enum) 9 == or (L:MFD3PCDTouch,enum) 12 == or (L:MFD3PCDTouch,enum) 13 == or (L:MFD3PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		(L:MFD3PCDTouch,enum) 17 == or (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 - (>L:TargetNumber, number) }
+	}
+(L:TSD2View,enum) 2 &lt; if{
+		(L:MFD3PCDTouch,enum) 23 == (L:MFD3PCDTouch,enum) 28 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) }
+		(L:MFD3PCDTouch,enum) 22 == (L:MFD3PCDTouch,enum) 27 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+		(L:MFD3PCDTouch,enum) 24 == (L:MFD3PCDTouch,enum) 29 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+	}
+(L:TSD2View,enum) 2 == if{
+		(L:MFD3PCDTouch,enum) 21 == if{ (L:TSD_VSD_RCSDeclutter, bool) ! (>L:TSD_VSD_RCSDeclutter, bool) }
+		(L:MFD3PCDTouch,enum) 13 == (L:MFD3PCDTouch,enum) 18 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) (L:RadarScanVolumeDisplay, number) 2 &gt; if{ 0 (>L:RadarScanVolumeDisplay, number) } }
+		(L:RadarScanVolumeDisplay, number) 0 &gt; (L:RadarScanVolumeDisplay, number) 3 &lt; and if{
+			(L:MFD3PCDTouch,enum) 3 == (L:MFD3PCDTouch,enum) 8 == or if{ 1 (>L:RadarCenterElevationDecrease, bool) }
+			(L:MFD3PCDTouch,enum) 23 == (L:MFD3PCDTouch,enum) 28 == or if{ 1 (>L:RadarCenterElevationIncrease, bool) }
+			(L:MFD3PCDTouch,enum) 7 == (L:MFD3PCDTouch,enum) 12 == or (L:MFD3PCDTouch,enum) 17 == or (L:MFD3PCDTouch,enum) 22 == or if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+			(L:MFD3PCDTouch,enum) 9 == (L:MFD3PCDTouch,enum) 14 == or (L:MFD3PCDTouch,enum) 19 == or (L:MFD3PCDTouch,enum) 24 == or if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+		}
+		(L:RadarScanVolumeDisplay, number) 0 == if{
+			(L:MFD3PCDTouch,enum) 3 == (L:MFD3PCDTouch,enum) 7 == or (L:MFD3PCDTouch,enum) 8 == or (L:MFD3PCDTouch,enum) 9 == or (L:MFD3PCDTouch,enum) 12 == or (L:MFD3PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+			(L:MFD3PCDTouch,enum) 28 == (L:MFD3PCDTouch,enum) 22 == or (L:MFD3PCDTouch,enum) 23 == or (L:MFD3PCDTouch,enum) 24 == or (L:MFD3PCDTouch,enum) 17 == or (L:MFD3PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		}
+	}
+}
+
+
+(L:MFD3_Screen, number) 20 == if{
+
+(L:MFD3PCDTouch,enum) 7 == if{ (L:TSD_Filter,enum) ++ (>L:TSD_Filter,enum) 0 (>L:MFD3PCDTouch,enum) }
+
+(L:TSD3Map, bool) ! (L:TSD3View, bool) 2 &lt; and (L:MFD3PCDTouch,enum) 6 == and if{ (L:TSD3_Zoom, number) ++ (&gt;L:TSD3_Zoom, number) }
+(L:TSD3Map, bool) ! (L:TSD3View, bool) 2 &lt; and (L:MFD3PCDTouch,enum) 11 == and if{ (L:TSD3_Zoom, number) -- (&gt;L:TSD3_Zoom, number) }
+
+(L:TSD3Map, bool) (L:TSD3View, bool) 0 == and (L:MFD3PCDTouch,enum) 6 == and if{ 1 (>L:TSDMapInc, bool) }
+(L:TSD3Map, bool) (L:TSD3View, bool) 0 == and (L:MFD3PCDTouch,enum) 11 == and if{ 1 (>L:TSDMapDec, bool) }
+(L:MFD3PCDTouch,enum) 2 == if{ (L:TSD3View,enum) ++ (>L:TSD3View,enum) }
+(L:MFD3PCDTouch,enum) 21 == if{ (L:TSD3Map, number) ! (>L:TSD3Map, number) }
+
+(L:TSD3View,enum) 0 == if{
+		(L:MFD3PCDTouch,enum) 7 == (L:MFD3PCDTouch,enum) 8 == or (L:MFD3PCDTouch,enum) 9 == or (L:MFD3PCDTouch,enum) 12 == or (L:MFD3PCDTouch,enum) 13 == or (L:MFD3PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		(L:MFD3PCDTouch,enum) 17 == or (L:MFD3PCDTouch,enum) 18 == or (L:MFD3PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 - (>L:TargetNumber, number) }
+	}
+(L:TSD3View,enum) 2 &lt; if{
+		(L:MFD3PCDTouch,enum) 23 == (L:MFD3PCDTouch,enum) 28 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) }
+		(L:MFD3PCDTouch,enum) 22 == (L:MFD3PCDTouch,enum) 27 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+		(L:MFD3PCDTouch,enum) 24 == (L:MFD3PCDTouch,enum) 29 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+	}
+(L:TSD3View,enum) 2 == if{
+		(L:MFD3PCDTouch,enum) 21 == if{ (L:TSD_VSD_RCSDeclutter, bool) ! (>L:TSD_VSD_RCSDeclutter, bool) }
+		(L:MFD3PCDTouch,enum) 13 == (L:MFD3PCDTouch,enum) 18 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) (L:RadarScanVolumeDisplay, number) 2 &gt; if{ 0 (>L:RadarScanVolumeDisplay, number) } }
+		(L:RadarScanVolumeDisplay, number) 0 &gt; (L:RadarScanVolumeDisplay, number) 3 &lt; and if{
+			(L:MFD3PCDTouch,enum) 3 == (L:MFD3PCDTouch,enum) 8 == or if{ 1 (>L:RadarCenterElevationDecrease, bool) }
+			(L:MFD3PCDTouch,enum) 23 == (L:MFD3PCDTouch,enum) 28 == or if{ 1 (>L:RadarCenterElevationIncrease, bool) }
+			(L:MFD3PCDTouch,enum) 7 == (L:MFD3PCDTouch,enum) 12 == or (L:MFD3PCDTouch,enum) 17 == or (L:MFD3PCDTouch,enum) 22 == or if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+			(L:MFD3PCDTouch,enum) 9 == (L:MFD3PCDTouch,enum) 14 == or (L:MFD3PCDTouch,enum) 19 == or (L:MFD3PCDTouch,enum) 24 == or if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+		}
+		(L:RadarScanVolumeDisplay, number) 0 == if{
+			(L:MFD3PCDTouch,enum) 3 == (L:MFD3PCDTouch,enum) 7 == or (L:MFD3PCDTouch,enum) 8 == or (L:MFD3PCDTouch,enum) 9 == or (L:MFD3PCDTouch,enum) 12 == or (L:MFD3PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+			(L:MFD3PCDTouch,enum) 28 == (L:MFD3PCDTouch,enum) 22 == or (L:MFD3PCDTouch,enum) 23 == or (L:MFD3PCDTouch,enum) 24 == or (L:MFD3PCDTouch,enum) 17 == or (L:MFD3PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		}
+	}
+}
+
+(L:MFD4_Screen, number) 18 == if{
+
+(L:MFD4PCDTouch,enum) 7 == if{ (L:TSD_Filter,enum) ++ (>L:TSD_Filter,enum) 0 (>L:MFD4PCDTouch,enum) }
+
+(L:TSD1Map, bool) ! (L:TSD1View, bool) 2 &lt; and (L:MFD4PCDTouch,enum) 6 == and if{ (L:TSD1_Zoom, number) ++ (&gt;L:TSD1_Zoom, number) }
+(L:TSD1Map, bool) ! (L:TSD1View, bool) 2 &lt; and (L:MFD4PCDTouch,enum) 11 == and if{ (L:TSD1_Zoom, number) -- (&gt;L:TSD1_Zoom, number) }
+
+(L:TSD1Map, bool) (L:TSD1View, bool) 0 == and (L:MFD4PCDTouch,enum) 6 == and if{ 1 (>L:TSDMapInc, bool) }
+(L:TSD1Map, bool) (L:TSD1View, bool) 0 == and (L:MFD4PCDTouch,enum) 11 == and if{ 1 (>L:TSDMapDec, bool) }
+(L:MFD4PCDTouch,enum) 2 == if{ (L:TSD1View,enum) ++ (>L:TSD1View,enum) }
+(L:MFD4PCDTouch,enum) 21 == if{ (L:TSD1Map, number) ! (>L:TSD1Map, number) }
+
+(L:TSD1View,enum) 0 == if{
+		(L:MFD4PCDTouch,enum) 7 == (L:MFD4PCDTouch,enum) 8 == or (L:MFD4PCDTouch,enum) 9 == or (L:MFD4PCDTouch,enum) 12 == or (L:MFD4PCDTouch,enum) 13 == or (L:MFD4PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		(L:MFD4PCDTouch,enum) 17 == or (L:MFD4PCDTouch,enum) 18 == or (L:MFD4PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 - (>L:TargetNumber, number) }
+	}
+(L:TSD1View,enum) 2 &lt; if{
+		(L:MFD4PCDTouch,enum) 23 == (L:MFD4PCDTouch,enum) 28 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) }
+		(L:MFD4PCDTouch,enum) 22 == (L:MFD4PCDTouch,enum) 27 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+		(L:MFD4PCDTouch,enum) 24 == (L:MFD4PCDTouch,enum) 29 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+	}
+(L:TSD1View,enum) 2 == if{
+		(L:MFD4PCDTouch,enum) 21 == if{ (L:TSD_VSD_RCSDeclutter, bool) ! (>L:TSD_VSD_RCSDeclutter, bool) }
+		(L:MFD4PCDTouch,enum) 13 == (L:MFD4PCDTouch,enum) 18 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) (L:RadarScanVolumeDisplay, number) 2 &gt; if{ 0 (>L:RadarScanVolumeDisplay, number) } }
+		(L:RadarScanVolumeDisplay, number) 0 &gt; (L:RadarScanVolumeDisplay, number) 3 &lt; and if{
+			(L:MFD4PCDTouch,enum) 3 == (L:MFD4PCDTouch,enum) 8 == or if{ 1 (>L:RadarCenterElevationDecrease, bool) }
+			(L:MFD4PCDTouch,enum) 23 == (L:MFD4PCDTouch,enum) 28 == or if{ 1 (>L:RadarCenterElevationIncrease, bool) }
+			(L:MFD4PCDTouch,enum) 7 == (L:MFD4PCDTouch,enum) 12 == or (L:MFD4PCDTouch,enum) 17 == or (L:MFD4PCDTouch,enum) 22 == or if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+			(L:MFD4PCDTouch,enum) 9 == (L:MFD4PCDTouch,enum) 14 == or (L:MFD4PCDTouch,enum) 19 == or (L:MFD4PCDTouch,enum) 24 == or if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+		}
+		(L:RadarScanVolumeDisplay, number) 0 == if{
+			(L:MFD4PCDTouch,enum) 3 == (L:MFD4PCDTouch,enum) 7 == or (L:MFD4PCDTouch,enum) 8 == or (L:MFD4PCDTouch,enum) 9 == or (L:MFD4PCDTouch,enum) 12 == or (L:MFD4PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+			(L:MFD4PCDTouch,enum) 28 == (L:MFD4PCDTouch,enum) 22 == or (L:MFD4PCDTouch,enum) 23 == or (L:MFD4PCDTouch,enum) 24 == or (L:MFD4PCDTouch,enum) 17 == or (L:MFD4PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		}
+	}
+}
+
+(L:MFD4_Screen, number) 19 == if{
+
+(L:MFD4PCDTouch,enum) 7 == if{ (L:TSD_Filter,enum) ++ (>L:TSD_Filter,enum) 0 (>L:MFD4PCDTouch,enum) }
+
+(L:TSD2Map, bool) ! (L:TSD2View, bool) 2 &lt; and (L:MFD4PCDTouch,enum) 6 == and if{ (L:TSD2_Zoom, number) ++ (&gt;L:TSD2_Zoom, number) }
+(L:TSD2Map, bool) ! (L:TSD2View, bool) 2 &lt; and (L:MFD4PCDTouch,enum) 11 == and if{ (L:TSD2_Zoom, number) -- (&gt;L:TSD2_Zoom, number) }
+
+(L:TSD2Map, bool) (L:TSD2View, bool) 0 == and (L:MFD4PCDTouch,enum) 6 == and if{ 1 (>L:TSDMapInc, bool) }
+(L:TSD2Map, bool) (L:TSD2View, bool) 0 == and (L:MFD4PCDTouch,enum) 11 == and if{ 1 (>L:TSDMapDec, bool) }
+(L:MFD4PCDTouch,enum) 2 == if{ (L:TSD2View,enum) ++ (>L:TSD2View,enum) }
+(L:MFD4PCDTouch,enum) 21 == if{ (L:TSD2Map, number) ! (>L:TSD2Map, number) }
+
+(L:TSD2View,enum) 0 == if{
+		(L:MFD4PCDTouch,enum) 7 == (L:MFD4PCDTouch,enum) 8 == or (L:MFD4PCDTouch,enum) 9 == or (L:MFD4PCDTouch,enum) 12 == or (L:MFD4PCDTouch,enum) 13 == or (L:MFD4PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		(L:MFD4PCDTouch,enum) 17 == or (L:MFD4PCDTouch,enum) 18 == or (L:MFD4PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 - (>L:TargetNumber, number) }
+	}
+(L:TSD2View,enum) 2 &lt; if{
+		(L:MFD4PCDTouch,enum) 23 == (L:MFD4PCDTouch,enum) 28 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) }
+		(L:MFD4PCDTouch,enum) 22 == (L:MFD4PCDTouch,enum) 27 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+		(L:MFD4PCDTouch,enum) 24 == (L:MFD4PCDTouch,enum) 29 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+	}
+(L:TSD2View,enum) 2 == if{
+		(L:MFD4PCDTouch,enum) 21 == if{ (L:TSD_VSD_RCSDeclutter, bool) ! (>L:TSD_VSD_RCSDeclutter, bool) }
+		(L:MFD4PCDTouch,enum) 13 == (L:MFD4PCDTouch,enum) 18 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) (L:RadarScanVolumeDisplay, number) 2 &gt; if{ 0 (>L:RadarScanVolumeDisplay, number) } }
+		(L:RadarScanVolumeDisplay, number) 0 &gt; (L:RadarScanVolumeDisplay, number) 3 &lt; and if{
+			(L:MFD4PCDTouch,enum) 3 == (L:MFD4PCDTouch,enum) 8 == or if{ 1 (>L:RadarCenterElevationDecrease, bool) }
+			(L:MFD4PCDTouch,enum) 23 == (L:MFD4PCDTouch,enum) 28 == or if{ 1 (>L:RadarCenterElevationIncrease, bool) }
+			(L:MFD4PCDTouch,enum) 7 == (L:MFD4PCDTouch,enum) 12 == or (L:MFD4PCDTouch,enum) 17 == or (L:MFD4PCDTouch,enum) 22 == or if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+			(L:MFD4PCDTouch,enum) 9 == (L:MFD4PCDTouch,enum) 14 == or (L:MFD4PCDTouch,enum) 19 == or (L:MFD4PCDTouch,enum) 24 == or if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+		}
+		(L:RadarScanVolumeDisplay, number) 0 == if{
+			(L:MFD4PCDTouch,enum) 3 == (L:MFD4PCDTouch,enum) 7 == or (L:MFD4PCDTouch,enum) 8 == or (L:MFD4PCDTouch,enum) 9 == or (L:MFD4PCDTouch,enum) 12 == or (L:MFD4PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+			(L:MFD4PCDTouch,enum) 28 == (L:MFD4PCDTouch,enum) 22 == or (L:MFD4PCDTouch,enum) 23 == or (L:MFD4PCDTouch,enum) 24 == or (L:MFD4PCDTouch,enum) 17 == or (L:MFD4PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		}
+	}
+}
+
+
+(L:MFD4_Screen, number) 20 == if{
+
+(L:MFD4PCDTouch,enum) 7 == if{ (L:TSD_Filter,enum) ++ (>L:TSD_Filter,enum) 0 (>L:MFD4PCDTouch,enum) }
+
+(L:TSD3Map, bool) ! (L:TSD3View, bool) 2 &lt; and (L:MFD4PCDTouch,enum) 6 == and if{ (L:TSD3_Zoom, number) ++ (&gt;L:TSD3_Zoom, number) }
+(L:TSD3Map, bool) ! (L:TSD3View, bool) 2 &lt; and (L:MFD4PCDTouch,enum) 11 == and if{ (L:TSD3_Zoom, number) -- (&gt;L:TSD3_Zoom, number) }
+
+(L:TSD3Map, bool) (L:TSD3View, bool) 0 == and (L:MFD4PCDTouch,enum) 6 == and if{ 1 (>L:TSDMapInc, bool) }
+(L:TSD3Map, bool) (L:TSD3View, bool) 0 == and (L:MFD4PCDTouch,enum) 11 == and if{ 1 (>L:TSDMapDec, bool) }
+(L:MFD4PCDTouch,enum) 2 == if{ (L:TSD3View,enum) ++ (>L:TSD3View,enum) }
+(L:MFD4PCDTouch,enum) 21 == if{ (L:TSD3Map, number) ! (>L:TSD3Map, number) }
+
+(L:TSD3View,enum) 0 == if{
+		(L:MFD4PCDTouch,enum) 7 == (L:MFD4PCDTouch,enum) 8 == or (L:MFD4PCDTouch,enum) 9 == or (L:MFD4PCDTouch,enum) 12 == or (L:MFD4PCDTouch,enum) 13 == or (L:MFD4PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		(L:MFD4PCDTouch,enum) 17 == or (L:MFD4PCDTouch,enum) 18 == or (L:MFD4PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 - (>L:TargetNumber, number) }
+	}
+(L:TSD3View,enum) 2 &lt; if{
+		(L:MFD4PCDTouch,enum) 23 == (L:MFD4PCDTouch,enum) 28 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) }
+		(L:MFD4PCDTouch,enum) 22 == (L:MFD4PCDTouch,enum) 27 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+		(L:MFD4PCDTouch,enum) 24 == (L:MFD4PCDTouch,enum) 29 == or (L:RadarScanVolumeDisplay, number) 0 &gt; and if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+	}
+(L:TSD3View,enum) 2 == if{
+		(L:MFD4PCDTouch,enum) 21 == if{ (L:TSD_VSD_RCSDeclutter, bool) ! (>L:TSD_VSD_RCSDeclutter, bool) }
+		(L:MFD4PCDTouch,enum) 13 == (L:MFD4PCDTouch,enum) 18 == or if{ (L:RadarScanVolumeDisplay, number) ++ (>L:RadarScanVolumeDisplay, number) (L:RadarScanVolumeDisplay, number) 2 &gt; if{ 0 (>L:RadarScanVolumeDisplay, number) } }
+		(L:RadarScanVolumeDisplay, number) 0 &gt; (L:RadarScanVolumeDisplay, number) 3 &lt; and if{
+			(L:MFD4PCDTouch,enum) 3 == (L:MFD4PCDTouch,enum) 8 == or if{ 1 (>L:RadarCenterElevationDecrease, bool) }
+			(L:MFD4PCDTouch,enum) 23 == (L:MFD4PCDTouch,enum) 28 == or if{ 1 (>L:RadarCenterElevationIncrease, bool) }
+			(L:MFD4PCDTouch,enum) 7 == (L:MFD4PCDTouch,enum) 12 == or (L:MFD4PCDTouch,enum) 17 == or (L:MFD4PCDTouch,enum) 22 == or if{ 1 (>L:RadarCenterAzimuthDecrease, bool) }
+			(L:MFD4PCDTouch,enum) 9 == (L:MFD4PCDTouch,enum) 14 == or (L:MFD4PCDTouch,enum) 19 == or (L:MFD4PCDTouch,enum) 24 == or if{ 1 (>L:RadarCenterAzimuthIncrease, bool) }
+		}
+		(L:RadarScanVolumeDisplay, number) 0 == if{
+			(L:MFD4PCDTouch,enum) 3 == (L:MFD4PCDTouch,enum) 7 == or (L:MFD4PCDTouch,enum) 8 == or (L:MFD4PCDTouch,enum) 9 == or (L:MFD4PCDTouch,enum) 12 == or (L:MFD4PCDTouch,enum) 14 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+			(L:MFD4PCDTouch,enum) 28 == (L:MFD4PCDTouch,enum) 22 == or (L:MFD4PCDTouch,enum) 23 == or (L:MFD4PCDTouch,enum) 24 == or (L:MFD4PCDTouch,enum) 17 == or (L:MFD4PCDTouch,enum) 19 == or if{ (L:TargetNumber, number) 1 + (>L:TargetNumber, number) }
+		}
+	}
+}
+
+
+
+(L:MFD3_Screen, number) 18 == (L:TSD1View,enum) 1 == and (L:MFD3_Screen, number) 19 == (L:TSD2View,enum) 1 == and or (L:MFD3_Screen, number) 20 == (L:TSD3View,enum) 1 == and or if{
+(L:MFD3PCDTouch,enum) 16 == if{ (L:CDIMode, enum) ++ (>L:CDIMode, enum) (L:CDIMode, enum) 4 > if{ 0 (>L:CDIMode, enum) } }
+(L:MFD3PCDTouch,enum) 10 == if{ 1 (>K:TOGGLE_FLIGHT_DIRECTOR, bool) }
+(L:MFD3PCDTouch,enum) 31 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 1 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 35 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 2 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 30 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 3 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 26 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 4 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD3PCDTouch,enum) 7 == if{ 1 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 8 == if{ 2 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 9 == if{ 3 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 12 == if{ 4 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 13 == if{ 5 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 14 == if{ 6 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 17 == if{ 7 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 18 == if{ 8 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 19 == if{ 9 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 23 == if{ 0 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+}
+
+(L:MFD4_Screen, number) 18 == (L:TSD1View,enum) 1 == and (L:MFD4_Screen, number) 19 == (L:TSD2View,enum) 1 == and or (L:MFD4_Screen, number) 20 == (L:TSD3View,enum) 1 == and or if{
+(L:MFD4PCDTouch,enum) 16 == if{ (L:CDIMode, enum) ++ (>L:CDIMode, enum) (L:CDIMode, enum) 4 > if{ 0 (>L:CDIMode, enum) } }
+(L:MFD4PCDTouch,enum) 10 == if{ 1 (>K:TOGGLE_FLIGHT_DIRECTOR, bool) }
+(L:MFD4PCDTouch,enum) 31 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 1 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 35 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 2 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 30 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 3 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 26 == if{ (L:EFISKeypad, bool) ! (>L:EFISKeypad, bool) (L:EFISKeypad, bool) if{ 0 (>L:EFI_digit_counter,number) 0 (>L:EFI_NewDigit, number) 4 (>L:EFI_mode,number) } els{ 0 (>L:EFI_mode,number) } }
+(L:MFD4PCDTouch,enum) 7 == if{ 1 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 8 == if{ 2 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 9 == if{ 3 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 12 == if{ 4 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 13 == if{ 5 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 14 == if{ 6 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 17 == if{ 7 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 18 == if{ 8 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 19 == if{ 9 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 23 == if{ 0 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+}
+
+(L:TSD1View,enum) 2 &gt; if{ 0 (>L:TSD1View,enum) }
+(L:TSD2View,enum) 2 &gt; if{ 0 (>L:TSD2View,enum) }
+(L:TSD3View,enum) 2 &gt; if{ 0 (>L:TSD3View,enum) }
+(L:TSD1View,enum) 0 != if{ 0 (>L:TSD1Map, bool) }
+(L:TSD2View,enum) 0 != if{ 0 (>L:TSD2Map, bool) }
+(L:TSD3View,enum) 0 != if{ 0 (>L:TSD3Map, bool) }
+</Value>
+</Select>
+</Element>
+
+<Comment>TWD controls</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 21 == if{
+(L:MFD3PCDTouch,enum) 10 == if{ (L:TWDAudio, bool) ! (>L:TWDAudio, bool) }
+}
+
+(L:MFD4_Screen, number) 21 == if{
+(L:MFD4PCDTouch,enum) 10 == if{ (L:TWDAudio, bool) ! (>L:TWDAudio, bool) }
+}
+</Value>
+</Select>
+</Element>
+
+
+
+<Comment>Menu Screen</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 0 == if{
+(L:MFD3PCDTouch,enum) 6 == if{ 1 (>L:MFD3_Screen, number) }
+(L:MFD3PCDTouch,enum) 7 == if{ 2 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 8 == if{ 3 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 9 == if{ 4 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 10 == if{ 5 (>L:MFD3_Screen, number) }
+(L:MFD3PCDTouch,enum) 11 == if{ 6 (>L:MFD3_Screen, number) }
+(L:MFD3PCDTouch,enum) 12 == if{ 7 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 13 == if{ 8 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 14 == if{ 11 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 15 == if{ 12 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 16 == if{ 13 (>L:MFD3_Screen, number) }
+(L:MFD3PCDTouch,enum) 17 == if{ 14 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 18 == if{ 15 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 19 == if{ 16 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 20 == if{ 17 (>L:MFD3_Screen, number) }
+(L:MFD3PCDTouch,enum) 21 == if{ 18 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 22 == if{ 19 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 23 == if{ 20 (>L:MFD3_Screen, number) } 
+(L:MFD3PCDTouch,enum) 24 == if{ 21 (>L:MFD3_Screen, number) }
+(L:MFD3PCDTouch,enum) 25 == if{ 22 (>L:MFD3_Screen, number) }
+(L:MFD3PCDTouch,enum) 26 == if{ 23 (>L:MFD3_Screen, number) }
+}
+
+(L:MFD4_Screen, number) 0 == if{
+(L:MFD4PCDTouch,enum) 6 == if{ 1 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 7 == if{ 2 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 8 == if{ 3 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 9 == if{ 4 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 10 == if{ 5 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 11 == if{ 6 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 12 == if{ 7 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 13 == if{ 8 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 14 == if{ 11 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 15 == if{ 12 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 16 == if{ 13 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 17 == if{ 14 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 18 == if{ 15 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 19 == if{ 16 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 20 == if{ 17 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 21 == if{ 18 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 22 == if{ 19 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 23 == if{ 20 (>L:MFD4_Screen, number) } 
+(L:MFD4PCDTouch,enum) 24 == if{ 21 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 25 == if{ 22 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 26 == if{ 23 (>L:MFD4_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>AUTOPILOT POP UP</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 224 == if{
+(L:MFD4PCDTouch,enum) 16 == if{ 1 (>L:AP_Digit, number) 1 (>L:AP_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 17 == if{ 2 (>L:AP_Digit, number) 1 (>L:AP_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 18 == if{ 3 (>L:AP_Digit, number) 1 (>L:AP_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 21 == if{ 4 (>L:AP_Digit, number) 1 (>L:AP_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 22 == if{ 5 (>L:AP_Digit, number) 1 (>L:AP_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 23 == if{ 6 (>L:AP_Digit, number) 1 (>L:AP_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 26 == if{ 7 (>L:AP_Digit, number) 1 (>L:AP_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 27 == if{ 8 (>L:AP_Digit, number) 1 (>L:AP_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 28 == if{ 9 (>L:AP_Digit, number) 1 (>L:AP_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 32 == if{ 0 (>L:AP_Digit, number) 1 (>L:AP_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 33 == if{ 0 (>L:AP_Digit, number) -1 (>L:AP_NewDigit, number) }
+
+
+
+(L:MFD4PCDTouch,enum) 4 == if{ (A:AUTOPILOT ATTITUDE HOLD,bool) ! if{ 1 (>K:AP_HDG_HOLD_OFF) 1 (>K:AP_NAV1_HOLD_OFF) 1 (>K:AP_ATT_HOLD_ON) } els{ 1 (>K:AP_HDG_HOLD_OFF) 1 (>K:AP_NAV1_HOLD_OFF) 1 (>K:AP_ATT_HOLD_OFF) } }
+(L:MFD4PCDTouch,enum) 9 == if{ (A:AUTOPILOT HEADING LOCK,bool) ! if{ 1 (>K:AP_HDG_HOLD_ON) 1 (>K:AP_NAV1_HOLD_OFF) 1 (>K:AP_ATT_HOLD_OFF) } els{ 1 (>K:AP_HDG_HOLD_OFF) 1 (>K:AP_NAV1_HOLD_OFF) 1 (>K:AP_ATT_HOLD_OFF) } }
+(L:MFD4PCDTouch,enum) 14 == if{ 
+	(A:Indicated altitude,feet) (>K:AP_ALT_VAR_SET_ENGLISH) 
+	1 (>K:AP_PANEL_ALTITUDE_HOLD) 
+	1 (>L:AP_AltMode,bool) 
+	}
+(L:MFD4PCDTouch,enum) 19 == if{ 
+	(L:APAltitudeSetFeet,number) 100 &lt; if{ (A:Indicated altitude,feet) (>L:APAltitudeSetFeet,number) (A:Indicated altitude,feet) (>K:AP_ALT_VAR_SET_ENGLISH) } 
+	1 (>K:AP_PANEL_ALTITUDE_HOLD) 
+	0 (>L:AP_AltMode,bool)
+	}
+
+(L:MFD4PCDTouch,enum) 24 == if{ 	
+	1 (>K:AUTO_THROTTLE_ARM)
+	(L:PCDAirspeed, knots) (>K:AP_SPD_VAR_SET) 
+	(L:ATMach,bool) if{ 1 (>K:AP_MACH_HOLD) } els{ 1 (>K:AP_PANEL_SPEED_HOLD) } 
+	1 (>L:AP_SpeedMode,bool)	
+	}
+
+(L:MFD4PCDTouch,enum) 29 == if{	
+	1 (>K:AUTO_THROTTLE_ARM)
+	(L:APSpeedSetKnots,number) 10 &lt; if{ (A:AIRSPEED INDICATED, knots) (>L:APSpeedSetKnots,number) (A:AIRSPEED INDICATED, knots) (>K:AP_SPD_VAR_SET) }
+	(L:APSpeedSetMach,number) 10 &lt; if{ (A:AIRSPEED MACH, mach) 100 * (>K:AP_MACH_VAR_SET) (A:AIRSPEED MACH, mach) 100 * (>L:APSpeedSetMach,number) }
+	(L:ATMach,bool) if{ 1 (>K:AP_MACH_HOLD) } els{ 1 (>K:AP_PANEL_SPEED_HOLD) }
+	0 (>L:AP_SpeedMode,bool)	
+	}
+
+(L:MFD4PCDTouch,enum) 34 == if{
+	(A:Autopilot nav1 lock, bool) ! (A:GPS DRIVES NAV1, bool) ! or 
+	if{ 
+	1 (>K:AP_HDG_HOLD_OFF) 1 (>K:AP_NAV1_HOLD_ON) 1 (>L:NAVMode,number)
+	(A:GPS DRIVES NAV1, bool) ! if{ 1 (>K:TOGGLE_GPS_DRIVES_NAV1) } 
+	} 
+	els{ 1 (>K:AP_NAV1_HOLD_OFF) }
+	}
+
+
+
+
+(L:MFD4PCDTouch,enum) 14 == 0 and if{ 1 (>K:AP_VS_HOLD) }
+
+
+(L:MFD4PCDTouch,enum) 35 == (L:ExpandedAutopilot,bool) and if{
+	(A:AUTOPILOT APPROACH HOLD, bool) or 
+	if{  1 (>K:AP_APR_HOLD_OFF) 2 (>L:NAVMode,number)	} 
+	els{ 1 (>K:AP_APR_HOLD_ON) (A:GPS DRIVES NAV1, bool) 
+	if{ 1 (>K:TOGGLE_GPS_DRIVES_NAV1) } }
+}
+
+(L:MFD4PCDTouch,enum) 39 == (L:ExpandedAutopilot,bool) and if{
+	(A:Autopilot nav1 lock, bool) ! (A:GPS DRIVES NAV1, bool) or 
+	if{ 
+	1 (>K:AP_HDG_HOLD_OFF) 1 (>K:AP_NAV1_HOLD_ON) 2 (>L:NAVMode,number)
+	(A:GPS DRIVES NAV1, bool) if{ 1 (>K:TOGGLE_GPS_DRIVES_NAV1) } 
+	} 
+	els{ 1 (>K:AP_NAV1_HOLD_OFF) }
+	}
+
+(L:MFD4PCDTouch,enum) 40 == (L:ExpandedAutopilot,bool) and if{ 1 (>K:AP_BC_HOLD) 2 (>L:NAVMode,number) }
+
+
+
+(L:MFD4PCDTouch,enum) 10 == if{ 0 (>L:AP_digit_counter,number) 0 (>L:AP_NewDigit, number) (L:AP_mode,number) 0 == if{ 2 (>L:AP_mode,number) } els{ 0 (>L:AP_mode,number) } }
+(L:MFD4PCDTouch,enum) 20 == if{ 0 (>L:AP_digit_counter,number) 0 (>L:AP_NewDigit, number) (L:AP_mode,number) 0 == if{ 1 (>L:AP_mode,number) } els{ 0 (>L:AP_mode,number) } }
+(L:MFD4PCDTouch,enum) 25 == if{ (L:ATMach,bool) ! (>L:ATMach,bool) }
+(L:MFD4PCDTouch,enum) 30 == if{ 0 (>L:AP_digit_counter,number) 0 (>L:AP_NewDigit, number) (L:AP_mode,number) 0 == if{ 4 (>L:AP_mode,number) } els{ 0 (>L:AP_mode,number) } }
+
+(L:MFD4PCDTouch,enum) 15 == 0 and if{ 0 (>L:AP_digit_counter,number) 0 (>L:AP_NewDigit, number) (L:AP_mode,number) 0 == if{ 5 (>L:AP_mode,number) } els{ 0 (>L:AP_mode,number) } }
+(L:MFD4PCDTouch,enum) 25 == 0 and if{ 0 (>L:AP_digit_counter,number) 0 (>L:AP_NewDigit, number) (L:AP_mode,number) 0 == if{ 3 (>L:AP_mode,number) } els{ 0 (>L:AP_mode,number) } }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>KEYPAD for pop up MFD3</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 225 > (L:MFD3_Screen, number) 231 &lt; and (L:MFD3_Screen, number) 233 == or (L:TouchScreenPause, bool) 0 == and if{
+(L:MFD3PCDTouch,enum) 16 == if{ 1 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 17 == if{ 2 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 18 == if{ 3 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 21 == if{ 4 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 22 == if{ 5 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 23 == if{ 6 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 26 == if{ 7 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 27 == if{ 8 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 28 == if{ 9 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 32 == if{ 0 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD3PCDTouch,enum) 33 == if{ 1 (>L:CNI_Enter, number) }
+(L:MFD3PCDTouch,enum) 31 == if{ 2 (>L:CNI_Enter, number) }
+(L:MFD3PCDTouch,enum) 36 == if{ 2 (>L:CNI_Enter, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>Pop Up Keypad MFD3</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 6 == 0 and if{
+				(L:MFD3_Screen, number) 6 == if{ 1 (>L:EFI_Digit, number) 1 (>L:EFI_NewDigit, number) }
+				(L:MFD3_Screen, number) 11 == if{ 1 (>L:FUEL_Digit, number) 1 (>L:FUEL_NewDigit, number) }
+				(L:MFD3_Screen, number) 225 == if{ 1 (>L:MENU_Digit, number) 1 (>L:MENU_NewDigit, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>MENU control</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 225 == if{
+(L:MFD4PCDTouch,enum) 6 == if{ 235 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 7 == if{ 240 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 8 == if{ 231 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 9 == if{ 232 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 11 == if{ 237 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 12 == if{ 226 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 13 == if{  }
+(L:MFD4PCDTouch,enum) 14 == if{ 234 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 15 == if{  }
+
+(L:MFD4PCDTouch,enum) 25 == if{
+				1 (>L:CallTheBall, bool)
+				1 (>L:LSOActive, bool)
+				(L:MFD4_Screen_POPUP_Buffer, number) (>L:MFD4_Screen, number) (L:PCDUISound, bool) ! (>L:PCDUISound, bool) 
+}
+
+(L:MFD4PCDTouch,enum) 0 != if{ 0 (>L:MFD4PCDTouch,enum) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>MENU IN-GPS</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 237 == if{
+(L:MFD4PCDTouch,enum) 40 == if{ 225 (>L:MFD4_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>MENU GPS</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 238 == if{
+(L:MFD3PCDTouch,enum) 40 == (L:TouchScreenPause, bool) ! and (L:MFD3PCDTouchTimer,enum) 0 == and if{ 237 (>L:MFD3_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>KEYPAD for pop up MFD4</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 225 > (L:MFD4_Screen, number) 231 &lt; and if{
+(L:MFD4PCDTouch,enum) 16 == if{ 1 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 17 == if{ 2 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 18 == if{ 3 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 21 == if{ 4 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 22 == if{ 5 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 23 == if{ 6 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 26 == if{ 7 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 27 == (L:MFD4_Screen, number) 228 != and if{ 8 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 28 == (L:MFD4_Screen, number) 228 != and if{ 9 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 32 == if{ 0 (>L:CNI_Digit, number) 1 (>L:CNI_NewDigit, number) }
+(L:MFD4PCDTouch,enum) 33 == if{ 1 (>L:CNI_Enter, number) }
+(L:MFD4PCDTouch,enum) 31 == if{ 2 (>L:CNI_Enter, number) }
+(L:MFD4PCDTouch,enum) 36 == if{ 2 (>L:CNI_Enter, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>Lights</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 226 == if{
+(L:MFD4PCDTouch,enum) 1 == if{ 1 (>K:PANEL_LIGHTS_TOGGLE) }
+(L:MFD4PCDTouch,enum) 2 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 17 != if{ 17 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } }
+(L:MFD4PCDTouch,enum) 4 == if{ 1 (>K:TOGGLE_NAV_LIGHTS) }
+(L:MFD4PCDTouch,enum) 5 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 18 != if{ 18 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } }
+(L:MFD4PCDTouch,enum) 9 == if{ 1 (>K:STROBES_TOGGLE) }
+(L:MFD4PCDTouch,enum) 10 == if{ (L:StrobeDim, bool) ! (>L:StrobeDim, bool) }
+(L:MFD4PCDTouch,enum) 11 == if{ 1 (>L:LightsBrightnessDecrease, bool) }
+(L:MFD4PCDTouch,enum) 12 == if{ 1 (>L:LightsBrightnessIncrease, bool) }
+(L:MFD4PCDTouch,enum) 14 == if{ 1 (>K:TOGGLE_LOGO_LIGHTS) }
+(L:MFD4PCDTouch,enum) 15 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 19 != if{ 19 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } }
+(L:MFD4PCDTouch,enum) 24 == if{ }
+(L:MFD4PCDTouch,enum) 37 == (L:MFD4PCDTouch,enum) 38 == or if{ 
+(L:LightsMaster, bool) ! (>L:LightsMaster, bool)
+
+(L:LightsMaster, bool) if{ 
+1 (>K:PANEL_LIGHTS_ON)
+1 (>K:NAV_LIGHTS_ON)
+1 (>K:STROBES_ON)
+1 (>K:LOGO_LIGHTS_SET)
+}
+
+(L:LightsMaster, bool) ! if{ 
+1 (>K:PANEL_LIGHTS_OFF)
+1 (>K:NAV_LIGHTS_OFF)
+1 (>K:STROBES_OFF)
+0 (>K:LOGO_LIGHTS_SET)
+}
+
+}
+(L:MFD4PCDTouch,enum) 40 == if{ 225 (>L:MFD4_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>Navigation</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 227 == if{
+(L:MFD3PCDTouch,enum) 2 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 8 != if{ 8 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 3 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 10 != if{ 10 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 4 == (L:MFD3PCDTouch,enum) 5 == or if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 30 != if{ 30 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 8 == if{ 1 (L:TacanChannelYCommanded, bool) ! (>L:TacanChannelYCommanded, bool) 1 (>L:TacanUpdate, bool) }
+
+(L:MFD3PCDTouch,enum) 9 == (L:MFD3PCDTouch,enum) 10 == or (L:MFD3PCDTouch,enum) 19 == or (L:MFD3PCDTouch,enum) 20 == or if{ (L:NavMode) 1 ==  if{ 0 (>L:NavMode) } els{ 1 (>L:NavMode) } }
+(L:MFD3PCDTouch,enum) 7 == if{ (L:NavMode) 2 ==  if{ 0 (>L:NavMode) } els{ 2 (>L:NavMode) } }
+(L:MFD3PCDTouch,enum) 13 == if{ (L:NavMode) 3 ==  if{ 0 (>L:NavMode) } els{ 3 (>L:NavMode) } }
+
+(L:MFD3PCDTouch,enum) 34 == if{ 1 (>L:ManualWP,bool) }
+(L:MFD3PCDTouch,enum) 31 == if{ 1 (>L:SelectPrevWP,bool) }
+(L:MFD3PCDTouch,enum) 36 == if{ 1 (>L:SelectNextWP,bool) }
+(L:MFD3PCDTouch,enum) 39 == if{ 236 (>L:MFD3_Screen, number) 1 (>L:TouchScreenPause, bool) }
+(L:MFD3PCDTouch,enum) 40 == if{ 233 (>L:MFD3_Screen, number) 
+(A:GPS FLIGHT PLAN WP COUNT, number) 0 == if{ 
+	(A:PLANE LATITUDE, degrees) (>L:FlightPlanNewWaypointLatitude, degrees)
+	(A:PLANE LONGITUDE, degrees) (>L:FlightPlanNewWaypointLongitude, degrees)
+}
+els{ 
+	(A:GPS WP NEXT LAT, degrees) (>L:FlightPlanNewWaypointLatitude, degrees)
+	(A:GPS WP NEXT LON, degrees) (>L:FlightPlanNewWaypointLongitude, degrees)
+}
+1 (>L:TouchScreenPause, bool) 
+}
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>WAYPOINT</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 233 == (L:TouchScreenPause, bool) 0 == and if{
+(L:MFD3PCDTouch,enum) 10 == (L:MFD3PCDTouch,enum) 9 == or if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) 1 (>L:TouchScreenPause, bool) (L:CNI_mode,number) 35 != if{ 35 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 17 == (L:CNI_mode,number) 35 == and if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) 1 (>L:TouchScreenPause, bool) (L:CNI_mode,number) 31 != if{ 31 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 27 == (L:CNI_mode,number) 35 == and if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) 1 (>L:TouchScreenPause, bool) (L:CNI_mode,number) 32 != if{ 32 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 21 == (L:CNI_mode,number) 35 == and if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) 1 (>L:TouchScreenPause, bool) (L:CNI_mode,number) 34 != if{ 34 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 23 == (L:CNI_mode,number) 35 == and if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) 1 (>L:TouchScreenPause, bool) (L:CNI_mode,number) 33 != if{ 33 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+
+(L:MFD3PCDTouch,enum) 34 == if{
+(L:FlightPlanNewWaypointLatitude, degrees) (>C:fs9gps:FlightPlanNewWaypointLatitude, degrees)
+(L:FlightPlanNewWaypointLongitude, degrees) (>C:fs9gps:FlightPlanNewWaypointLongitude, degrees)
+(A:GPS FLIGHT PLAN WP COUNT, number) 0 == if{ 
+'BASE' (>C:fs9gps:FlightPlanNewWaypointIdent) (>C:fs9gps:FlightPlanDirectToDestination) }
+els{ 
+(L:WaypointLabel,enum) 1 + (>L:WaypointLabel,enum)
+(L:WaypointLabel,enum) 15 &gt; if{ 1 (>L:WaypointLabel,enum) }
+(L:WaypointLabel,enum) 1 == if{ 'ALPHA' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 2 == if{ 'BULL' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 3 == if{ 'CHEVY' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 4 == if{ 'DELTA' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 5 == if{ 'ECHO' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 6 == if{ 'FORD' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 7 == if{ 'FOX' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 8 == if{ 'HOTEL' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 9 == if{ 'LIMA' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 10 == if{ 'LION' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 11 == if{ 'ROVER' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 12 == if{ 'SPIKE' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 13 == if{ 'SPOT' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 14 == if{ 'TANGO' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 15 == if{ 'XROAD' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(A:GPS FLIGHT PLAN WP INDEX,number) (>C:fs9gps:FlightPlanAddWaypoint) }
+}
+
+(L:MFD3PCDTouch,enum) 35 == if{
+(A:GPS FLIGHT PLAN WP INDEX,number) (>C:fs9gps:FlightPlanDeleteWaypoint)
+}
+
+(L:MFD3PCDTouch,enum) 39 == if{
+'BASE' (>C:fs9gps:FlightPlanNewWaypointIdent)
+(A:PLANE LATITUDE, degrees) (>L:FlightPlanNewWaypointLatitude, degrees)
+(A:PLANE LONGITUDE, degrees) (>L:FlightPlanNewWaypointLongitude, degrees)
+(A:GPS FLIGHT PLAN WP COUNT, number) 0 == if{
+(L:FlightPlanNewWaypointLatitude, degrees) (>C:fs9gps:FlightPlanNewWaypointLatitude, degrees)
+(L:FlightPlanNewWaypointLongitude, degrees) (>C:fs9gps:FlightPlanNewWaypointLongitude, degrees)
+'BASE' (>C:fs9gps:FlightPlanNewWaypointIdent) (>C:fs9gps:FlightPlanDirectToDestination) 
+}
+els{
+(L:FlightPlanNewWaypointLatitude, degrees) (>C:fs9gps:FlightPlanNewWaypointLatitude, degrees)
+(L:FlightPlanNewWaypointLongitude, degrees) (>C:fs9gps:FlightPlanNewWaypointLongitude, degrees) 
+(L:WaypointLabel,enum) 1 + (>L:WaypointLabel,enum)
+(L:WaypointLabel,enum) 15 &gt; if{ 1 (>L:WaypointLabel,enum) }
+(L:WaypointLabel,enum) 1 == if{ 'ALPHA' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 2 == if{ 'BULL' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 3 == if{ 'CHEVY' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 4 == if{ 'DELTA' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 5 == if{ 'ECHO' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 6 == if{ 'FORD' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 7 == if{ 'FOX' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 8 == if{ 'HOTEL' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 9 == if{ 'LIMA' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 10 == if{ 'LION' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 11 == if{ 'ROVER' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 12 == if{ 'SPIKE' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 13 == if{ 'SPOT' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 14 == if{ 'TANGO' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(L:WaypointLabel,enum) 15 == if{ 'XROAD' (>C:fs9gps:FlightPlanNewWaypointIdent) }
+(A:GPS FLIGHT PLAN WP INDEX,number) (>C:fs9gps:FlightPlanAddWaypoint) }
+}
+
+
+(L:MFD3PCDTouch,enum) 40 == (L:TouchScreenPause, bool) ! and (L:MFD3PCDTouchTimer,enum) 0 == and if{ 227 (>L:MFD3_Screen, number) }
+
+(L:MFD3PCDTouch,enum) 31 == if{ 1 (>L:SelectPrevWP,bool) }
+(L:MFD3PCDTouch,enum) 36 == if{ 1 (>L:SelectNextWP,bool) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>REF POINT</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 236 == if{
+(L:MFD3PCDTouch,enum) 4 == (L:TouchScreenPause, bool) ! and (L:MFD3PCDTouchTimer,enum) 0 == and (A:GPS FLIGHT PLAN WP COUNT, number) 0 &gt; and if{ 
+	(L:RefpointBullseyeActive,bool) ! (>L:RefpointBullseyeActive,bool)
+	(L:RefpointBullseyeActive,bool) if{
+			(A:GPS FLIGHT PLAN WP INDEX,number) (>L:RefpointBullseye,number)
+			(A:GPS WP NEXT LAT, degrees) (>L:BullseyeLatitude, degrees)
+			(A:GPS WP NEXT LON, degrees) (>L:BullseyeLongitude, degrees)
+			}
+		}
+
+(L:MFD3PCDTouch,enum) 40 == (L:TouchScreenPause, bool) ! and (L:MFD3PCDTouchTimer,enum) 0 == and if{ 227 (>L:MFD3_Screen, number) }
+
+(L:MFD3PCDTouch,enum) 31 == (L:RefpointBullseyeActive,bool) ! and if{ 1 (>L:SelectPrevWP,bool) }
+(L:MFD3PCDTouch,enum) 36 == (L:RefpointBullseyeActive,bool) ! and if{ 1 (>L:SelectNextWP,bool) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>Identification IFF</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 228 == if{
+(L:MFD4PCDTouch,enum) 4 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 11 != if{ 11 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD4PCDTouch,enum) 9 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 12 != if{ 12 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD4PCDTouch,enum) 10 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 13 != if{ 13 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD4PCDTouch,enum) 14 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 4 != if{ 4 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD4PCDTouch,enum) 20 == if{ 
+	(A:TRANSPONDER STATE:1, enum) 5 == if{ 0 (>A:TRANSPONDER STATE:1, enum) }				
+	els{ (A:TRANSPONDER STATE:1, enum) 1 + (>A:TRANSPONDER STATE:1, enum) }
+}
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>Baro and ALOW</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 229 == if{
+(L:MFD4PCDTouch,enum) 5 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 14 != if{ 14 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD4PCDTouch,enum) 2 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 27 != if{ 27 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } }
+(L:MFD4PCDTouch,enum) 6 == if{ (L:GCASLevel,enum) 1 + (>L:GCASLevel,enum) (L:GCASLevel, enum) 3 == if{ 0 (>L:GCASLevel, enum) } }
+(L:MFD4PCDTouch,enum) 9 == if{ 1013.25 16 * (>K:KOHLSMAN_SET, Millibars) } 
+(L:MFD4PCDTouch,enum) 10 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 15 != if{ 15 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD4PCDTouch,enum) 20 == (L:MFD4PCDTouch,enum) 19 == or if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 25 != if{ 25 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD4PCDTouch,enum) 25 == (L:MFD4PCDTouch,enum) 24 == or if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 26 != if{ 26 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD4PCDTouch,enum) 30 == (L:MFD4PCDTouch,enum) 29 == or if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 16 != if{ 16 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } }
+(L:MFD4PCDTouch,enum) 34 == if{ (L:Radalt_Standby,bool) ! (>L:Radalt_Standby,bool)  } 
+(L:MFD4PCDTouch,enum) 1 == if{ (L:GCASMode,enum) 1 + (>L:GCASMode,enum) (L:GCASMode, enum) 3 == if{ 0 (>L:GCASMode, enum) } }
+}
+</Value>
+</Select>
+</Element>
+ 
+
+<Comment>Communication</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen, number) 230 == if{
+(L:MFD3PCDTouch,enum) 4 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 6 != if{ 6 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 5 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 6 != if{ 6 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 9 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 7 != if{ 7 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 10 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 7 != if{ 7 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 14 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 9 != if{ 9 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+(L:MFD3PCDTouch,enum) 15 == if{ 0 (>L:CNI_digit_counter,number) 0 (>L:CNI_NewDigit, number) (L:CNI_mode,number) 9 != if{ 9 (>L:CNI_mode,number) } els{ 0 (>L:CNI_mode,number) } } 
+
+(L:MFD3PCDTouch,enum) 2 == if{ 1 (>K:COM_STBY_RADIO_SWAP) }
+(L:MFD3PCDTouch,enum) 7 == if{ 1 (>K:COM2_RADIO_SWAP) }
+(L:MFD3PCDTouch,enum) 12 == if{ 1 (>K:COM3_RADIO_SWAP) }
+(L:MFD3PCDTouch,enum) 29 == (L:MFD3PCDTouch,enum) 30 == or if{ 121500000 (>K:COM_STBY_RADIO_SET_HZ) } 
+
+(L:MFD3PCDTouch,enum) 3 == if{ (A:COM TRANSMIT:1,bool) if{ (>K:COM2_TRANSMIT_SELECT) } els{ (>K:COM1_TRANSMIT_SELECT) } }
+(L:MFD3PCDTouch,enum) 8 == if{ (A:COM TRANSMIT:1,bool) if{ (>K:COM2_TRANSMIT_SELECT) } els{ (>K:COM1_TRANSMIT_SELECT) } }
+}
+</Value>
+</Select>
+</Element>
+
+	
+<Comment>ECS</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 231 == if{
+(L:MFD4PCDTouch,enum) 40 == if{ 225 (>L:MFD4_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>HMD</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 232 == if{
+(L:MFD4PCDTouch,enum) 2 == if{ (L:HUDDeclutter, enum) ++ (>L:HUDDeclutter, enum) }
+(L:MFD4PCDTouch,enum) 7 == if{ (L:HMDDeclutter, enum) ++ (>L:HMDDeclutter, enum) }
+(L:MFD4PCDTouch,enum) 4 == if{ (L:HUDCage,bool) ! (>L:HUDCage,bool) }
+(L:MFD4PCDTouch,enum) 5 == if{ (L:HMDSpeed, enum) ! (>L:HMDSpeed, enum) }
+(L:MFD4PCDTouch,enum) 8 == if{ (L:HMDOffBoresight,bool) ! (>L:HMDOffBoresight,bool) }
+(L:MFD4PCDTouch,enum) 40 == if{ 225 (>L:MFD4_Screen, number) }
+}
+
+(L:HUDDeclutter, enum) 2 &gt; if{ 0 (>L:HUDDeclutter, enum) }
+(L:HMDDeclutter, enum) 2 &gt; if{ 0 (>L:HMDDeclutter, enum) }
+</Value>
+</Select>
+</Element>
+
+<Comment>Waypoint</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 231 == if{
+(L:MFD4PCDTouch,enum) 40 == if{ 225 (>L:MFD4_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>PMDDR</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 234 == if{
+(L:MFD4PCDTouch,enum) 21 == if{ 1 (>K:REPAIR_AND_REFUEL, bool) }
+(L:MFD4PCDTouch,enum) 22 == if{ (L:AlternateLandingFBW,bool) ! (>L:AlternateLandingFBW,bool) }
+(L:MFD4PCDTouch,enum) 23 == if{ (L:AlternateAutopilot,bool) ! (>L:AlternateAutopilot,bool) }
+(L:MFD4PCDTouch,enum) 24 == if{ (L:NWSAutomatic, bool) ! (>L:NWSAutomatic, bool) }
+
+(L:MFD4PCDTouch,enum) 26 == if{ (L:AdditionalKeyBindings, bool) ! (>L:AdditionalKeyBindings, bool) }
+(L:MFD4PCDTouch,enum) 27 == if{ (L:RadarReflectorsDisabled, bool) ! (>L:RadarReflectorsDisabled, bool) }
+(L:MFD4PCDTouch,enum) 28 == if{ (L:HMDVisorToggle, bool) ! (>L:HMDVisorToggle, bool) }
+(L:MFD4PCDTouch,enum) 29 == if{ (L:TintedGlass, bool) ! (>L:TintedGlass, bool) ! }
+
+(L:MFD4PCDTouch,enum) 31 == if{ (L:ExpandedAutopilot, bool) ! (>L:ExpandedAutopilot, bool) }
+(L:MFD4PCDTouch,enum) 32 == if{ (L:StickControlDisabled, bool) ! (>L:StickControlDisabled, bool) }
+(L:MFD4PCDTouch,enum) 33 == if{ (L:VapourEffectsDisabled, bool) ! (>L:VapourEffectsDisabled, bool) }
+(L:MFD4PCDTouch,enum) 34 == if{ (L:STOVLMovingShipDynamics, bool) ! (>L:STOVLMovingShipDynamics, bool) }
+
+(L:MFD4PCDTouch,enum) 36 == if{  1 (>L:CallTheBall, bool) 1 (>L:LSOActive, bool) (L:MFD4_Screen_POPUP_Buffer, number) (>L:MFD4_Screen, number) }
+
+
+(L:MFD4PCDTouch,enum) 11 == if{
+(L:MFD1_Screen, number) 199 &gt; if{ (L:MFD1_Screen_POPUP_Buffer, number) (>L:MFD1_Screen_Store, number) }  els{ (L:MFD1_Screen, number) (>L:MFD1_Screen_Store, number) }
+(L:MFD2_Screen, number) 199 &gt; if{ (L:MFD2_Screen_POPUP_Buffer, number) (>L:MFD2_Screen_Store, number) }  els{ (L:MFD2_Screen, number) (>L:MFD2_Screen_Store, number) }
+(L:MFD3_Screen, number) 199 &gt; if{ (L:MFD3_Screen_POPUP_Buffer, number) (>L:MFD3_Screen_Store, number) }  els{ (L:MFD3_Screen, number) (>L:MFD3_Screen_Store, number) }
+(L:MFD4_Screen, number) 199 &gt; if{ (L:MFD4_Screen_POPUP_Buffer, number) (>L:MFD4_Screen_Store, number) }  els{ (L:MFD4_Screen, number) (>L:MFD4_Screen_Store, number) }
+(L:MFD1_Subportal,number) (>L:MFD1_Subportal_Store, number)
+(L:MFD2_Subportal,number) (>L:MFD2_Subportal_Store, number)
+(L:MFD3_Subportal,number) (>L:MFD3_Subportal_Store, number)
+(L:MFD4_Subportal,number) (>L:MFD4_Subportal_Store, number)
+(L:MFD1_Subportal1,number) (>L:MFD1_Subportal1_Store, number)
+(L:MFD1_Subportal2,number) (>L:MFD1_Subportal2_Store, number)
+(L:MFD2_Subportal1,number) (>L:MFD2_Subportal1_Store, number)
+(L:MFD2_Subportal2,number) (>L:MFD2_Subportal2_Store, number)
+(L:MFD3_Subportal1,number) (>L:MFD3_Subportal1_Store, number)
+(L:MFD3_Subportal2,number) (>L:MFD3_Subportal2_Store, number)
+(L:MFD4_Subportal1,number) (>L:MFD4_Subportal1_Store, number)
+(L:MFD4_Subportal2,number) (>L:MFD4_Subportal2_Store, number)
+(L:MFD_Top_Bar_Swap, bool) (>L:MFD_Top_Bar_Swap_Store, bool)
+}
+
+(L:MFD4PCDTouch,enum) 12 == if{
+(L:MFD1_Screen, number) 199 &gt; if{ (L:MFD1_Screen_Store, number) (>L:MFD1_Screen_POPUP_Buffer, number) }  els{ (L:MFD1_Screen_Store, number) (>L:MFD1_Screen, number) }
+(L:MFD2_Screen, number) 199 &gt; if{ (L:MFD2_Screen_Store, number) (>L:MFD2_Screen_POPUP_Buffer, number) }  els{ (L:MFD2_Screen_Store, number) (>L:MFD2_Screen, number) }
+(L:MFD3_Screen, number) 199 &gt; if{ (L:MFD3_Screen_Store, number) (>L:MFD3_Screen_POPUP_Buffer, number) }  els{ (L:MFD3_Screen_Store, number) (>L:MFD3_Screen, number) }
+(L:MFD4_Screen, number) 199 &gt; if{ (L:MFD4_Screen_Store, number) (>L:MFD4_Screen_POPUP_Buffer, number) }  els{ (L:MFD4_Screen_Store, number) (>L:MFD4_Screen, number) }
+(L:MFD1_Subportal_Store, number) (>L:MFD1_Subportal,number)
+(L:MFD2_Subportal_Store, number) (>L:MFD2_Subportal,number)
+(L:MFD3_Subportal_Store, number) (>L:MFD3_Subportal,number)
+(L:MFD4_Subportal_Store, number) (>L:MFD4_Subportal,number)
+(L:MFD1_Subportal1_Store, number) (>L:MFD1_Subportal1,number)
+(L:MFD1_Subportal2_Store, number) (>L:MFD1_Subportal2,number)
+(L:MFD2_Subportal1_Store, number) (>L:MFD2_Subportal1,number)
+(L:MFD2_Subportal2_Store, number) (>L:MFD2_Subportal2,number)
+(L:MFD3_Subportal1_Store, number) (>L:MFD3_Subportal1,number)
+(L:MFD3_Subportal2_Store, number) (>L:MFD3_Subportal2,number)
+(L:MFD4_Subportal1_Store, number) (>L:MFD4_Subportal1,number)
+(L:MFD4_Subportal2_Store, number) (>L:MFD4_Subportal2,number)
+(L:MFD_Top_Bar_Swap_Store, bool) (>L:MFD_Top_Bar_Swap, bool)
+}
+
+(L:MFD4PCDTouch,enum) 13 == if{
+6 (>L:MFD1_Screen, number)
+0 (>L:MFD1_Subportal, number)
+18 (>L:MFD1_Subportal1, number)  
+4 (>L:MFD1_Subportal2, number)  
+8 (>L:MFD2_Screen, number)
+1 (>L:MFD2_Subportal, number)
+12 (>L:MFD2_Subportal1, number)  
+15 (>L:MFD2_Subportal2, number)  
+7 (>L:MFD3_Screen, number)
+1 (>L:MFD3_Subportal, number)
+13 (>L:MFD3_Subportal1, number)  
+17 (>L:MFD3_Subportal2, number)  
+11 (>L:MFD4_Screen, number)
+0 (>L:MFD4_Subportal, number)
+8 (>L:MFD4_Subportal1, number)
+6 (>L:MFD4_Subportal2, number)
+}
+
+
+(L:MFD4PCDTouch,enum) 40 == if{ 225 (>L:MFD4_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>CRUS</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 235 == if{
+(L:MFD4PCDTouch,enum) 40 == if{ 225 (>L:MFD4_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>Time</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 239 == if{
+(L:MFD4PCDTouch,enum) 10 == if{ (L:MenuTime, bool) ! (>L:MenuTime, bool) }
+(L:MFD4PCDTouch,enum) 20 == if{ 1 (>L:StopwatchStatus, number) }
+(L:MFD4PCDTouch,enum) 25 == if{ 2 (>L:StopwatchStatus, number) }
+(L:MFD4PCDTouch,enum) 24 == if{ 3 (>L:StopwatchStatus, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>DATALINK</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 240 == if{
+(L:MFD4PCDTouch,enum) 5 == if{ 241 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 10 == if{ 242 (>L:MFD4_Screen, number) }
+(L:MFD4PCDTouch,enum) 40 == if{ 225 (>L:MFD4_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>MADL</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 241 == if{
+(L:MFD4PCDTouch,enum) 40 == if{ 240 (>L:MFD4_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>LINK16</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD4_Screen, number) 242 == if{
+(L:MFD4PCDTouch,enum) 3 == if{ 1 (>L:Link16ListChange,bool) }
+(L:MFD4PCDTouch,enum) 35 == if{ 1 (>L:Link16IDLChange,bool) }
+(L:MFD4PCDTouch,enum) 40 == if{ 240 (>L:MFD4_Screen, number) }
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>Reset PCD Touchscreen variable FIRST PORTAL</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:MFD3PCDTouch,enum) 0 != if{
+(L:MFD3PCDTouch,enum) 1 == if{ 1 (>L:MFD3TouchColumn, enum) 1 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 2 == if{ 2 (>L:MFD3TouchColumn, enum) 1 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 3 == if{ 3 (>L:MFD3TouchColumn, enum) 1 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 4 == if{ 4 (>L:MFD3TouchColumn, enum) 1 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 5 == if{ 5 (>L:MFD3TouchColumn, enum) 1 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 6 == if{ 1 (>L:MFD3TouchColumn, enum) 2 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 7 == if{ 2 (>L:MFD3TouchColumn, enum) 2 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 8 == if{ 3 (>L:MFD3TouchColumn, enum) 2 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 9 == if{ 4 (>L:MFD3TouchColumn, enum) 2 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 10 == if{ 5 (>L:MFD3TouchColumn, enum) 2 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 11 == if{ 1 (>L:MFD3TouchColumn, enum) 3 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 12 == if{ 2 (>L:MFD3TouchColumn, enum) 3 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 13 == if{ 3 (>L:MFD3TouchColumn, enum) 3 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 14 == if{ 4 (>L:MFD3TouchColumn, enum) 3 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 15 == if{ 5 (>L:MFD3TouchColumn, enum) 3 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 16 == if{ 1 (>L:MFD3TouchColumn, enum) 4 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 17 == if{ 2 (>L:MFD3TouchColumn, enum) 4 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 18 == if{ 3 (>L:MFD3TouchColumn, enum) 4 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 19 == if{ 4 (>L:MFD3TouchColumn, enum) 4 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 20 == if{ 5 (>L:MFD3TouchColumn, enum) 4 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 21 == if{ 1 (>L:MFD3TouchColumn, enum) 5 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 22 == if{ 2 (>L:MFD3TouchColumn, enum) 5 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 23 == if{ 3 (>L:MFD3TouchColumn, enum) 5 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 24 == if{ 4 (>L:MFD3TouchColumn, enum) 5 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 25 == if{ 5 (>L:MFD3TouchColumn, enum) 5 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 26 == if{ 1 (>L:MFD3TouchColumn, enum) 6 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 27 == if{ 2 (>L:MFD3TouchColumn, enum) 6 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 28 == if{ 3 (>L:MFD3TouchColumn, enum) 6 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 29 == if{ 4 (>L:MFD3TouchColumn, enum) 6 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 30 == if{ 5 (>L:MFD3TouchColumn, enum) 6 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 31 == if{ 1 (>L:MFD3TouchColumn, enum) 7 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 32 == if{ 2 (>L:MFD3TouchColumn, enum) 7 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 33 == if{ 3 (>L:MFD3TouchColumn, enum) 7 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 34 == if{ 4 (>L:MFD3TouchColumn, enum) 7 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 35 == if{ 5 (>L:MFD3TouchColumn, enum) 7 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 36 == if{ 1 (>L:MFD3TouchColumn, enum) 8 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 37 == if{ 2 (>L:MFD3TouchColumn, enum) 8 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 38 == if{ 3 (>L:MFD3TouchColumn, enum) 8 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 39 == if{ 4 (>L:MFD3TouchColumn, enum) 8 (>L:MFD3TouchRow, enum) }
+(L:MFD3PCDTouch,enum) 40 == if{ 5 (>L:MFD3TouchColumn, enum) 8 (>L:MFD3TouchRow, enum) }
+1 (>L:MFD3PCDTouchTimer,enum)  
+0 (>L:MFD3PCDTouch,enum)
+(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+}
+
+(L:MFD3PCDTouchTimer,enum) 0 > if{ (L:MFD3PCDTouchTimer,enum) 1 + (>L:MFD3PCDTouchTimer,enum) }
+(L:MFD3PCDTouchTimer,enum) 12 > if{ 0 (>L:MFD3PCDTouchTimer,enum) }
+</Value>
+</Select>
+</Element>
+
+<Comment>Reset PCD Touchscreen variable SECOND PORTAL</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:MFD4PCDTouch,enum) 0 != if{
+(L:MFD4PCDTouch,enum) 1 == if{ 1 (>L:MFD4TouchColumn, enum) 1 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 2 == if{ 2 (>L:MFD4TouchColumn, enum) 1 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 3 == if{ 3 (>L:MFD4TouchColumn, enum) 1 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 4 == if{ 4 (>L:MFD4TouchColumn, enum) 1 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 5 == if{ 5 (>L:MFD4TouchColumn, enum) 1 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 6 == if{ 1 (>L:MFD4TouchColumn, enum) 2 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 7 == if{ 2 (>L:MFD4TouchColumn, enum) 2 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 8 == if{ 3 (>L:MFD4TouchColumn, enum) 2 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 9 == if{ 4 (>L:MFD4TouchColumn, enum) 2 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 10 == if{ 5 (>L:MFD4TouchColumn, enum) 2 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 11 == if{ 1 (>L:MFD4TouchColumn, enum) 3 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 12 == if{ 2 (>L:MFD4TouchColumn, enum) 3 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 13 == if{ 3 (>L:MFD4TouchColumn, enum) 3 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 14 == if{ 4 (>L:MFD4TouchColumn, enum) 3 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 15 == if{ 5 (>L:MFD4TouchColumn, enum) 3 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 16 == if{ 1 (>L:MFD4TouchColumn, enum) 4 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 17 == if{ 2 (>L:MFD4TouchColumn, enum) 4 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 18 == if{ 3 (>L:MFD4TouchColumn, enum) 4 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 19 == if{ 4 (>L:MFD4TouchColumn, enum) 4 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 20 == if{ 5 (>L:MFD4TouchColumn, enum) 4 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 21 == if{ 1 (>L:MFD4TouchColumn, enum) 5 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 22 == if{ 2 (>L:MFD4TouchColumn, enum) 5 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 23 == if{ 3 (>L:MFD4TouchColumn, enum) 5 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 24 == if{ 4 (>L:MFD4TouchColumn, enum) 5 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 25 == if{ 5 (>L:MFD4TouchColumn, enum) 5 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 26 == if{ 1 (>L:MFD4TouchColumn, enum) 6 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 27 == if{ 2 (>L:MFD4TouchColumn, enum) 6 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 28 == if{ 3 (>L:MFD4TouchColumn, enum) 6 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 29 == if{ 4 (>L:MFD4TouchColumn, enum) 6 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 30 == if{ 5 (>L:MFD4TouchColumn, enum) 6 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 31 == if{ 1 (>L:MFD4TouchColumn, enum) 7 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 32 == if{ 2 (>L:MFD4TouchColumn, enum) 7 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 33 == if{ 3 (>L:MFD4TouchColumn, enum) 7 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 34 == if{ 4 (>L:MFD4TouchColumn, enum) 7 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 35 == if{ 5 (>L:MFD4TouchColumn, enum) 7 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 36 == if{ 1 (>L:MFD4TouchColumn, enum) 8 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 37 == if{ 2 (>L:MFD4TouchColumn, enum) 8 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 38 == if{ 3 (>L:MFD4TouchColumn, enum) 8 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 39 == if{ 4 (>L:MFD4TouchColumn, enum) 8 (>L:MFD4TouchRow, enum) }
+(L:MFD4PCDTouch,enum) 40 == if{ 5 (>L:MFD4TouchColumn, enum) 8 (>L:MFD4TouchRow, enum) }
+1 (>L:MFD4PCDTouchTimer,enum)  
+0 (>L:MFD4PCDTouch,enum)
+(L:PCDUISound, bool) ! (>L:PCDUISound, bool)
+}
+
+(L:MFD4PCDTouchTimer,enum) 0 > if{ (L:MFD4PCDTouchTimer,enum) 1 + (>L:MFD4PCDTouchTimer,enum) }
+(L:MFD4PCDTouchTimer,enum) 12 > if{ 0 (>L:MFD4PCDTouchTimer,enum) }
+</Value>
+</Select>
+</Element>
+
+<Comment>Reset Pause Button</Comment>
+
+<Element>
+<Select>
+<Value>
+0 (>L:TouchScreenPause, bool)
+</Value>
+</Select>
+</Element>
+
+<Comment>FAB Touch Timers</Comment>
+<Element>
+<Select>
+<Value>
+(L:MFD3_PopTimer, enum) 0 &gt; if{ (L:MFD3_PopTimer, enum) ++ (>L:MFD3_PopTimer, enum) }
+(L:MFD3_PopTimer, enum) 36 &gt; if{ 0 (>L:MFD3_PopTimer, enum) }
+(L:MFD4_PopTimer, enum) 0 &gt; if{ (L:MFD4_PopTimer, enum) ++ (>L:MFD4_PopTimer, enum) }
+(L:MFD4_PopTimer, enum) 36 &gt; if{ 0 (>L:MFD4_PopTimer, enum) }
+</Value>
+</Select>
+</Element>
+
+</Gauge>

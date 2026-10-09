@@ -1,0 +1,34 @@
+<Gauge Name="STOVL Window Control" Version="1.1">
+<Comment>
+This gauge controls the STOVL 2D-window in Dino Catteneo's F35-A/B/C panel.cfg.
+At aircraft initialisation, this window (with Ident 10090) is opened only when
+(L:F35Model,enum) is set to 1; hence loading the STOVL gauges only for the F35-B.
+
+V1.1:
+- Checks if the ***_Function gauge is loaded, to assure the window is opened and 
+  preventing unnecessary (timer-based) WindowOpen commands.
+
+
+COPYRIGHT STATEMENT
+==================
+Although this gauge is freeware, it may NOT be renamed, copied, re-uploaded,
+modified, or bundled in an other archive, without my prior consent.
+Rob Barendregt, 15 March 2016
+Email: rc.barendregt@planet.nl
+</Comment>
+
+<Update Frequency="1"/>
+
+<Element>
+  <Select>
+    <Value>
+      (* Forces the STOVL Window open untill STOVL gauge is loaded *)
+      (L:VSTOLInit,bool) ! (L:F35Model,enum) 1 == &amp;&amp;
+      if{ 10090 (&gt;K:PANEL_ID_OPEN) }
+    </Value>
+  </Select>
+</Element>
+
+</Gauge>
+
+

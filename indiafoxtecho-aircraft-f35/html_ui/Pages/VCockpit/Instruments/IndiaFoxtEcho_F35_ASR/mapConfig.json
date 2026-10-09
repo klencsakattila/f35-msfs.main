@@ -1,0 +1,186 @@
+﻿{
+  "waypointLabelFontSize": 36,
+  "waypointLabelFontFamily": "Consolas",
+  "waypointLabelColor": "black",
+  "waypointLabelStrokeColor": "#black",
+  "waypointLabelStrokeWidth": 10,
+  "waypointLabelUseBackground": false,
+  "waypointLabelBackgroundColor": "#ffffff",
+  "waypointLabelBackgroundStrokeColor": "black",
+  "waypointLabelBackgroundStrokeWidth": 0,
+  "waypointLabelBackgroundPadding": "5 5 5 5",
+  "waypointLabelDistanceX": 70,
+  "waypointLabelDistance": 5,
+  "waypointIconSize": 50,
+
+  "preventLabelOverlap": false,
+
+  "cityLabelFontSize": 24,
+  "cityLabelFontFamily": "Consolas",
+  "cityLabelColor": "#black",
+  "cityLabelStrokeColor": "#3f3f3f",
+  "cityLabelStrokeWidth": 0,
+  "cityLabelUseBackground": false,
+  "cityLabelBackgroundColor": "white",
+  "cityLabelBackgroundStrokeColor": "red",
+  "cityLabelBackgroundStrokeWidth": 10,
+  "cityLabelBackgroundPadding": "7 12 0 12",
+  "cityLabelDistance": 0.45,
+  "cityIconSize": 90,
+
+  "airplaneIconSize": 90,
+  "airplaneIcon1": "ICON_MAP_TCAS_AS03D",
+  "airplaneIcon2": "ICON_MAP_PLANE_AS03D",
+
+  "imagesDir": "/Pages/VCockpit/Instruments/Airliners/Shared/MFD/Images/",
+
+  "runwayFillColor": "white",
+  "runwayStrokeColor": "black",
+  "runwayStrokeWidth": 3,
+  "runwayCornerRadius": 8,
+  "runwayMinimalWidth": 16,
+
+  "latLonStrokeColor": "gray",
+  "latLonStrokeWidth": 1,
+  "latLonLabelFontFamily": "Consolas",
+  "latLonLabelFontSize": 14,
+  "latLonLabelColor": "white",
+  "latLonLabelStrokeColor": "none",
+  "latLonLabelStrokeWidth": 0,
+
+  "flightPlanActiveLegColor": "#ff00ff",
+  "flightPlanActiveLegWidth": 6,
+  "flightPlanActiveLegStrokeColor": "white",
+  "flightPlanActiveLegStrokeWidth": 0,
+  "flightPlanNonActiveLegColor": "#ff00ff",
+  "flightPlanNonActiveLegWidth": 6,
+  "flightPlanNonActiveLegStrokeColor": "white",
+  "flightPlanNonActiveLegStrokeWidth": 0,
+
+  "roadMotorWayColor": "black",
+  "roadMotorWayWidth": 2,
+  "roadTrunkColor": "black",
+  "roadTrunkWidth": 1.5,
+  "roadPrimaryColor": "black",
+  "roadPrimaryWidth": 1,
+
+  "railwayStrokeColor": "black",
+  "railwayWidth": 2,
+  "railwayDashLength": 6,
+
+  "netBingTopViewAltitudeMin": 5000,
+  "netBingTopViewAltitudeMax": 400000,
+  "netBingTopViewAltitudeLevels": 11,
+
+  "netBingTextureResolution": 1024,
+
+  "netBingAltitudeColors1": [],
+  "netBingWaterColor1": "#404040",
+  "netBingHeightColor1": [
+    {
+      "alt": 0,
+      "color": "#505050"
+    },
+    {
+      "alt": 200,
+      "color": "#545454"
+    },
+    {
+      "alt": 500,
+      "color": "#585858"
+    },
+    {
+      "alt": 1000,
+      "color": "#5b5b5b"
+    },
+    {
+      "alt": 1500,
+      "color": "#5e5e5e"
+    },
+    {
+      "alt": 2000,
+      "color": "#646464"
+    },
+    {
+      "alt": 2500,
+      "color": "#686868"
+    },
+    {
+      "alt": 3000,
+      "color": "#6b6b6b"
+    },
+    {
+      "alt": 3500,
+      "color": "#6f6f6f"
+    },
+    {
+      "alt": 4000,
+      "color": "#747474"
+    },
+    {
+      "alt": 4500,
+      "color": "#777777"
+    },
+    {
+      "alt": 5000,
+      "color": "#7b7b7b"
+    },
+    {
+      "alt": 5500,
+      "color": "#7f7f7f"
+    },
+    {
+      "alt": 6000,
+      "color": "#848484"
+    },
+    {
+      "alt": 6500,
+      "color": "#888888"
+    },
+    {
+      "alt": 7000,
+      "color": "#8b8b8b"
+    },
+    {
+      "alt": 7500,
+      "color": "#8f8f8f"
+    },
+    {
+      "alt": 8000,
+      "color": "#949494"
+    }
+  ],
+
+  "netBingAltitudeColors2": [],
+  "netBingWaterColor2": "#1a2127",
+  "netBingHeightColor2": [
+    {
+      "alt": 0,
+      "color": "#F"
+    },
+    {
+      "alt": 100,
+      "color": "#E53F37"
+    },
+    {
+      "alt": 500,
+      "color": "#FF6A00"
+    },
+    {
+      "alt": 1000,
+      "color": "#FF6A00"
+    },
+    {
+      "alt": 2000,
+      "color": "#37A238"
+    },
+    {
+      "alt": 2500,
+      "color": "#37A238"
+    },
+    {
+      "alt": 3500,
+      "color": "#1a2127"
+    }
+  ]
+}

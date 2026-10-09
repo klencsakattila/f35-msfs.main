@@ -1,0 +1,368 @@
+<Gauge Name="SMS" Version="1.0">
+
+<Comment>
+(L:tailhook_animation, number) from the aircraft, current status of the tailhook extension 0 to 100
+(L:SwitchHookBypass,bool) from the aircraft, true if switch hook bypass is selected
+(L:AOAUnits, number) from the aircraft, AOA units
+(L:AOAUnitsTarget, number) target AOA for landing
+
+(L:LSOIndication, number) as follows
+
+1 == On Speed
+2 == A Little Fast
+3 == A Little Slow
+4 == Fast
+5 == Slow
+6 == High
+7 == Slow
+
+98 = Roger Ball
+99 == Waveoff
+</Comment>
+
+
+<Comment>
+TARGET VALUES BELOW - CHANGE TO THOSE OF YOUR AIRCRAFT!!!
+</Comment>
+
+<Element>
+<Select>
+<Value>
+19 (>L:AOAUpperLimit, number) 
+18 (>L:AOAUpperDeviationLimit, number) 
+17.5 (>L:AOAUpperSmallDeviationLimit, number) 
+17 (>L:AOATarget, number)
+16.5 (>L:AOALowerSmallDeviationLimit, number) 
+16 (>L:AOALowerDeviationLimit, number) 
+15 (>L:AOALowerLimit, number) 
+</Value>
+</Select>
+</Element>
+
+<Comment>
+ON SPEED
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:AOAUpperSmallDeviationLimit, number) (L:AOAUnits, number) &gt;
+(L:AOALowerSmallDeviationLimit, number) (L:AOAUnits, number) &lt; and
+if{
+1 (>L:LSOIndication, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+LITTLE DEVIATION
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:AOALowerSmallDeviationLimit, number) (L:AOAUnits, number) &gt;
+(L:AOALowerDeviationLimit, number) (L:AOAUnits, number) &lt; and
+if{
+2 (>L:LSOIndication, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AOAUpperDeviationLimit, number) (L:AOAUnits, number) &gt;
+(L:AOAUpperSmallDeviationLimit, number) (L:AOAUnits, number) &lt; and
+if{
+3 (>L:LSOIndication, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+DEVIATION
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:AOALowerDeviationLimit, number) (L:AOAUnits, number) &gt;
+if{
+4 (>L:LSOIndication, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:AOAUpperDeviationLimit, number) (L:AOAUnits, number) &lt;
+if{
+5  (>L:LSOIndication, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+WAVEOFF
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:AOAUpperLimit, number) (L:AOAUnits, number) &lt; 
+(L:AOALowerLimit, number) (L:AOAUnits, number) &gt; or
+if{
+(L:LSOWaveOffCounter, number) 1 + (>L:LSOWaveOffCounter, number)
+}
+(L:LSOWaveOffCounter, number) 150 &gt; if{
+99 (>L:LSOIndication, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:CallTheBall, bool)
+if{
+98  (>L:LSOIndication, number)
+0 (>L:LSOWaveOffCounter, number)
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+Should Sound play
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:F35Model, number) 2 == 
+(A:GEAR CENTER POSITION, percent) 96 &gt; and
+(A:SIM ON GROUND, bool) ! and
+(L:LSOActive, bool) and
+(L:tailhook_animation, number) 50 &gt; (L:SwitchHookBypass,bool) or and
+if{
+1 (>L:LSOVoiceEnabled, bool)
+}
+els{
+0 (>L:LSOVoiceEnabled, bool)
+0 (>L:LSOWaveOffCounter, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:LSOCounter, number) 1 + (>L:LSOCounter, number)
+(L:LSOVoiceEnabled, bool) (L:LSOCounter, number) 50 ==  and
+if{
+(L:LSOIndication, number) (>L:LSOVoicePlay, bool) 
+}
+els{
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:LSOCounter, number) 79 &gt;  
+if{
+0 (>L:LSOIndication, number)
+0 (>L:LSOVoicePlay, bool)
+0 (>L:LSOCounter, number) 
+0 (>L:LSOHigh, number)
+0 (>L:LSOLow, number)
+0 (>L:LSOFast, number)
+0 (>L:LSOSlow, number)
+0 (>L:LSOLittleFast, number)
+0 (>L:LSOLittleSlow, number)
+0 (>L:LSOOnSpeed, number)
+0 (>L:LSOPaddles, number)
+0 (>L:LSORogerBall, number)
+0 (>L:LSOUnderpowered, number)
+0 (>L:LSOOverpowered, number)
+0 (>L:LSOWaveoff, number)
+0 (>L:CallTheBall, bool)
+
+}
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:LSOVoicePlay, bool) 1 ==
+if{
+0 (>L:LSOHigh, number)
+0 (>L:LSOLow, number)
+0 (>L:LSOFast, number)
+0 (>L:LSOSlow, number)
+0 (>L:LSOLittleFast, number)
+0 (>L:LSOLittleSlow, number)
+1 (>L:LSOOnSpeed, number)
+0 (>L:LSOPaddles, number)
+0 (>L:LSORogerBall, number)
+0 (>L:LSOUnderpowered, number)
+0 (>L:LSOOverpowered, number)
+0 (>L:LSOWaveoff, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:LSOVoicePlay, bool) 2 ==
+if{
+0 (>L:LSOHigh, number)
+0 (>L:LSOLow, number)
+0 (>L:LSOFast, number)
+0 (>L:LSOSlow, number)
+1 (>L:LSOLittleFast, number)
+0 (>L:LSOLittleSlow, number)
+0 (>L:LSOOnSpeed, number)
+0 (>L:LSOPaddles, number)
+0 (>L:LSORogerBall, number)
+0 (>L:LSOUnderpowered, number)
+0 (>L:LSOOverpowered, number)
+0 (>L:LSOWaveoff, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:LSOVoicePlay, bool) 3 ==
+if{
+0 (>L:LSOHigh, number)
+0 (>L:LSOLow, number)
+0 (>L:LSOFast, number)
+0 (>L:LSOSlow, number)
+0 (>L:LSOLittleFast, number)
+1 (>L:LSOLittleSlow, number)
+0 (>L:LSOOnSpeed, number)
+0 (>L:LSOPaddles, number)
+0 (>L:LSORogerBall, number)
+0 (>L:LSOUnderpowered, number)
+0 (>L:LSOOverpowered, number)
+0 (>L:LSOWaveoff, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:LSOVoicePlay, bool) 4 ==
+if{
+0 (>L:LSOHigh, number)
+0 (>L:LSOLow, number)
+1 (>L:LSOFast, number)
+0 (>L:LSOSlow, number)
+0 (>L:LSOLittleFast, number)
+0 (>L:LSOLittleSlow, number)
+0 (>L:LSOOnSpeed, number)
+0 (>L:LSOPaddles, number)
+0 (>L:LSORogerBall, number)
+0 (>L:LSOUnderpowered, number)
+0 (>L:LSOOverpowered, number)
+0 (>L:LSOWaveoff, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:LSOVoicePlay, bool) 5 ==
+if{
+0 (>L:LSOHigh, number)
+0 (>L:LSOLow, number)
+0 (>L:LSOFast, number)
+1 (>L:LSOSlow, number)
+0 (>L:LSOLittleFast, number)
+0 (>L:LSOLittleSlow, number)
+0 (>L:LSOOnSpeed, number)
+0 (>L:LSOPaddles, number)
+0 (>L:LSORogerBall, number)
+0 (>L:LSOUnderpowered, number)
+0 (>L:LSOOverpowered, number)
+0 (>L:LSOWaveoff, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:LSOVoicePlay, bool) 98 ==
+if{
+0 (>L:LSOHigh, number)
+0 (>L:LSOLow, number)
+0 (>L:LSOFast, number)
+0 (>L:LSOSlow, number)
+0 (>L:LSOLittleFast, number)
+0 (>L:LSOLittleSlow, number)
+0 (>L:LSOOnSpeed, number)
+0 (>L:LSOPaddles, number)
+1 (>L:LSORogerBall, number)
+0 (>L:LSOUnderpowered, number)
+0 (>L:LSOOverpowered, number)
+0 (>L:LSOWaveoff, number)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:LSOVoicePlay, bool) 99 ==
+if{
+0 (>L:LSOHigh, number)
+0 (>L:LSOLow, number)
+0 (>L:LSOFast, number)
+0 (>L:LSOSlow, number)
+0 (>L:LSOLittleFast, number)
+0 (>L:LSOLittleSlow, number)
+0 (>L:LSOOnSpeed, number)
+0 (>L:LSOPaddles, number)
+0 (>L:LSORogerBall, number)
+0 (>L:LSOUnderpowered, number)
+0 (>L:LSOOverpowered, number)
+1 (>L:LSOWaveoff, number)
+
+0 (>L:LSOActive, bool)
+
+}
+</Value>
+</Select>
+</Element>
+
+
+</Gauge>

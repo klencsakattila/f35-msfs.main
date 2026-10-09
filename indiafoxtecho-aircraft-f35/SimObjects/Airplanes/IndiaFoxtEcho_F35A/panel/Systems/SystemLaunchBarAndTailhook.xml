@@ -1,0 +1,100 @@
+<Gauge Name="Replacement Animations for launch bar and tailhook" Version="1.0">
+
+<Comment>
+This code serves to replace default launch bar and tailhook animations as they
+are not currently working in the sim.
+Variables employed are as follows:
+L:CarrierFunctionsEnabled, bool - TRUE if a non-zero value on SDK variables is detected
+L:switch_launch_bar_position, bool - Drives animation of the switch in the VC, TRUE is extend
+L:switch_launch_bar, bool - Commanded position of the launch bar, TRUE is extend, FALSE is retract
+L:launch_bar_animation, number - Drives animation of the launch bar in the model, 0 is retracted, 100 is extended
+L:launch_bar_status, number - Bespoke animation for the launch bar, 0 is retracted, 1 is extended
+L:lever_tailhook, bool 
+L:tailhook_animation, number
+L:tailhook_status, number
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:LAUNCHBAR SWITCH,bool) (A:SIM ON GROUND, bool) and if{ 1 (>L:switch_launch_bar, bool) } els{ 0 (>L:switch_launch_bar, bool) }
+(A:LAUNCHBAR SWITCH,bool) (A:SIM ON GROUND, bool) ! and if{ 1 (>K:TOGGLE_LAUNCH_BAR_SWITCH) }
+(L:switch_launch_bar,bool) (>L:switch_launch_bar_position, bool)
+(L:launch_bar_status, number) (>L:launch_bar_animation, number)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+LightSwitchOverride STOVL control
+</Comment>
+
+<Comment>
+<Element>
+<Select>
+<Value>
+(A:LIGHT WING, bool) (L:PrevLightWingStatus, bool) != if{  
+(A:LIGHT WING, bool) (>L:lever_tailhook, bool) != if{
+(A:LIGHT WING, bool) (>L:lever_tailhook, bool) }
+}
+(A:LIGHT WING, bool) (>L:PrevLightWingStatus, bool)
+</Value>
+</Select>
+</Element>
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:SIM ON GROUND, bool) ! if{ 0 (>L:switch_launch_bar, bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:switch_launch_bar, bool) (L:launch_bar_status, number) 100 &lt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:launch_bar_status, number) 1 + (>L:launch_bar_status, number) }
+(L:switch_launch_bar, bool) ! (L:launch_bar_status, number) 0 &gt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:launch_bar_status, number) 5 - (>L:launch_bar_status, number) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:TAILHOOK HANDLE,bool) (>L:lever_tailhook, bool) 
+(A:TAILHOOK POSITION:1, percent) (>L:tailhook_animation, number)
+</Value>
+</Select>
+</Element>
+
+
+<Element>
+<Select>
+<Value>
+(L:lever_tailhook, bool) (L:tailhook_status, number) 100 &lt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:tailhook_status, number) 1 + (>L:tailhook_status, number) }
+(L:lever_tailhook, bool) ! (L:tailhook_status, number) 0 &gt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:tailhook_status, number) 1 - (>L:tailhook_status, number) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:lever_wingfold, bool) (L:wingfold_status, number) 100 &lt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:wingfold_status, number) 1 + (>L:wingfold_status, number) }
+(L:lever_wingfold, bool) ! (L:wingfold_status, number) 0 &gt; and (L:ElectricalPowerAvailable,bool) and if{
+(L:wingfold_status, number) 1 - (>L:wingfold_status, number) }
+(L:wingfold_status, number) 100 / (>A:FOLDING WING LEFT PERCENT, number)
+(L:wingfold_status, number) 100 / (>A:FOLDING WING RIGHT PERCENT, number)
+</Value>
+</Select>
+</Element>
+
+
+</Gauge>

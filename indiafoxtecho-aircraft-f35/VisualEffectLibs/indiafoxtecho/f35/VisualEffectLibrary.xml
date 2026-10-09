@@ -1,0 +1,12 @@
+<VisualEffectLibrary Version="1.0.0">
+	<VisualEffect File="LiftFanWashGeneric"/>
+	<VisualEffect File="F35WingVapourNewRight"/>
+	<VisualEffect File="F35WhiskerNewRight"/>
+	<VisualEffect File="F35PrandtlGlauert"/>
+	<VisualEffect File="F35WhiskerNewLeft"/>
+	<VisualEffect File="Aerobatics Smoke White NEAR"/>
+	<VisualEffect File="F35WingVapourNewLeft"/>
+	<VisualEffect File="LifFanWashDust"/>
+	<VisualEffect File="LiftFanWashWater"/>
+</VisualEffectLibrary>
+

@@ -1,0 +1,206 @@
+<Gauge Name="AutoRecovery" Version="2.0">
+<Comment>
+
+VS BIT
+
+(>L:FCS_Flaperon_LT, number)
+(>L:FCS_Flaperon_RT, number)
+(>L:FCS_Taileron_LT, number)
+(>L:FCS_Taileron_RT, number)
+(>L:FCS_Slat_LT, number)
+(>L:FCS_Slat_RT, number)
+(>L:FCS_Speedbrake, number)
+(>L:FCS_Rudder_LT, number)
+(>L:FCS_Rudder_RT, number)
+
+</Comment>
+
+<Update Frequency="0"/>
+
+
+<Comment>
+******************
+VEHICLE SYSTEM BIT
+******************
+</Comment>
+
+
+<Element>
+  <Select>
+    <Value>
+    (L:VSBIT, bool) (A:GENERAL ENG MASTER ALTERNATOR:1, bool) ! (A:TURB ENG CORRECTED N1:1, percent) 15 &lt; or and (A:SIM ON GROUND, bool) ! or if{ 0 (>L:VSBIT, bool) }
+	(L:VSBIT, bool) (L:VSBITComplete,bool) ! and if{ 1 (>L:VSBITComplete,bool) }
+    </Value>
+  </Select>
+</Element>
+
+
+<Comment>
+******************
+VEHICLE SYSTEM BIT
+******************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:VSBIT, bool) ! if{ 0 (>L:VSBITCounter1, number) 0 (>L:VSBITCounter2, number) } 
+(L:VSBIT, bool) (L:VSBITCounter1, number) 0 == and if{ 1 (>L:VSBITCounter1, number) } 
+(L:VSBIT, bool) (L:VSBITCounter1, number) 0 &gt; and if{ 1 (>L:VSBITRunning, number) } els{ 0 (>L:VSBITRunning, number) } 
+
+(L:VSBITCounter1, number) 0 &gt; if{ (L:VSBITCounter2, number) 5 + (>L:VSBITCounter2, number) } 
+(L:VSBITCounter2, number) 100 &gt; if{ (L:VSBITCounter1, number) 1 + (>L:VSBITCounter1, number) 0 (>L:VSBITCounter2, number) } 
+
+(L:VSBIT, bool) if{
+
+50 (>L:FCS_Flaperon_LT, number)
+50 (>L:FCS_Flaperon_RT, number)
+50 (>L:FCS_Taileron_LT, number)
+50 (>L:FCS_Taileron_RT, number)
+0 (>L:FCS_Slat_LT, number)
+0 (>L:FCS_Slat_RT, number)
+50 (>L:FCS_Rudder_LT, number)
+50 (>L:FCS_Rudder_RT, number)
+
+(L:VSBITCounter1, number) 1 == if{
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Rudder_RT, number)
+}
+
+(L:VSBITCounter1, number) 2 == if{
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Rudder_RT, number)
+}
+
+
+(L:VSBITCounter1, number) 4 == if{
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Rudder_RT, number)
+}
+
+(L:VSBITCounter1, number) 5 == if{
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Rudder_RT, number)
+}
+
+
+(L:VSBITCounter1, number) 7 == if{
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Rudder_RT, number)
+}
+
+(L:VSBITCounter1, number) 8 == if{
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Rudder_RT, number)
+}
+
+
+
+(L:VSBITCounter1, number) 10 == if{
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Rudder_RT, number)
+}
+
+(L:VSBITCounter1, number) 11 == if{
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Rudder_RT, number)
+}
+
+
+(L:VSBITCounter1, number) 13 == if{
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Flaperon_LT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Flaperon_RT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Rudder_RT, number)
+1 (>L:switch_IFR_door, bool)
+}
+
+(L:VSBITCounter1, number) 14 == if{
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Flaperon_LT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Flaperon_RT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Rudder_RT, number)
+}
+
+
+(L:VSBITCounter1, number) 16 == if{
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Flaperon_LT, number)
+(L:VSBITCounter2, number) 0.5 * 50 +  (>L:FCS_Flaperon_RT, number)
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Rudder_RT, number)
+0 (>L:switch_IFR_door, bool)
+}
+
+(L:VSBITCounter1, number) 17 == if{
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Flaperon_LT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Flaperon_RT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Taileron_LT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Taileron_RT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Rudder_LT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Rudder_RT, number)
+}
+
+
+(L:VSBITCounter1, number) 19 == if{
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Flaperon_LT, number)
+(L:VSBITCounter2, number) -0.5 * 50 + (>L:FCS_Flaperon_RT, number)
+(L:VSBITCounter2, number) (>L:FCS_Slat_LT, number)
+(L:VSBITCounter2, number) (>L:FCS_Slat_RT, number)
+}
+
+(L:VSBITCounter1, number) 20 == if{
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Flaperon_LT, number)
+(L:VSBITCounter2, number) 0.5 * (>L:FCS_Flaperon_RT, number)
+100 (L:VSBITCounter2, number) - (>L:FCS_Slat_LT, number)
+100 (L:VSBITCounter2, number) - (>L:FCS_Slat_RT, number)
+}
+
+
+(L:VSBITCounter1, number) 22 == if{
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Flaperon_LT, number)
+(L:VSBITCounter2, number) 0.5 * 50 + (>L:FCS_Flaperon_RT, number)
+}
+
+(L:VSBITCounter1, number) 23 == if{
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Flaperon_LT, number)
+(L:VSBITCounter2, number) -0.5 * 100 + (>L:FCS_Flaperon_RT, number)
+}
+
+
+(L:VSBITCounter1, number) 25 == (L:VSBITCounter2, number) 0 == and if{ (&gt;K:TOGGLE_TAIL_HOOK_HANDLE) (L:lever_tailhook, bool) ! (>L:lever_tailhook, bool) }
+
+(L:VSBITCounter1, number) 28 == (L:VSBITCounter2, number) 0 == and if{ (&gt;K:TOGGLE_TAIL_HOOK_HANDLE) (L:lever_tailhook, bool) ! (>L:lever_tailhook, bool) }
+
+(L:VSBITCounter1, number) 23 &gt; (L:F35Model, number) 1 != and if{ 0 (>L:VSBITCounter1, number) 0 (>L:VSBITCounter2, number) 0 (>L:VSBIT, bool) } 
+(L:VSBITCounter1, number) 30 &gt; if{ 0 (>L:VSBITCounter1, number) 0 (>L:VSBITCounter2, number) 0 (>L:VSBIT, bool) } 
+}
+
+
+</Value>
+</Select>
+</Element>
+
+
+</Gauge>

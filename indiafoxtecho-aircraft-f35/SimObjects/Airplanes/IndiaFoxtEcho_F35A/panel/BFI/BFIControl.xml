@@ -1,0 +1,18 @@
+<Gauge Name="BFIControl" Version="1.0">
+<Update Frequency="18"/> 
+
+<Element>
+<Select>
+<Value>
+(L:BFI_ALIGN_COUNTDOWN,enum) 0 &gt; if{
+(L:BFI_ALIGN_COUNTDOWN,enum) 0.1 - (>L:BFI_ALIGN_COUNTDOWN,enum) 
+0 (>L:BFI_ALIGN,enum)
+}
+els{
+1 (>L:BFI_ALIGN,enum)
+}
+</Value>
+</Select>
+</Element>
+
+</Gauge>

@@ -1,0 +1,62 @@
+<script type="text/html" id="AS04F_HMD">
+    <div id="Mainframe">
+        <div id="Electricity" state="off">
+            <div class="main-screen hmd-display">
+                <div id="hmd-airspeed"> </div>
+                <div id="hmd-vertical-speed">
+				</div>
+
+				
+                <svg id="CameraOverlay" viewBox="0 0 512 512">
+				<g id="TFLIRCS">		
+                <line x1="166" y1="256" x2="246" y2="256" stroke="#ffffff" fill="none" stroke-width="4"></line>
+                <line x1="266" y1="256" x2="346" y2="256" stroke="#ffffff" fill="none" stroke-width="4"></line>
+                <line x1="256" y1="166" x2="256" y2="246" stroke="#ffffff" fill="none" stroke-width="4"></line>
+                <line x1="256" y1="266" x2="256" y2="346" stroke="#ffffff" fill="none" stroke-width="4"></line>		
+				<line x1="166" y1="166" x2="216" y2="166" stroke="#ffffff" fill="none" stroke-width="2"></line>
+                <line x1="166" y1="166" x2="166" y2="216" stroke="#ffffff" fill="none" stroke-width="2"></line>
+                <line x1="346" y1="166" x2="296" y2="166" stroke="#ffffff" fill="none" stroke-width="2"></line>
+                <line x1="346" y1="166" x2="346" y2="216" stroke="#ffffff" fill="none" stroke-width="2"></line>	
+				<line x1="166" y1="346" x2="216" y2="346" stroke="#ffffff" fill="none" stroke-width="2"></line>
+                <line x1="166" y1="346" x2="166" y2="296" stroke="#ffffff" fill="none" stroke-width="2"></line>
+                <line x1="346" y1="346" x2="296" y2="346" stroke="#ffffff" fill="none" stroke-width="2"></line>
+                <line x1="346" y1="346" x2="346" y2="296" stroke="#ffffff" fill="none" stroke-width="2"></line>
+				</g>	  
+
+               
+				<g id="TFLIRNOCS">		
+                <line x1="166" y1="256" x2="246" y2="256" stroke="#00ffff" fill="none" stroke-width="4"></line>
+                <line x1="266" y1="256" x2="346" y2="256" stroke="#00ffff" fill="none" stroke-width="4"></line>
+                <line x1="256" y1="166" x2="256" y2="246" stroke="#00ffff" fill="none" stroke-width="4"></line>
+                <line x1="256" y1="266" x2="256" y2="346" stroke="#00ffff" fill="none" stroke-width="4"></line>		
+				<line x1="166" y1="166" x2="216" y2="166" stroke="#00ffff" fill="none" stroke-width="2"></line>
+                <line x1="166" y1="166" x2="166" y2="216" stroke="#00ffff" fill="none" stroke-width="2"></line>
+                <line x1="346" y1="166" x2="296" y2="166" stroke="#00ffff" fill="none" stroke-width="2"></line>
+                <line x1="346" y1="166" x2="346" y2="216" stroke="#00ffff" fill="none" stroke-width="2"></line>	
+				<line x1="166" y1="346" x2="216" y2="346" stroke="#00ffff" fill="none" stroke-width="2"></line>
+                <line x1="166" y1="346" x2="166" y2="296" stroke="#00ffff" fill="none" stroke-width="2"></line>
+                <line x1="346" y1="346" x2="296" y2="346" stroke="#00ffff" fill="none" stroke-width="2"></line>
+                <line x1="346" y1="346" x2="346" y2="296" stroke="#00ffff" fill="none" stroke-width="2"></line>
+				</g>
+				
+				<g id="OwnshipNorth">
+				<path id="northarrow" d="M 380 400 l 0 30 l 0 -60 l -5 10 l 5 -10 l 5 10 l -5 -10" stroke="#00ffff" fill="none" stroke-width="2" />
+				</g> 
+				
+				<g id="rangecirle">
+				<circle cx="256" cy="256" r="150" stroke="#ff00ff" fill="none" stroke-width="4"></circle>
+				</g>         
+				
+				<g id="TFLIRCameraAngle">
+				<path id="cameraangle" d="M 256 106 l 0 10" stroke="#ff00ff" " fill="none" stroke-width="10" />			
+				</g> 		
+                </svg> 
+
+            </div>
+        </div>
+    </div>
+</script>
+
+<link rel="stylesheet" href="F35_TFLIROverlay.css" />
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/IndiaFoxtEcho_F35_TFLIR/F35_TFLIROverlay.js">

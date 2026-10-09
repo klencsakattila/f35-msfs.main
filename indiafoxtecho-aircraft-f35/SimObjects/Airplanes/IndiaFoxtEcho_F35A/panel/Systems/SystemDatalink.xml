@@ -1,0 +1,409 @@
+<Gauge Name="Brake System" Version="1.1">
+
+<Update Frequency="0"/>
+
+<Comment>
+DATALINK BASIC IMPLEMENTATION
+</Comment>
+
+<Comment>
+***********************
+DATALINK INITIALIZATION
+***********************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:DatalinkInitialized, bool) ! if{ 
+
+
+}
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+*******************
+DATALINK CALLSIGN
+*******************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:TRANSPONDER1 CODE,number) 100 / 14 % int 15 min (>L:CallsignOwnship,number)
+</Value>
+</Select>
+</Element>
+
+<Comment>
+*********************
+DATALINK CALLSIGN IDL
+0 - Solo
+1 - AWACS
+2 - Blue Forces
+3 - Blue Forces + AWACS
+4 - Red Forces
+5 - Red Forces + AWACS
+*********************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:Link16IDLChange,bool) if{ (L:Link16IDL,enum) 1 + (>L:Link16IDL,enum) }
+(L:Link16IDL,enum) 1 &gt; if{ 0 (>L:Link16IDL,enum) }
+
+(L:DatalinkInitialized, bool) ! (L:Link16IDLChange,bool) or if{
+
+(L:Link16IDL,enum) 0 == if{
+0 (>L:Datalink_AWACS,bool) 
+
+(A:TRANSPONDER1 CODE,number) (>L:Link16_Flight_1,number)
+0 (>L:Link16_Flight_2,number)
+0 (>L:Link16_Flight_3,number)
+0 (>L:Link16_Flight_4,number)
+0 (>L:Link16_Flight_5,number)
+0 (>L:Link16_Flight_6,number)
+0 (>L:Link16_Flight_7,number)
+0 (>L:Link16_Flight_8,number)
+(L:FlightPositionOwnship,number) (>L:Link16_FlightW_1,number)
+0 (>L:Link16_FlightW_2,number)
+0 (>L:Link16_FlightW_3,number)
+0 (>L:Link16_FlightW_4,number)
+0 (>L:Link16_FlightW_5,number)
+0 (>L:Link16_FlightW_6,number)
+0 (>L:Link16_FlightW_7,number)
+0 (>L:Link16_FlightW_8,number)
+0 (>L:Link16_FlightIND_1,number)
+0 (>L:Link16_FlightIND_2,number)
+0 (>L:Link16_FlightIND_3,number)
+0 (>L:Link16_FlightIND_4,number)
+0 (>L:Link16_FlightIND_5,number)
+0 (>L:Link16_FlightIND_6,number)
+0 (>L:Link16_FlightIND_7,number)
+0 (>L:Link16_FlightIND_8,number)
+
+(A:TRANSPONDER1 CODE,number) (>L:Link16_Flight_1,number)
+0 (>L:Link16_Donor_2,number)
+0 (>L:Link16_Donor_3,number)
+0 (>L:Link16_Donor_4,number)
+0 (>L:Link16_Donor_5,number)
+0 (>L:Link16_Donor_6,number)
+0 (>L:Link16_Donor_7,number)
+0 (>L:Link16_Donor_8,number)
+(L:FlightPositionOwnship,number) (>L:Link16_FlightW_1,number)
+0 (>L:Link16_DonorW_2,number)
+0 (>L:Link16_DonorW_3,number)
+0 (>L:Link16_DonorW_4,number)
+0 (>L:Link16_DonorW_5,number)
+0 (>L:Link16_DonorW_6,number)
+0 (>L:Link16_DonorW_7,number)
+0 (>L:Link16_DonorW_8,number)
+0 (>L:Link16_DonorIND_1,number)
+0 (>L:Link16_DonorIND_2,number)
+0 (>L:Link16_DonorIND_3,number)
+0 (>L:Link16_DonorIND_4,number)
+0 (>L:Link16_DonorIND_5,number)
+0 (>L:Link16_DonorIND_6,number)
+0 (>L:Link16_DonorIND_7,number)
+0 (>L:Link16_DonorIND_8,number)
+
+0 (>L:Link16_FTI_1,number)
+0 (>L:Link16_FTI_2,number)
+0 (>L:Link16_FTI_3,number)
+0 (>L:Link16_FTI_4,number)
+0 (>L:Link16_FTI_5,number)
+0 (>L:Link16_FTI_6,number)
+0 (>L:Link16_FTI_7,number)
+0 (>L:Link16_FTI_8,number)
+0 (>L:Link16_FTIW_1,number)
+0 (>L:Link16_FTIW_2,number)
+0 (>L:Link16_FTIW_3,number)
+0 (>L:Link16_FTIW_4,number)
+0 (>L:Link16_FTIW_5,number)
+0 (>L:Link16_FTIW_6,number)
+0 (>L:Link16_FTIW_7,number)
+0 (>L:Link16_FTIW_8,number)
+0 (>L:Link16_FTIIND_1,number)
+0 (>L:Link16_FTIIND_2,number)
+0 (>L:Link16_FTIIND_3,number)
+0 (>L:Link16_FTIIND_4,number)
+0 (>L:Link16_FTIIND_5,number)
+0 (>L:Link16_FTIIND_6,number)
+0 (>L:Link16_FTIIND_7,number)
+0 (>L:Link16_FTIIND_8,number)
+
+
+0 (>L:Link16_Foes_1,number)
+0 (>L:Link16_Foes_2,number)
+0 (>L:Link16_Foes_3,number)
+0 (>L:Link16_Foes_4,number)
+0 (>L:Link16_Foes_5,number)
+0 (>L:Link16_Foes_6,number)
+0 (>L:Link16_Foes_7,number)
+0 (>L:Link16_Foes_8,number)
+0 (>L:Link16_FoesW_1,number)
+0 (>L:Link16_FoesW_2,number)
+0 (>L:Link16_FoesW_3,number)
+0 (>L:Link16_FoesW_4,number)
+0 (>L:Link16_FoesW_5,number)
+0 (>L:Link16_FoesW_6,number)
+0 (>L:Link16_FoesW_7,number)
+0 (>L:Link16_FoesW_8,number)
+0 (>L:Link16_FoesIND_1,number)
+0 (>L:Link16_FoesIND_2,number)
+0 (>L:Link16_FoesIND_3,number)
+0 (>L:Link16_FoesIND_4,number)
+0 (>L:Link16_FoesIND_5,number)
+0 (>L:Link16_FoesIND_6,number)
+0 (>L:Link16_FoesIND_7,number)
+0 (>L:Link16_FoesIND_8,number)
+}
+
+(L:Link16IDL,enum) 1 == if{
+1 (>L:Datalink_AWACS,bool) 
+
+(A:TRANSPONDER1 CODE,number) (>L:Link16_Flight_1,number)
+0 (>L:Link16_Flight_2,number)
+0 (>L:Link16_Flight_3,number)
+0 (>L:Link16_Flight_4,number)
+0 (>L:Link16_Flight_5,number)
+0 (>L:Link16_Flight_6,number)
+0 (>L:Link16_Flight_7,number)
+0 (>L:Link16_Flight_8,number)
+9 (>L:Link16_FlightW_1,number)
+(L:FlightPositionOwnship,number) (>L:Link16_FlightW_1,number)
+0 (>L:Link16_FlightW_2,number)
+0 (>L:Link16_FlightW_4,number)
+0 (>L:Link16_FlightW_5,number)
+0 (>L:Link16_FlightW_6,number)
+0 (>L:Link16_FlightW_7,number)
+0 (>L:Link16_FlightW_8,number)
+0 (>L:Link16_FlightIND_1,number)
+0 (>L:Link16_FlightIND_2,number)
+0 (>L:Link16_FlightIND_3,number)
+0 (>L:Link16_FlightIND_4,number)
+0 (>L:Link16_FlightIND_5,number)
+0 (>L:Link16_FlightIND_6,number)
+0 (>L:Link16_FlightIND_7,number)
+0 (>L:Link16_FlightIND_8,number)
+
+9999 (>L:Link16_Donor_1,number)
+(A:TRANSPONDER1 CODE,number) (>L:Link16_Donor_2,number)
+0 (>L:Link16_Donor_3,number)
+0 (>L:Link16_Donor_4,number)
+0 (>L:Link16_Donor_5,number)
+0 (>L:Link16_Donor_6,number)
+0 (>L:Link16_Donor_7,number)
+0 (>L:Link16_Donor_8,number)
+4 (>L:Link16_DonorW_1,number)
+(L:FlightPositionOwnship,number) (>L:Link16_DonorW_2,number)
+0 (>L:Link16_DonorW_3,number)
+0 (>L:Link16_DonorW_4,number)
+0 (>L:Link16_DonorW_5,number)
+0 (>L:Link16_DonorW_6,number)
+0 (>L:Link16_DonorW_7,number)
+0 (>L:Link16_DonorW_8,number)
+0 (>L:Link16_DonorIND_1,number)
+0 (>L:Link16_DonorIND_2,number)
+0 (>L:Link16_DonorIND_3,number)
+0 (>L:Link16_DonorIND_4,number)
+0 (>L:Link16_DonorIND_5,number)
+0 (>L:Link16_DonorIND_6,number)
+0 (>L:Link16_DonorIND_7,number)
+0 (>L:Link16_DonorIND_8,number)
+
+0 (>L:Link16_FTI_1,number)
+0 (>L:Link16_FTI_2,number)
+0 (>L:Link16_FTI_3,number)
+0 (>L:Link16_FTI_4,number)
+0 (>L:Link16_FTI_5,number)
+0 (>L:Link16_FTI_6,number)
+0 (>L:Link16_FTI_7,number)
+0 (>L:Link16_FTI_8,number)
+0 (>L:Link16_FTIW_1,number)
+0 (>L:Link16_FTIW_2,number)
+0 (>L:Link16_FTIW_3,number)
+0 (>L:Link16_FTIW_4,number)
+0 (>L:Link16_FTIW_5,number)
+0 (>L:Link16_FTIW_6,number)
+0 (>L:Link16_FTIW_7,number)
+0 (>L:Link16_FTIW_8,number)
+0 (>L:Link16_FTIIND_1,number)
+0 (>L:Link16_FTIIND_2,number)
+0 (>L:Link16_FTIIND_3,number)
+0 (>L:Link16_FTIIND_4,number)
+0 (>L:Link16_FTIIND_5,number)
+0 (>L:Link16_FTIIND_6,number)
+0 (>L:Link16_FTIIND_7,number)
+0 (>L:Link16_FTIIND_8,number)
+
+
+0 (>L:Link16_Foes_1,number)
+0 (>L:Link16_Foes_2,number)
+0 (>L:Link16_Foes_3,number)
+0 (>L:Link16_Foes_4,number)
+0 (>L:Link16_Foes_5,number)
+0 (>L:Link16_Foes_6,number)
+0 (>L:Link16_Foes_7,number)
+0 (>L:Link16_Foes_8,number)
+0 (>L:Link16_FoesW_1,number)
+0 (>L:Link16_FoesW_2,number)
+0 (>L:Link16_FoesW_3,number)
+0 (>L:Link16_FoesW_4,number)
+0 (>L:Link16_FoesW_5,number)
+0 (>L:Link16_FoesW_6,number)
+0 (>L:Link16_FoesW_7,number)
+0 (>L:Link16_FoesW_8,number)
+0 (>L:Link16_FoesIND_1,number)
+0 (>L:Link16_FoesIND_2,number)
+0 (>L:Link16_FoesIND_3,number)
+0 (>L:Link16_FoesIND_4,number)
+0 (>L:Link16_FoesIND_5,number)
+0 (>L:Link16_FoesIND_6,number)
+0 (>L:Link16_FoesIND_7,number)
+0 (>L:Link16_FoesIND_8,number)
+}
+
+
+
+}
+
+0 (>L:Link16IDLChange,bool)
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+*******************
+LINK16 LIST SELECTION
+*******************
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:Link16ListChange,bool) if{ (L:Link16List,enum) 1 + (>L:Link16List,enum) }
+(L:Link16List,enum) 3 &gt; if{ 0 (>L:Link16List,enum) }
+
+(L:Link16List,number) 0 == if{
+(L:Link16_Flight_1,number) (>L:Link16_Member_1,number)
+(L:Link16_Flight_2,number) (>L:Link16_Member_2,number)
+(L:Link16_Flight_3,number) (>L:Link16_Member_3,number)
+(L:Link16_Flight_4,number) (>L:Link16_Member_4,number)
+(L:Link16_Flight_5,number) (>L:Link16_Member_5,number)
+(L:Link16_Flight_6,number) (>L:Link16_Member_6,number)
+(L:Link16_Flight_7,number) (>L:Link16_Member_7,number)
+(L:Link16_Flight_8,number) (>L:Link16_Member_8,number)
+(L:Link16_FlightW_1,number) (>L:Link16_Wingman_1,number)
+(L:Link16_FlightW_2,number) (>L:Link16_Wingman_2,number)
+(L:Link16_FlightW_3,number) (>L:Link16_Wingman_3,number)
+(L:Link16_FlightW_4,number) (>L:Link16_Wingman_4,number)
+(L:Link16_FlightW_5,number) (>L:Link16_Wingman_5,number)
+(L:Link16_FlightW_6,number) (>L:Link16_Wingman_6,number)
+(L:Link16_FlightW_7,number) (>L:Link16_Wingman_7,number)
+(L:Link16_FlightW_8,number) (>L:Link16_Wingman_7,number)
+(L:Link16_FlightIND_1,number) (>L:Link16_IND_1,number)
+(L:Link16_FlightIND_2,number) (>L:Link16_IND_2,number)
+(L:Link16_FlightIND_3,number) (>L:Link16_IND_3,number)
+(L:Link16_FlightIND_4,number) (>L:Link16_IND_4,number)
+(L:Link16_FlightIND_5,number) (>L:Link16_IND_5,number)
+(L:Link16_FlightIND_6,number) (>L:Link16_IND_6,number)
+(L:Link16_FlightIND_7,number) (>L:Link16_IND_7,number)
+(L:Link16_FlightIND_8,number) (>L:Link16_IND_7,number)
+}
+
+(L:Link16List,number) 1 == if{
+(L:Link16_Donor_1,number) (>L:Link16_Member_1,number)
+(L:Link16_Donor_2,number) (>L:Link16_Member_2,number)
+(L:Link16_Donor_3,number) (>L:Link16_Member_3,number)
+(L:Link16_Donor_4,number) (>L:Link16_Member_4,number)
+(L:Link16_Donor_5,number) (>L:Link16_Member_5,number)
+(L:Link16_Donor_6,number) (>L:Link16_Member_6,number)
+(L:Link16_Donor_7,number) (>L:Link16_Member_7,number)
+(L:Link16_Donor_8,number) (>L:Link16_Member_8,number)
+(L:Link16_DonorW_1,number) (>L:Link16_Wingman_1,number)
+(L:Link16_DonorW_2,number) (>L:Link16_Wingman_2,number)
+(L:Link16_DonorW_3,number) (>L:Link16_Wingman_3,number)
+(L:Link16_DonorW_4,number) (>L:Link16_Wingman_4,number)
+(L:Link16_DonorW_5,number) (>L:Link16_Wingman_5,number)
+(L:Link16_DonorW_6,number) (>L:Link16_Wingman_6,number)
+(L:Link16_DonorW_7,number) (>L:Link16_Wingman_7,number)
+(L:Link16_DonorW_8,number) (>L:Link16_Wingman_8,number)
+(L:Link16_DonorIND_1,number) (>L:Link16_IND_1,number)
+(L:Link16_DonorIND_2,number) (>L:Link16_IND_2,number)
+(L:Link16_DonorIND_3,number) (>L:Link16_IND_3,number)
+(L:Link16_DonorIND_4,number) (>L:Link16_IND_4,number)
+(L:Link16_DonorIND_5,number) (>L:Link16_IND_5,number)
+(L:Link16_DonorIND_6,number) (>L:Link16_IND_6,number)
+(L:Link16_DonorIND_7,number) (>L:Link16_IND_7,number)
+(L:Link16_DonorIND_8,number) (>L:Link16_IND_7,number)
+}
+
+(L:Link16List,number) 2 == if{
+(L:Link16_FTI_1,number) (>L:Link16_Member_1,number)
+(L:Link16_FTI_2,number) (>L:Link16_Member_2,number)
+(L:Link16_FTI_3,number) (>L:Link16_Member_3,number)
+(L:Link16_FTI_4,number) (>L:Link16_Member_4,number)
+(L:Link16_FTI_5,number) (>L:Link16_Member_5,number)
+(L:Link16_FTI_6,number) (>L:Link16_Member_6,number)
+(L:Link16_FTI_7,number) (>L:Link16_Member_7,number)
+(L:Link16_FTI_8,number) (>L:Link16_Member_8,number)
+(L:Link16_FTIW_1,number) (>L:Link16_Wingman_1,number)
+(L:Link16_FTIW_2,number) (>L:Link16_Wingman_2,number)
+(L:Link16_FTIW_3,number) (>L:Link16_Wingman_3,number)
+(L:Link16_FTIW_4,number) (>L:Link16_Wingman_4,number)
+(L:Link16_FTIW_5,number) (>L:Link16_Wingman_5,number)
+(L:Link16_FTIW_6,number) (>L:Link16_Wingman_6,number)
+(L:Link16_FTIW_7,number) (>L:Link16_Wingman_7,number)
+(L:Link16_FTIW_8,number) (>L:Link16_Wingman_8,number)
+(L:Link16_FTIIND_1,number) (>L:Link16_IND_1,number)
+(L:Link16_FTIIND_2,number) (>L:Link16_IND_2,number)
+(L:Link16_FTIIND_3,number) (>L:Link16_IND_3,number)
+(L:Link16_FTIIND_4,number) (>L:Link16_IND_4,number)
+(L:Link16_FTIIND_5,number) (>L:Link16_IND_5,number)
+(L:Link16_FTIIND_6,number) (>L:Link16_IND_6,number)
+(L:Link16_FTIIND_7,number) (>L:Link16_IND_7,number)
+(L:Link16_FTIIND_8,number) (>L:Link16_IND_7,number)
+}
+
+(L:Link16List,number) 3 == if{
+(L:Link16_Foes_1,number) (>L:Link16_Member_1,number)
+(L:Link16_Foes_2,number) (>L:Link16_Member_2,number)
+(L:Link16_Foes_3,number) (>L:Link16_Member_3,number)
+(L:Link16_Foes_4,number) (>L:Link16_Member_4,number)
+(L:Link16_Foes_5,number) (>L:Link16_Member_5,number)
+(L:Link16_Foes_6,number) (>L:Link16_Member_6,number)
+(L:Link16_Foes_7,number) (>L:Link16_Member_7,number)
+(L:Link16_Foes_8,number) (>L:Link16_Member_8,number)
+(L:Link16_FoesW_1,number) (>L:Link16_Wingman_1,number)
+(L:Link16_FoesW_2,number) (>L:Link16_Wingman_2,number)
+(L:Link16_FoesW_3,number) (>L:Link16_Wingman_3,number)
+(L:Link16_FoesW_4,number) (>L:Link16_Wingman_4,number)
+(L:Link16_FoesW_5,number) (>L:Link16_Wingman_5,number)
+(L:Link16_FoesW_6,number) (>L:Link16_Wingman_6,number)
+(L:Link16_FoesW_7,number) (>L:Link16_Wingman_7,number)
+(L:Link16_FoesW_8,number) (>L:Link16_Wingman_8,number)
+(L:Link16_FoesIND_1,number) (>L:Link16_IND_1,number)
+(L:Link16_FoesIND_2,number) (>L:Link16_IND_2,number)
+(L:Link16_FoesIND_3,number) (>L:Link16_IND_3,number)
+(L:Link16_FoesIND_4,number) (>L:Link16_IND_4,number)
+(L:Link16_FoesIND_5,number) (>L:Link16_IND_5,number)
+(L:Link16_FoesIND_6,number) (>L:Link16_IND_6,number)
+(L:Link16_FoesIND_7,number) (>L:Link16_IND_7,number)
+(L:Link16_FoesIND_8,number) (>L:Link16_IND_7,number)
+}
+
+0 (>L:Link16ListChange,bool)
+0 (>L:DatalinkInitialized, bool)
+</Value>
+</Select>
+</Element>
+
+
+
+</Gauge>

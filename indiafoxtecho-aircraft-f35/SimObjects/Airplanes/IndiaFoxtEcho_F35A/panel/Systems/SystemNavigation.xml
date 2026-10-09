@@ -1,0 +1,114 @@
+<Gauge Name="SMS" Version="1.0">
+
+<Comment>
+Special navigation functions
+</Comment>
+
+<Update Frequency="0"/>
+
+
+<Element>
+<Select>
+<Value>
+(A:GPS GROUND TRUE TRACK, degrees) (A:GPS GROUND TRUE HEADING, degrees) - (>L:groundTrackDifferenceUnrestricted, degrees)
+(L:groundTrackDifferenceUnrestricted, degrees) 180 &gt; if{ (L:groundTrackDifferenceUnrestricted, degrees) 360 - (>L:groundTrackDifferenceUnrestricted, degrees) }
+(L:groundTrackDifferenceUnrestricted, degrees) 15 min -15 max (>L:groundTrackDifference, degrees)
+</Value>
+</Select>
+</Element>
+
+
+<Element> <Select> <Value>
+(A:NAV HAS TACAN:2, bool) (>L:tacanSignalDetected, bool)
+(A:NAV HAS TACAN:2, bool) if{ (A:TACAN STATION RADIAL:2,degrees) 180 + dnor (A:PLANE HEADING DEGREES MAGNETIC,degrees) - dnor s2 180 &gt; if{ l2 360 - (>L:HeadingMarkerUnrestricted, number) } els{ l2 (>L:TacanMarkerMarkerUnrestricted, number) } }
+(A:NAV HAS TACAN:2, bool) if{ (A:TACAN STATION RADIAL:2,degrees) 180 + (A:Plane heading degrees gyro,degrees) - (>L:tacanBearing, number) }	
+(L:tacanBearing, number) 15 min -15 max (>L:tacanBearing, number)
+</Value> </Select> </Element>
+
+<!-->
+WAYPOINT MANAGEMENT
+</|-->
+
+
+<Element>
+<Select>
+<Value>
+(L:SelectPrevWP,bool) (A:GPS WP PREV VALID, bool) and 
+if{
+(A:GPS FLIGHT PLAN WP INDEX, number) 1 - (>C:fs9gps:FlightPlanActiveWaypoint)
+0 (>L:SelectPrevWP,bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:SelectNextWP,bool)
+if{
+(A:GPS FLIGHT PLAN WP INDEX, number) 1 + (>C:fs9gps:FlightPlanActiveWaypoint)
+(A:GPS WP NEXT LAT, degrees) (>L:FlightPlanNewWaypointLatitude, degrees)
+(A:GPS WP NEXT LON, degrees) (>L:FlightPlanNewWaypointLongitude, degrees)
+0 (>L:SelectNextWP,bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:ManualWP,bool)
+if{
+(C:fs9gps:FlightPlanIsActiveWaypointLocked) ! (>C:fs9gps:FlightPlanIsActiveWaypointLocked)
+(>L:ManualWP,bool)
+}
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+0 (>L:SelectNextWP,bool)
+0 (>L:SelectPrevWP,bool)
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(L:MFD3_Screen) 233 ==
+(L:MFD1_Screen) 233 == or
+(C:fs9gps:FlightPlanIsActiveWaypointLocked) ! and
+if{
+1 (>C:fs9gps:FlightPlanIsActiveWaypointLocked)
+}
+</Value>
+</Select>
+</Element>
+
+<Comment>
+******
+HEADING SYSTEM
+******
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(L:AircraftHeadingType,enum) 0 ==  if{ (A:Plane heading degrees gyro, degrees) (>L:AircraftHeadingReference, degrees) }
+(L:AircraftHeadingType,enum) 1 == if{ (A:PLANE HEADING DEGREES TRUE, degrees) (>L:AircraftHeadingReference, degrees) }
+(L:AircraftHeadingType,enum) 2 ==  if{ (A:PLANE HEADING DEGREES Magnetic, degrees) (>L:AircraftHeadingReference, degrees) }
+
+(A:Plane heading degrees gyro, degrees) (>L:AircraftHeadingGyro, degrees)
+(A:PLANE HEADING DEGREES TRUE, degrees) (>L:AircraftHeadingTrue, degrees)
+(A:PLANE HEADING DEGREES Magnetic, degrees) (>L:AircraftHeadingMagnetic, degrees)
+(A:PLANE HEADING DEGREES TRUE, degrees) (A:PLANE HEADING DEGREES Magnetic, degrees) - (>L:AircraftHeadingDelta, degrees)
+</Value>
+</Select>
+</Element>
+
+</Gauge>

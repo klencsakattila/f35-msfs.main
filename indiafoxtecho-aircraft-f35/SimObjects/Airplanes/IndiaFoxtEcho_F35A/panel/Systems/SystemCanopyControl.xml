@@ -1,0 +1,42 @@
+<Gauge Name="CanopyControl" Version="1.0">
+
+
+<Comment>
+Is canopy closed and locked?
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:INTERACTIVE POINT OPEN:0, percent) 0 == if{ 1 (>L:IsCanopyClosedAndLocked, bool) } els{ 1 (>L:IsCanopyClosedAndLocked, bool) }
+</Value>
+</Select>
+</Element>
+
+
+<Comment>
+Canopy opening and closing animation controller
+</Comment>
+
+<Element>
+<Select>
+<Value>
+(A:INTERACTIVE POINT OPEN:0, percent) 10 &gt; (A:AIRSPEED INDICATED, knots) 50 &gt; and (L:CanopyAutomaticClosing,bool) ! and
+if{
+1 (>L:CanopyAutomaticClosing,bool)
+1 (>K:TOGGLE_AIRCRAFT_EXIT, bool)
+}
+(A:AIRSPEED INDICATED, knots) 50 &lt; (A:INTERACTIVE POINT OPEN:0, percent) 1 &lt; or (L:CanopyAutomaticClosing,bool) and if{ 0 (>L:CanopyAutomaticClosing,bool) }
+</Value>
+</Select>
+</Element>
+
+<Element>
+<Select>
+<Value>
+(A:INTERACTIVE POINT OPEN:0, percent) (>L:CanopyOpen, number)
+</Value>
+</Select>
+</Element>
+
+</Gauge>
